@@ -1,0 +1,279 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
+
+*, *:before, *:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100vh;
+}
+
+body {
+  font: 20px/1 'Open Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif;
+  color: #555;
+  background: #545f60; /* Color of the rest of the page */ 
+}
+
+main {
+  min-width: 520px;
+  max-width: 800px;
+  padding: 0px;
+  margin: 0 auto;
+  background: #000; /* Colors the area of the section that holds the tabs */ 
+}
+
+section {
+  display: none;
+  padding: 20px 0 0;
+  border-top: 1px solid #000; /*Line that separates tab and  text section */
+}
+
+h1 {
+ 	padding: 50px 0;
+  	font-weight: 400;
+	text-align: center;
+	
+}
+
+h3 {
+	padding: 10px 0;
+  	font-weight: 200;
+  	text-align: center;
+}
+
+h4 {
+	color:#ffffff;
+	padding: 0px 0;
+	font-size: 16px;
+  	text-align: center;
+  	background:#545f60;
+  	font-weight: bold;
+  	font-family: 'Open Sans', sans-serif;		
+}
+
+
+p {
+  	margin: 0 0 20px;
+  	line-height: 1.5;
+  	padding: 0px 30px 20px; /*Controls the border around the text in p tag */
+  	font-family: 'Open Sans', sans-serif;
+  	font-size: 18px;
+	text-align: left;	
+	text-decoration: none;
+}
+
+input {
+  display: none;
+}
+
+label {
+  display: inline-block;
+  margin: 0 0 -1px;
+  padding: 20px 25px;
+  font-weight: 600;
+  text-align: center;
+  color: #fff;
+  background: #000;
+  border: 0px solid transparent;
+}
+
+label:before {
+  font-family: fontawesome;
+  font-weight: normal;
+  margin-right: 10px;
+}
+
+label[for*='1']:before { content: '\f1cb'; }
+label[for*='2']:before { content: '\f17d'; }
+label[for*='3']:before { content: '\f16b'; }
+label[for*='4']:before { content: '\f1a9'; }
+label[for*='5']:before { content: '\f1a9'; }
+
+label:hover {
+  color: #888;
+  cursor: pointer;
+}
+
+/*Controls the properties of the tab which is selected */
+input:checked + label {
+  color: #6edeef;
+  background: #000;
+  border: 0px solid #ddd;
+  border-top: 0px solid orange;
+  border-bottom: 0px solid #fff;
+}
+
+#tab1:checked ~ #content1,
+#tab2:checked ~ #content2,
+#tab3:checked ~ #content3,
+#tab4:checked ~ #content4,
+#tab5:checked ~ #content5{
+  display: block;
+}
+
+
+
+/* ========================================== */
+/* NFL Table Style */
+/* ========================================== */
+	
+	.datagrid {
+		font: 18px/1 'Open Sans', sans-serif;  		
+  		background:#fff;
+		overflow: hidden;
+  		white-space: nowrap; 
+  		border: 1px solid #545f60;
+	}
+	
+	
+	.datagrid h5 {
+  		font-size: 12px;
+  		text-align: center;
+  		text-decoration: none;
+  		font-family: 'Open Sans', sans-serif;
+	}
+		
+	
+	.datagrid table { 
+		border-collapse: collapse; 
+		text-align: left; 
+		width: 100%;
+	}
+			
+			
+	.datagrid table td { 
+		padding: 7px 7px; 	/*Cell vertical space */
+		color: #000;		/*Color of the text in the td */
+		font-size: 16px;
+		font-weight: bold;		  
+	}
+	
+	
+	
+	.datagrid table tbody .alt td { 
+		padding: 0px 0px;
+		border-left: 1px solid #545f60;
+		border-right: 1px solid #545f60;
+		border-bottom: 1px solid #545f60;
+	}
+	
+	
+	.datagrid table tbody td:first-child { 
+		border-left: none; 
+	}
+	
+	.datagrid table tbody tr:last-child td { 
+		border-bottom: none; 
+	}
+	
+	
+	/* SCHEDULE */
+	/* ----------------------------------------------- */
+	.schedulegrid {
+		font: 18px/1 'Open Sans', sans-serif;
+		overflow: hidden;
+		background: #ffffff;
+		border: 0px solid #545f60;	
+  		white-space: nowrap;   		
+	}
+
+	.schedulegrid h4 { 
+		color:#545f60;
+		background:#ffffff;
+		padding: 0px 0;
+		font-size: 16px;
+  		font-weight: bold;
+  		font-family: 'Open Sans', sans-serif;
+	} 
+		
+	.schedulegrid table { 
+		border-collapse: collapse; 
+		width: 100%; 
+	} 
+		
+	
+	.schedulegrid table tr {
+		border-left: 1px solid #545f60;
+		border-right: 1px solid #545f60;
+		border-bottom: 1px solid #545f60;
+	}
+		
+	.schedulegrid table td { 
+		padding: 2px 5px; /*Cell vertical space */
+		background:#ffffff;
+		color: #000;  /*Color of the text in the td */
+		font-size: 16px;
+		font-weight: bold;		  
+	}
+	
+	.schedulegrid table tbody .salt td { 
+		color: #545f60;
+		background:#ffffff;
+		padding: 1px 1px; 
+	}	
+	
+	.schedulegrid table tbody td:first-child { 
+		border-left: none; 
+	}
+	
+	.schedulegrid table tbody tr:last-child td { 
+		border-bottom: none; 
+	}
+	
+	
+	/* WINNINGS */
+	/* ----------------------------------------------- */
+	.wingrid {
+		font: 18px/1 'Open Sans', sans-serif;
+		overflow: hidden;
+		background: #ffffff;
+		border: 0px solid #545f60;	
+  		white-space: nowrap;   		
+	}
+
+	.wingrid h4 { 
+		color:#545f60;
+		background:#ffffff;
+		padding: 0px 0;
+		font-size: 16px;
+  		font-weight: bold;
+  		font-family: 'Open Sans', sans-serif;
+	} 
+		
+	.wingrid table { 
+		border-collapse: collapse; 
+		width: 100%; 
+	} 
+		
+	
+	.wingrid table tr {
+		padding: 10px 10px;
+	}
+		
+	.wingrid table td { 
+		padding: 2px 5px; /*Cell vertical space */
+		background:#ffffff;
+		color: #000;  /*Color of the text in the td */
+		font-size: 16px;
+		font-weight: bold;		  
+	}
+	
+	.wingrid table tbody .alt tr { 
+		color: #545f60;
+		background:#ffffff;
+		padding: 1px 1px;
+		border-left: 1px solid #545f60;
+		border-right: 1px solid #545f60;
+		border-bottom: 1px solid #545f60;
+	}	
+	
+	.wingrid table tbody td:first-child { 
+		border-left: none; 
+	}
+	
+	.wingrid table tbody tr:last-child td { 
+		border-bottom: none; 
+	}

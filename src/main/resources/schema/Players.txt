@@ -1,0 +1,8 @@
+CREATE TABLE `Players` (
+  `Name` varchar(45) NOT NULL,
+  `NickName` varchar(45) NOT NULL,
+  `Email` varchar(45) NOT NULL,
+  `Image` blob,
+  `IsActive` tinyint(4) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`Email`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Table to store information about Players'

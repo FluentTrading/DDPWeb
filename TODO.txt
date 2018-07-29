@@ -1,0 +1,44 @@
+//Done
+
+1. How to get all picks that are in loop
+2. Preserve the selection if there is an error
+3. If statement to check is pick is enabled is not coded
+6. Enter picks for week 9 using pick page    
+6. Don't store winnings info in DB.
+
+
+TODO:
+=====================================================
+1 When I update score by changing the json file, the page doesn't update.
+4 Add Team's record with on DDP or Schedule or both
+5 Add the name of the stadium with City where the game is played in the schedule tab
+
+
+//Analytics
+1. How will we display Analytics
+2. How will need a background thread.
+
+
+//Functionality
+4. Display a message with image if picks haven't been made
+7. Make the icons 42X42 rather than shoterning them in the code
+8. The jsp page for phone will not have images http://icoconvert.com/
+9. When page refreshes, it always takes us back to the first Tab
+
+
+//Performance 
+2. Can we update scores without refreshing the page?
+3. Set to refresh every 45 seconds
+
+//UI COloring
+Find the right shade of colors
+
+
+Links:
+http://www.nfl.com/ajax/scorestrip?season=2017&seasonType=REG&week=2
+http://www.nfl.com/liveupdate/game-center/2017091701/2017091701_gtd.json
+http://www.nfl.com/widget/gc/2011/tabs/cat-post-playbyplay?gameId=2012020500
+
+https://jsonformatter.org/json-pretty-print
+https://burntsushi.net/stuff/nfldb/nfldb-condensed.pdf
+http://live.numberfire.com/nfl?week=8
