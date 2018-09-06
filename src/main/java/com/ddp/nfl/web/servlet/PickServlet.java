@@ -36,10 +36,10 @@ public class PickServlet extends HttpServlet {
             handleError( ERROR_MESSAGE, request, response );
         }
          
-        ActionType actionType   = ActionType.get(request.getParameter("action"));
+        PickActionType actionType   = PickActionType.get(request.getParameter("action"));
         
         boolean isPasswordValid = isPasswordValid( request );
-        boolean enforcePassword = (ActionType.SAVE == actionType && !isPasswordValid);
+        boolean enforcePassword = (PickActionType.SAVE == actionType && !isPasswordValid);
         if( enforcePassword ) {
             handleError( "Unauthorized! You are not permissioned to save picks.", request, response );            
             return;
@@ -67,7 +67,7 @@ public class PickServlet extends HttpServlet {
     }
     
 
-    protected final PickResult handleAction( ActionType type, int pickForWeek, PickManager pickManager, HttpServletRequest request ) {
+    protected final PickResult handleAction( PickActionType type, int pickForWeek, PickManager pickManager, HttpServletRequest request ) {
         
         PickResult result   = null;
                 

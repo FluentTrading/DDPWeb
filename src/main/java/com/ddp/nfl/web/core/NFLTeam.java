@@ -22,6 +22,7 @@ public final class NFLTeam{
     private final static String NFL_LOGO_PREFIX      = "images/teams/";
     private final static String NFL_LOGO_SUFFIX      = ".png";
     private final static String MISSING_TEAM_LOGO    = NFL_LOGO_PREFIX + "Missing" + NFL_LOGO_SUFFIX;
+    private final static String THUMBS_DOWN_LOGO     = NFL_LOGO_PREFIX + "thumbs_down.jpg";
     
     public NFLTeam( int id, String camelCaseName, String nickName, String division, String conference, 
                     String city, String state, String rosterLink ){
@@ -94,6 +95,11 @@ public final class NFLTeam{
         return MISSING_TEAM_LOGO;
     }
     
+    public final static String getThumbsDownLogo( ){
+        return THUMBS_DOWN_LOGO;
+    }
+    
+    
     protected final static String createRoundIcon( String teamName ){
         return NFL_LOGO_PREFIX + teamName + NFL_ROUND_ICON_ID + NFL_LOGO_SUFFIX;
     }
@@ -101,7 +107,7 @@ public final class NFLTeam{
     protected final static String createSquareIcon( String teamName ){
         return NFL_LOGO_PREFIX + teamName + NFL_SQUARE_ICON_ID + NFL_LOGO_SUFFIX;
     }
-
+    
 
     @Override
     public final int hashCode( ) {

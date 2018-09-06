@@ -26,6 +26,8 @@
   <input id="tab1" type="radio" name="tabs" checked>
   <label for="tab1">
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <i class="fas fa-football-ball"></i>
   	NFL Week
     <c:if test="${requestScope[DDPUtil.RESULT_MANAGER_KEY] != null}">
@@ -38,9 +40,6 @@
     
   <input id="tab3" type="radio" name="tabs">
   <label for="tab3"><i class="fas fa-dollar-sign"></i> Cash Money</label>
-    
-  <input id="tab4" type="radio" name="tabs">
-  <label for="tab4"><i class="fab fa-sticker-mule"></i> Rules</label>
       
   <section id="content1">
 
@@ -232,12 +231,12 @@
     
    	<section id="content2">
     	
-    	<div>    	
+    	<div class="schedulegrid">    	
     	
     		<c:choose>
 				<c:when test="${applicationScope[DDPUtil.SCHEDULE_KEY] != null}">
 					
-    				<div class="schedulegrid">
+    				<div>
 						<table>
 							
 							<c:forEach var="entry" items="${applicationScope[DDPUtil.SCHEDULE_KEY].getSchedules( ).values()}">
@@ -279,11 +278,7 @@
     		
     			</c:when>
 				<c:otherwise>
-						<tr>
-							<td align="center">
-								<h1 style="color:#009DDC;">Schedule for this week isn't available!</h1>
-							</td>
-						</tr>
+					<h3>Schedule for this week isn't available!</h3>
 				</c:otherwise>
 			</c:choose>	
    		</div>
@@ -368,12 +363,6 @@
     		</div>
     
 	 </section>
-	 
-	   <section id="content4">
-    		<div class="wingrid">	  	
-    			<h3>State Property</h3>				
-    		</div>
-	   	</section>
 	
 </main>
   

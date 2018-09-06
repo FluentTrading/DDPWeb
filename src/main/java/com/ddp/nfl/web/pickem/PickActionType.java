@@ -1,21 +1,21 @@
 package com.ddp.nfl.web.pickem;
 
-public enum ActionType {
+public enum PickActionType {
     
     SAVE,
     LOAD,
     UNKNOWN;
     
     
-    public final static ActionType get( String name ){
+    public final static PickActionType get( String name ){
     
-        for( ActionType type : ActionType.values( ) ) {
+        for( PickActionType type : PickActionType.values( ) ) {
             if( type.name( ).equalsIgnoreCase( name )) {
                 return type;
             }
         }
         
-        return ActionType.UNKNOWN;
+        return PickActionType.UNKNOWN;
         
     }
     

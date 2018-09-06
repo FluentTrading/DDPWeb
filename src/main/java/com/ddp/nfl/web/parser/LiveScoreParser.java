@@ -83,16 +83,17 @@ public final class LiveScoreParser{
            int awayScore        = safeParse( startElement, "vs", ZERO);
            
            String rawQuarterStr = safeParse( startElement, "q", EMPTY );
-           boolean notStarted   = "p".equalsIgnoreCase( rawQuarterStr );
+           boolean notStarted   = !isValid(rawQuarterStr) || "p".equalsIgnoreCase( rawQuarterStr );
            boolean isFinished   = rawQuarterStr.equalsIgnoreCase("F") || rawQuarterStr.equalsIgnoreCase("FO");
            boolean isPlaying    = !notStarted && !isFinished;
            boolean isRedzone    = parseRedZone( isPlaying, startElement, "rz");
            
-           String quarter       = parseQuarter( isFinished, rawQuarterStr, gameTime );
+           String teamPossession= safeParse( startElement, "p", EMPTY);
+           String timeRemaining = safeParse( startElement, "k", EMPTY);
            
            liveScore            = new LiveScore( gameId, gameEid, gameDay, gameTime,
-                                                      notStarted, isPlaying, isFinished, home, homeScore, 
-                                                     away, awayScore, isRedzone, quarter );
+                                                 notStarted, isPlaying, isFinished, home, homeScore, 
+                                                 away, awayScore, teamPossession, timeRemaining, isRedzone, rawQuarterStr );
            //TODO: Muting it for now
            //LOGGER.info( "{}", liveScore );
                    
@@ -105,11 +106,12 @@ public final class LiveScoreParser{
     }
 
     
-    private static boolean parseRedZone( boolean isPlaying, StartElement startElement, String string ) {
+    private final static boolean parseRedZone( boolean isPlaying, StartElement startElement, String string ) {
         
         if( !isPlaying ) return false;
-        int redZoneCode     = safeParse( startElement, "rz", NEGATIVE_ONE);
-        boolean isRedZone   = ( redZoneCode > NEGATIVE_ONE );
+        
+        int redZoneCode     = safeParse( startElement, "rz", ZERO );
+        boolean isRedZone   = ( redZoneCode > ZERO );
         
         return isRedZone;
     }
@@ -136,38 +138,6 @@ public final class LiveScoreParser{
     }
     
     
-    public final static String parseQuarter( boolean isFinished, String quarterStr, String gameTime ) {
-        
-        if( isFinished ){
-            return "Final";
-        }
-            
-        if( quarterStr.equalsIgnoreCase("P") ){
-            return gameTime;
-        }
-        
-        if( quarterStr.equalsIgnoreCase("H") ){
-            return "Half";
-        }
-                
-        if( quarterStr.equalsIgnoreCase("1")){
-            return quarterStr + " QT";
-        
-        }else if( quarterStr.equalsIgnoreCase("2")){
-            return quarterStr + " QT";
-                                
-        }else if( quarterStr.equalsIgnoreCase("3")){
-            return quarterStr + " QT";
-        
-        }else if( quarterStr.equalsIgnoreCase("4")){            
-            return quarterStr + " QT";
-        
-        }else{
-            return "O.T";
-        }
-                
-    }
-        
    
     public final static String createLiveScoreUrl(  String seasonType, int year, int week ){
         

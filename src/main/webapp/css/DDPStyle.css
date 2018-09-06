@@ -23,13 +23,13 @@ main {
   max-width: 800px;
   margin: 0 auto;
   background: #000000; /* Colors the area of the section that holds the tabs */
-  padding: 0px 0px 15px 0px; /* Top, Right, Bottom, Left */
+  padding: 0px 0px 15px 0px; /* Top, Right, Bottom, Left */  
 }
 
 
 section {
   display: none;
-  border-top: 1px solid #000000; /*Line that separates tab and  text section */
+  border-top: 1px solid #000000; /*Line that separates tab and  text section */  
 }
 
 
@@ -57,7 +57,7 @@ label:before {
 label[for*='1']:before { }
 label[for*='2']:before { }
 label[for*='3']:before { }
-label[for*='4']:before { }
+
 
 label:hover {
   color: #ffffff;
@@ -69,14 +69,13 @@ input:checked + label {
   color: #009DDC;
   background: #000000;
   border: 0px solid #ddd;
-  border-top: 0px solid#009DDC;
+  border-top: 0px solid #009DDC;
   border-bottom: 0px solid #fff;
 }
 
 #tab1:checked ~ #content1,
 #tab2:checked ~ #content2,
-#tab3:checked ~ #content3,
-#tab4:checked ~ #content4{
+#tab3:checked ~ #content3{
   display: block;
 }
 
@@ -114,8 +113,15 @@ input:checked + label {
 		border-collapse: collapse; 
 		text-align: left; 
 		width: 100%;
-	}
 
+		/*
+		background-image: url("../images/result/bortles.gif");
+		background-repeat: no-repeat;
+		background-position: center;
+		z-index: -1;
+		*/
+		
+	}
 
 	.datagrid table td { 
 		padding: 4px 0px 0px 15px; /* Top, Right, Bottom, Left */
@@ -123,8 +129,14 @@ input:checked + label {
 		font-size: 18px;
 		font-weight: bold;
 		/*border: 2px solid #9FAFB4;	 Border around the cell */
+				
 	}
 		
+	/*
+	.touchdown_background{
+		background-image: url("../images/result/touchdown.gif");
+	}
+	*/
 	
 	.datagrid table .alt td { 
 		padding: 0px 0px 2px 0px; /* Top, Right, Bottom, Left */
@@ -172,6 +184,7 @@ input:checked + label {
 		font-weight: bold;		  
 	}
 	
+		
 	
 	/* WINNINGS */
 	/* ----------------------------------------------- */
@@ -197,13 +210,23 @@ input:checked + label {
 	/* Analytics link buttons */
 	/* ----------------------------------------------- */
 	.Blink {
-    	animation: blinker 0.5s cubic-bezier(.5, 0, 1, 1) infinite alternate;  
+    	animation: blinker 1s linear infinite;  
 	}
 	
 	@keyframes blinker {  
- 		from { opacity: 1; }
-  		to { opacity: 0; }
+ 		50% {
+   		 opacity: 0;
+  		}
 	}
+	
+	.dot {
+  		height: 8px;
+  		width: 8px;
+  		background-color: #27AC44;
+  		border-radius: 50%;
+  		display: inline-block;
+	}
+
 
 	.nostartButton {
     	background-color: #a0a5a5;
@@ -280,4 +303,17 @@ input:checked + label {
   		font-family: 'Open Sans', sans-serif;
 	}  
 	
+	
+	@keyframes glow{
+ 	 to {
+    	box-shadow: 0px 0px 30px 20px #27AC44;
+  		}
+	}
+	
+	glowimg .img{
+ 	 	margin: 30px;
+  		border-radius: 50%;
+  		box-shadow: 0px 0px 9px 4px #27AC44;
+  		animation: glow 1.5s linear infinite alternate;
+	}
 	

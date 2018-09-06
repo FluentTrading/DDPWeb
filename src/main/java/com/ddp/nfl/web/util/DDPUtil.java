@@ -1,14 +1,10 @@
 package com.ddp.nfl.web.util;
 
-import static com.ddp.nfl.web.util.DDPUtil.*;
-
-import java.time.*;
 import java.time.format.*;
 import java.util.concurrent.*;
 
 import com.google.gson.*;
 import com.ddp.nfl.web.core.*;
-import com.ddp.nfl.web.parser.*;
 
 
 public final class DDPUtil{
@@ -29,6 +25,7 @@ public final class DDPUtil{
     public final static String L_BRACKET            = "[";
     public final static String R_BRACKET            = "]";
     public final static String NEWLINE              = "<br />";
+    public final static String HTML_SPACE           = "&nbsp";
     public final static String PRINT_NEWLINE        = "\n";
     
     public final static String LOGIN_RESULT_KEY     = "LoginResultKey";
@@ -45,7 +42,7 @@ public final class DDPUtil{
         
     public final static String GRR_IMG_PREFIX       = "images/GRR/GRR";
     public final static String GRR_IMG_POSTFIX      = ".gif";
-    public final static String REDZONE_ANIMATION     = "<i class=\"fa fa-circle text-danger Blink\"></i>";
+    public final static String POSSESSION_BLINK_DIV = "<div class=\"Blink\"><span class=\"dot\"></span></div>";
         
     public final static String GAME_SERVLET_LINK    = "/game";
     public final static String DDP_GAME_PAGE_LINK   = "/WEB-INF/nfl.jsp";
@@ -56,6 +53,7 @@ public final class DDPUtil{
     public final static Gson GSON_INSTANCE          = new GsonBuilder().create();
     public final static JsonParser JSON_PARSER      = new JsonParser();
     
+    public final static String RED_ZONE_ICON        = "images/result/touchdown.gif";
     public final static DateTimeFormatter _YYYYMMDDD= DateTimeFormatter.ofPattern("yyyyMMdd");
     public final static DateTimeFormatter _HH_MM    = DateTimeFormatter.ofPattern("hh:mm");
     

@@ -1,12 +1,9 @@
 
-Prod Check
-===============================
-Make analytics uncliackable if we dont finish.
 
-Can we use full screen for the app?
-Review all the colors
-Remove all TODOs
-Check game start date, week number and links to get scores.
+What does "p" and "k" mean in the data?
+//Show possession by blinking green (small icon)
+//Deploy!
+
 
 Rebooting:
 ====================================================
@@ -22,7 +19,6 @@ Enhancements:
 ====================================================
 UI:
 1) Update Seahawks, Ramns, Colts logos?
-
 
 1. Chakka flag for the looser
 2. Team record should be available in analytics
@@ -41,11 +37,26 @@ Picks:
 	It won't get automatically reflected.
 	When we save the picks, we should also update the teamMap.
 
+
+Prod Check
+===============================
+Make analytics uncliackable if we dont finish.
+Remove all TODOs
+Check game start date, week number and links to get scores.
+
+
 Schedule:
 1)	Show AM/PM in time
 2)	Show Stadium Location if possible
 3)  Group schedule by date (like CBS sports schedule) 
 4)  We have all the schedules downloaded with stadium info, should we store them in DB?
+
+
+Winnig Page:
+//Put Al bundy in the bg
+
+Rules Page:
+//Put Al bundy in the bg and add rules defined at the bottom
 
 
 Links:
@@ -58,3 +69,66 @@ https://burntsushi.net/stuff/nfldb/nfldb-condensed.pdf
 http://live.numberfire.com/nfl?week=8
 http://icoconvert.com/
 https://codepen.io/imprakash/pen/GgNMXO
+
+
+Rules:
+ 		<div class="rulegrid">
+    		
+    		<div>
+    			<table>
+    			<tr>
+					<td><h3>Rules!</h3></td>
+				</tr>
+				<tr>
+					<h4>Every week, players picks three teams.</h4>
+					<h4>At the end of the week, we sum the points scored by each team.</h4>
+					<h4>Player with the highest total wins $50.</h4>
+				</tr>
+    
+    
+    			<tr>
+					<h3>U.I Info: Player</h3>
+				</tr>
+				<tr>
+					<h4>Player icon and his total points are shown in the first column.</h4>
+					<h4>Teams picked are shown on the top row and laid out in the order they were picked.</h4>					
+				</tr>
+				
+				<tr>
+					<h3>U.I Info: Points</h3>
+				</tr>
+				<tr>
+					<h4>Player with the highest total is on the top row.</h4>
+					<h4>If two player have the same total score, player who picked teams last wins.</h4>					
+				</tr>
+				
+				<tr>
+					<h3>U.I Info: Quarter Color</h3>
+				</tr>
+				<tr>
+					<h4>Gray = Game has not yet started.</h4>
+					<h4>Green= Your team is either winning or won</h4>
+					<h4>Red= Your team is either loosing or lost</h4>
+					<h4>Yellow= Your team is tied.</h4>										
+				</tr>
+				
+				<tr>
+					<h3>U.I Info: Quarter Text</h3>
+				</tr>
+				<tr>
+					<h4>If the game hasn't started, text will show start time in EST.</h4>
+					<h4>If the game is Finished, text will show "Final".</h4>
+					<h4>If the game is in play, text will show the Quarter and the time remaining (including half and overtime)</h4>
+				</tr>
+				
+				<tr>
+					<h3>U.I Info: Team Icon</h3>
+				</tr>
+				<tr>
+					<h4>If the game is finished, winning team's icon is shown.</h4>
+					<h4>If the game is in play & redzone gif is shown if your team is in the redzone.</h4>
+					<h4>If the game is in play & your team is winning, it's icon is shown.</h4>
+				</tr>
+				</table>
+			</div>
+    	</div>

@@ -9,17 +9,13 @@ import java.time.*;
 import com.ddp.nfl.web.core.*;
 
 
-//Will contain all data for MatchScore  + Schedule class
-//Then schedule class will only do lookups based on this data
-//Rename it to MatchScore or something better (LiveMatchScore0
 
 public final class LiveScore{
     
     private final String gameId;
     private final LocalDate gameDate;
     private final String gameDateTime;
-    private final String gameDayTime;
-    
+        
     private final boolean notStarted;
     private final boolean isPlaying;
     private final boolean isFinished;
@@ -30,6 +26,9 @@ public final class LiveScore{
     private final NFLTeam away;
     private final int awayScore;
     
+    private final String teamPossession;
+    private final String timeRemaining;
+    
     private final boolean isRedzone;
     private final String quarter;
     
@@ -39,22 +38,24 @@ public final class LiveScore{
     public LiveScore(  String gameId, String gameEid, String gameDay, String gameTime,
                             boolean notStarted, boolean isPlaying, boolean isFinished, 
                             NFLTeam home, int homeScore, 
-                            NFLTeam away, int awayScore, 
-                            boolean isRedzone, String quarter ){
+                            NFLTeam away, int awayScore,
+                            String teamPossession, String timeRemaining, 
+                            boolean isRedzone, String rawQuarterStr ){
         
-        this.gameId     = gameId;
-        this.gameDate   = parseGameDate( gameEid );
-        this.gameDateTime= createFormattedGameTime( gameDay, gameDate, gameTime );
-        this.gameDayTime= gameDay + COLON + SPACE + gameTime;
-        this.notStarted = notStarted;
-        this.isPlaying  = isPlaying;
-        this.isFinished = isFinished;
-        this.home       = home;
-        this.homeScore  = homeScore;
-        this.away       = away;
-        this.awayScore  = awayScore;
-        this.isRedzone  = isRedzone;
-        this.quarter    = quarter;
+        this.gameId         = gameId;
+        this.gameDate       = parseGameDate( gameEid );
+        this.gameDateTime   = createFormattedGameTime( gameDay, gameDate, gameTime );
+        this.notStarted     = notStarted;
+        this.isPlaying      = isPlaying;
+        this.isFinished     = isFinished;
+        this.home           = home;
+        this.homeScore      = homeScore;
+        this.away           = away;
+        this.awayScore      = awayScore;
+        this.timeRemaining  = timeRemaining;
+        this.teamPossession = teamPossession;
+        this.isRedzone      = isRedzone;
+        this.quarter        = parseQuarter( notStarted, isFinished, rawQuarterStr, gameDay, gameTime, timeRemaining );
         
     }
     
@@ -62,18 +63,8 @@ public final class LiveScore{
     public final String getGameId( ) {
         return gameId;
     }
-        
 
-    public final LocalDate getGameDate( ) {
-        return gameDate;
-    }
-
-  
-    public final String getGameDayTime( ) {
-        return gameDayTime;
-    }
-    
-    
+      
     public final String getGameDateTime( ) {
         return gameDateTime;
     }
@@ -116,6 +107,16 @@ public final class LiveScore{
     
     public final boolean isRedzone( ){
         return isRedzone;
+    }
+    
+    
+    public final String getTimeRemaining( ){
+        return timeRemaining;
+    }
+    
+    
+    public final String getPossessionTeam( ){
+        return teamPossession;
     }
     
     
@@ -168,6 +169,42 @@ public final class LiveScore{
     
     }
     
+    
+    public final static String parseQuarter( boolean notStarted, boolean isFinished, 
+                                            String quarterStr, String gameDay, String gameTime, 
+                                            String timeRemaining ) {
+
+        //SHow the time when the game starts
+        if( notStarted ){
+            return gameDay + SPACE + gameTime;
+        }
+
+        if( isFinished ){
+            return "Final";
+        }
+
+        if( quarterStr.equalsIgnoreCase("H") ){
+            return "Half";
+        }
+
+        if( quarterStr.equalsIgnoreCase("1")){
+            return quarterStr + " QT " + timeRemaining;
+
+        }else if( quarterStr.equalsIgnoreCase("2")){
+            return quarterStr + " QT " + timeRemaining;
+
+        }else if( quarterStr.equalsIgnoreCase("3")){
+            return quarterStr + " QT " + timeRemaining;
+
+        }else if( quarterStr.equalsIgnoreCase("4")){            
+            return quarterStr + " QT " + timeRemaining;
+
+        }else{
+            return "O.T";
+        }
+
+    }
+    
 
     @Override
     public final String toString( ){
@@ -176,15 +213,25 @@ public final class LiveScore{
         
         builder.append( "LiveScore[")
         .append( "GameId=" ).append( gameId )
-        .append( ", Time=" ).append( gameDateTime )
-        .append( ", NotStarted=" ).append( notStarted )
-        .append( ", isPlaying=" ).append( isPlaying )
-        .append( ", isFinished=" ).append( isFinished )
-        .append( ", isRedzone=" ).append( isRedzone )
-        .append( ", quarter=" ).append( quarter )
         .append( ", Home=" ).append( home.getUpperCaseName( ) ).append( ", HomeScore=" ).append( homeScore )
-        .append( ", Away=" ).append( away.getUpperCaseName( ) ).append( ", AwayScore=" ).append( awayScore )
-        .append( "]" );
+        .append( ", Away=" ).append( away.getUpperCaseName( ) ).append( ", AwayScore=" ).append( awayScore );
+        
+        if(notStarted ) {
+            builder.append( ", StartTime=" ).append( gameDateTime );
+        }
+        
+        if( isPlaying ) {
+            builder.append( ", Possession=" ).append( teamPossession )
+            .append( ", quarter=" ).append( quarter )
+            .append( ", TimeLeft=" ).append( timeRemaining )
+            .append( ", isRedzone=" ).append( isRedzone );
+        }
+        
+        if( isFinished ) {
+            builder.append( ", quarter=" ).append( quarter );
+        }
+        
+        builder.append( "]" );
         
         return builder.toString( );
     }
