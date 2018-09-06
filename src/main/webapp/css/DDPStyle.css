@@ -128,15 +128,11 @@ input:checked + label {
 		color: #000000;		/*Color of the text in the td */
 		font-size: 18px;
 		font-weight: bold;
+		vertical-align: middle;
 		/*border: 2px solid #9FAFB4;	 Border around the cell */
 				
 	}
 		
-	/*
-	.touchdown_background{
-		background-image: url("../images/result/touchdown.gif");
-	}
-	*/
 	
 	.datagrid table .alt td { 
 		padding: 0px 0px 2px 0px; /* Top, Right, Bottom, Left */
@@ -219,12 +215,14 @@ input:checked + label {
   		}
 	}
 	
-	.dot {
+	.dotBlink {
   		height: 8px;
   		width: 8px;
   		background-color: #27AC44;
   		border-radius: 50%;
   		display: inline-block;
+  		vertical-align: middle;
+  		animation: blinker 1s linear infinite;
 	}
 
 

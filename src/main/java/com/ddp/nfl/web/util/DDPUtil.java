@@ -5,6 +5,7 @@ import java.util.concurrent.*;
 
 import com.google.gson.*;
 import com.ddp.nfl.web.core.*;
+import com.ddp.nfl.web.parser.*;
 
 
 public final class DDPUtil{
@@ -42,7 +43,7 @@ public final class DDPUtil{
         
     public final static String GRR_IMG_PREFIX       = "images/GRR/GRR";
     public final static String GRR_IMG_POSTFIX      = ".gif";
-    public final static String POSSESSION_BLINK_DIV = "<div class=\"Blink\"><span class=\"dot\"></span></div>";
+    public final static String BLINK_GREEN_DOT      = "<span class=\"dotBlink\"/>";
         
     public final static String GAME_SERVLET_LINK    = "/game";
     public final static String DDP_GAME_PAGE_LINK   = "/WEB-INF/nfl.jsp";
@@ -60,8 +61,8 @@ public final class DDPUtil{
     
     //TODO: Replace with real link
     public final static String createLiveScoreUrl( DDPMeta meta ) {
-        return "http://localhost:8080/web/testdata/Live_Score_Reg_2018_1.xml";
-        //return  LiveScoreParser.createLiveScoreUrl( meta.getSeasonType( ), meta.getYear( ), meta.getWeek( ) );
+        //return "http://localhost:8080/web/testdata/Live_Score_Reg_2018_1.xml";
+        return LiveScoreParser.createLiveScoreUrl( meta.getSeasonType( ), meta.getYear( ), meta.getWeek( ) );
     }
         
     

@@ -1,8 +1,6 @@
 
 
 What does "p" and "k" mean in the data?
-//Show possession by blinking green (small icon)
-//Deploy!
 
 
 Rebooting:

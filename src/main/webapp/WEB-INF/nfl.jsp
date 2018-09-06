@@ -108,10 +108,9 @@
     										<img src="${gameResult.getPlayer( ).getIcon( )}" title=${gameResult.getPlayer( ).getName( )} height="52" width="52">
     									</td>
     									    				
-    									
-    									<td valign="middle" align="left" width="10%">
-    										${gameResult.getMy1TeamName( )}
-    									</td>
+   										<td valign="middle" align="left" width="10%">
+   											${gameResult.getMy1TeamName( )}
+   										</td>
     									
     									    									
     									<td valign="middle" align="left" width="5%">

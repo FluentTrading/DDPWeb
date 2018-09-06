@@ -44,17 +44,17 @@ public final class GameResult{
     
     
     public final String getMy1TeamName( ){
-        return getDisplayTeamName( getMy1Team( ), getMatch1Score( ) );
+        return getHomeTeamDisplayName( getMy1Team( ), getMatch1Score( ) );
     }
     
         
     public final String getMy2TeamName( ){
-        return getDisplayTeamName( getMy2Team( ), getMatch2Score( ) );
+        return getHomeTeamDisplayName( getMy2Team( ), getMatch2Score( ) );
     }
     
     
     public final String getMy3TeamName( ){
-        return getDisplayTeamName( getMy3Team( ), getMatch3Score( ) );
+        return getHomeTeamDisplayName( getMy3Team( ), getMatch3Score( ) );
     }
     
     
@@ -90,15 +90,16 @@ public final class GameResult{
         
     //AWAY
     public final String getOpp1TeamName( ){
-        return getDisplayTeamName( getOpp1Team( ), getMatch1Score( ) );
+        return getOpp1Team( ).getCamelCaseName( );
     }
     
     public final String getOpp2TeamName( ){
-        return getDisplayTeamName( getOpp2Team( ), getMatch2Score( ) );
+        return getOpp2Team( ).getCamelCaseName( );
     }
     
+    
     public final String getOpp3TeamName( ){
-        return getDisplayTeamName( getOpp3Team( ), getMatch3Score( ) );
+        return ( getOpp3Team( ) == null ) ? EMPTY : getOpp3Team( ).getCamelCaseName( );         
     }
     
     
@@ -165,18 +166,17 @@ public final class GameResult{
     //UI shouldn't directly invoke these methods.
     //-----------------------------------------------------------
     
-    protected final String getDisplayTeamName( NFLTeam team, LiveScore score ){
+    //If home team has possession, adds a blinking green dot next to the name
+    //
+    protected final String getHomeTeamDisplayName( NFLTeam team, LiveScore score ){
         
         if( team == null ) return EMPTY;
         
         String teamName         = team.getCamelCaseName( );
         boolean hasPossession   = teamHasPossession( team, score );
+        String displayName      = ( hasPossession ) ? (teamName + SPACE + BLINK_GREEN_DOT) : teamName;
         
-        if( hasPossession ) {
-            return teamName + HTML_SPACE + POSSESSION_BLINK_DIV;
-        }else {
-            return teamName;
-        }
+        return displayName;
     }
     
     
