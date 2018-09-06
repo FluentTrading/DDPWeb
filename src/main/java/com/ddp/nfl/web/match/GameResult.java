@@ -43,15 +43,15 @@ public final class GameResult{
     
    
     public final String getMy1TeamName( ){
-        return getMy1Team( ).getUpperCaseName( );
+        return getMy1Team( ).getCamelCaseName( );
     }
         
     public final String getMy2TeamName( ){
-        return getMy2Team( ).getUpperCaseName( );
+        return getMy2Team( ).getCamelCaseName( );
     }
     
     public final String getMy3TeamName( ){
-        return (getMy3Team( ) != null) ? getMy3Team( ).getUpperCaseName( ) : EMPTY;
+        return (getMy3Team( ) != null) ? getMy3Team( ).getCamelCaseName( ) : EMPTY;
     }
     
     
@@ -87,15 +87,15 @@ public final class GameResult{
         
     //AWAY
     public final String getOpp1TeamName( ){
-        return getOpp1Team( ).getUpperCaseName( );
+        return getOpp1Team( ).getCamelCaseName( );
     }
     
     public final String getOpp2TeamName( ){
-        return getOpp2Team( ).getUpperCaseName( );
+        return getOpp2Team( ).getCamelCaseName( );
     }
     
     public final String getOpp3TeamName( ){
-        return (getOpp3Team( ) != null) ? getOpp3Team( ).getUpperCaseName( ) : EMPTY;
+        return (getOpp3Team( ) != null) ? getOpp3Team( ).getCamelCaseName( ) : EMPTY;
     }
     
     

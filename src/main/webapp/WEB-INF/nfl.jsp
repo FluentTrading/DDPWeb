@@ -247,28 +247,38 @@
 					
     				<div class="schedulegrid">
 						<table>
+							
 							<c:forEach var="entry" items="${applicationScope[DDPUtil.SCHEDULE_KEY].getSchedules( ).values()}">
+							
 									<tr>
-  										<td align="right">
+										<td align="center" width="15%"></td>
+  										
+  										<td align="left">
     										${entry.getGameDateTime()}
 	   									</td>
 	   									
     									<td align="right">
-    										${entry.getAwayTeam( ).getUpperCaseName( )}
+    										${entry.getAwayTeam( ).getCamelCaseName( )}
     									</td>
-    						    									
+    									
+    									<td align="right">
+    										<img src=${entry.getAwayTeam().getRoundTeamIcon( )} title="${entry.getAwayTeam( ).getCamelCaseName( )}" height="42" width="42"/>
+    									</td>
+    									
+    									<td align="center" width="10%">
+    										<h5>at</h5>
+    									</td>
+    									
     									<td align="center">
-    										<img src=${entry.getAwayTeam().getRoundTeamIcon( )} title="${entry.getAwayTeam( ).getUpperCaseName( )}" height="42" width="42"/>
+    										<img src=${entry.getHomeTeam().getRoundTeamIcon( )} title="${entry.getHomeTeam( ).getCamelCaseName( )}" height="42" width="42"/>    									
     									</td>
-    									<td align="center">
-    										<h5>AT</h5>
-    									</td>
-    									<td align="center">
-    										<img src=${entry.getHomeTeam().getRoundTeamIcon( )} title="${entry.getHomeTeam( ).getUpperCaseName( )}" height="42" width="42"/>    									
-    									</td>
+    									
     									<td align="left">
-    										${entry.getHomeTeam( ).getUpperCaseName( )}    										
+    										${entry.getHomeTeam( ).getCamelCaseName( )}    										
     									</td>
+    									
+    									<td align="center" width="15%"></td>
+    									
     								</tr>
   								</c:forEach>																
 							

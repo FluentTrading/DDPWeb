@@ -7,7 +7,6 @@ Can we use full screen for the app?
 Review all the colors
 Remove all TODOs
 Check game start date, week number and links to get scores.
-Check in source code to github
 
 Rebooting:
 ====================================================
@@ -21,6 +20,10 @@ Wednesday Night:
 
 Enhancements:
 ====================================================
+UI:
+1) Update Seahawks, Ramns, Colts logos?
+
+
 1. Chakka flag for the looser
 2. Team record should be available in analytics
 3. If multiple users are logged on to the servlet, how does the servlet know to display the game that the user click on?
@@ -42,11 +45,8 @@ Schedule:
 1)	Show AM/PM in time
 2)	Show Stadium Location if possible
 3)  Group schedule by date (like CBS sports schedule) 
-4)  ALign the game Time properly
+4)  We have all the schedules downloaded with stadium info, should we store them in DB?
 
-
-UI:
-1) Update Seahawks, Ramns, Colts logos?
 
 Links:
 http://www.nfl.com/ajax/scorestrip?season=2017&seasonType=REG&week=2

@@ -22,8 +22,8 @@ public final class GameResultManager{
     }
     
     
-    public final static GameResultManager createValid( DDPMeta meta, List<GameResult> infoList ){
-        return new GameResultManager( meta, ResultCode.SUCCESS, EMPTY, infoList );
+    public final static GameResultManager createValid( DDPMeta meta, List<GameResult> resultList ){
+        return new GameResultManager( meta, ResultCode.SUCCESS, EMPTY, resultList );
     }
 
     public final static GameResultManager createInvalid( DDPMeta meta, ResultCode code, String message ){
@@ -68,7 +68,7 @@ public final class GameResultManager{
     public final String toString( ) {
         
         StringBuilder builder = new StringBuilder( );
-        builder.append( "DDPGameResult [code=" );
+        builder.append( "GameResultManager [code=" );
         builder.append( code );
         builder.append( ", message=" );
         builder.append( message );

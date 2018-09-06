@@ -21,8 +21,7 @@ public final class LiveScoreParser{
     private final static String WEEK_PART   = "&week=";
     private final static Logger LOGGER      = LoggerFactory.getLogger( "LiveScoreParser" );
     
-   
-    
+       
     public final static Map<NFLTeam, LiveScore> parseLiveScore( String scheduleUrl, Map<String, NFLTeam> teamMap ){
     
         LOGGER.info("Parsing live score from {}", scheduleUrl);

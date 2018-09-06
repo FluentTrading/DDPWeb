@@ -241,6 +241,7 @@ public final class PickManager{
         return nickMap;
     }
     
+
     //If week 6 is current, show option for week 6 as well
     protected final static int[] getUnpickedWeeks( int currWeek ){
         int pickCount   = (NFL_TOTAL_PLAY_WEEK + ONE - currWeek);

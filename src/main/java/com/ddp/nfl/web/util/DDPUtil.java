@@ -1,5 +1,7 @@
 package com.ddp.nfl.web.util;
 
+import static com.ddp.nfl.web.util.DDPUtil.*;
+
 import java.time.*;
 import java.time.format.*;
 import java.util.concurrent.*;
@@ -15,6 +17,7 @@ public final class DDPUtil{
     public final static int ONE                     = 1;
     public final static int TWO                     = 2;
     public final static int THREE                   = 3;
+    public final static int TEN                     = 10;
     public final static int NEGATIVE_ONE            = -1;
     
     public final static String DOT                  = ".";
@@ -22,6 +25,7 @@ public final class DDPUtil{
     public final static String COMMA                = ",";
     public final static String SPACE                = " ";
     public final static String COLON                = ":";    
+    public final static String PM_TIME              = "PM";
     public final static String L_BRACKET            = "[";
     public final static String R_BRACKET            = "]";
     public final static String NEWLINE              = "<br />";
@@ -58,8 +62,8 @@ public final class DDPUtil{
     
     //TODO: Replace with real link
     public final static String createLiveScoreUrl( DDPMeta meta ) {
-        //return "http://localhost:8080/web/testdata/Live_Score_Reg_2018_1.xml";
-        return  LiveScoreParser.createLiveScoreUrl( meta.getSeasonType( ), meta.getYear( ), meta.getWeek( ) );
+        return "http://localhost:8080/web/testdata/Live_Score_Reg_2018_1.xml";
+        //return  LiveScoreParser.createLiveScoreUrl( meta.getSeasonType( ), meta.getYear( ), meta.getWeek( ) );
     }
         
     
@@ -92,7 +96,7 @@ public final class DDPUtil{
     
     
     public final static String generateGRRImage( ){
-        int randomNum = ThreadLocalRandom.current().nextInt(1, 7 + 1);
+        int randomNum = ThreadLocalRandom.current().nextInt(1, 5 + 1);
         return GRR_IMG_PREFIX + randomNum + GRR_IMG_POSTFIX;
     }
 
@@ -129,9 +133,11 @@ public final class DDPUtil{
         return element.getAsBoolean( );
     }
     
-   
+    
     public final static void main( String[] args ) {
-        System.out.println(  LocalTime.parse( "08:20", _HH_MM ) );
+        for( int i =0; i<100; i++ ) {
+        System.out.println(  generateGRRImage( ) );
+        }
     }
     
 }

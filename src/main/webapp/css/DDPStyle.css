@@ -146,12 +146,13 @@ input:checked + label {
 		text-align: left; 
 		width: 100%;
 	}
-			
-			
+
+
+				
 	.datagrid table td { 
-		padding: 1px 2px 0px 15px; /* Top, Right, Bottom, Left */
+		padding: 1px 0px 0px 15px; /* Top, Right, Bottom, Left */
 		color: #000000;		/*Color of the text in the td */
-		font-size: 15px;
+		font-size: 18px;
 		font-weight: bold;
 		/*border: 2px solid #9FAFB4;	 Border around the cell */
 		
@@ -184,6 +185,7 @@ input:checked + label {
     	font-weight: bold;
     	padding: 4px 6px;
 	}
+	
 	
 	.datagrid a {
     	background-color: #ffffff;
@@ -233,7 +235,7 @@ input:checked + label {
 		padding: 0px 0px; /*Cell vertical space */
 		background:#ffffff;
 		color: #000000;  /*Color of the text in the td */
-		font-size: 14px;
+		font-size: 18px;
 		font-weight: bold;		  
 	}
 	
@@ -337,8 +339,8 @@ input:checked + label {
 	} 
 
 	.winButton {
-    	background-color: #009B72;
-    	border-bottom: 2px solid #009B72;
+    	background-color: #27AC44;;
+    	border-bottom: 2px solid #27AC44;;
     	outline:none;
     	cursor: none; /* pointer */
     	padding: 4px 0px 4px 0px; /* Top, Right, Bottom, Left */
@@ -346,16 +348,17 @@ input:checked + label {
 	}
 	
 	.winButton h4 { 
-		background:#009B72;
+		background:#27AC44;
 		color:#000000;
 		font-size: 12px;
 		font-weight: bold;
+		vertical-align:middle;
 		font-family: 'Open Sans', sans-serif;
 	} 
 			
 	.lossButton {
-    	background-color: #F26430;
-    	border-bottom: 2px solid #F26430;
+    	background-color: #f46e5f;
+    	border-bottom: 2px solid #f46e5f;
     	outline:none;
     	cursor: none;
     	padding: 4px 0px 4px 0px; /* Top, Right, Bottom, Left */
@@ -364,29 +367,32 @@ input:checked + label {
 	}
 	
 	.lossButton h4 { 
-		background:#F26430;
+		background:#f46e5f;
 		color:#000000;
 		font-size: 12px;
   		font-weight: bold;
+  		vertical-align:middle;
   		font-family: 'Open Sans', sans-serif;
 	}
 	
 	
 	.tiedButton {
-    	background-color:#FFE4B5;
+    	background-color:#efd19e;
+    	border-bottom: 2px solid #efd19e;
     	border: none;
     	outline:none;
-    	cursor: pointer;
+    	cursor: none;
     	padding: 4px 0px 4px 0px; /* Top, Right, Bottom, Left */
     	font-size: 14px;
     	
 	}
 	
 	.tiedButton h4 { 
-		background:#FFE4B5;
+		background:#efd19e;
 		color:#000000;
 		font-size: 12px;
   		font-weight: bold;
+  		vertical-align:middle;
   		font-family: 'Open Sans', sans-serif;
 	}  
 	

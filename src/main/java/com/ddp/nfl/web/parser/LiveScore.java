@@ -122,17 +122,31 @@ public final class LiveScore{
     public final String getQuarter( ){
         return quarter;
     }
-    
+       
   
-        
     protected final String createFormattedGameTime( String gameDay, LocalDate gameDate, String gameTime ){
-        StringBuilder builder= new StringBuilder( 32 );
-                
-        builder.append( gameDay.toUpperCase( ) ).append( ", " );
-        builder.append( gameDate.getMonthValue( ) ).append( "/" );
-        builder.append( gameDate.getDayOfMonth( ) ).append( " " );
-        builder.append( gameTime );
         
+        StringBuilder builder   = new StringBuilder( 32 );
+        
+        int monthValue       = gameDate.getMonthValue( );
+        int dateValue        = gameDate.getDayOfMonth( );
+        
+        builder.append( gameDay ).append( ", " );
+        
+        if( monthValue < TEN ) {
+            builder.append( ZERO ).append( monthValue ).append( "/" );
+        }else {
+            builder.append( monthValue ).append( "/" );
+        }
+        
+        if( dateValue < TEN ) {
+            builder.append( ZERO ).append( dateValue ).append( SPACE );
+        }else {
+            builder.append( dateValue ).append( SPACE);
+        }
+        
+        builder.append( gameTime );    
+                 
         return builder.toString( );
     }
     
@@ -153,6 +167,7 @@ public final class LiveScore{
         return gameDate;
     
     }
+    
 
     @Override
     public final String toString( ){
