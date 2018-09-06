@@ -1,69 +1,64 @@
 package com.ddp.nfl.web.schedule;
 
-import org.slf4j.*;
-
 import java.util.*;
 
 import com.ddp.nfl.web.core.*;
+import com.ddp.nfl.web.database.*;
+import com.ddp.nfl.web.parser.*;
 
 
 public final class ScheduleManager{
 
     private final boolean isValid;
-    private final Map<String, NFLSchedule> schMap;
+    private final Map<String, LiveScore> gameIdMap;
     
-    private final static Logger LOGGER  = LoggerFactory.getLogger( "ScheduleManager" );
-    
-    
-    public ScheduleManager( Map<String, NFLSchedule> schMap ){
-        this.schMap  = schMap;
-        this.isValid = ( schMap != null && !schMap.isEmpty( ) );
+    public ScheduleManager( DDPMeta ddpMeta, DBService service ){
+        this.gameIdMap  = parse( ddpMeta, service );
+        this.isValid    = ( !gameIdMap.isEmpty( ) );
     }
     
-    
+
     public final boolean isValid( ){
         return isValid;
     }
    
     
-    public final NFLSchedule get( String gameId ) {
-        return schMap.get( gameId );
+    public final LiveScore get( String gameId ) {
+        return gameIdMap.get( gameId );
     }
 
     
-    public final Map<String, NFLSchedule> getSchedules( ) {
-        return schMap;
+    public final int getScheduleCount( ) {
+        return gameIdMap.size( );
     }
     
     
-    public final Set<NFLTeam> getPlayingTeams( int pickForWeek, DDPMeta meta, Map<String, NFLTeam> teamMap ){
+    public final Map<String, LiveScore> getSchedules( ) {
+        return gameIdMap;
+    }
+    
+
+    //Used to display data on the schedules page
+   //We use this map to display schedule where earliest game (smallest gid) is at first
+    protected final Map<String, LiveScore> parse( DDPMeta meta, DBService service ) {
         
-        Set<NFLTeam> playingTeams  = new HashSet<>( );
-        try {
+        Map<String, LiveScore> gameIdMap= new TreeMap<>( );
+        String liveScoreUrl             = LiveScoreParser.createLiveScoreUrl( meta.getSeasonType( ), meta.getYear( ), meta.getWeek( ) );
+        Map<NFLTeam, LiveScore> scoreMap= LiveScoreParser.parseLiveScore( liveScoreUrl, service.getAllTeams( ) );
         
-            String scheduleUrl         = ScheduleParser.prepareUrl( meta.getSeasonType( ), meta.getYear( ), pickForWeek );
-            Collection<NFLSchedule> schs= ScheduleParser.parseSchedule( scheduleUrl, teamMap ).values( );
-            for( NFLSchedule schedule : schs ) {
-                playingTeams.add( schedule.getHomeTeam( ) );
-                playingTeams.add( schedule.getAwayTeam( ) );
-            }
-            
-        }catch( Exception e ) {
-            LOGGER.warn("FAILED to get playing teams for week [{}]", pickForWeek, e );
+        for( LiveScore score : scoreMap.values( ) ) {
+            gameIdMap.put( score.getGameId( ), score );
         }
-        
-        return playingTeams;
-        
-    }
     
+        return gameIdMap;
+    }
+
 
     @Override
     public final String toString( ) {
         StringBuilder builder = new StringBuilder( 64 );
-        builder.append( "ScheduleManager [isValid=" ).append( isValid ).append( ", schMap=" ).append( schMap ).append( "]" );
+        builder.append( "ScheduleManager [isValid=" ).append( isValid ).append( ", gameIdMap=" ).append( gameIdMap ).append( "]" );
         return builder.toString( );
     }
-
-
 
 }

@@ -24,9 +24,8 @@ public class PickServlet extends HttpServlet {
     private final static Logger LOGGER          = LoggerFactory.getLogger( "PickServlet" );
 
     
-    public final void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println( "doGet called" );
-    }
+    public final void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {}        
+    
     
     @Override
     public final void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -59,9 +58,10 @@ public class PickServlet extends HttpServlet {
             return;
         }
         
-        handleSuccess( pickResult.getMessage( ), request, response );
+        handleSuccess( pickResult, request, response );
                 
     }
+    
 
     protected final PickResult handleAction( ActionType type, int pickForWeek, PickManager pickManager, HttpServletRequest request ) {
         
@@ -92,15 +92,23 @@ public class PickServlet extends HttpServlet {
     
 
     protected final PickResult loadPicks( String headerMsg, int pickForWeek, PickManager pickManager ){
-        Collection<DDPPick> picks   = pickManager.getPickedTeamForWeek( pickForWeek );
-        boolean picksNotMade        = ( picks.isEmpty( ) );
-        if( picksNotMade ){
-            return PickResult.createInvalid( "Picks have not been made for week " + pickForWeek );
+        
+        PickResult pickResult       = null;
+        try {
+            
+            Collection<DDPPick> picks   = pickManager.getPickedTeamForWeek( pickForWeek );
+            boolean picksNotMade        = ( picks.isEmpty( ) );
+            if( picksNotMade ){
+                return PickResult.createInvalid( "Picks have not been made for week " + pickForWeek );
+            }
+        
+            pickResult              =  PickResult.createValid( headerMsg, picks );
+        
+        }catch( Exception e) {
+            LOGGER.warn( "FAILED to load picks", e );
         }
         
-        String successMessage       = PickManager.toMessageString( headerMsg, picks );
-        return PickResult.createValid( successMessage );
-        
+        return pickResult;
     }
     
     
@@ -152,15 +160,15 @@ public class PickServlet extends HttpServlet {
     }
         
     
-    protected final void handleSuccess( String message, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        request.setAttribute( PICK_RESULT_KEY, message );
+    protected final void handleSuccess( PickResult result, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        request.setAttribute( PICK_RESULT_KEY, result );
         request.getRequestDispatcher(PICK_TAB_LINK).forward(request, response);
     }
     
     
-    protected final void handleError( String errorReason, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        LOGGER.warn("ERROR! {} ", errorReason );
-        request.setAttribute( PICK_RESULT_KEY, errorReason );
+    protected final void handleError( String errorMessage, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        LOGGER.warn("ERROR! {} ", errorMessage );
+        request.setAttribute( PICK_RESULT_KEY, PickResult.createInvalid( errorMessage ));
         request.getRequestDispatcher(PICK_TAB_LINK).forward(request, response);        
     }
 

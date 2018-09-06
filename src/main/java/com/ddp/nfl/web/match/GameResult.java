@@ -11,9 +11,9 @@ public final class GameResult{
     private final boolean has6Teams;
     private final DDPPick pick;
     private final NFLTeam[] myTeams;
-    private final NFLMatchInfo[] myScores;
+    private final MatchScore[] myScores;
         
-    public GameResult( boolean hasAll6Teams, DDPPick pick, NFLMatchInfo[ ] myScores ){
+    public GameResult( boolean hasAll6Teams, DDPPick pick, MatchScore[ ] myScores ){
         this.has6Teams      = hasAll6Teams;
         this.pick           = pick;
         this.myTeams        = pick.getTeams( );
@@ -51,7 +51,7 @@ public final class GameResult{
     
     public final int getMy1TeamScore( ){
         NFLTeam myTeam      = getMy1Team( );
-        NFLMatchInfo info   = getMatch1Info( );
+        MatchScore info   = getMatch1Info( );
         int myTeamScore     = getScore( true, myTeam, info);
         
         return myTeamScore;
@@ -59,7 +59,7 @@ public final class GameResult{
     
     public final int getMy2TeamScore( ){
         NFLTeam myTeam      = getMy2Team( );
-        NFLMatchInfo info   = getMatch2Info( );
+        MatchScore info   = getMatch2Info( );
         int myTeamScore     = getScore( true, myTeam, info);
         
         return myTeamScore;
@@ -67,7 +67,7 @@ public final class GameResult{
     
     public final int getMy3TeamScore( ){
         NFLTeam myTeam      = getMy3Team( );
-        NFLMatchInfo info   = getMatch3Info( );
+        MatchScore info   = getMatch3Info( );
         int myTeamScore     = getScore( true, myTeam, info);
         
         return myTeamScore;
@@ -94,21 +94,21 @@ public final class GameResult{
     
     
     public final int getOpp1TeamScore( ){
-        NFLMatchInfo info   = getMatch1Info( );
+        MatchScore info   = getMatch1Info( );
         int myTeamScore     = getScore( false, getMy1Team( ), info);
         
         return myTeamScore;
     }
     
     public final int getOpp2TeamScore( ){
-        NFLMatchInfo info   = getMatch2Info( );
+        MatchScore info   = getMatch2Info( );
         int myTeamScore     = getScore( false, getMy2Team( ), info);
         
         return myTeamScore;
     }
     
     public final int getOpp3TeamScore( ){
-        NFLMatchInfo info   = getMatch3Info( );
+        MatchScore info   = getMatch3Info( );
         int myTeamScore     = getScore( false, getMy3Team( ), info);
         
         return myTeamScore;
@@ -165,7 +165,7 @@ public final class GameResult{
         if( home == null || away == null ) return MISSING_TEAM_LOGO;
         if( homeScore == awayScore ) return MISSING_TEAM_LOGO;
          
-        String winnerIcon= (homeScore > awayScore) ? home.getIcon( ) : MISSING_TEAM_LOGO;
+        String winnerIcon= (homeScore > awayScore) ? home.getRoundTeamIcon( ) : MISSING_TEAM_LOGO;
         return winnerIcon;
     }
     
@@ -197,10 +197,10 @@ public final class GameResult{
     }
     */
     
-    protected final int calcTotalScore( boolean home, NFLMatchInfo[] scores ){
+    protected final int calcTotalScore( boolean home, MatchScore[] scores ){
         int totalScore = 0;
         
-        for( NFLMatchInfo score : scores ){
+        for( MatchScore score : scores ){
             if( score != null ) {
                 totalScore += (home) ? score.getHomeScore( ) : score.getAwayScore( );
             }
@@ -226,29 +226,29 @@ public final class GameResult{
     }
     
     protected final NFLTeam getOpp1Team( ){
-        NFLMatchInfo info   = getMatch1Info( );
-        NFLTeam oppTeam     = getOpponentTeam( getMy1Team( ), info );
+        MatchScore info   = getMatch1Info( );
+        NFLTeam oppTeam   = getOpponentTeam( getMy1Team( ), info );
         
         return oppTeam;
     }
     
     protected final NFLTeam getOpp2Team( ){
-        NFLMatchInfo info   = getMatch2Info( );
-        NFLTeam oppTeam     = getOpponentTeam( getMy2Team( ), info );
+        MatchScore info   = getMatch2Info( );
+        NFLTeam oppTeam   = getOpponentTeam( getMy2Team( ), info );
         
         return oppTeam;
     }
     
     protected final NFLTeam getOpp3Team( ){
-        NFLMatchInfo info   = getMatch3Info( );
-        NFLTeam oppTeam     = getOpponentTeam( getMy3Team( ), info );
+        MatchScore info   = getMatch3Info( );
+        NFLTeam oppTeam   = getOpponentTeam( getMy3Team( ), info );
         
         return oppTeam;         
     }
 
     
     
-    protected final int getScore( boolean forHome, NFLTeam myTeam, NFLMatchInfo info ){
+    protected final int getScore( boolean forHome, NFLTeam myTeam, MatchScore info ){
         
         if( myTeam == null || info == null ) {
             return -1;
@@ -264,7 +264,7 @@ public final class GameResult{
     
     
     
-    protected final NFLTeam getOpponentTeam( NFLTeam myTeam, NFLMatchInfo info ){
+    protected final NFLTeam getOpponentTeam( NFLTeam myTeam, MatchScore info ){
 
         if( myTeam == null || info == null ) {
             return null;
@@ -274,17 +274,17 @@ public final class GameResult{
     }
     
     
-    public final NFLMatchInfo getMatch1Info( ){
+    public final MatchScore getMatch1Info( ){
         return myScores[0];        
     }
     
     
-    public final NFLMatchInfo getMatch2Info( ){
+    public final MatchScore getMatch2Info( ){
         return myScores[1];        
     }
     
     
-    public final NFLMatchInfo getMatch3Info( ){
+    public final MatchScore getMatch3Info( ){
         if( !has6Teams ) return null;
         return myScores[2];        
     }

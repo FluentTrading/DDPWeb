@@ -37,11 +37,11 @@ public final class DDPPick{
         }
         
         StringBuilder builder = new StringBuilder( );
-        builder.append( teams[0].getName( ) ).append( SPACE );
-        builder.append( teams[1].getName( ) ).append( SPACE );
+        builder.append( teams[0].getLowerCaseName( ) ).append( SPACE );
+        builder.append( teams[1].getLowerCaseName( ) ).append( SPACE );
         
         if( teams[2] != null ) {
-            builder.append( teams[2].getName( ) );
+            builder.append( teams[2].getLowerCaseName( ) );
         }
         
         return builder.toString( );
@@ -59,7 +59,7 @@ public final class DDPPick{
         builder.append( ", Teams: ");
         
         for( int i=0; i< teams.length; i++ ) {
-            builder.append( teams[i].getName( ) ).append( " " );
+            builder.append( teams[i].getLowerCaseName( ) ).append( " " );
         }
         
         builder.append( "]" );        

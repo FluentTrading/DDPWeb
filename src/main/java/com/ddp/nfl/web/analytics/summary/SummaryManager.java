@@ -3,6 +3,7 @@ package com.ddp.nfl.web.analytics.summary;
 import java.util.*;
 import java.util.Map.*;
 
+import static com.ddp.nfl.web.util.DDPUtil.*;
 
 public final class SummaryManager{
     
@@ -12,7 +13,6 @@ public final class SummaryManager{
     public SummaryManager( Map<Integer, ScoreSummary> map ){
         this.map    = map;
     }
-
     
     public final ScoreSummary get( int key ){
         return map.get( key );
@@ -31,7 +31,7 @@ public final class SummaryManager{
             builder.append( entry.getKey( ) );
             builder.append( " => ");
             builder.append( entry.getValue( ) );
-            builder.append( "\n");
+            builder.append( PRINT_NEWLINE );
         }
    
         return builder.toString( );

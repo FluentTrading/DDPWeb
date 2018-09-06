@@ -2,10 +2,13 @@ package com.ddp.nfl.web.analytics.home;
 
 import java.util.*;
 
+import static com.ddp.nfl.web.util.DDPUtil.*;
+
+
 public class TeamInfo{
 
     private final boolean isHome;
-    private final String abbr;
+    private final String teamAbbr;
     private final int to;
     private final StatsManager stats;
     private final String players;
@@ -16,7 +19,7 @@ public class TeamInfo{
     
     public TeamInfo( boolean isHome, String abbr, int to, StatsManager stats, Map<String, Integer> scoreMap, String players ){
         this.isHome = isHome;
-        this.abbr   = abbr;
+        this.teamAbbr  = abbr;
         this.to     = to;
         this.stats  = stats;
         this.players= players;
@@ -29,8 +32,8 @@ public class TeamInfo{
     }
     
 
-    public final String getAbbr( ) {
-        return abbr;
+    public final String getTeamNameAbbr( ) {
+        return teamAbbr;
     }
 
     public final int getTo( ) {
@@ -75,6 +78,21 @@ public class TeamInfo{
     }
     
     
+    public final void toDisplayString( StringBuilder builder ){
+        builder.append( teamAbbr ).append( SPACE )
+        .append( getTotalScore( ) ).append( SPACE )
+        .append( "[" )
+        .append( get1QuarterScore( )).append( SPACE )
+        .append( get2QuarterScore( )).append( SPACE )
+        .append( get3QuarterScore( )).append( SPACE )
+        .append( get4QuarterScore( )).append( SPACE )
+        .append( getOvertimeScore( ))
+        .append( "]" )
+        .append( NEWLINE );
+    }
+    
+        
+    
     @Override
     public final String toString( ){
         
@@ -85,7 +103,7 @@ public class TeamInfo{
         }else {
             builder.append( "Away=" );
         }
-        builder.append( abbr );
+        builder.append( teamAbbr );
         
         builder.append( ", To=" ).append( to );
         builder.append( ", Score:" ). append( scoreMap );

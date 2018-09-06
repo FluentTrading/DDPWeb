@@ -1,0 +1,88 @@
+body {
+  			font: 20px/1 'Open Sans', sans-serif;
+  			font-family: 'Open Sans', sans-serif;
+  			color: #555;
+  			background: #9FAFB4; /* Color of the rest of the page */ 
+		}
+		
+		.pickGrid {
+			font: 18px/1 'Open Sans', sans-serif;
+			overflow: hidden;
+			border: 5px solid #9FAFB4;	
+			white-space: nowrap;			
+		}
+		
+		.pickGrid table { 
+			border-collapse: collapse; 
+		} 
+		
+		.pickGrid table td { 
+			background:#ffffff;
+			color: #000000;  /*Color of the text in the td */
+			font-size: 16px;
+			font-weight: bold;
+			padding: 15px 10px 0px 10px; /* Top, Right, Bottom, Left */  
+		}
+	
+		.loadResult table { 
+			border-collapse: collapse; 
+		} 
+		
+		.loadResult table td { 
+			background:#9FAFB4;
+			color: #ffffff;  /*Color of the text in the td */
+			font-size: 14px;
+			font-weight: bold;
+			padding: 5px 10px 0px 10px; /* Top, Right, Bottom, Left */  
+		}
+		
+		.pickGrid-content{
+			width: 150px;
+			height: 30px;
+			background: #2C353C;
+   			color: #ffffff;
+   			font-size: 13px;
+   			margin-bottom: 10px;
+			border: none;
+			outline: none;
+			padding: 0 10px;
+   			display: inline-block;
+   			font-weight: bold;	
+		}
+	
+		.pickGridPass{
+			width: 150px;
+			height: 30px;
+			padding: 0 0 10px;
+			margin-bottom: 10px;
+   			background: #4CAF50;
+   			color: #000000;
+   			font-size: 15px;
+   			border: 2px solid #4CAF50;
+			outline: none;
+			font-weight: bold;	
+		}
+	
+		.pickGridBtn{
+			width: 150px;
+			height: 30px;
+			padding: 0 0 10px;
+			margin-bottom: 10px;
+			background: #4CAF50;
+   			color: #2C353C;
+   			font-size: 15px;	
+			font-weight: bold;
+			border: none;
+   			cursor: pointer;
+   			opacity: 0.9;
+   		}
+		
+		.pickGrid input {
+			width: 100px;
+			height: 5px;
+			color: white;
+			padding: 14px 20px;
+    		margin: 8px 0;
+    		border: none; 
+		}
+	

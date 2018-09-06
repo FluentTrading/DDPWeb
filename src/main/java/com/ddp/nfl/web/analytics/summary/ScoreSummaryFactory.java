@@ -26,10 +26,10 @@ public final class ScoreSummaryFactory{
     
     protected final static Map<Integer,ScoreSummary> parseScoreSummary( JsonElement scoreElement ){
         
-        Map<Integer, ScoreSummary> map   = new TreeMap<>( );
+        //Reverse order so that we display Quarter 4 info before Quarter 1
+        Map<Integer, ScoreSummary> summaryMap   = new TreeMap<>( Collections.reverseOrder() );
                 
-        try {
-        
+        try {        
             
             for( Entry<String, JsonElement> entry : scoreElement.getAsJsonObject( ).entrySet( ) ){
                 
@@ -48,14 +48,14 @@ public final class ScoreSummaryFactory{
                 }
                 
                 ScoreSummary summary = new ScoreSummary( type, desc, quarter, team, players );
-                map.put( scoreTime, summary );
+                summaryMap.put( scoreTime, summary );
             }
             
         }catch( Exception e ){
             LOGGER.warn( "FAILED to parse {}", scoreElement, e );
         }
       
-        return map;
+        return summaryMap;
     }
     
   

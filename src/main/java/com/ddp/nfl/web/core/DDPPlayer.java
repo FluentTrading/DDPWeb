@@ -1,6 +1,5 @@
 package com.ddp.nfl.web.core;
 
-import com.ddp.nfl.web.util.*;
 
 public final class DDPPlayer{
     
@@ -9,13 +8,18 @@ public final class DDPPlayer{
     private final String nickName;
     private final String email;
     private final String icon;
+    private final int deposit;
     
-    public DDPPlayer( int id, String name, String nickName, String email ){
+    private final static String PLAYER_LOGO_PREFIX   = "images/players/";
+    private final static String PLAYER_LOGO_SUFFIX   = ".ico";
+    
+    public DDPPlayer( int id, String name, String nickName, String email, int deposit ){
         this.id         = id;
         this.name       = name;
         this.nickName   = nickName;
         this.email      = email;
-        this.icon       = DDPUtil.getPlayerIcon( name );
+        this.deposit    = deposit;
+        this.icon       = createPlayerIcon( name );
     }
     
         
@@ -40,6 +44,14 @@ public final class DDPPlayer{
         return email;
     }
 
+    public final int getDepositAmount( ) {
+        return deposit;
+    }
+    
+    protected final static String createPlayerIcon( String playerName ){
+        return PLAYER_LOGO_PREFIX + playerName + PLAYER_LOGO_SUFFIX;
+    }
+    
     
     @Override
     public final String toString( ) {
@@ -48,6 +60,7 @@ public final class DDPPlayer{
         builder.append( ", Name=" ).append( name );
         builder.append( ", NickName=" ).append( nickName );
         builder.append( ", Email=" ).append( email );
+        builder.append( ", Amount=" ).append( deposit );
         builder.append( "]" );
         return builder.toString( );
     }

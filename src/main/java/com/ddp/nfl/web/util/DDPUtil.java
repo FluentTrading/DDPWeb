@@ -2,9 +2,9 @@ package com.ddp.nfl.web.util;
 
 import java.io.*;
 import java.net.*;
-import java.text.*;
-import java.util.*;
+import java.util.concurrent.*;
 
+import com.ddp.nfl.web.core.*;
 import com.google.gson.*;
 
 
@@ -15,15 +15,13 @@ public final class DDPUtil{
     public final static int TWO                     = 2;
     public final static int THREE                   = 3;
     public final static int NEGATIVE_ONE            = -1;
-    
-    
+        
     public final static String EMPTY                = "";
     public final static String COMMA                = ",";
     public final static String SPACE                = " ";
     public final static String NEWLINE              = "<br />";
     public final static String PRINT_NEWLINE        = "\n";
-    public final static Date TODAY_DATE             = new Date();
-    
+        
     public final static String DB_SERVICE_KEY       = "DBServiceKey";
     public final static String META_INFO_KEY        = "MetaInfoKey";
     public final static String JSON_PARSER_KEY      = "JsonParserKey";
@@ -33,8 +31,7 @@ public final class DDPUtil{
     
     public final static String PICK_RESULT_KEY      = "PickResultKey";
     public final static String PICK_MANAGER_KEY     = "PickManagerKey";
-    
-    
+        
     public final static String NFL_TAB_LINK         = "/WEB-INF/DDPNFL.jsp";
     public final static String CASH_TAB_LINK        = "/WEB-INF/DDPCash.jsp";
     public final static String RULES_TAB_LINK       = "/WEB-INF/DDPRules.jsp";
@@ -44,20 +41,22 @@ public final class DDPUtil{
     public final static String ANON_PLAYER_ICON     = PLAYER_LOGO_PREFIX + "Anon" + PLAYER_LOGO_SUFFIX;
     
     public final static String NFL_LOGO_PREFIX      = "images/teams/";
+    public final static String ROUND_ICON_SUFFIX    = "2";
+    public final static String SQUARE_ICON_SUFFIX   = "";
     public final static String NFL_LOGO_SUFFIX      = ".png";
     public final static String MISSING_TEAM_LOGO    = NFL_LOGO_PREFIX + "Missing" + NFL_LOGO_SUFFIX;
     
     //public final static String PROD_URL_PREFIX    = "http://localhost:8084/DDPNFLWeb";
-    public final static String NFL_DATA_URL         = "http://localhost:8080/web/css/2017Week6Data.json";
-    //public final static String NFL_DATA_URL     = "http://www.nfl.com/liveupdate/scorestrip/ss.json";
-    public final static String PROD_URL_PREFIX      = "http://ddpscore.us-east-2.elasticbeanstalk.com";
+    public final static String NFL_DATA_URL       = "http://localhost:8080/web/testdata/2018Week1Data.json";
+    //public final static String NFL_DATA_URL         = "http://www.nfl.com/liveupdate/scorestrip/ss.json";
+    //public final static String PROD_URL_PREFIX    = "http://ddpscore.us-east-2.elasticbeanstalk.com";
     
-    public final static String GRR_IMG_URL          = PROD_URL_PREFIX + "/images/GRR.gif";
-        
-    public final static Gson GSON_INSTANCE          =  new GsonBuilder().create();
+    public final static String GRR_IMG_PREFIX       = "../web/images/GRR/GRR";
+    public final static String GRR_IMG_POSTFIX      = ".gif";
+    
+    public final static Gson GSON_INSTANCE          = new GsonBuilder().create();
     public final static JsonParser JSON_PARSER      = new JsonParser();
-    public final static DateFormat NFL_EID_FORMAT   = new SimpleDateFormat("yyyyMMdd");
-    
+        
     
     public final static boolean isValid( String data ){
         return !( data == null || data.trim( ).isEmpty( ) );            
@@ -79,11 +78,15 @@ public final class DDPUtil{
     }
     
     
-    public final static String getTeamIcon( String team ){
-        return NFL_LOGO_PREFIX + team + NFL_LOGO_SUFFIX;
+    public final static String getTeamRoundIcon( String team ){
+        return NFL_LOGO_PREFIX + team + ROUND_ICON_SUFFIX + NFL_LOGO_SUFFIX;
     }
     
-    /*
+    public final static String getTeamSquareIcon( String team ){
+        return NFL_LOGO_PREFIX + team + SQUARE_ICON_SUFFIX + NFL_LOGO_SUFFIX;
+    }
+    
+    
     public final static String toCamelCase( String word ){
         if( !isValid(word) ) return word;
         
@@ -95,7 +98,17 @@ public final class DDPUtil{
         
         return builder.toString( );
     }
-     */
+    
+    
+    public final static String generateGRRImage( ){
+        int randomNum = ThreadLocalRandom.current().nextInt(1, 7 + 1);
+        return GRR_IMG_PREFIX + randomNum + GRR_IMG_POSTFIX;
+    }
+
+    
+    public final static String getFormattedTeam( NFLTeam team ) {
+        return (team == null) ? "" : DDPUtil.toCamelCase( team.getName( ) );
+    }
     
     
     public final static int safeParseInt( JsonObject gameObj, String key ) {
@@ -155,6 +168,14 @@ public final class DDPUtil{
         
         return buffer.toString();
         
+    }
+    
+    
+    public static void main( String[] args ) {
+        for( int i=0; i< 200; i ++ ) {
+            String name = generateGRRImage( );
+            System.out.println( name );
+        }
     }
     
 }

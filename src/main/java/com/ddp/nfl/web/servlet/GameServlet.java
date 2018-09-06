@@ -12,7 +12,6 @@ import com.ddp.nfl.web.database.*;
 import com.ddp.nfl.web.match.*;
 import com.ddp.nfl.web.parser.*;
 import com.ddp.nfl.web.schedule.*;
-import com.ddp.nfl.web.winnings.*;
 
 import static com.ddp.nfl.web.util.DDPUtil.*;
 import static com.ddp.nfl.web.match.ResultCode.*;
@@ -26,12 +25,10 @@ public class GameServlet extends HttpServlet {
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        LOGGER.info( "Get Method called" );
         performService( request, response);
     }
     
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        LOGGER.info( "Post Method called" );
         performService( request, response );
     }
     
@@ -64,23 +61,22 @@ public class GameServlet extends HttpServlet {
             return;
         }
                 
-        Map<NFLTeam, NFLMatchInfo> map= NFLDataParser.parseFromURL( NFL_DATA_URL, schMan, service );
+        String gameData         = NFLDataParser.loadGameData( NFL_DATA_URL );
+        if( !isValid(gameData) ){
+            handleError( metaInfo, PARSE_ERROR, "Internal Error! FAILED to read NFL data!", request, response );
+            return;
+        }
+        
+        Map<NFLTeam, MatchScore> map= NFLDataParser.parseGameData( gameData, schMan, service );
         if( map.isEmpty( ) ) {
             handleError( metaInfo, PARSE_ERROR, "Internal Error! FAILED to parse NFL data!", request, response );
             return;
         }
                 
         GameResultManager result= MatchManager.packData( metaInfo, map, service );
-    //    storeWinnings( metaInfo, service, result, request );
         handleSuccess( result, request, response );   
         
     }
-
-
-//    protected final void storeWinnings( DDPMeta metaInfo, DBService service, GameResultManager result, HttpServletRequest request ) {
-//        CashManager.store( metaInfo, service, result );
-//        request.setAttribute( WINNINGS_MAP_KEY, service.getWinningsMap( ) );
-//    }
     
 
     protected final void handleSuccess( GameResultManager resultMan, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{

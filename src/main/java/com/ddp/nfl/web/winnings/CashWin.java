@@ -95,11 +95,11 @@ public final class CashWin{
         StringBuilder builder = new StringBuilder( 128 );
         builder.append( "CashWin [winPick=" ).append( winPick.getPlayer( ).getName( ) ).append( ", Week=" ).append( weekNumber );
         builder.append( ", CashWon=" ).append( cashWon ).append( ", TotalScore=" ).append( totalScore );
-        builder.append( ", Team1=" ).append( team1.getName( ) );
+        builder.append( ", Team1=" ).append( team1.getLowerCaseName( ) );
         builder.append( ", Score=" ).append( _1Score );
-        builder.append( ", Team2=" ).append( team2.getName( ) );
+        builder.append( ", Team2=" ).append( team2.getLowerCaseName( ) );
         builder.append( ", Score=" ).append( _2Score );
-        builder.append( ", Team3=" ).append( team3.getName( ) );
+        builder.append( ", Team3=" ).append( team3.getLowerCaseName( ) );
         builder.append( ", Score=" ).append( _3Score );
         
         return builder.toString( );

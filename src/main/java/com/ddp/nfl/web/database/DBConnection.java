@@ -43,8 +43,10 @@ public final class DBConnection{
         
         try{
            
+            LOGGER.info( "Loading all DDP picks stored in the database." );
+            
             String query            = "SELECT * from " + DDP_PICK.getTableName( ) + " WHERE Year=" + nflYear + " AND Week=" + nflWeek + " order by PickOrder";
-            LOGGER.info( "Executing query {}", query );
+            LOGGER.info( "Executing query [{}]", query );
             
             ResultSet result        = connection.createStatement( ).executeQuery( query );
             
@@ -72,6 +74,8 @@ public final class DBConnection{
             LOGGER.warn( "Exception while getting Pick info from DB", e );   
         }
 
+        LOGGER.info( "Successfully loaded [{}] DDP picks{}", map.size( ), PRINT_NEWLINE );
+        
         return map;
         
     }
@@ -85,8 +89,10 @@ public final class DBConnection{
         
         try{
             
+            LOGGER.info( "Loading all DDP players stored in the database." );
+            
             String query        = "SELECT * from " + DDP_PLAYER.getTableName( ) + " WHERE IsActive=1";
-            LOGGER.info( "Executing query {}", query );
+            LOGGER.info( "Executing query [{}]", query );
             
             ResultSet result    = connection.createStatement( ).executeQuery( query );
             
@@ -106,6 +112,8 @@ public final class DBConnection{
             LOGGER.warn( "Exception while getting player info from DB", e );   
         }
 
+        LOGGER.info( "Successfully loaded [{}] players{}", map.size( ), PRINT_NEWLINE );
+        
         return map;
     
     }
@@ -117,8 +125,10 @@ public final class DBConnection{
         
         try{
             
+            LOGGER.info( "Loading all NFL teams stored in the database." );
+            
             String query        = "SELECT * from " + NFL_TEAM.getTableName( );
-            LOGGER.info( "Executing query {}", query );
+            LOGGER.info( "Executing query [{}]", query );
             
             ResultSet result    = connection.createStatement( ).executeQuery( query );
             
@@ -141,6 +151,8 @@ public final class DBConnection{
             LOGGER.warn( "Exception while getting Team info from DB", e );   
         }
 
+        LOGGER.info( "Successfully loaded [{}] teams{}", map.size( ), PRINT_NEWLINE );
+        
         return map;
         
     }
@@ -219,7 +231,7 @@ public final class DBConnection{
             LOGGER.info("Connecting to DB at [{}], User: [{}] ", jdbcUrl, userName );
 
             connection          = DriverManager.getConnection(jdbcUrl, userName, password);
-            LOGGER.info("Successfully connected to database: [{}]", dbName);
+            LOGGER.info("Successfully connected to database: [{}]{}", dbName, PRINT_NEWLINE);
             
         }catch( Exception e) { 
             LOGGER.error("FAILED to connect to DB [{}:{}] [{}] [{}]", hostname, port, dbName, userName, e );
@@ -227,8 +239,7 @@ public final class DBConnection{
         
         return connection;
         
-    }
-    
+    }    
 
     
     public final void close( ) throws SQLException {

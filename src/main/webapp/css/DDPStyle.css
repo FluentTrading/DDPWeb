@@ -20,7 +20,7 @@ body {
 
 main {	
   min-width: 520px;
-  max-width: 800px;
+  max-width: 700px;
   padding: 1px;
   margin: 0 auto;
   background: #000; /* Colors the area of the section that holds the tabs */
@@ -29,7 +29,6 @@ main {
 
 section {
   display: none;
-  padding: 15px 0 0;
   border-top: 1px solid #000; /*Line that separates tab and  text section */
 }
 
@@ -152,9 +151,9 @@ input:checked + label {
 			
 			
 	.datagrid table td { 
-		padding: 7px 7px; 	/*Cell vertical space */
+		padding: 5px 1px 2px 0px; /* Top, Right, Bottom, Left */
 		color: #000;		/*Color of the text in the td */
-		font-size: 16px;
+		font-size: 14px;
 		font-weight: bold;		  
 	}
 		
@@ -190,7 +189,7 @@ input:checked + label {
 		color:#545f60;
 		background:#ffffff;
 		padding: 0px 0;
-		font-size: 16px;
+		font-size: 14px;
   		font-weight: bold;
   		font-family: 'Open Sans', sans-serif;
 	} 
@@ -211,7 +210,7 @@ input:checked + label {
 		padding: 2px 5px; /*Cell vertical space */
 		background:#ffffff;
 		color: #000;  /*Color of the text in the td */
-		font-size: 16px;
+		font-size: 14px;
 		font-weight: bold;		  
 	}
 	
@@ -244,7 +243,7 @@ input:checked + label {
 		color:#545f60;
 		background:#ffffff;
 		padding: 0px 0;
-		font-size: 16px;
+		font-size: 14px;
   		font-weight: bold;
   		font-family: 'Open Sans', sans-serif;
 	} 
@@ -263,7 +262,7 @@ input:checked + label {
 		padding: 2px 5px; /*Cell vertical space */
 		background:#ffffff;
 		color: #000;  /*Color of the text in the td */
-		font-size: 16px;
+		font-size: 14px;
 		font-weight: bold;		  
 	}
 	

@@ -15,7 +15,6 @@ public final class CashManager{
     
     private final Map<Integer, CashWin> winnings;
     
-    private final static int CASH_PER_WEEK  = 50;
     private final static String NAME        = CashManager.class.getSimpleName( );
     private final static Logger LOGGER      = LoggerFactory.getLogger( NAME );
            
@@ -31,7 +30,7 @@ public final class CashManager{
     
     
     protected final Map<Integer, CashWin> prepareWinnerPerWeek( DDPMeta ddpMeta, DBService service ){
-    
+        
         Map<Integer, CashWin> map   = new TreeMap<>( );
         int[] weekArray             = prepareWeekArray( ddpMeta.getWeek( ) );
                 
@@ -58,7 +57,7 @@ public final class CashManager{
                 }
             }
             
-            CashWin cashWin      = createCashWin( weekNumber, winPick, highestPoints, winScores );
+            CashWin cashWin      = createCashWin( weekNumber, ddpMeta.getCashPerWeek( ), winPick, highestPoints, winScores );
             if( cashWin != null ) {
                 map.put( weekNumber, cashWin );    
             }
@@ -70,7 +69,7 @@ public final class CashManager{
     }
 
     
-    protected final CashWin createCashWin( int week, DDPPick winPick, int totalScore, Map<NFLTeam, Integer> map ){
+    protected final CashWin createCashWin( int week, int cashPerWeek, DDPPick winPick, int totalScore, Map<NFLTeam, Integer> map ){
         
         if( winPick == null ){
             LOGGER.warn("FAILED to find winner for Week [{}]", week );
@@ -84,7 +83,7 @@ public final class CashManager{
         NFLTeam thirdTeam   = hasThree ? teams[TWO] : null;
         int thirdScore      = hasThree ? scores[TWO] : ZERO;
         
-        CashWin cashWin     = new CashWin( week, winPick, CASH_PER_WEEK, totalScore, 
+        CashWin cashWin     = new CashWin( week, winPick, cashPerWeek, totalScore, 
                                             teams[0], scores[0], teams[1], scores[1], thirdTeam, thirdScore );
         
         return cashWin;
@@ -131,7 +130,6 @@ public final class CashManager{
             if( weekResult != null ) {
                 resultPerWeek.put( week, weekResult.values( ) );
             }
-        
         }
         
         return resultPerWeek;
@@ -167,7 +165,7 @@ public final class CashManager{
             weekArray[i]= i + 1;
         }
             
-        LOGGER.info( "Will find winners for weeks {}", weekArray);
+        LOGGER.info( "Will find winners for following game weeks {}", weekArray);
         
         return weekArray;
     
@@ -190,7 +188,7 @@ public final class CashManager{
         System.setProperty("RDS_USERNAME", "hrayapudi" );
         System.setProperty("RDS_PASSWORD", "Wonne22#");
         
-        DDPMeta ddpMeta     = new DDPMeta( "1.0", "REG", 2017, 6 );
+        DDPMeta ddpMeta     = new DDPMeta( "1.0", "REG", 2018, 2, 50);
         DBService service   = new DBService( ddpMeta, "com.mysql.cj.jdbc.Driver",
                                         "wonnedevdb.cmtwfoal5czm.us-east-2.rds.amazonaws.com", "3306", "WonneDB" );
         

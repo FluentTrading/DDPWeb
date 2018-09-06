@@ -13,21 +13,23 @@ public final class NFLTeam{
     private final String city;
     private final String state;
     private final String rosterLink;
-    private final String teamIcon;
+    private final String teamRoundIcon;
+    private final String teamSquareIcon;
         
     public NFLTeam( int id, String name, String nickName, String division, String conference, 
                     String city, String state, String rosterLink ){
         
-        this.id         = id;
-        this.name       = name;
-        this.displayName= name.toUpperCase( );
-        this.nickName   = nickName;
-        this.division   = division;
-        this.conference = conference;
-        this.city       = city;
-        this.state      = state;
-        this.rosterLink = rosterLink;
-        this.teamIcon   = DDPUtil.getTeamIcon( name );
+        this.id             = id;
+        this.name           = name;
+        this.displayName    = name.toUpperCase( );
+        this.nickName       = nickName;
+        this.division       = division;
+        this.conference     = conference;
+        this.city           = city;
+        this.state          = state;
+        this.rosterLink     = rosterLink;
+        this.teamRoundIcon  = DDPUtil.getTeamRoundIcon( name );
+        this.teamSquareIcon = DDPUtil.getTeamSquareIcon( name );
         
     }
     
@@ -47,8 +49,12 @@ public final class NFLTeam{
         return nickName;
     }
     
-    public final String getIcon( ) {
-        return teamIcon;
+    public final String getRoundTeamIcon( ) {
+        return teamRoundIcon;
+    }
+    
+    public final String getSquareTeamIcon( ) {
+        return teamSquareIcon;
     }
     
     public final String getDivision( ) {

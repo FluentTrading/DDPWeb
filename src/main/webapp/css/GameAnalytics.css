@@ -1,0 +1,46 @@
+/* ----------------------------------------------- */
+/* Game Center */
+/* ----------------------------------------------- */
+	
+	.gamecenter {
+		font: 18px/1 'Open Sans', sans-serif;  		
+  		background:#fff;
+		overflow: hidden;
+  		white-space: nowrap; 
+	}
+	
+
+	.gamecenter h4 { 		
+  		font-size: 24px;
+		color: #000000;
+		background-color: #9FAFB4;
+		font-family: 'Open Sans', sans-serif;
+	}
+	
+	.gamecenter h5 { 		
+  		font-size: 20px;
+		color: #000000;
+		background-color: #9FAFB4;
+		font-family: 'Open Sans', sans-serif;
+	}
+	
+	
+	.gamecenter table { 
+		border-collapse: collapse; 
+		width: 100%;
+	}
+	
+			
+	.gamecenter table tr { 
+		padding: 10px 0px 10px 0px; /* Top, Right, Bottom, Left */
+		text-align: left;
+		font-family: 'Open Sans', sans-serif;
+	}
+				
+			
+	.gamecenter table td { 
+		padding: 2px 2px 2px 2px; /* Top, Right, Bottom, Left */
+		/*border: 2px solid #9FAFB4;	 Border around the cell */
+		font-family: 'Open Sans', sans-serif;
+	}
+		

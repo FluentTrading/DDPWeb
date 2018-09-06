@@ -39,13 +39,8 @@ public final class GameResultManager{
     public final boolean isValid( ){
         return (ResultCode.SUCCESS == code );
     }
-    
-    
-    public final boolean isError( ){
-        return code.isError( );
-    }
-    
-    
+     
+        
     public final boolean isMissingPicks( ){
         return (ResultCode.PICKS_NOT_MADE == code );
     }
@@ -54,9 +49,13 @@ public final class GameResultManager{
     public final ResultCode getResultCode( ){
         return code;
     }
-    
+        
     public final String getMessage( ){
         return message;
+    }
+    
+    public final String getDisplayMessage( ){
+        return getMessage( );
     }
     
 

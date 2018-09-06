@@ -16,6 +16,8 @@ public final class PickManager{
     private final int[] unpicked;
     private final DBService service;
     private final ScheduleManager schMan;
+    private final Map<String, NFLTeam> nflTeams; 
+    private final Map<String, DDPPlayer> players;
     
     private final static int NFL_TOTAL_PLAY_WEEK= 16;
     private final static Logger LOGGER          = LoggerFactory.getLogger( "PickManager" );
@@ -25,6 +27,8 @@ public final class PickManager{
         this.meta       = meta;
         this.service    = service;
         this.schMan     = schMan;
+        this.nflTeams   = new TreeMap<>( service.getAllTeams( ));
+        this.players    = new TreeMap<>( service.getAllPlayers( ));
         this.unpicked   = getUnpickedWeeks( meta.getWeek( ) );
     }
     
@@ -38,12 +42,12 @@ public final class PickManager{
     //If the pick for next week has been made, display it on the form,
     //If the pick hasn't been made, then show the pick order
     public final Map<String, DDPPlayer> getAllPlayers( ){
-        return service.getAllPlayers( );
+        return players;
     }
     
 
     public final Map<String, NFLTeam> getAllTeams( ) {
-        return service.getAllTeams( );
+        return nflTeams;
     }
     
 
@@ -55,8 +59,7 @@ public final class PickManager{
     public final Set<NFLTeam> getPlayingTeamsForWeek( int weekNumber ){
         return schMan.getPlayingTeams( weekNumber, meta, service.getAllTeams( ) );        
     }
-        
-        
+                
     
     public final PickResult process( int pickForWeek, String player, String team1, String team2, String team3 ) {
 
@@ -73,10 +76,10 @@ public final class PickManager{
         DDPPick ddpPick             = parse( pickOrder, pickForWeek, player, team1, team2, team3 );
         boolean storedCorrectly     = service.upsertPick( year, pickForWeek, pickOrder, ddpPick );
         if( !storedCorrectly ) {
-            return PickResult.createInvalid( "FAILED to save picsk, Server on Fire Mon!" );
+            return PickResult.createInvalid( "FAILED to save picks! Server on Fire Mon!" );
         }
         
-        return PickResult.createValid( "" );
+        return PickResult.createValid( "", picks );
         
     }
     
@@ -129,7 +132,7 @@ public final class PickManager{
             return PickResult.createInvalid( team3 + " was already picked!" );
         }
                       
-        return PickResult.createValid("");
+        return PickResult.createValid("", null);
    
     }
         
@@ -240,22 +243,36 @@ public final class PickManager{
     }
                
     
-    public final static String toMessageString( String header, Collection<DDPPick> teams ){
+    /*
+    public final static String toHtmlString( String header, Collection<DDPPick> teams ){
                 
         StringBuilder builder       = new StringBuilder( 64 );
         builder.append( header ).append( NEWLINE ).append( NEWLINE );
         
         for( DDPPick pick : teams ){
             
-            builder.append( pick.getPlayer( ).getName( ) ).append( "\t" );
-            builder.append( pick.getTeams()[0].getName( ) ).append( " " );
-            builder.append( pick.getTeams()[1].getName( ) ).append( " " );
-            builder.append( pick.getTeams()[2].getName( ) ).append( " " );
+            builder.append("<tr>");
             
-            builder.append( NEWLINE );            
+            builder.append("<td>");
+            builder.append( pick.getPlayer( ).getName( ) );
+            builder.append("<\td>");
+            builder.append("<td>");
+            builder.append( pick.getTeams()[0].getName( ) );
+            builder.append("<\td>");
+            builder.append("<td>");
+            builder.append( pick.getTeams()[1].getName( ) );
+            builder.append("<\td>");
+            builder.append("<td>");
+            builder.append( pick.getTeams()[2].getName( ) );
+            builder.append("<\td>");
+            
+            builder.append("<\tr>");
+            
         }
                 
         return builder.toString( );
         
     }
+    */
+    
 }

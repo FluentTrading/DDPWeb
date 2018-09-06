@@ -62,6 +62,7 @@ public final class DBService{
         return playerPickMap;
     }
     
+    
     public final Map<Integer, DDPPick> loadPicks( int week, DDPMeta meta ){
         return dbConnection.loadPicks( meta.getYear( ), week, teamMap, playerMap );
     }
