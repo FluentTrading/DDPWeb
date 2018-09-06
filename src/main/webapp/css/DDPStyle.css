@@ -13,57 +13,25 @@ body {
   font: 20px/1 'Open Sans', sans-serif;
   font-family: 'Open Sans', sans-serif;
   color: #000000;
-  background: #9FAFB4; /* Color of the rest of the page */ 
+  background: #9FAFB4; /* Color of the rest of the page */
+  padding: 0px 0px 0px 0px; /* Top, Right, Bottom, Left */ 
 }
+
 
 main {	
   min-width: 800px;
   max-width: 800px;
-  padding: 1px;
   margin: 0 auto;
   background: #000000; /* Colors the area of the section that holds the tabs */
- 
+  padding: 0px 0px 15px 0px; /* Top, Right, Bottom, Left */
 }
+
 
 section {
   display: none;
   border-top: 1px solid #000000; /*Line that separates tab and  text section */
 }
 
-h1 {
- 	padding: 50px 0;
-  	font-weight: 400;
-	text-align: center;
-}
-
-h3 {
-	padding: 10px 0;
-  	font-weight: bold;
-  	font-size: 20px;
-  	color:#000000;
-  	text-align: center;
-}
-
-h4 {
-	color:#ffffff;
-	padding: 0px 0;
-	font-size: 16px;
-  	text-align: center;
-  	background:#9FAFB4;
-  	font-weight: bold;
-  	font-family: 'Open Sans', sans-serif;		
-}
-
-
-p {
-  	margin: 0 0 20px;
-  	line-height: 1.5;
-  	padding: 0px 30px 20px; /*Controls the border around the text in p tag */
-  	font-family: 'Open Sans', sans-serif;
-  	font-size: 18px;
-	text-align: left;	
-	text-decoration: none;
-}
 
 input {
   display: none;
@@ -133,6 +101,7 @@ input:checked + label {
 		font-family: 'Open Sans', sans-serif;
 	}
 	
+	
 	.datagrid h5 {
   		font-size: 12px;
   		text-align: center;
@@ -148,58 +117,23 @@ input:checked + label {
 	}
 
 
-				
 	.datagrid table td { 
-		padding: 1px 0px 0px 15px; /* Top, Right, Bottom, Left */
+		padding: 4px 0px 0px 15px; /* Top, Right, Bottom, Left */
 		color: #000000;		/*Color of the text in the td */
 		font-size: 18px;
 		font-weight: bold;
 		/*border: 2px solid #9FAFB4;	 Border around the cell */
-		
 	}
 		
 	
-	.datagrid table tbody .alt td { 
-		padding: 0px 0px;
-		border-left: 1px solid #9FAFB4;
-		border-right: 1px solid #9FAFB4;
+	.datagrid table .alt td { 
+		padding: 0px 0px 2px 0px; /* Top, Right, Bottom, Left */
+		border-left: 0x solid #9FAFB4;
+		border-right: 0px solid #9FAFB4;
 		border-bottom: 1px solid #9FAFB4;
 	}
 	
-	
-	.datagrid table tbody td:first-child { 
-		border-left: none; 
-	}
-	
-	.datagrid table tbody tr:last-child td { 
-		border-bottom: none; 
-	}
-	
-	.datagrid button {
-    	border: none;
-    	color: #000000;
-    	text-align: center;
-    	text-decoration: none;
-    	display: inline-block;
-    	font-size: 14px;
-    	font-weight: bold;
-    	padding: 4px 6px;
-	}
-	
-	
-	.datagrid a {
-    	background-color: #ffffff;
-    	border: none;
-    	color: #000000;
-    	text-align: center;
-    	text-decoration: none;
-    	display: inline-block;
-    	font-size: 14px;
-    	font-weight: bold;
-    	padding: 4px 6px;
-	}
-	
-	
+		
 	/* SCHEDULE */
 	/* ----------------------------------------------- */
 	.schedulegrid {
@@ -215,8 +149,7 @@ input:checked + label {
 		background:#ffffff;
 		padding: 0px 0;
 		font-size: 14px;
-  		font-weight: bold;
-  		font-family: 'Open Sans', sans-serif;
+  		font-weight: bold;  		
 	} 
 		
 	.schedulegrid table { 
@@ -226,8 +159,8 @@ input:checked + label {
 		
 	
 	.schedulegrid table tr {
-		border-left: 1px solid #9FAFB4;
-		border-right: 1px solid #9FAFB4;
+		border-left: 0px solid #9FAFB4;
+		border-right: 0px solid #9FAFB4;
 		border-bottom: 1px solid #9FAFB4;
 	}
 		
@@ -235,22 +168,8 @@ input:checked + label {
 		padding: 0px 0px; /*Cell vertical space */
 		background:#ffffff;
 		color: #000000;  /*Color of the text in the td */
-		font-size: 18px;
+		padding: 0px 0px 0px 15px; /* Top, Right, Bottom, Left */
 		font-weight: bold;		  
-	}
-	
-	.schedulegrid table tbody .salt td { 
-		color: #9FAFB4;
-		background:#ffffff;
-		padding: 1px 1px; 
-	}	
-	
-	.schedulegrid table tbody td:first-child { 
-		border-left: none; 
-	}
-	
-	.schedulegrid table tbody tr:last-child td { 
-		border-bottom: none; 
 	}
 	
 	
@@ -264,50 +183,15 @@ input:checked + label {
   		white-space: nowrap;   		
 	}
 
-	.wingrid h4 { 
-		color:#9FAFB4;
-		background:#ffffff;
-		padding: 0px 0;
-		font-size: 14px;
+	.wingrid h3 { 
+		color:#009DDC;
+		background:#000000;
+		padding: 40px 0px 40px 0px; /* Top, Right, Bottom, Left */
+		font-size: 30px;
   		font-weight: bold;
-  		font-family: 'Open Sans', sans-serif;
+  		text-align: center;
 	} 
 		
-	.wingrid table { 
-		border-collapse: collapse; 
-		width: 100%; 
-	} 
-		
-	
-	.wingrid table tr {
-		padding: 10px 10px;
-	}
-		
-	.wingrid table td { 
-		padding: 2px 5px; /*Cell vertical space */
-		background:#ffffff;
-		color: #000000;  /*Color of the text in the td */
-		font-size: 14px;
-		font-weight: bold;		  
-	}
-	
-	.wingrid table tbody .alt tr { 
-		color: #9FAFB4;
-		background:#ffffff;
-		padding: 1px 1px;
-		border-left: 1px solid #9FAFB4;
-		border-right: 1px solid #9FAFB4;
-		border-bottom: 1px solid #9FAFB4;
-	}	
-	
-	.wingrid table tbody td:first-child { 
-		border-left: none; 
-	}
-	
-	.wingrid table tbody tr:last-child td { 
-		border-bottom: none; 
-	}
-	
 	
 	/* ----------------------------------------------- */
 	/* Analytics link buttons */

@@ -103,14 +103,8 @@
 							<form action="analytics" method="POST">
 							<c:forEach items="${requestScope[DDPUtil.RESULT_MANAGER_KEY].getResultList( )}" var="gameResult"> 
   									
-  									<tr><td></td></tr>
-  									<tr><td></td></tr>
-  									<tr><td></td></tr>
-  									<tr><td></td></tr>
-  									  									
   									<tr>
   									
-  													
   										<td valign="middle" align="center" width="10%">
     										<img src="${gameResult.getPlayer( ).getIcon( )}" title=${gameResult.getPlayer( ).getName( )} height="52" width="52">
     									</td>
@@ -220,9 +214,7 @@
   										<td></td>
   									</tr>	
 									</c:forEach>	
-									
-									<tr><td><h3></h3></td></tr>
-								
+																	
 							</table>
 							</form>
 						</div>
@@ -299,13 +291,14 @@
     
     
       <section id="content3">
-    	<div>    	
+    	
+    	<div class="wingrid">    	
     		
     		<c:choose>
 				
 				<c:when test="${applicationScope[DDPUtil.WINNINGS_MAP_KEY] != null}">
 					
-    				<div class="wingrid">
+    				<div>
 						<table>
 								<c:forEach var="entry" items="${applicationScope[DDPUtil.WINNINGS_MAP_KEY]}">
 
@@ -362,25 +355,13 @@
     								</c:if>
   								</tr>
   								
-  								<tr class="alt">
-  										<td></td><td></td>
-  										<td></td><td></td>
-  										<td></td><td></td>
-  										<td></td><td></td>
-  										<td></td><td></td>		
-  								</tr>
   							</c:forEach>
   															
 						</table>
 					</div> 		
     			</c:when>
 				<c:otherwise>
-					<tr>
-						<td align="center">
-							<h1 style="color:#009DDC;">DDP Cash hasn't been awarded yet!</h1>
-						</td>
-					</tr>		
-													
+					<h3>DDP Cash hasn't been awarded yet!</h3>
 				</c:otherwise>
 			</c:choose>	
     		
@@ -389,12 +370,8 @@
 	 </section>
 	 
 	   <section id="content4">
-    		<div>	  	
-    			<tr>
-					<td align="center">
-						<h1 style="color:#009DDC;">State Property</h1>
-					</td>
-				</tr>
+    		<div class="wingrid">	  	
+    			<h3>State Property</h3>				
     		</div>
 	   	</section>
 	
