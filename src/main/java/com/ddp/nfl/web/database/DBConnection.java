@@ -43,7 +43,7 @@ public final class DBConnection{
         
         try{
            
-            LOGGER.info( "Loading all DDP picks stored in the database." );
+            LOGGER.info( "Loading all team picks stored in the database." );
             
             String query            = "SELECT * from " + DDP_PICK.getTableName( ) + " WHERE Year=" + nflYear + " AND Week=" + nflWeek + " order by PickOrder";
             LOGGER.info( "Executing query [{}]", query );
@@ -67,7 +67,7 @@ public final class DBConnection{
                 DDPPick pick    = new DDPPick( pickOrder, player, teams );
                 
                 map.put( pickOrder,  pick );
-                LOGGER.info( "[{}] Retrieved Pick {}", map.size( ), pick );                                                                                                                                                                                                                         
+                LOGGER.info( "Retrieved {}", pick );                                                                                                                                                                                                                         
             }
                        
         }catch( SQLException e ) {
@@ -101,8 +101,9 @@ public final class DBConnection{
                 String name     = result.getString( "Name" );
                 String nickName = result.getString( "NickName" );
                 String email    = result.getString( "Email" );
+                int deposit     = result.getInt( "Deposit" );
                 
-                DDPPlayer player= new DDPPlayer( playerId, name, nickName, email );
+                DDPPlayer player= new DDPPlayer( playerId, name, nickName, email, deposit );
                 map.put( name,  player );
                 
                 LOGGER.info( "Retrieved Player {}", player );
@@ -134,7 +135,7 @@ public final class DBConnection{
             
             while( result.next( ) ){
                 int teamId      = result.getInt( "Id" );
-                String name     = result.getString( "Team" ).toLowerCase( );
+                String name     = result.getString( "Team" );
                 String nickName = result.getString( "NickName" );
                 String division = result.getString( "Division" );
                 String conf     = result.getString( "Conference" );
@@ -143,7 +144,7 @@ public final class DBConnection{
                 String roster   = result.getString( "Roster" );
                 
                 NFLTeam team    = new NFLTeam( teamId, name, nickName, division, conf, city, state, roster );
-                map.put( name,  team );
+                map.put( team.getLowerCaseName( ),  team );
                 LOGGER.info( "Retrieved Team {}", team );
             }
             
@@ -169,9 +170,9 @@ public final class DBConnection{
             pickPrepStatement.setInt    ( startColumnIndex++, pickForWeek );
             pickPrepStatement.setInt    ( startColumnIndex++, pickOrder );
             pickPrepStatement.setString ( startColumnIndex++, pick.getPlayer( ).getName( ) );
-            pickPrepStatement.setString ( startColumnIndex++, pick.getTeams( )[0].getName( ) );
-            pickPrepStatement.setString ( startColumnIndex++, pick.getTeams( )[1].getName( ) );
-            pickPrepStatement.setString ( startColumnIndex++, pick.getTeams( )[2].getName( ) );
+            pickPrepStatement.setString ( startColumnIndex++, pick.getTeams( )[0].getLowerCaseName( ) );
+            pickPrepStatement.setString ( startColumnIndex++, pick.getTeams( )[1].getLowerCaseName( ) );
+            pickPrepStatement.setString ( startColumnIndex++, pick.getTeams( )[2].getLowerCaseName( ) );
              
             int updateResult    = pickPrepStatement.executeUpdate( );
             picksUpdated        = ( updateResult > -1 );

@@ -9,10 +9,10 @@ import javax.servlet.annotation.*;
 
 import com.ddp.nfl.web.core.*;
 import com.ddp.nfl.web.database.*;
-import com.ddp.nfl.web.parser.*;
 import com.ddp.nfl.web.pickem.*;
 import com.ddp.nfl.web.schedule.*;
 import com.ddp.nfl.web.winnings.*;
+import com.ddp.nfl.web.analytics.core.*;
 
 import static com.ddp.nfl.web.util.DDPUtil.*;
 
@@ -23,7 +23,7 @@ public final class DDPContextListener implements ServletContextListener{
     private final static String APP_VERSION_KEY = "APP_VERSION";
     private final static String NFL_SEASON_KEY  = "NFL_SEASON_TYPE";
     private final static String NFL_YEAR_KEY    = "NFL_YEAR";
-    private final static String DEV_WEEK_NUM_KEY= "GAME_WEEK";
+    private final static String NFL_WEEK_NUMBER = "NFL_WEEK_NUMBER";
     private final static String CASH_PER_WEEK_KEY= "CASH_PER_WEEK";
     private final static String RDS_DRIVER_TAG  = "RDS_DRIVER";
     private final static String RDS_HOST_TAG    = "RDS_HOST";
@@ -40,21 +40,23 @@ public final class DDPContextListener implements ServletContextListener{
         
         ServletContext context  = event.getServletContext();
         loadLogger( context );
-        
+                
         DDPMeta ddpMeta         = createMetaData( context );
         DBService service       = createDBService( ddpMeta, context );
         ScheduleManager schMan  = parseSchedule( ddpMeta, service, context );
         
-        createPickManager( ddpMeta, schMan, service, context );
+        createPickManager( ddpMeta, service, context );
         prepareWinningsCash( ddpMeta, service, context );
-        
+        createGameCenter( schMan, context );
+                        
         LOGGER.info( "DDP NFL Servlet context initialized!");
         
     }
 
 
-    protected final void createPickManager( DDPMeta meta, ScheduleManager schMan, DBService service, ServletContext context ){
-        PickManager pick    = new PickManager( meta, schMan, service );
+
+    protected final void createPickManager( DDPMeta meta, DBService service, ServletContext context ){
+        PickManager pick    = new PickManager( meta, service );
         context.setAttribute( PICK_MANAGER_KEY, pick );
         LOGGER.info("Successfully created PickManager with key [{}]{}", PICK_MANAGER_KEY, PRINT_NEWLINE);
         
@@ -63,6 +65,7 @@ public final class DDPContextListener implements ServletContextListener{
     
     protected final void prepareWinningsCash( DDPMeta ddpMeta, DBService service, ServletContext context ){
         LOGGER.info("Attempting to calculate cash winnngs.");
+        
         CashManager cashManager     = new CashManager( ddpMeta, service );
         Map<Integer, CashWin> winMap= cashManager.getWinnings( );
         boolean isWinningsValid     = (winMap != null && !winMap.isEmpty( ));
@@ -72,6 +75,15 @@ public final class DDPContextListener implements ServletContextListener{
         }
     }
 
+
+    protected final void createGameCenter( ScheduleManager schMan, ServletContext context ) {
+        PickManager pickManager     = (PickManager) context.getAttribute( PICK_MANAGER_KEY );
+        GameAnalyticsManager manager= new GameAnalyticsManager( schMan.getSchedules( ), pickManager );
+        manager.start( );
+        
+        context.setAttribute( GAME_ANALYTICS_KEY, manager );
+        LOGGER.info("Successfully stored game center manager with key [{}] {}", GAME_ANALYTICS_KEY, PRINT_NEWLINE);        
+    }
     
 
     protected final DBService createDBService( DDPMeta ddpMeta, ServletContext context ){
@@ -94,13 +106,12 @@ public final class DDPContextListener implements ServletContextListener{
 
     protected final ScheduleManager parseSchedule( DDPMeta ddpMeta, DBService service, ServletContext context ){
         
-        Map<String, NFLSchedule> schedules  = ScheduleParser.parseSchedule( ddpMeta, service.getAllTeams( ) );
-        ScheduleManager scheduleManager     = new ScheduleManager( schedules );
+        ScheduleManager manager = new ScheduleManager( ddpMeta, service );
+        context.setAttribute( SCHEDULE_KEY, manager );
         
-        context.setAttribute( SCHEDULE_KEY, scheduleManager );     
-        LOGGER.info( "Stored [{}] game schedule for Week [{}] with Key: [{}]{}", schedules.size( ), ddpMeta.getWeek( ), SCHEDULE_KEY, PRINT_NEWLINE );
+        LOGGER.info( "Stored [{}] game schedule for Week [{}] with Key: [{}]{}", manager.getScheduleCount( ), ddpMeta.getWeek( ), SCHEDULE_KEY, PRINT_NEWLINE );
      
-        return scheduleManager;
+        return manager;
     
     }
     
@@ -120,32 +131,7 @@ public final class DDPContextListener implements ServletContextListener{
         return yearNumber;
     }
     
-    
-    protected final int parseWeek( ServletContext context ){
         
-        int weekNumber          = 0;
-        
-        try {
-            
-            String weekStr      = System.getProperty( DEV_WEEK_NUM_KEY );
-            boolean isValid     = (weekStr != null && !weekStr.isEmpty( ) );
-            if( isValid ) {
-                weekNumber      = Integer.parseInt( weekStr );
-                LOGGER.info( "TEST: Successfully parsed NFL week [{}] using DEV property [{}].", weekNumber, DEV_WEEK_NUM_KEY );
-            }else {
-                weekNumber      = NFLDataParser.parseWeekNumber( NFL_DATA_URL );
-                LOGGER.info( "Successfully parsed NFL week [{}] using URL [{}]", weekNumber, NFL_DATA_URL);
-            }
-                        
-        }catch( Exception e ) {
-            LOGGER.warn( "FAILED to parse to NFL week", e );
-        }
-        
-        return weekNumber;
-        
-    }
-    
-    
     protected final DDPMeta createMetaData( ServletContext context ){
         
         DDPMeta metaData        = null;
@@ -155,7 +141,7 @@ public final class DDPContextListener implements ServletContextListener{
             String version      = context.getInitParameter( APP_VERSION_KEY );
             String nflSeason    = context.getInitParameter( NFL_SEASON_KEY );
             int nflYear         = Integer.parseInt( context.getInitParameter(NFL_YEAR_KEY) );
-            int nflWeek         = parseWeek( context );
+            int nflWeek         = Integer.parseInt( context.getInitParameter( NFL_WEEK_NUMBER ) );
             int cashPerWeek     = Integer.parseInt( context.getInitParameter( CASH_PER_WEEK_KEY ) );
             
             metaData            = new DDPMeta( version, nflSeason, nflYear, nflWeek, cashPerWeek );
@@ -171,6 +157,7 @@ public final class DDPContextListener implements ServletContextListener{
 
     }
 
+    
     
     protected final void loadLogger( ServletContext context ){
         
@@ -204,9 +191,15 @@ public final class DDPContextListener implements ServletContextListener{
             DBService service   = (DBService) ctx.getAttribute( DB_SERVICE_KEY );
             if( service != null ){
                 service.close( );
-                LOGGER.info( "Successfully destroyed DDP Servlet context.");
             }
-                                  
+                        
+            GameAnalyticsManager gameManager = (GameAnalyticsManager) ctx.getAttribute( GAME_ANALYTICS_KEY );
+            if( gameManager != null ) {
+                gameManager.stop();
+            }
+            
+            LOGGER.info( "Successfully destroyed DDP Servlet context.");
+            
         } catch (SQLException e) {
             LOGGER.warn("FAILED to destroy DDP Servlet context.", e);
         }

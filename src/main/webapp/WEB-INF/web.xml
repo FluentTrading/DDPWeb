@@ -2,6 +2,8 @@
 
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 
+	<display-name>DDP NFL Web</display-name>
+   	
     <context-param>
         <param-name>APP_VERSION</param-name>
         <param-value>2.0</param-value>
@@ -15,6 +17,11 @@
     <context-param>
         <param-name>NFL_YEAR</param-name>
         <param-value>2018</param-value>
+    </context-param>
+        
+    <context-param>
+        <param-name>NFL_WEEK_NUMBER</param-name>
+        <param-value>1</param-value>
     </context-param>
     
     <context-param>
@@ -34,7 +41,7 @@
     
     <context-param>
         <param-name>RDS_HOST</param-name>
-        <param-value>wonnedevdb.cmtwfoal5czm.us-east-2.rds.amazonaws.com</param-value>
+        <param-value>aa15utan83usopw.ceanhhiadqb0.us-east-2.rds.amazonaws.com</param-value>
     </context-param>
     
     <context-param>
@@ -46,16 +53,6 @@
         <param-name>RDS_DB_NAME</param-name>
         <param-value>WonneDB</param-value>
     </context-param>
-  	
-  	
-  	<context-param>
-        <param-name>RDS_USERNAME</param-name>
-        <param-value>hrayapudi</param-value>
-    </context-param>
-    
-    <context-param>
-        <param-name>RDS_PASSWORD</param-name>
-        <param-value>Wonne22#</param-value>
-    </context-param>
+
     
 </web-app>

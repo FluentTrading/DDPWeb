@@ -10,13 +10,19 @@ public final class GameResult{
     
     private final boolean has6Teams;
     private final DDPPick pick;
-    private final NFLTeam[] myTeams;
-    private final MatchScore[] myScores;
+    private final LiveScore[] myScores;
+    private final NFLTeam[] myPickedTeams;
+    
+    private final static String WIN_BUTTON_CLASS     = "winButton";
+    private final static String LOSS_BUTTON_CLASS    = "lossButton";
+    private final static String TIED_BUTTON_CLASS    = "tiedButton";
+    private final static String NO_START_BUTTON_CLASS= "nostartButton";
+    
         
-    public GameResult( boolean hasAll6Teams, DDPPick pick, MatchScore[ ] myScores ){
+    public GameResult( boolean hasAll6Teams, DDPPick pick, LiveScore[ ] myScores ){
         this.has6Teams      = hasAll6Teams;
         this.pick           = pick;
-        this.myTeams        = pick.getTeams( );
+        this.myPickedTeams  = pick.getTeams( );
         this.myScores       = myScores;
     }
 
@@ -34,41 +40,41 @@ public final class GameResult{
     public final DDPPlayer getPlayer( ) {
         return pick.getPlayer( );
     }
-        
     
+   
     public final String getMy1TeamName( ){
-        return getMy1Team( ).getDisplayName( );
+        return getMy1Team( ).getUpperCaseName( );
     }
-    
+        
     public final String getMy2TeamName( ){
-        return getMy2Team( ).getDisplayName( );
+        return getMy2Team( ).getUpperCaseName( );
     }
     
     public final String getMy3TeamName( ){
-        return (getMy3Team( ) != null) ? getMy3Team( ).getDisplayName( ) : EMPTY;
+        return (getMy3Team( ) != null) ? getMy3Team( ).getUpperCaseName( ) : EMPTY;
     }
     
     
     public final int getMy1TeamScore( ){
-        NFLTeam myTeam      = getMy1Team( );
-        MatchScore info   = getMatch1Info( );
-        int myTeamScore     = getScore( true, myTeam, info);
+        NFLTeam myTeam    = getMy1Team( );
+        LiveScore info    = getMatch1Info( );
+        int myTeamScore   = getScore( true, myTeam, info);
         
         return myTeamScore;
     }
     
     public final int getMy2TeamScore( ){
-        NFLTeam myTeam      = getMy2Team( );
-        MatchScore info   = getMatch2Info( );
-        int myTeamScore     = getScore( true, myTeam, info);
+        NFLTeam myTeam    = getMy2Team( );
+        LiveScore info    = getMatch2Info( );
+        int myTeamScore   = getScore( true, myTeam, info);
         
         return myTeamScore;
     }
     
     public final int getMy3TeamScore( ){
-        NFLTeam myTeam      = getMy3Team( );
-        MatchScore info   = getMatch3Info( );
-        int myTeamScore     = getScore( true, myTeam, info);
+        NFLTeam myTeam    = getMy3Team( );
+        LiveScore info    = getMatch3Info( );
+        int myTeamScore   = getScore( true, myTeam, info);
         
         return myTeamScore;
     }
@@ -81,35 +87,35 @@ public final class GameResult{
         
     //AWAY
     public final String getOpp1TeamName( ){
-        return getOpp1Team( ).getDisplayName( );
+        return getOpp1Team( ).getUpperCaseName( );
     }
     
     public final String getOpp2TeamName( ){
-        return getOpp2Team( ).getDisplayName( );
+        return getOpp2Team( ).getUpperCaseName( );
     }
     
     public final String getOpp3TeamName( ){
-        return (getOpp3Team( ) != null) ? getOpp3Team( ).getDisplayName( ) : EMPTY;
+        return (getOpp3Team( ) != null) ? getOpp3Team( ).getUpperCaseName( ) : EMPTY;
     }
     
     
     public final int getOpp1TeamScore( ){
-        MatchScore info   = getMatch1Info( );
-        int myTeamScore     = getScore( false, getMy1Team( ), info);
+        LiveScore info   = getMatch1Info( );
+        int myTeamScore  = getScore( false, getMy1Team( ), info);
         
         return myTeamScore;
     }
     
     public final int getOpp2TeamScore( ){
-        MatchScore info   = getMatch2Info( );
-        int myTeamScore     = getScore( false, getMy2Team( ), info);
+        LiveScore info   = getMatch2Info( );
+        int myTeamScore  = getScore( false, getMy2Team( ), info);
         
         return myTeamScore;
     }
     
     public final int getOpp3TeamScore( ){
-        MatchScore info   = getMatch3Info( );
-        int myTeamScore     = getScore( false, getMy3Team( ), info);
+        LiveScore info   = getMatch3Info( );
+        int myTeamScore  = getScore( false, getMy3Team( ), info);
         
         return myTeamScore;
     }
@@ -121,86 +127,107 @@ public final class GameResult{
     
     
     public final String getGame1Quarter( ){
-        return getMatch1Info( ).getQuarter( );        
+        return getGameQuarterButton( getMatch1Info( ), getMy1TeamScore( ), getOpp1TeamScore( ) );        
     }
     
     public final String getGame2Quarter( ){
-        return getMatch2Info( ).getQuarter( );        
+        return getGameQuarterButton( getMatch2Info( ), getMy2TeamScore( ), getOpp2TeamScore( ) );        
     }
     
     public final String getGame3Quarter( ){
-        return ( getMatch3Info( ) != null ) ? getMatch3Info().getQuarter( ) : EMPTY;        
+        
+        if( getMatch3Info( ) == null ) {
+            return EMPTY;
+        }
+        
+        return getGameQuarterButton( getMatch3Info( ), getMy3TeamScore( ), getOpp3TeamScore( ) );    
     }
     
-    
-    public final String getGame1QuarterColor( ){
-        return getQuarterColor( getMy1TeamScore( ), getOpp1TeamScore( ) );        
-    }
-    
-    public final String getGame2QuarterColor( ){
-        return getQuarterColor( getMy2TeamScore( ), getOpp2TeamScore( ) );        
-    }
-    
-    public final String getGame3QuarterColor( ){
-        return getQuarterColor( getMy3TeamScore( ), getOpp3TeamScore( ) );
-    }
-    
-               
-    //Winner Icons
+
     public final String getGame1WinnerIcon( ){
         return getGameWinnerIcon( getMy1TeamScore( ), getMy1Team( ), getOpp1TeamScore( ), getOpp1Team( ) );
     }
+    
     
     public final String getGame2WinnerIcon( ){
         return getGameWinnerIcon( getMy2TeamScore( ), getMy2Team( ), getOpp2TeamScore( ), getOpp2Team( ) );
     }
     
+    
     public final String getGame3WinnerIcon( ){
         return getGameWinnerIcon( getMy3TeamScore( ), getMy3Team( ), getOpp3TeamScore( ), getOpp3Team( ) );
     }
+      
     
-    
-    //If game hasn't started or the score is tied, display no icon
     public final String getGameWinnerIcon( int homeScore, NFLTeam home, int awayScore, NFLTeam away ){
-        if( home == null || away == null ) return MISSING_TEAM_LOGO;
-        if( homeScore == awayScore ) return MISSING_TEAM_LOGO;
-         
-        String winnerIcon= (homeScore > awayScore) ? home.getRoundTeamIcon( ) : MISSING_TEAM_LOGO;
-        return winnerIcon;
-    }
-    
-    
-    //Team Bg Color
-    protected final String getQuarterColor( int homeScore, int awayScore ){
         
-        if( homeScore == awayScore) return "#a0a5a5";
+        boolean notStarted    = ( home == null || away == null );
+        boolean gameTied      = ( homeScore == awayScore );
+        boolean homeTeamLost  = ( homeScore < awayScore );
         
-        String tdBgColor    = ( homeScore > awayScore ) ? "#27AC44" : "#f46e5f";
-        return tdBgColor;
+        if( notStarted || gameTied || homeTeamLost ){
+            return NFLTeam.getMissingTeamLogo( );
+        }
+                
+        return home.getRoundTeamIcon( );
         
     }
     
-    /*
-    //Quarter Color
-    protected final String getQuarterColor( NFLGameScore home, String tdBgColor ){
+
+    //In order to color the quarter button, we need to determine the score from player's perspective
+    //Can't just use the live score home and away score.
+    public final String getGameQuarterButton( LiveScore liveScore, int homeScore, int awayScore ){
         
-        if( home.isFinished( ) ){
-            return tdBgColor;
+        StringBuilder builder   = new StringBuilder( );
+        String unclickableLabel = ( liveScore == null ) ? EMPTY : liveScore.getGameDayTime( );
+                
+        //Game not started, not clickable & we show the time of the game
+        if( liveScore.notStarted( ) ){
+            builder.append("<div class=").append( NO_START_BUTTON_CLASS ).append(">");
+            builder.append(  "<h4>" ).append( unclickableLabel ).append(  "</h4>" );
+            builder.append( "</div>");
+            return builder.toString( );
         }
         
-        if( !home.isPlaying( ) ){
-            return "#5c5e5a";
-        }else{
-            return "#7a8944";
-        }
+        String gameId       = liveScore.getGameId( );
+        String quarterString= (liveScore == null ) ? EMPTY : liveScore.getQuarter( );
+        String redzoneBlink = liveScore.isRedzone( ) ? REDZONE_ANIMATION : EMPTY;
+        String btnClassName = (homeScore == awayScore)? TIED_BUTTON_CLASS: (homeScore > awayScore ? WIN_BUTTON_CLASS : LOSS_BUTTON_CLASS);
         
-    }
-    */
+        /*
+         * 
+        builder.append("<div class=\"").append( btnClassName ).append("\">");
+        builder.append("<button class=\"").append( btnClassName ).append("\"");
+        builder.append( " type=\"submit\"");
+        builder.append( " name=" ).append( ANALYTICS_GAME_ID_KEY );
+        builder.append( " value=\"" ).append( gameId ).append("\">");
+        builder.append(  "<h4>" );
+        builder.append( redzoneBlink );
+        builder.append("&nbsp");
+        builder.append( quarterString );
+        builder.append(  "</h4>" );
+        builder.append( "</button>");
+        builder.append( "</div>");
+        */
+        
+        
+        //Unclickable for now
+        builder.append("<div class=\"").append( btnClassName ).append("\">");
+        builder.append(  "<h4>" );
+        builder.append( redzoneBlink );
+        builder.append("&nbsp");
+        builder.append( quarterString );
+        builder.append(  "</h4>" );
+        builder.append( "</div>");
+        
+        return builder.toString( );
     
-    protected final int calcTotalScore( boolean home, MatchScore[] scores ){
+    }
+    
+    protected final int calcTotalScore( boolean home, LiveScore[] scores ){
         int totalScore = 0;
         
-        for( MatchScore score : scores ){
+        for( LiveScore score : scores ){
             if( score != null ) {
                 totalScore += (home) ? score.getHomeScore( ) : score.getAwayScore( );
             }
@@ -214,44 +241,43 @@ public final class GameResult{
     //UI shouldn't directly invoke these methods.
     
     protected final NFLTeam getMy1Team( ){
-        return myTeams[0];
+        return myPickedTeams[0];
     }
     
     protected final NFLTeam getMy2Team( ){
-        return myTeams[1];
+        return myPickedTeams[1];
     }
     
     protected final NFLTeam getMy3Team( ){
-        return (myTeams.length == 3) ? myTeams[2] : null;
+        return (myPickedTeams.length == 3) ? myPickedTeams[2] : null;
     }
     
     protected final NFLTeam getOpp1Team( ){
-        MatchScore info   = getMatch1Info( );
-        NFLTeam oppTeam   = getOpponentTeam( getMy1Team( ), info );
+        LiveScore info   = getMatch1Info( );
+        NFLTeam oppTeam  = getOpponentTeam( getMy1Team( ), info );
         
         return oppTeam;
     }
     
     protected final NFLTeam getOpp2Team( ){
-        MatchScore info   = getMatch2Info( );
-        NFLTeam oppTeam   = getOpponentTeam( getMy2Team( ), info );
+        LiveScore info   = getMatch2Info( );
+        NFLTeam oppTeam  = getOpponentTeam( getMy2Team( ), info );
         
         return oppTeam;
     }
     
     protected final NFLTeam getOpp3Team( ){
-        MatchScore info   = getMatch3Info( );
-        NFLTeam oppTeam   = getOpponentTeam( getMy3Team( ), info );
+        LiveScore info   = getMatch3Info( );
+        NFLTeam oppTeam  = getOpponentTeam( getMy3Team( ), info );
         
         return oppTeam;         
     }
 
-    
-    
-    protected final int getScore( boolean forHome, NFLTeam myTeam, MatchScore info ){
+        
+    protected final int getScore( boolean forHome, NFLTeam myTeam, LiveScore info ){
         
         if( myTeam == null || info == null ) {
-            return -1;
+            return NEGATIVE_ONE;
         }
         
         if( forHome ) {
@@ -261,11 +287,8 @@ public final class GameResult{
         return (myTeam.getId( ) == info.getHomeTeam( ).getId( )) ? info.getAwayScore( ) : info.getHomeScore( );
         
     }
-    
-    
-    
-    protected final NFLTeam getOpponentTeam( NFLTeam myTeam, MatchScore info ){
-
+        
+    protected final NFLTeam getOpponentTeam( NFLTeam myTeam, LiveScore info ){
         if( myTeam == null || info == null ) {
             return null;
         }
@@ -274,20 +297,20 @@ public final class GameResult{
     }
     
     
-    public final MatchScore getMatch1Info( ){
+    public final LiveScore getMatch1Info( ){
         return myScores[0];        
     }
     
     
-    public final MatchScore getMatch2Info( ){
+    public final LiveScore getMatch2Info( ){
         return myScores[1];        
     }
     
     
-    public final MatchScore getMatch3Info( ){
+    public final LiveScore getMatch3Info( ){
         if( !has6Teams ) return null;
         return myScores[2];        
     }
-    
+       
     
 }

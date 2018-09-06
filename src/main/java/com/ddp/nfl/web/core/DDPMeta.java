@@ -12,6 +12,7 @@ public final class DDPMeta{
     private final int cashPerWeek;
     
     public DDPMeta( String version, String seasonType, int year, int week, int cashPerWeek ){
+        
         this.version    = version;
         this.seasonType = seasonType;
         this.year       = year;
@@ -30,7 +31,7 @@ public final class DDPMeta{
     public final String getSeasonType( ){
         return seasonType;
     }
-
+  
     
     public final int getYear( ){
         return year;
@@ -57,11 +58,11 @@ public final class DDPMeta{
             throw new RuntimeException("NFL Year " + year + " is invalid" );
         }
         
-        if( !(week >= 1 && week < 20) ){
+        if( week < ONE ){
             throw new RuntimeException("NFL Week " + week + " is invalid" );
         }
         
-        if( cashPerWeek <=0 ){
+        if( cashPerWeek <= ONE ){
             throw new RuntimeException("Cash Per Week " + cashPerWeek + " is invalid" );
         }
           
@@ -70,6 +71,7 @@ public final class DDPMeta{
     
     @Override
     public final String toString( ){
+        
         StringBuilder builder = new StringBuilder( 32 );
         builder.append( "DDPMeta [version=" ).append( version ).append( ", seasonType=" ).append( seasonType );
         builder.append( ", year=" ).append( year ).append( ", week=" ).append( week );

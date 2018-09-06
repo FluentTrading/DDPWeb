@@ -5,9 +5,10 @@ import com.ddp.nfl.web.util.*;
 public final class NFLTeam{
 
     private final int id;
-    private final String name;
+    private final String lowerCaseName;
+    private final String upperCaseName;
+    private final String camelCaseName;
     private final String nickName;
-    private final String displayName;
     private final String division;
     private final String conference;
     private final String city;
@@ -16,20 +17,27 @@ public final class NFLTeam{
     private final String teamRoundIcon;
     private final String teamSquareIcon;
         
-    public NFLTeam( int id, String name, String nickName, String division, String conference, 
+    private final static String NFL_ROUND_ICON_ID    = "2";
+    private final static String NFL_SQUARE_ICON_ID   = "";
+    private final static String NFL_LOGO_PREFIX      = "images/teams/";
+    private final static String NFL_LOGO_SUFFIX      = ".png";
+    private final static String MISSING_TEAM_LOGO    = NFL_LOGO_PREFIX + "Missing" + NFL_LOGO_SUFFIX;
+    
+    public NFLTeam( int id, String camelCaseName, String nickName, String division, String conference, 
                     String city, String state, String rosterLink ){
         
         this.id             = id;
-        this.name           = name;
-        this.displayName    = name.toUpperCase( );
+        this.camelCaseName  = camelCaseName;
+        this.lowerCaseName  = camelCaseName.toLowerCase( );
+        this.upperCaseName  = camelCaseName.toUpperCase( );
         this.nickName       = nickName;
         this.division       = division;
         this.conference     = conference;
         this.city           = city;
         this.state          = state;
         this.rosterLink     = rosterLink;
-        this.teamRoundIcon  = DDPUtil.getTeamRoundIcon( name );
-        this.teamSquareIcon = DDPUtil.getTeamSquareIcon( name );
+        this.teamRoundIcon  = createRoundIcon( lowerCaseName );
+        this.teamSquareIcon = createSquareIcon( lowerCaseName );
         
     }
     
@@ -37,17 +45,22 @@ public final class NFLTeam{
         return id;
     }
     
-    public final String getName( ) {
-        return name;
-    }
-        
-    public final String getDisplayName( ) {
-        return displayName;
-    }
-    
     public final String getNickName( ) {
         return nickName;
     }
+    
+    public final String getLowerCaseName( ) {
+        return lowerCaseName;
+    }
+        
+    public final String getUpperCaseName( ) {
+        return upperCaseName;
+    }
+
+    public final String getCamelCaseName( ) {
+        return camelCaseName;
+    }
+
     
     public final String getRoundTeamIcon( ) {
         return teamRoundIcon;
@@ -77,14 +90,56 @@ public final class NFLTeam{
         return rosterLink;
     }
        
+    public final static String getMissingTeamLogo( ){
+        return MISSING_TEAM_LOGO;
+    }
     
+    protected final static String createRoundIcon( String teamName ){
+        return NFL_LOGO_PREFIX + teamName + NFL_ROUND_ICON_ID + NFL_LOGO_SUFFIX;
+    }
+    
+    protected final static String createSquareIcon( String teamName ){
+        return NFL_LOGO_PREFIX + teamName + NFL_SQUARE_ICON_ID + NFL_LOGO_SUFFIX;
+    }
+
+
+    @Override
+    public final int hashCode( ) {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + id;
+        result = prime * result + ( (lowerCaseName == null) ? 0 : lowerCaseName.hashCode( ));
+        return result;
+    }
+
+    @Override
+    public final boolean equals( Object obj ) {
+        if( this == obj )
+            return true;
+        if( obj == null )
+            return false;
+        if( getClass( ) != obj.getClass( ) )
+            return false;
+        NFLTeam other = (NFLTeam) obj;
+        if( id != other.id )
+            return false;
+        if( lowerCaseName == null ){
+            if( other.lowerCaseName != null )
+                return false;
+        }else if( !lowerCaseName.equals( other.lowerCaseName ) )
+            return false;
+        
+        return true;
+    
+    }
+ 
     @Override
     public final String toString( ) {
         StringBuilder builder = new StringBuilder( );
         builder.append( "NFLTeam [id=" );
         builder.append( id );
         builder.append( ", name=" );
-        builder.append( name );
+        builder.append( camelCaseName );
         builder.append( ", nickName=" );
         builder.append( nickName );
         builder.append( ", division=" );
@@ -101,35 +156,5 @@ public final class NFLTeam{
         
         return builder.toString( );
     }
-
-    @Override
-    public int hashCode( ) {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + id;
-        result = prime * result + ( (name == null) ? 0 : name.hashCode( ));
-        return result;
-    }
-
-    @Override
-    public boolean equals( Object obj ) {
-        if( this == obj )
-            return true;
-        if( obj == null )
-            return false;
-        if( getClass( ) != obj.getClass( ) )
-            return false;
-        NFLTeam other = (NFLTeam) obj;
-        if( id != other.id )
-            return false;
-        if( name == null ){
-            if( other.name != null )
-                return false;
-        }else if( !name.equals( other.name ) )
-            return false;
-        return true;
-    }
- 
-   
     
 }

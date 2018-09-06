@@ -6,7 +6,8 @@ import java.util.Map.*;
 
 import com.ddp.nfl.web.core.*;
 import com.ddp.nfl.web.database.*;
-import com.ddp.nfl.web.schedule.*;
+import com.ddp.nfl.web.parser.*;
+
 
 import static com.ddp.nfl.web.util.DDPUtil.*;
 
@@ -22,11 +23,19 @@ public final class CashManager{
     public CashManager(  DDPMeta ddpMeta, DBService service ) {
         this.winnings   = prepareWinnerPerWeek( ddpMeta, service );
     }
+  
+    
+    //TODO:: Hiding it for now, so I can release it after testing
+    public final Map<Integer, CashWin> getWinnings( ){
+        return null;
+    }
     
     
+    /*
     public final Map<Integer, CashWin> getWinnings( ){
         return winnings;
     }
+    */
     
     
     protected final Map<Integer, CashWin> prepareWinnerPerWeek( DDPMeta ddpMeta, DBService service ){
@@ -36,8 +45,9 @@ public final class CashManager{
                 
         //Players picks for all the weeks ( 1 to last week)
         Map<Integer, Collection<DDPPick>> picksPerWeek= getPicksPerWeek( ddpMeta, weekArray, service );
+        
         //Results for all the weeks ( 1 to last week)
-        Map<Integer, Collection<NFLSchedule>> resultsPerWeek = getResultPerWeek( ddpMeta, weekArray, service );
+        Map<Integer, Collection<LiveScore>> resultsPerWeek = getResultPerWeek( ddpMeta, weekArray, service );
         
         for( Entry<Integer, Collection<DDPPick>> entry : picksPerWeek.entrySet( ) ) {
             
@@ -72,7 +82,7 @@ public final class CashManager{
     protected final CashWin createCashWin( int week, int cashPerWeek, DDPPick winPick, int totalScore, Map<NFLTeam, Integer> map ){
         
         if( winPick == null ){
-            LOGGER.warn("FAILED to find winner for Week [{}]", week );
+            LOGGER.warn("FAILED to find DDP winner for Week [{}]", week );
             return null;
         }
         
@@ -90,22 +100,22 @@ public final class CashManager{
     }
     
     
-    protected final Map<NFLTeam, Integer> getTeamPoints( int week, DDPPick ddpPick, Map<Integer, Collection<NFLSchedule>> results ){
+    protected final Map<NFLTeam, Integer> getTeamPoints( int week, DDPPick ddpPick, Map<Integer, Collection<LiveScore>> results ){
         
         NFLTeam[] myPickedTeams     = ddpPick.getTeams( );
         Map<NFLTeam, Integer> scores= new LinkedHashMap<>( );
         
-        Collection<NFLSchedule> res = results.get( week );
+        Collection<LiveScore> res   = results.get( week );
         
         for( NFLTeam nflTeam : myPickedTeams ){
-            String myTeam   = nflTeam.getName( );
+            String myTeam   = nflTeam.getLowerCaseName( );
             
-            for( NFLSchedule result : res ){
+            for( LiveScore result : res ){
                 
-                if( myTeam.equalsIgnoreCase(result.getHomeTeam( ).getName( )) ){
+                if( myTeam.equalsIgnoreCase(result.getHomeTeam( ).getLowerCaseName( )) ){
                     scores.put( result.getHomeTeam( ), result.getHomeScore( ) );
                 
-                }else if( myTeam.equalsIgnoreCase(result.getAwayTeam( ).getName( )) ){
+                }else if( myTeam.equalsIgnoreCase(result.getAwayTeam( ).getLowerCaseName( )) ){
                     scores.put( result.getAwayTeam( ), result.getAwayScore( ) );
                 }
                 
@@ -115,30 +125,25 @@ public final class CashManager{
         return scores;
         
     }
-            
+                
     
-    
-    protected final Map<Integer, Collection<NFLSchedule>> getResultPerWeek( DDPMeta ddpMeta, int[] weekArray, DBService service ){
+    protected final Map<Integer, Collection<LiveScore>> getResultPerWeek( DDPMeta ddpMeta, int[] weekArray, DBService service ){
         
         int nflYear         = ddpMeta.getYear( );
         String seasonType   = ddpMeta.getSeasonType( );
-        Map<Integer, Collection<NFLSchedule>> resultPerWeek = new HashMap<>( );
+        Map<Integer, Collection<LiveScore>> resultPerWeek = new HashMap<>( );
         
         for( int week : weekArray ){
-            String scheduleUrl  = ScheduleParser.prepareUrl( seasonType, nflYear, week );
-            Map<String, NFLSchedule> weekResult = ScheduleParser.parseSchedule( scheduleUrl, service.getAllTeams( ) );
-            if( weekResult != null ) {
-                resultPerWeek.put( week, weekResult.values( ) );
-            }
+            String scheduleUrl  = LiveScoreParser.createLiveScoreUrl( seasonType, nflYear, week );
+            Map<NFLTeam, LiveScore> liveScore = LiveScoreParser.parseLiveScore( scheduleUrl, service.getAllTeams( ) );
+            resultPerWeek.put( week, liveScore.values( ) );
         }
         
         return resultPerWeek;
         
     }
 
-    
 
-    
     protected final Map<Integer, Collection<DDPPick>> getPicksPerWeek( DDPMeta ddpMeta, int[] weekArray, DBService service ){
         
         int nflYear                 = ddpMeta.getYear( );
@@ -158,6 +163,7 @@ public final class CashManager{
 
 
     protected final int[] prepareWeekArray( int currentWeek ){
+        
         int priorWeek   = (currentWeek == 1 ? 1 : currentWeek);
         int[] weekArray = new int[ priorWeek];
         
@@ -165,7 +171,7 @@ public final class CashManager{
             weekArray[i]= i + 1;
         }
             
-        LOGGER.info( "Will find winners for following game weeks {}", weekArray);
+        LOGGER.info( "Will find winners for following weeks {}", weekArray);
         
         return weekArray;
     
@@ -184,13 +190,13 @@ public final class CashManager{
 
     
     public static void main( String[] args ){
-        
-        System.setProperty("RDS_USERNAME", "hrayapudi" );
-        System.setProperty("RDS_PASSWORD", "Wonne22#");
+
+        System.setProperty("RDS_USERNAME", "ddpweb" );
+        System.setProperty("RDS_PASSWORD", "1whynopass2");
         
         DDPMeta ddpMeta     = new DDPMeta( "1.0", "REG", 2018, 2, 50);
         DBService service   = new DBService( ddpMeta, "com.mysql.cj.jdbc.Driver",
-                                        "wonnedevdb.cmtwfoal5czm.us-east-2.rds.amazonaws.com", "3306", "WonneDB" );
+                                        "aa15utan83usopw.ceanhhiadqb0.us-east-2.rds.amazonaws.com", "3306", "WonneDB" );
         
         CashManager cashMan = new CashManager( ddpMeta, service );
         Map<Integer, CashWin> winnings     = cashMan.getWinnings( );

@@ -13,19 +13,18 @@ import javax.servlet.annotation.*;
 import static com.ddp.nfl.web.util.DDPUtil.*;
 
 
-@WebServlet(name = "PickServlet", description = "Servlet to store the Team Picks", urlPatterns = {"/Pick"})
+@WebServlet(name = "PickServlet", description = "Servlet to store the Team Picks", urlPatterns = {"/pick"})
 public class PickServlet extends HttpServlet {
 
     private final static long serialVersionUID  = 1L;
     private final static String EXPECTED_PASS   = "nopass";
     private final static String PASS_SESSION_KEY= "isLoggedIn";
-    private final static String PICK_TAB_LINK   = "/Pick.jsp";
-    private final static String ERROR_MESSAGE   = "Internal Error! Server on FIRE mon!" + NEWLINE;
+    private final static String ERROR_MESSAGE   = "Internal Error! ";
     private final static Logger LOGGER          = LoggerFactory.getLogger( "PickServlet" );
 
     
-    public final void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {}        
-    
+    public final void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {}
+            
     
     @Override
     public final void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -46,10 +45,15 @@ public class PickServlet extends HttpServlet {
             return;
         }
                 
-        int pickForWeek         = Integer.parseInt( request.getParameter("weekNumber") );
+        int pickForWeek         = parseWeekParam( request.getParameter("weekNumber") );
+        if( pickForWeek == NEGATIVE_ONE ){
+            handleError( ERROR_MESSAGE + "Week number parameter is missing.", request, response );
+            return;
+        }
+                
         PickResult pickResult   = handleAction( actionType, pickForWeek, pickManager, request );
         if( pickResult == null ){
-            handleError( ERROR_MESSAGE + "Failed to save picks", request, response );
+            handleError( ERROR_MESSAGE + "Failed to handle action " + actionType, request, response );
             return;
         }
         
@@ -129,6 +133,9 @@ public class PickServlet extends HttpServlet {
                 return PickResult.createInvalid( "Invalid selection, Player and all 3 teams must be selected!" );
             }
             
+            team1               = team1.toLowerCase( );
+            team2               = team2.toLowerCase( );
+            team3               = team3.toLowerCase( );
             pickResult          = pickManager.process( pickForWeek, player, team1, team2, team3 );
             
         }catch( Exception e) {
@@ -173,4 +180,15 @@ public class PickServlet extends HttpServlet {
     }
 
 
+    protected final int parseWeekParam( String weekString ){
+        int paramWeekNumber  = NEGATIVE_ONE;
+        try {
+            paramWeekNumber = Integer.parseInt( weekString );
+        }catch (Exception e) {
+            LOGGER.warn("FAILED to parse week number param [{}]", weekString );
+        }
+        
+        return paramWeekNumber;
+    }
+    
 }

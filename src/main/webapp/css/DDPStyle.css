@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
-
 *, *:before, *:after {
   margin: 0;
   padding: 0;
@@ -8,28 +6,28 @@
 
 html, body {
   height: 100vh;
-  
+  width: 100vw;
 }
 
 body {
   font: 20px/1 'Open Sans', sans-serif;
   font-family: 'Open Sans', sans-serif;
-  color: #555;
-  background: #545f60; /* Color of the rest of the page */ 
+  color: #000000;
+  background: #9FAFB4; /* Color of the rest of the page */ 
 }
 
 main {	
-  min-width: 520px;
-  max-width: 700px;
+  min-width: 800px;
+  max-width: 800px;
   padding: 1px;
   margin: 0 auto;
-  background: #000; /* Colors the area of the section that holds the tabs */
+  background: #000000; /* Colors the area of the section that holds the tabs */
  
 }
 
 section {
   display: none;
-  border-top: 1px solid #000; /*Line that separates tab and  text section */
+  border-top: 1px solid #000000; /*Line that separates tab and  text section */
 }
 
 h1 {
@@ -40,7 +38,9 @@ h1 {
 
 h3 {
 	padding: 10px 0;
-  	font-weight: 200;
+  	font-weight: bold;
+  	font-size: 20px;
+  	color:#000000;
   	text-align: center;
 }
 
@@ -49,7 +49,7 @@ h4 {
 	padding: 0px 0;
 	font-size: 16px;
   	text-align: center;
-  	background:#545f60;
+  	background:#9FAFB4;
   	font-weight: bold;
   	font-family: 'Open Sans', sans-serif;		
 }
@@ -75,8 +75,8 @@ label {
   padding: 20px 25px;
   font-weight: 600;
   text-align: center;
-  color: #fff;
-  background: #000;
+  color: #ffffff;
+  background: #000000;
   border: 0px solid transparent;
 }
 
@@ -86,31 +86,29 @@ label:before {
   margin-right: 10px;
 }
 
-label[for*='1']:before { content: '\f1cb'; }
-label[for*='2']:before { content: '\f17d'; }
-label[for*='3']:before { content: '\f16b'; }
-label[for*='4']:before { content: '\f1a9'; }
-label[for*='5']:before { content: '\f1a9'; }
+label[for*='1']:before { }
+label[for*='2']:before { }
+label[for*='3']:before { }
+label[for*='4']:before { }
 
 label:hover {
-  color: #888;
+  color: #ffffff;
   cursor: pointer;
 }
 
 /*Controls the properties of the tab which is selected */
 input:checked + label {
-  color: #6edeef;
-  background: #000;
+  color: #009DDC;
+  background: #000000;
   border: 0px solid #ddd;
-  border-top: 0px solid orange;
+  border-top: 0px solid#009DDC;
   border-bottom: 0px solid #fff;
 }
 
 #tab1:checked ~ #content1,
 #tab2:checked ~ #content2,
 #tab3:checked ~ #content3,
-#tab4:checked ~ #content4,
-#tab5:checked ~ #content5{
+#tab4:checked ~ #content4{
   display: block;
 }
 
@@ -125,7 +123,7 @@ input:checked + label {
   		background:#fff;
 		overflow: hidden;
   		white-space: nowrap; 
-  		border: 1px solid #545f60;
+  		border: 1px solid #9FAFB4;
 	}
 	
 	
@@ -151,18 +149,20 @@ input:checked + label {
 			
 			
 	.datagrid table td { 
-		padding: 5px 1px 2px 0px; /* Top, Right, Bottom, Left */
-		color: #000;		/*Color of the text in the td */
-		font-size: 14px;
-		font-weight: bold;		  
+		padding: 1px 2px 0px 15px; /* Top, Right, Bottom, Left */
+		color: #000000;		/*Color of the text in the td */
+		font-size: 15px;
+		font-weight: bold;
+		/*border: 2px solid #9FAFB4;	 Border around the cell */
+		
 	}
 		
 	
 	.datagrid table tbody .alt td { 
 		padding: 0px 0px;
-		border-left: 1px solid #545f60;
-		border-right: 1px solid #545f60;
-		border-bottom: 1px solid #545f60;
+		border-left: 1px solid #9FAFB4;
+		border-right: 1px solid #9FAFB4;
+		border-bottom: 1px solid #9FAFB4;
 	}
 	
 	
@@ -174,6 +174,29 @@ input:checked + label {
 		border-bottom: none; 
 	}
 	
+	.datagrid button {
+    	border: none;
+    	color: #000000;
+    	text-align: center;
+    	text-decoration: none;
+    	display: inline-block;
+    	font-size: 14px;
+    	font-weight: bold;
+    	padding: 4px 6px;
+	}
+	
+	.datagrid a {
+    	background-color: #ffffff;
+    	border: none;
+    	color: #000000;
+    	text-align: center;
+    	text-decoration: none;
+    	display: inline-block;
+    	font-size: 14px;
+    	font-weight: bold;
+    	padding: 4px 6px;
+	}
+	
 	
 	/* SCHEDULE */
 	/* ----------------------------------------------- */
@@ -181,12 +204,12 @@ input:checked + label {
 		font: 18px/1 'Open Sans', sans-serif;
 		overflow: hidden;
 		background: #ffffff;
-		border: 0px solid #545f60;	
+		border: 0px solid #9FAFB4;	
   		white-space: nowrap;   		
 	}
 
 	.schedulegrid h4 { 
-		color:#545f60;
+		color:#9FAFB4;
 		background:#ffffff;
 		padding: 0px 0;
 		font-size: 14px;
@@ -201,21 +224,21 @@ input:checked + label {
 		
 	
 	.schedulegrid table tr {
-		border-left: 1px solid #545f60;
-		border-right: 1px solid #545f60;
-		border-bottom: 1px solid #545f60;
+		border-left: 1px solid #9FAFB4;
+		border-right: 1px solid #9FAFB4;
+		border-bottom: 1px solid #9FAFB4;
 	}
 		
 	.schedulegrid table td { 
-		padding: 2px 5px; /*Cell vertical space */
+		padding: 0px 0px; /*Cell vertical space */
 		background:#ffffff;
-		color: #000;  /*Color of the text in the td */
+		color: #000000;  /*Color of the text in the td */
 		font-size: 14px;
 		font-weight: bold;		  
 	}
 	
 	.schedulegrid table tbody .salt td { 
-		color: #545f60;
+		color: #9FAFB4;
 		background:#ffffff;
 		padding: 1px 1px; 
 	}	
@@ -235,12 +258,12 @@ input:checked + label {
 		font: 18px/1 'Open Sans', sans-serif;
 		overflow: hidden;
 		background: #ffffff;
-		border: 0px solid #545f60;	
+		border: 0px solid #9FAFB4;	
   		white-space: nowrap;   		
 	}
 
 	.wingrid h4 { 
-		color:#545f60;
+		color:#9FAFB4;
 		background:#ffffff;
 		padding: 0px 0;
 		font-size: 14px;
@@ -261,18 +284,18 @@ input:checked + label {
 	.wingrid table td { 
 		padding: 2px 5px; /*Cell vertical space */
 		background:#ffffff;
-		color: #000;  /*Color of the text in the td */
+		color: #000000;  /*Color of the text in the td */
 		font-size: 14px;
 		font-weight: bold;		  
 	}
 	
 	.wingrid table tbody .alt tr { 
-		color: #545f60;
+		color: #9FAFB4;
 		background:#ffffff;
 		padding: 1px 1px;
-		border-left: 1px solid #545f60;
-		border-right: 1px solid #545f60;
-		border-bottom: 1px solid #545f60;
+		border-left: 1px solid #9FAFB4;
+		border-right: 1px solid #9FAFB4;
+		border-bottom: 1px solid #9FAFB4;
 	}	
 	
 	.wingrid table tbody td:first-child { 
@@ -282,3 +305,89 @@ input:checked + label {
 	.wingrid table tbody tr:last-child td { 
 		border-bottom: none; 
 	}
+	
+	
+	/* ----------------------------------------------- */
+	/* Analytics link buttons */
+	/* ----------------------------------------------- */
+	.Blink {
+    	animation: blinker 0.5s cubic-bezier(.5, 0, 1, 1) infinite alternate;  
+	}
+	
+	@keyframes blinker {  
+ 		from { opacity: 1; }
+  		to { opacity: 0; }
+	}
+
+	.nostartButton {
+    	background-color: #a0a5a5;
+    	border: none;
+    	cursor: none;
+    	outline:none;
+    	padding: 5px 5px 5px 5px; /* Top, Right, Bottom, Left */
+    	font-size: 14px;    	
+	}
+	
+	.nostartButton h4 { 
+		background:#a0a5a5;
+		color:#000000;
+		font-size: 12px;
+  		font-weight: bold;
+  		font-family: 'Open Sans', sans-serif;
+	} 
+
+	.winButton {
+    	background-color: #009B72;
+    	border-bottom: 2px solid #009B72;
+    	outline:none;
+    	cursor: none; /* pointer */
+    	padding: 4px 0px 4px 0px; /* Top, Right, Bottom, Left */
+    	font-size: 12px;
+	}
+	
+	.winButton h4 { 
+		background:#009B72;
+		color:#000000;
+		font-size: 12px;
+		font-weight: bold;
+		font-family: 'Open Sans', sans-serif;
+	} 
+			
+	.lossButton {
+    	background-color: #F26430;
+    	border-bottom: 2px solid #F26430;
+    	outline:none;
+    	cursor: none;
+    	padding: 4px 0px 4px 0px; /* Top, Right, Bottom, Left */
+    	font-size: 14px;
+    	
+	}
+	
+	.lossButton h4 { 
+		background:#F26430;
+		color:#000000;
+		font-size: 12px;
+  		font-weight: bold;
+  		font-family: 'Open Sans', sans-serif;
+	}
+	
+	
+	.tiedButton {
+    	background-color:#FFE4B5;
+    	border: none;
+    	outline:none;
+    	cursor: pointer;
+    	padding: 4px 0px 4px 0px; /* Top, Right, Bottom, Left */
+    	font-size: 14px;
+    	
+	}
+	
+	.tiedButton h4 { 
+		background:#FFE4B5;
+		color:#000000;
+		font-size: 12px;
+  		font-weight: bold;
+  		font-family: 'Open Sans', sans-serif;
+	}  
+	
+	

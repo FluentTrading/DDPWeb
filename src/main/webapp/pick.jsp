@@ -8,100 +8,8 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>|| DDP NFL || Pick</title>
-	
-	<style>
-	
-		body {
-  			font: 20px/1 'Open Sans', sans-serif;
-  			font-family: 'Open Sans', sans-serif;
-  			color: #555;
-  			background: #545f60; /* Color of the rest of the page */ 
-		}
-		
-		.pickGrid {
-			font: 18px/1 'Open Sans', sans-serif;
-			overflow: hidden;
-			border: 5px solid #545f60;	
-			white-space: nowrap;			
-		}
-		
-		.pickGrid table { 
-			border-collapse: collapse; 
-		} 
-		
-		.pickGrid table td { 
-			background:#ffffff;
-			color: #000;  /*Color of the text in the td */
-			font-size: 16px;
-			font-weight: bold;
-			padding: 15px 10px 0px 10px; /* Top, Right, Bottom, Left */  
-		}
-	
-		.loadResult table { 
-			border-collapse: collapse; 
-		} 
-		
-		.loadResult table td { 
-			background:#545f60;
-			color: #ffffff;  /*Color of the text in the td */
-			font-size: 14px;
-			font-weight: bold;
-			padding: 5px 10px 0px 10px; /* Top, Right, Bottom, Left */  
-		}
-		
-		.pickGrid-content{
-			width: 150px;
-			height: 30px;
-			background: #2C353C;
-   			color: #ffffff;
-   			font-size: 13px;
-   			margin-bottom: 10px;
-			border: none;
-			outline: none;
-			padding: 0 10px;
-   			display: inline-block;
-   			font-weight: bold;	
-		}
-	
-		.pickGridPass{
-			width: 150px;
-			height: 30px;
-			padding: 0 0 10px;
-			margin-bottom: 10px;
-   			background: #4CAF50;
-   			color: #000000;
-   			font-size: 15px;
-   			border: 2px solid #4CAF50;
-			outline: none;
-			font-weight: bold;	
-		}
-	
-		.pickGridBtn{
-			width: 150px;
-			height: 30px;
-			padding: 0 0 10px;
-			margin-bottom: 10px;
-			background: #4CAF50;
-   			color: #2C353C;
-   			font-size: 15px;	
-			font-weight: bold;
-			border: none;
-   			cursor: pointer;
-   			opacity: 0.9;
-   		}
-		
-		.pickGrid input {
-			width: 100px;
-			height: 5px;
-			color: white;
-			padding: 14px 20px;
-    		margin: 8px 0;
-    		border: none; 
-		}
-	
-	</style>
-	
+	<title>|| DDP NFL Web ||</title>
+	<link rel="stylesheet" type="text/css" href="css/Pick.css">
 </head>
 
 <body>
@@ -115,7 +23,7 @@
 		
 			<table>
 							
-					<form action="Pick" method="POST">
+					<form action="pick" method="POST">
 						
 						<tr>
 							<td align="center">Week</td>		
@@ -148,7 +56,7 @@
 							<td align="center">
 							  	<select class="pickGrid-content" name="team1">
 							  		<c:forEach var="entry1" items="${applicationScope[DDPUtil.PICK_MANAGER_KEY].getAllTeams().values()}">
-    									<option value="${entry1.getName( )}">${entry1.getDisplayName( )}</option>
+    									<option value="${entry1.getCamelCaseName( )}">${entry1.getCamelCaseName( )}</option>
     								</c:forEach>
     								<option value="" selected>Select</option>
   								</select>
@@ -157,7 +65,7 @@
 							<td align="center"> 
 							  	<select class="pickGrid-content" name="team2">
 							  		<c:forEach var="entry2" items="${applicationScope[DDPUtil.PICK_MANAGER_KEY].getAllTeams().values()}">
-    									<option value="${entry2.getName( )}">${entry2.getDisplayName( )}</option>
+    									<option value="${entry2.getCamelCaseName( )}">${entry2.getCamelCaseName( )}</option>
     								</c:forEach>
     								<option value="" selected>Select</option>
   								</select>
@@ -168,7 +76,7 @@
 							<td align="center">
 							  	<select class="pickGrid-content" name="team3">
 							  		<c:forEach var="entry3" items="${applicationScope[DDPUtil.PICK_MANAGER_KEY].getAllTeams().values()}">
-    									<option value="${entry3.getName( )}">${entry3.getDisplayName( )}</option>
+    									<option value="${entry3.getCamelCaseName( )}">${entry3.getCamelCaseName( )}</option>
     								</c:forEach>
     								<option value="" selected>Select</option>
   								</select>
@@ -213,13 +121,13 @@
     						<img src=${ddpPick.getPlayer( ).getIcon( )} title="${ddpPick.getPlayer( ).getName( )}" height="64" width="64"/>  											
   						</td>
   						<td>
-  							<h1>${DDPUtil.getFormattedTeam( ddpPick.getTeams()[0] )}</h1>
+  							<h1>${ddpPick.getTeams()[0].getCamelCaseName()}</h1>
   						</td>
   						<td>
-  							<h1>${DDPUtil.getFormattedTeam( ddpPick.getTeams()[1] )}</h1>
+  							<h1>${ddpPick.getTeams()[1].getCamelCaseName()}</h1>
   						</td>
   						<td>
-  							<h1>${DDPUtil.getFormattedTeam( ddpPick.getTeams()[2] )}</h1>
+  							<h1>${ddpPick.getTeams()[2].getCamelCaseName()}</h1>
   						</td>  					
   					</tr>	
   				</table>
