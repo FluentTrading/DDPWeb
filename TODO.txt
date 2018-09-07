@@ -4,6 +4,7 @@ We are now using the full feed to power this app!
 1. For live score, we cannot only parse the game that are going on as we show info on all three games.
 What we can do, it parse the games that are in future but only get the basics (mostly from Schedule)
            
+         //Also, if the game is not live, game center has no data for it.
     //TODO: improve by checking time not just date           
            
            

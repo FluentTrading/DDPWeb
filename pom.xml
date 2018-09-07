@@ -5,7 +5,7 @@
   <groupId>com.ddp.nfl</groupId>
   <artifactId>ddp-web</artifactId>
   <packaging>war</packaging>
-  <version>0.0.2</version>
+  <version>0.0.3</version>
   <name>DDP NFL Web</name>
     
   

@@ -32,17 +32,16 @@ public final class LiteScoreParser{
         for( Entry<String, Schedule> entry: gameScheduleMap.entrySet( ) ){
             
             Schedule schedule   = entry.getValue( );
-            boolean isPlaying   = isGameBeingPlayedNow( schedule );
-            LiveScore liveScore = null;
+            LiveScore liveScore = parseLiveScore( entry.getKey( ), schedule );
             
-            if( isPlaying ) {
-                liveScore = parseLiveScore( entry.getKey( ), schedule ); 
-            }else {
+            //Most likely the game is not being played right now
+            if( liveScore == null ){
                 liveScore = miniParse( entry.getKey( ), schedule );
             } 
             
             if( liveScore != null ) {
-                LOGGER.info( "{}", liveScore );
+                //Muting for now
+                //LOGGER.info( "{}", liveScore );
                 scores.put( liveScore.getHomeTeam( ), liveScore );
                 scores.put( liveScore.getAwayTeam( ), liveScore );
             }
@@ -52,15 +51,7 @@ public final class LiteScoreParser{
         return scores;
         
     }
-    
 
-    //TODO: improve by checking time not just date
-    protected final static boolean isGameBeingPlayedNow( Schedule schedule ) {
-        LocalDate gameTime = schedule.getGameDate( );
-        boolean gameToday  =  DAYS.between(LocalDate.now( ), gameTime) == ZERO;
-        
-        return gameToday;        
-    }
 
 
     public final static LiveScore parseLiveScore( String gameId, Schedule schedule ){
@@ -73,7 +64,11 @@ public final class LiteScoreParser{
             LOGGER.info("Parsing live score from {}", gameDataUrl);
             
             String gameDayData  = readUrl( gameDataUrl );
-            liveScore           = parseLiveScore( gameId, schedule, gameDayData );
+            boolean isDataValid = isValid( gameDayData );
+            
+            if( isDataValid ) {
+                liveScore       = parseLiveScore( gameId, schedule, gameDayData );
+            }
                                     
         }catch( FileNotFoundException fe ) {
             //This will warn if the url has no data (if we run this before data has been published by NFL)
