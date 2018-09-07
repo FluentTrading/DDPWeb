@@ -6,9 +6,13 @@ What we can do, it parse the games that are in future but only get the basics (m
            
          //Also, if the game is not live, game center has no data for it.
     //TODO: improve by checking time not just date           
-           
-           
+               
 2. Cache the data for games that has finished for the week.
+Should we pull this data in the background Thread??
+
+Where do we get team record from??
+
+
 3. Cash Manager is throwing an error, commented out for now.
 4. We now have access to a lot more info, see what can be used.
 

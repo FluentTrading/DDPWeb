@@ -41,7 +41,9 @@ public final class DDPUtil{
     
     public final static String PICK_RESULT_KEY      = "PickResultKey";
     public final static String PICK_MANAGER_KEY     = "PickManagerKey";
-        
+    
+    public final static String LIVE_SCORE_PARSER_KEY= "LiveScoreParaserKey";
+    
     public final static String GRR_IMG_PREFIX       = "images/GRR/GRR";
     public final static String GRR_IMG_POSTFIX      = ".gif";
     public final static String BLINK_GREEN_DOT      = "<span class=\"dotBlink\"/>";

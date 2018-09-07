@@ -9,6 +9,7 @@ import javax.servlet.annotation.*;
 
 import com.ddp.nfl.web.core.*;
 import com.ddp.nfl.web.database.*;
+import com.ddp.nfl.web.parser.*;
 import com.ddp.nfl.web.pickem.*;
 import com.ddp.nfl.web.schedule.*;
 import com.ddp.nfl.web.winnings.*;
@@ -18,7 +19,7 @@ import static com.ddp.nfl.web.util.DDPUtil.*;
 
 
 @WebListener
-public final class DDPContextListener implements ServletContextListener{
+public final class AppContextListener implements ServletContextListener{
     
     private final static String APP_VERSION_KEY = "APP_VERSION";
     private final static String NFL_SEASON_KEY  = "NFL_SEASON_TYPE";
@@ -45,11 +46,22 @@ public final class DDPContextListener implements ServletContextListener{
         DBService service       = createDBService( ddpMeta, context );
         ScheduleManager schMan  = parseSchedule( ddpMeta, service, context );
         
+        LiveScoreParser parser  = createLiveScoreParser( schMan, context );
         createPickManager( ddpMeta, schMan, service, context );
-        //prepareWinningsCash( ddpMeta, service, context );
+        //prepareWinningsCash( ddpMeta, parser, service, context );
                                 
         LOGGER.info( "DDP NFL Servlet context initialized!");
         
+    }
+
+
+
+    protected final LiveScoreParser createLiveScoreParser( ScheduleManager schMan, ServletContext context  ) {
+        LiveScoreParser scoreParser = new LiveScoreParser( schMan );
+        context.setAttribute( LIVE_SCORE_PARSER_KEY, scoreParser );
+        LOGGER.info("Successfully created ScoreParser with key [{}]{}", LIVE_SCORE_PARSER_KEY, PRINT_NEWLINE);
+   
+        return scoreParser;
     }
 
 
@@ -62,10 +74,10 @@ public final class DDPContextListener implements ServletContextListener{
     }
     
     
-    protected final void prepareWinningsCash( DDPMeta ddpMeta, DBService service, ServletContext context ){
+    protected final void prepareWinningsCash( DDPMeta ddpMeta, LiveScoreParser parser, DBService service, ServletContext context ){
         LOGGER.info("Attempting to calculate cash winnngs.");
         
-        CashManager cashManager     = new CashManager( ddpMeta, service );
+        CashManager cashManager     = new CashManager( ddpMeta, parser, service );
         Map<Integer, CashWin> winMap= cashManager.getWinnings( );
         boolean isWinningsValid     = (winMap != null && !winMap.isEmpty( ));
         if( isWinningsValid ){

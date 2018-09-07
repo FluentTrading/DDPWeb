@@ -9,6 +9,7 @@ public enum ResultCode {
     SEASON_NOT_STARTED,
     PICKS_NOT_MADE,
     SCHEDULE_MISSING,
+    SCORE_PARSER_MISSING,
     SUCCESS,
     UNKNOWN;
     

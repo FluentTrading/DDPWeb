@@ -34,7 +34,6 @@ public final class LiveScore{
     private final int togo;
     private final int down;
     private final String note;
-    private final String stadium;
     private final SummaryManager summary; 
     
     private final static int    DATE_LENGTH     = 8;
@@ -46,7 +45,7 @@ public final class LiveScore{
                             int awayScore,
                             String teamPossession, String timeRemaining, 
                             boolean isRedzone, String rawQuarterStr,
-                            String yl, int togo, int down, String  note, String  stadium, SummaryManager summary ){
+                            String yl, int togo, int down, String  note, SummaryManager summary ){
         
         this.gameId         = gameId;
         this.schedule       = schedule;
@@ -65,7 +64,6 @@ public final class LiveScore{
         this.togo           = togo;
         this.down           = down;
         this.note           = note;
-        this.stadium        = stadium;
         this.summary        = summary;
     }
     
@@ -165,18 +163,13 @@ public final class LiveScore{
     }
 
 
-    public final String getStadium( ) {
-        return stadium;
-    }
-
-
     public final SummaryManager getSummary( ) {
         return summary;
     }
 
     
   
-    protected final String createFormattedGameTime( String gameDay, LocalDate gameDate, String gameTime ){
+    protected final static String createFormattedGameTime( String gameDay, LocalDate gameDate, String gameTime ){
         
         StringBuilder builder   = new StringBuilder( 32 );
         
@@ -264,39 +257,32 @@ public final class LiveScore{
         
         builder.append( "LiveScore[")
         .append( "GameId=" ).append( gameId );
-        
+                        
         if(notStarted ) {
-            builder.append( ", StartTime=" ).append( getGameScheduleTime( ) )
-            .append( ", Home=" ).append( getHomeTeam( ) )
-            .append( ", Away=" ).append( getAwayTeam( ) );
+            builder.append( ", NotStarted=" ).append( notStarted ).append( ", StartTime=" ).append( getGameScheduleTime( ) )
+            .append( ", Home=" ).append( getHomeTeam( ).getCamelCaseName( ) )
+            .append( ", Away=" ).append( getAwayTeam( ).getCamelCaseName( ) );
         }
 
-        if( isFinished ) {
-            builder.append( ", Home=" ).append( getHomeTeam( ) ).append( ", HomeScore=" ).append( homeScore )
-            .append( ", Away=" ).append( getAwayTeam( ) ).append( ", AwayScore=" ).append( awayScore )
-            .append( " Game Over!" );
-        }
-        
-        if ( isPlaying ) {
-            builder.append( ", Home=" ).append( getHomeTeam( )).append( ", HomeScore=" ).append( homeScore )
-            .append( ", Away=" ).append( getAwayTeam( ) ).append( ", AwayScore=" ).append( awayScore )
-            .append( ", Possession=" ).append( teamPossession )
-            .append( ", quarter=" ).append( quarter )
-            .append( ", TimeLeft=" ).append( timeRemaining )
-            .append( ", isRedzone=" ).append( isRedzone )
-            .append( ", yl=" ).append( yl ).append( ", togo=" ).append( togo )
-            .append( ", down=" ).append( down ).append( ", note=" ).append( note ).append( ", stadium=" )
-            .append( stadium );
+        builder.append( ", IsFinished=" ).append( isFinished )
+        .append( ", IsPlaying=" ).append( isPlaying )
+        .append( ", Home=" ).append( getHomeTeam( ).getCamelCaseName( )).append( ", HomeScore=" ).append( homeScore )
+        .append( ", Away=" ).append( getAwayTeam( ).getCamelCaseName( ) ).append( ", AwayScore=" ).append( awayScore )
+        .append( ", Possession=" ).append( teamPossession )
+        .append( ", quarter=" ).append( quarter )
+        .append( ", TimeLeft=" ).append( timeRemaining )
+        .append( ", isRedzone=" ).append( isRedzone )
+        .append( ", yl=" ).append( yl ).append( ", togo=" ).append( togo )
+        .append( ", down=" ).append( down ).append( ", note=" ).append( note );
             
-            if( summary != null ) {
-                builder.append( ", summary=" ).append( summary );
-            }
+        if( summary != null ) {
+            builder.append( summary );
+        }
              
-            builder.append( "]" );
+        builder.append( "]" );
             
-        }
-        
         return builder.toString( );
+        
     }
     
 

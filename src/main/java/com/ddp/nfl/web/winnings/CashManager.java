@@ -14,13 +14,15 @@ import static com.ddp.nfl.web.util.DDPUtil.*;
 
 public final class CashManager{
     
+    private final LiveScoreParser parser;
     private final Map<Integer, CashWin> winnings;
     
     private final static String NAME        = CashManager.class.getSimpleName( );
     private final static Logger LOGGER      = LoggerFactory.getLogger( NAME );
            
     
-    public CashManager(  DDPMeta ddpMeta, DBService service ) {
+    public CashManager(  DDPMeta ddpMeta, LiveScoreParser parser, DBService service ) {
+        this.parser     = parser;
         this.winnings   = prepareWinnerPerWeek( ddpMeta, service );
     }
   
@@ -137,7 +139,9 @@ public final class CashManager{
         for( int week : weekArray ){
             String scheduleUrl  = ScheduleManager.createScheduleUrl( seasonType, nflYear, week );
             Map<String, Schedule> scheduleMap = ScheduleManager.parseSchedule( scheduleUrl, teamMap );
-            Map<NFLTeam, LiveScore> liveScore = LiteScoreParser.parseLiveScore( scheduleMap );
+            
+            LOGGER.info( "Parsing live data to calculate winnings." );
+            Map<NFLTeam, LiveScore> liveScore = parser.parseLiveScore( scheduleMap );
             resultPerWeek.put( week, liveScore.values( ) );
         }
         
@@ -191,6 +195,7 @@ public final class CashManager{
     }
 
     
+    /*
     public static void main( String[] args ){
 
         System.setProperty("RDS_USERNAME", "ddpweb" );
@@ -206,5 +211,6 @@ public final class CashManager{
         System.out.println( winnings );
             
     }
+    */
     
 }
