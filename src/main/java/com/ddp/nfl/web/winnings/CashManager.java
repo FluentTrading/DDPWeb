@@ -7,7 +7,7 @@ import java.util.Map.*;
 import com.ddp.nfl.web.core.*;
 import com.ddp.nfl.web.database.*;
 import com.ddp.nfl.web.parser.*;
-
+import com.ddp.nfl.web.schedule.*;
 
 import static com.ddp.nfl.web.util.DDPUtil.*;
 
@@ -132,10 +132,12 @@ public final class CashManager{
         int nflYear         = ddpMeta.getYear( );
         String seasonType   = ddpMeta.getSeasonType( );
         Map<Integer, Collection<LiveScore>> resultPerWeek = new HashMap<>( );
+        Map<String, NFLTeam> teamMap = service.getAllTeams( );
         
         for( int week : weekArray ){
-            String scheduleUrl  = LiveScoreParser.createLiveScoreUrl( seasonType, nflYear, week );
-            Map<NFLTeam, LiveScore> liveScore = LiveScoreParser.parseLiveScore( scheduleUrl, service.getAllTeams( ) );
+            String scheduleUrl  = ScheduleManager.createScheduleUrl( seasonType, nflYear, week );
+            Map<String, Schedule> scheduleMap = ScheduleManager.parseSchedule( scheduleUrl, teamMap );
+            Map<NFLTeam, LiveScore> liveScore = LiteScoreParser.parseLiveScore( scheduleMap );
             resultPerWeek.put( week, liveScore.values( ) );
         }
         

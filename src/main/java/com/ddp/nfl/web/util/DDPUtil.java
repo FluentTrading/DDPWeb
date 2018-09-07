@@ -21,6 +21,7 @@ public final class DDPUtil{
     public final static String EMPTY                = "";
     public final static String COMMA                = ",";
     public final static String SPACE                = " ";
+    public final static String SPACE_DASH           = " - ";
     public final static String COLON                = ":";    
     public final static String PM_TIME              = "PM";
     public final static String L_BRACKET            = "[";
@@ -58,13 +59,6 @@ public final class DDPUtil{
     public final static DateTimeFormatter _YYYYMMDDD= DateTimeFormatter.ofPattern("yyyyMMdd");
     public final static DateTimeFormatter _HH_MM    = DateTimeFormatter.ofPattern("hh:mm");
     
-    
-    //TODO: Replace with real link
-    public final static String createLiveScoreUrl( DDPMeta meta ) {
-        //return "http://localhost:8080/web/testdata/Live_Score_Reg_2018_1.xml";
-        return LiveScoreParser.createLiveScoreUrl( meta.getSeasonType( ), meta.getYear( ), meta.getWeek( ) );
-    }
-        
     
     public final static boolean isValid( String data ){
         return !( data == null || data.trim( ).isEmpty( ) );            

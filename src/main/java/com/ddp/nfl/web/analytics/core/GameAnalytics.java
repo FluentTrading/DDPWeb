@@ -117,6 +117,13 @@ public final class GameAnalytics{
     public final String getStadium( ) {
         return stadium;
     }
+
+    @Override
+    public String toString( ) {
+        StringBuilder builder = new StringBuilder( );
+        builder.append( "GameAnalytics [gameId=" ).append( gameId ).append( ", nextupdate=" ).append( nextupdate ).append( ", home=" ).append( home ).append( ", away=" ).append( away ).append( ", scrsummary=" ).append( scrsummary ).append( ", weather=" ).append( weather ).append( ", media=" ).append( media ).append( ", yl=" ).append( yl ).append( ", qtr=" ).append( qtr ).append( ", note=" ).append( note ).append( ", down=" ).append( down ).append( ", togo=" ).append( togo ).append( ", redzone=" ).append( redzone ).append( ", clock=" ).append( clock ).append( ", posteam=" ).append( posteam ).append( ", stadium=" ).append( stadium ).append( "]" );
+        return builder.toString( );
+    }
   
    
 }

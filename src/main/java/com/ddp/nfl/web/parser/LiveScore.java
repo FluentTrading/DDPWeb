@@ -6,24 +6,22 @@ import org.slf4j.*;
 
 import java.time.*;
 
+import com.ddp.nfl.web.analytics.summary.*;
 import com.ddp.nfl.web.core.*;
+import com.ddp.nfl.web.schedule.*;
 
 
 
 public final class LiveScore{
     
     private final String gameId;
-    private final LocalDate gameDate;
-    private final String gameDateTime;
-        
+    private final Schedule schedule;
+            
     private final boolean notStarted;
     private final boolean isPlaying;
     private final boolean isFinished;
     
-    private final NFLTeam home;
     private final int homeScore;
-    
-    private final NFLTeam away;
     private final int awayScore;
     
     private final String teamPossession;
@@ -32,31 +30,43 @@ public final class LiveScore{
     private final boolean isRedzone;
     private final String quarter;
     
-    private final static int    DATE_LENGTH     = 8;
-    private final static Logger LOGGER          = LoggerFactory.getLogger( "MatchScore" );
+    private final String yl;
+    private final int togo;
+    private final int down;
+    private final String note;
+    private final String stadium;
+    private final SummaryManager summary; 
     
-    public LiveScore(  String gameId, String gameEid, String gameDay, String gameTime,
+    private final static int    DATE_LENGTH     = 8;
+    private final static Logger LOGGER          = LoggerFactory.getLogger( "LiveScore" );
+    
+    public LiveScore(  String gameId, Schedule schedule,
                             boolean notStarted, boolean isPlaying, boolean isFinished, 
-                            NFLTeam home, int homeScore, 
-                            NFLTeam away, int awayScore,
+                            int homeScore, 
+                            int awayScore,
                             String teamPossession, String timeRemaining, 
-                            boolean isRedzone, String rawQuarterStr ){
+                            boolean isRedzone, String rawQuarterStr,
+                            String yl, int togo, int down, String  note, String  stadium, SummaryManager summary ){
         
         this.gameId         = gameId;
-        this.gameDate       = parseGameDate( gameEid );
-        this.gameDateTime   = createFormattedGameTime( gameDay, gameDate, gameTime );
+        this.schedule       = schedule;
+        
         this.notStarted     = notStarted;
         this.isPlaying      = isPlaying;
         this.isFinished     = isFinished;
-        this.home           = home;
         this.homeScore      = homeScore;
-        this.away           = away;
         this.awayScore      = awayScore;
         this.timeRemaining  = timeRemaining;
         this.teamPossession = teamPossession;
         this.isRedzone      = isRedzone;
-        this.quarter        = parseQuarter( notStarted, isFinished, rawQuarterStr, gameDay, gameTime, timeRemaining );
+        this.quarter        = parseQuarter( notStarted, isFinished, schedule, rawQuarterStr, timeRemaining );
         
+        this.yl             = yl;
+        this.togo           = togo;
+        this.down           = down;
+        this.note           = note;
+        this.stadium        = stadium;
+        this.summary        = summary;
     }
     
 
@@ -65,8 +75,8 @@ public final class LiveScore{
     }
 
       
-    public final String getGameDateTime( ) {
-        return gameDateTime;
+    public final String getGameScheduleTime( ) {
+        return schedule.getGameScheduleTime( );
     }
     
 
@@ -86,7 +96,7 @@ public final class LiveScore{
 
     
     public final NFLTeam getHomeTeam( ){
-        return home;
+        return schedule.getHomeTeam( );
     }
 
     
@@ -96,7 +106,7 @@ public final class LiveScore{
 
     
     public final NFLTeam getAwayTeam( ){
-        return away;
+        return schedule.getAwayTeam( );
     }
 
     
@@ -124,6 +134,47 @@ public final class LiveScore{
         return quarter;
     }
        
+
+    public final boolean isNotStarted( ) {
+        return notStarted;
+    }
+
+
+    public final String getTeamPossession( ) {
+        return teamPossession;
+    }
+
+
+    public final String getYl( ) {
+        return yl;
+    }
+
+
+    public final int getTogo( ) {
+        return togo;
+    }
+
+
+    public final int getDown( ) {
+        return down;
+    }
+
+
+    public final String getNote( ) {
+        return note;
+    }
+
+
+    public final String getStadium( ) {
+        return stadium;
+    }
+
+
+    public final SummaryManager getSummary( ) {
+        return summary;
+    }
+
+    
   
     protected final String createFormattedGameTime( String gameDay, LocalDate gameDate, String gameTime ){
         
@@ -169,14 +220,14 @@ public final class LiveScore{
     
     }
     
+
     
-    public final static String parseQuarter( boolean notStarted, boolean isFinished, 
-                                            String quarterStr, String gameDay, String gameTime, 
-                                            String timeRemaining ) {
+    public final static String parseQuarter( boolean notStarted, boolean isFinished, Schedule schedule,
+                                            String quarterStr, String timeRemaining ) {
 
         //SHow the time when the game starts
         if( notStarted ){
-            return gameDay + SPACE + gameTime;
+            return schedule.getGameDayTime( );
         }
 
         if( isFinished ){
@@ -188,56 +239,66 @@ public final class LiveScore{
         }
 
         if( quarterStr.equalsIgnoreCase("1")){
-            return quarterStr + " QT " + timeRemaining;
+            return "Q" + quarterStr + SPACE_DASH + timeRemaining;
 
         }else if( quarterStr.equalsIgnoreCase("2")){
-            return quarterStr + " QT " + timeRemaining;
+            return "Q" + quarterStr + SPACE_DASH + timeRemaining;
 
         }else if( quarterStr.equalsIgnoreCase("3")){
-            return quarterStr + " QT " + timeRemaining;
+            return "Q" + quarterStr + SPACE_DASH + timeRemaining;
 
         }else if( quarterStr.equalsIgnoreCase("4")){            
-            return quarterStr + " QT " + timeRemaining;
+            return "Q" + quarterStr + SPACE_DASH + timeRemaining;
 
         }else{
             return "O.T";
         }
 
     }
-    
+
 
     @Override
     public final String toString( ){
         
-        StringBuilder builder = new StringBuilder( 128 );
+        StringBuilder builder = new StringBuilder( 256 );
         
         builder.append( "LiveScore[")
-        .append( "GameId=" ).append( gameId )
-        .append( ", Home=" ).append( home.getUpperCaseName( ) ).append( ", HomeScore=" ).append( homeScore )
-        .append( ", Away=" ).append( away.getUpperCaseName( ) ).append( ", AwayScore=" ).append( awayScore );
+        .append( "GameId=" ).append( gameId );
         
         if(notStarted ) {
-            builder.append( ", StartTime=" ).append( gameDateTime );
+            builder.append( ", StartTime=" ).append( getGameScheduleTime( ) )
+            .append( ", Home=" ).append( getHomeTeam( ) )
+            .append( ", Away=" ).append( getAwayTeam( ) );
+        }
+
+        if( isFinished ) {
+            builder.append( ", Home=" ).append( getHomeTeam( ) ).append( ", HomeScore=" ).append( homeScore )
+            .append( ", Away=" ).append( getAwayTeam( ) ).append( ", AwayScore=" ).append( awayScore )
+            .append( " Game Over!" );
         }
         
-        if( isPlaying ) {
-            builder.append( ", Possession=" ).append( teamPossession )
+        if ( isPlaying ) {
+            builder.append( ", Home=" ).append( getHomeTeam( )).append( ", HomeScore=" ).append( homeScore )
+            .append( ", Away=" ).append( getAwayTeam( ) ).append( ", AwayScore=" ).append( awayScore )
+            .append( ", Possession=" ).append( teamPossession )
             .append( ", quarter=" ).append( quarter )
             .append( ", TimeLeft=" ).append( timeRemaining )
-            .append( ", isRedzone=" ).append( isRedzone );
+            .append( ", isRedzone=" ).append( isRedzone )
+            .append( ", yl=" ).append( yl ).append( ", togo=" ).append( togo )
+            .append( ", down=" ).append( down ).append( ", note=" ).append( note ).append( ", stadium=" )
+            .append( stadium );
+            
+            if( summary != null ) {
+                builder.append( ", summary=" ).append( summary );
+            }
+             
+            builder.append( "]" );
+            
         }
-        
-        if( isFinished ) {
-            builder.append( ", quarter=" ).append( quarter );
-        }
-        
-        builder.append( "]" );
         
         return builder.toString( );
     }
     
-        
-
 
 }
 

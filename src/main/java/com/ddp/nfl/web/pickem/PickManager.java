@@ -6,6 +6,7 @@ import java.util.*;
 import com.ddp.nfl.web.core.*;
 import com.ddp.nfl.web.database.*;
 import com.ddp.nfl.web.parser.*;
+import com.ddp.nfl.web.schedule.*;
 
 import static com.ddp.nfl.web.util.DDPUtil.*;
 
@@ -15,6 +16,8 @@ public final class PickManager{
     private final DDPMeta meta;
     private final int[] unpicked;
     private final DBService service;
+    private final ScheduleManager schMan;
+    
     private final Map<String, NFLTeam> nflTeams;
     private final Map<String, NFLTeam> nflTeamsByNickName;
     private final Map<String, DDPPlayer> players;
@@ -23,8 +26,9 @@ public final class PickManager{
     private final static Logger LOGGER          = LoggerFactory.getLogger( "PickManager" );
     
     
-    public PickManager( DDPMeta meta, DBService service ){
+    public PickManager( DDPMeta meta, ScheduleManager schMan, DBService service ){
         this.meta       = meta;
+        this.schMan     = schMan;
         this.service    = service;
         this.nflTeams   = new TreeMap<>( service.getAllTeams( ));
         this.nflTeamsByNickName = createMapping( nflTeams );
@@ -263,12 +267,13 @@ public final class PickManager{
         
         try {
         
-            String liveScoreUrlForWeek= LiveScoreParser.createLiveScoreUrl( meta.getSeasonType( ), meta.getYear( ), pickForWeek );
-            Collection<LiveScore> map= LiveScoreParser.parseLiveScore( liveScoreUrlForWeek, teamMap ).values( );
+            LOGGER.info("Parsing schedule for week [{}] to figure out playing teams!", pickForWeek);
+            String scheduleUrlForWeek   = ScheduleManager.createScheduleUrl( meta.getSeasonType( ), meta.getYear( ), pickForWeek );
+            Collection<Schedule> map    = ScheduleManager.parseSchedule( scheduleUrlForWeek, teamMap ).values( );
             
-            for( LiveScore score : map ) {
-                playingTeams.add( score.getHomeTeam( ) );
-                playingTeams.add( score.getAwayTeam( ) );
+            for( Schedule schedule : map ) {
+                playingTeams.add( schedule.getHomeTeam( ) );
+                playingTeams.add( schedule.getAwayTeam( ) );
             }
             
         }catch( Exception e ) {

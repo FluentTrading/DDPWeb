@@ -71,7 +71,7 @@ public final class LoginBean {
         StringBuilder builder = new StringBuilder( );
         builder.append( "LoginBean [isValid=" ).append( isValid );
         if( player != null ) {
-            builder.append( ", player=" ).append( player ).append( SPACE );
+            builder.append( ", player=" ).append( player.getName( ) ).append( SPACE );
         }
         
         builder.append( userInfo );

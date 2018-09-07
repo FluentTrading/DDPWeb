@@ -29,13 +29,12 @@ public final class HomeFactory{
         
         try{
                         
-            String abbr         = safeParse( jObject, "abbr" );
+            String teamName     = safeParse( jObject, "abbr" );
+            teamName            = isValid( teamName ) ? teamName.toLowerCase( ) : EMPTY;
             int to              = safeParseInt( jObject, "to" );
             Map<String, Integer> sMap = parseScores( jObject );
             String players      = safeParse( jObject, "players" );
-            StatsManager stats  = parseStats( jObject );
-            
-            team                = new TeamInfo( isHome, abbr, to, stats, sMap, players );
+            team                = new TeamInfo( isHome, teamName, to, sMap, players );
             
         }catch(Exception e ){
             LOGGER.warn( "FAILED to parse TeamAnalytics for [{}]", jObject, e );
@@ -91,10 +90,11 @@ public final class HomeFactory{
         try{
             
             JsonObject passing  = gameObj.getAsJsonObject( "passing" );
-            
-            for( Entry<String, JsonElement> playerEntry : passing.entrySet( ) ) {
-                Passing pass    = GSON_INSTANCE.fromJson( playerEntry.getValue( ), Passing.class );
-                map.put( playerEntry.getKey( ), pass );
+            if( passing != null ) {
+                for( Entry<String, JsonElement> playerEntry : passing.entrySet( ) ) {
+                    Passing pass    = GSON_INSTANCE.fromJson( playerEntry.getValue( ), Passing.class );
+                    map.put( playerEntry.getKey( ), pass );
+                }
             }
             
         }catch(Exception e ){
@@ -111,10 +111,12 @@ public final class HomeFactory{
         
         try{
             
-            JsonObject passing  = gameObj.getAsJsonObject( "rushing" );
+            JsonObject rushing  = gameObj.getAsJsonObject( "rushing" );
             
-            for( Entry<String, JsonElement> playerEntry : passing.entrySet( ) ) {
-                map.put( playerEntry.getKey( ), GSON_INSTANCE.fromJson( playerEntry.getValue( ), Rushing.class ) );
+            if( rushing != null ) {
+                for( Entry<String, JsonElement> playerEntry : rushing.entrySet( ) ) {
+                    map.put( playerEntry.getKey( ), GSON_INSTANCE.fromJson( playerEntry.getValue( ), Rushing.class ) );
+                }
             }
             
         }catch(Exception e ){
@@ -132,9 +134,10 @@ public final class HomeFactory{
         try{
             
             JsonObject receiving  = gameObj.getAsJsonObject( "receiving" );
-            
-            for( Entry<String, JsonElement> playerEntry : receiving.entrySet( ) ) {
-                map.put( playerEntry.getKey( ), GSON_INSTANCE.fromJson( playerEntry.getValue( ), Receiving.class ) );
+            if( receiving != null ) {
+                for( Entry<String, JsonElement> playerEntry : receiving.entrySet( ) ) {
+                    map.put( playerEntry.getKey( ), GSON_INSTANCE.fromJson( playerEntry.getValue( ), Receiving.class ) );
+                }
             }
             
         }catch(Exception e ){
@@ -151,10 +154,11 @@ public final class HomeFactory{
         
         try{
             
-            JsonObject receiving  = gameObj.getAsJsonObject( "fumbles" );
-            
-            for( Entry<String, JsonElement> playerEntry : receiving.entrySet( ) ) {
-                map.put( playerEntry.getKey( ), GSON_INSTANCE.fromJson( playerEntry.getValue( ), Fumbles.class ) );
+            JsonObject fumbles  = gameObj.getAsJsonObject( "fumbles" );
+            if( fumbles != null ) {
+                for( Entry<String, JsonElement> playerEntry : fumbles.entrySet( ) ) {
+                    map.put( playerEntry.getKey( ), GSON_INSTANCE.fromJson( playerEntry.getValue( ), Fumbles.class ) );
+                }
             }
             
         }catch(Exception e ){
@@ -171,10 +175,11 @@ public final class HomeFactory{
         
         try{
             
-            JsonObject receiving  = gameObj.getAsJsonObject( "kicking" );
-            
-            for( Entry<String, JsonElement> playerEntry : receiving.entrySet( ) ) {
-                map.put( playerEntry.getKey( ), GSON_INSTANCE.fromJson( playerEntry.getValue( ), Kicking.class ) );
+            JsonObject kicking  = gameObj.getAsJsonObject( "kicking" );
+            if( kicking != null ) {
+                for( Entry<String, JsonElement> playerEntry : kicking.entrySet( ) ) {
+                    map.put( playerEntry.getKey( ), GSON_INSTANCE.fromJson( playerEntry.getValue( ), Kicking.class ) );
+                }
             }
             
         }catch(Exception e ){
@@ -191,10 +196,11 @@ public final class HomeFactory{
         
         try{
             
-            JsonObject receiving  = gameObj.getAsJsonObject( "punting" );
-            
-            for( Entry<String, JsonElement> playerEntry : receiving.entrySet( ) ) {
-                map.put( playerEntry.getKey( ), GSON_INSTANCE.fromJson( playerEntry.getValue( ), Punting.class ) );
+            JsonObject punting  = gameObj.getAsJsonObject( "punting" );
+            if( punting != null ) {
+                for( Entry<String, JsonElement> playerEntry : punting.entrySet( ) ) {
+                    map.put( playerEntry.getKey( ), GSON_INSTANCE.fromJson( playerEntry.getValue( ), Punting.class ) );
+                }
             }
             
         }catch(Exception e ){
@@ -211,10 +217,11 @@ public final class HomeFactory{
         
         try{
             
-            JsonObject receiving  = gameObj.getAsJsonObject( "kickret" );
-            
-            for( Entry<String, JsonElement> playerEntry : receiving.entrySet( ) ) {
-                map.put( playerEntry.getKey( ), GSON_INSTANCE.fromJson( playerEntry.getValue( ), Kickret.class ) );
+            JsonObject kickret  = gameObj.getAsJsonObject( "kickret" );
+            if( kickret != null ) {
+                for( Entry<String, JsonElement> playerEntry : kickret.entrySet( ) ) {
+                    map.put( playerEntry.getKey( ), GSON_INSTANCE.fromJson( playerEntry.getValue( ), Kickret.class ) );
+                }
             }
             
         }catch(Exception e ){
@@ -231,10 +238,11 @@ public final class HomeFactory{
         
         try{
             
-            JsonObject receiving  = gameObj.getAsJsonObject( "puntret" );
-            
-            for( Entry<String, JsonElement> playerEntry : receiving.entrySet( ) ) {
-                map.put( playerEntry.getKey( ), GSON_INSTANCE.fromJson( playerEntry.getValue( ), Puntret.class ) );
+            JsonObject puntret  = gameObj.getAsJsonObject( "puntret" );
+            if( puntret != null ) {
+                for( Entry<String, JsonElement> playerEntry : puntret.entrySet( ) ) {
+                    map.put( playerEntry.getKey( ), GSON_INSTANCE.fromJson( playerEntry.getValue( ), Puntret.class ) );
+                }
             }
             
         }catch(Exception e ){

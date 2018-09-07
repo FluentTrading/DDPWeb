@@ -72,7 +72,7 @@ public class LoginServlet extends HttpServlet{
         
 
     protected final void handleSuccess( LoginBean loginBean, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        LOGGER.info( "Successfully logged in {} [{}]", loginBean.getUserInfo( ).getUserName( ), loginBean );
+        LOGGER.info( "Successfully logged in {}", loginBean );
         request.getSession( ).setAttribute( LOGIN_RESULT_KEY, loginBean );
         response.sendRedirect( request.getContextPath() + GAME_SERVLET_LINK );
     }

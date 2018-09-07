@@ -4,11 +4,14 @@
 <%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xml:lang="en" xmlns= "http://www.w3.org/1999/xhtml">
 
 <head>
+	
 	<meta charset="UTF-8">
 	<meta http-equiv="refresh" content="45"/>
+	<meta http-equiv="Content-Language" content="en">
+	
 	<title>|| DDP NFL Web ||</title>
 	<link rel="stylesheet" type="text/css" href="css/Login.css">
 	<link rel="stylesheet" type="text/css" href="css/DDPStyle.css">
@@ -244,7 +247,7 @@
 										<td align="center" width="15%"></td>
   										
   										<td align="left">
-    										${entry.getGameDateTime()}
+    										${entry.getGameScheduleTime()}
 	   									</td>
 	   									
     									<td align="right">

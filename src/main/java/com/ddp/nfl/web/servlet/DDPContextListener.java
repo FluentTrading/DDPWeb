@@ -45,18 +45,17 @@ public final class DDPContextListener implements ServletContextListener{
         DBService service       = createDBService( ddpMeta, context );
         ScheduleManager schMan  = parseSchedule( ddpMeta, service, context );
         
-        createPickManager( ddpMeta, service, context );
-        prepareWinningsCash( ddpMeta, service, context );
-        createGameCenter( schMan, context );
-                        
+        createPickManager( ddpMeta, schMan, service, context );
+        //prepareWinningsCash( ddpMeta, service, context );
+                                
         LOGGER.info( "DDP NFL Servlet context initialized!");
         
     }
 
 
 
-    protected final void createPickManager( DDPMeta meta, DBService service, ServletContext context ){
-        PickManager pick    = new PickManager( meta, service );
+    protected final void createPickManager( DDPMeta meta, ScheduleManager schMan, DBService service, ServletContext context ){
+        PickManager pick    = new PickManager( meta, schMan, service );
         context.setAttribute( PICK_MANAGER_KEY, pick );
         LOGGER.info("Successfully created PickManager with key [{}]{}", PICK_MANAGER_KEY, PRINT_NEWLINE);
         
@@ -73,16 +72,7 @@ public final class DDPContextListener implements ServletContextListener{
             context.setAttribute( WINNINGS_MAP_KEY, winMap );
             LOGGER.info("Successfully stored winnings with key [{}] {}{}", WINNINGS_MAP_KEY, winMap.values( ), PRINT_NEWLINE);
         }
-    }
 
-
-    protected final void createGameCenter( ScheduleManager schMan, ServletContext context ) {
-        PickManager pickManager     = (PickManager) context.getAttribute( PICK_MANAGER_KEY );
-        GameAnalyticsManager manager= new GameAnalyticsManager( schMan.getSchedules( ), pickManager );
-        manager.start( );
-        
-        context.setAttribute( GAME_ANALYTICS_KEY, manager );
-        LOGGER.info("Successfully stored game center manager with key [{}] {}", GAME_ANALYTICS_KEY, PRINT_NEWLINE);        
     }
     
 
@@ -105,7 +95,7 @@ public final class DDPContextListener implements ServletContextListener{
     
 
     protected final ScheduleManager parseSchedule( DDPMeta ddpMeta, DBService service, ServletContext context ){
-        
+        LOGGER.info( "Parsing schedules for Schedule Manager." );
         ScheduleManager manager = new ScheduleManager( ddpMeta, service );
         context.setAttribute( SCHEDULE_KEY, manager );
         

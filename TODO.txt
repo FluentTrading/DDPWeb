@@ -1,6 +1,15 @@
 
-
-What does "p" and "k" mean in the data?
+We are now using the full feed to power this app!
+=================================================
+1. For live score, we cannot only parse the game that are going on as we show info on all three games.
+What we can do, it parse the games that are in future but only get the basics (mostly from Schedule)
+           
+    //TODO: improve by checking time not just date           
+           
+           
+2. Cache the data for games that has finished for the week.
+3. Cash Manager is throwing an error, commented out for now.
+4. We now have access to a lot more info, see what can be used.
 
 
 Rebooting:

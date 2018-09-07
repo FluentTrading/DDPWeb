@@ -10,18 +10,16 @@ public class TeamInfo{
     private final boolean isHome;
     private final String teamAbbr;
     private final int to;
-    private final StatsManager stats;
     private final String players;
     private final Map<String, Integer> scoreMap;
     
     private final static int DEFAULT_SCORE  = 0;
     
     
-    public TeamInfo( boolean isHome, String abbr, int to, StatsManager stats, Map<String, Integer> scoreMap, String players ){
+    public TeamInfo( boolean isHome, String teamName, int to, Map<String, Integer> scoreMap, String players ){
         this.isHome = isHome;
-        this.teamAbbr  = abbr;
+        this.teamAbbr  = teamName;
         this.to     = to;
-        this.stats  = stats;
         this.players= players;
         this.scoreMap = scoreMap;
     }
@@ -40,9 +38,6 @@ public class TeamInfo{
         return to;
     }
 
-    public final StatsManager getStats( ) {
-        return stats;
-    }
 
     public final String getPlayers( ) {
         return players;
@@ -107,8 +102,7 @@ public class TeamInfo{
         
         builder.append( ", To=" ).append( to );
         builder.append( ", Score:" ). append( scoreMap );
-        builder.append( ", Players=" ).append( players );
-        builder.append( ", Stats=" ).append( stats );        
+        builder.append( ", Players=" ).append( players );           
         builder.append( "]" );
         
         return builder.toString( );

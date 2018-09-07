@@ -11,6 +11,7 @@ import com.ddp.nfl.web.core.*;
 import com.ddp.nfl.web.database.*;
 import com.ddp.nfl.web.match.*;
 import com.ddp.nfl.web.parser.*;
+import com.ddp.nfl.web.schedule.*;
 
 import static com.ddp.nfl.web.util.DDPUtil.*;
 import static com.ddp.nfl.web.match.ResultCode.*;
@@ -56,12 +57,29 @@ public class GameServlet extends HttpServlet {
             return;
         }
                 
+        
+        ScheduleManager schManager= (ScheduleManager) context.getAttribute( SCHEDULE_KEY );
+        if( schManager == null ) {
+            handleError( metaInfo, SCHEDULE_MISSING, "Failed to lookup game schedule!", request, response );
+            return;
+        }
+        
+        
+        Map<NFLTeam, LiveScore> map = LiteScoreParser.parseLiveScore( schManager.getSchedules( ) );
+        if( map.isEmpty( ) ) {
+            handleError( metaInfo, PARSE_ERROR, "FAILED to read NFL data!", request, response );
+            return;
+        }
+        
+        /*
         String liveScoreUrl     = createLiveScoreUrl( metaInfo );
         Map<NFLTeam, LiveScore> map = LiveScoreParser.parseLiveScore( liveScoreUrl, service.getAllTeams( ) );
         if( map.isEmpty( ) ) {
             handleError( metaInfo, PARSE_ERROR, "FAILED to read NFL data!", request, response );
             return;
         }
+        */
+        
         
         /*
         GameAnalyticsManager analytics  =  (GameAnalyticsManager) context.getAttribute( GAME_ANALYTICS_KEY );
