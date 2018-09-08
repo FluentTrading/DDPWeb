@@ -6,7 +6,6 @@ import java.net.*;
 import java.util.*;
 import java.util.concurrent.*;
 
-import com.ddp.nfl.web.analytics.drives.*;
 import com.ddp.nfl.web.analytics.home.*;
 import com.ddp.nfl.web.analytics.summary.*;
 import com.ddp.nfl.web.core.*;
@@ -50,14 +49,8 @@ public final class GameAnalyticsManager{
     }
     
     
-    public final String getGameAnalytics( LoginBean loginBean ){
+    public final String getGameAnalytics( String gameId ){
         
-        if( loginBean == null ) {
-            LOGGER.warn( "getGameAnalytics() was called with a null login bean.");
-            return gameHtml.toErrorHtml( );
-        }
-        
-        String gameId           = loginBean.getGameId( );
         if( !isValid(gameId) ) {
             LOGGER.warn( "getGameAnalytics() was called without setting gameId!");
             return gameHtml.toErrorHtml( );
@@ -175,8 +168,7 @@ public final class GameAnalyticsManager{
                 TeamInfo home       = HomeFactory.createHome( gameObj );
                 TeamInfo away       = HomeFactory.createAway( gameObj );
                 SummaryManager summ = ScoreSummaryFactory.create( gameObj );
-                DriveManager drives = (!parseDrives) ? null : DriveFactory.create( gameObj );
-               
+                               
                 String weather      = safeParse( gameObj, "weather" );
                 String media        = safeParse( gameObj, "media" );
                 String yl           = safeParse( gameObj, "yl" );
@@ -191,7 +183,7 @@ public final class GameAnalyticsManager{
                 String posteam      = safeParse( gameObj, "posteam" );
                 String stadium      = safeParse( gameObj, "stadium" );
                 
-                gameCenter          = new GameAnalytics(   gameId, nextUpdate, home, away, drives, 
+                gameCenter          = new GameAnalytics(   gameId, nextUpdate, home, away, 
                                                         summ, weather, media, yl, qtr, note, down,
                                                         togo, redzone, clock, posteam, stadium );
                 

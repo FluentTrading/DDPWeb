@@ -30,7 +30,6 @@ public final class DDPUtil{
     public final static String HTML_SPACE           = "&nbsp";
     public final static String PRINT_NEWLINE        = "\n";
     
-    public final static String LOGIN_RESULT_KEY     = "LoginResultKey";
     public final static String DB_SERVICE_KEY       = "DBServiceKey";
     public final static String META_INFO_KEY        = "MetaInfoKey";
     public final static String SCHEDULE_KEY         = "ScheduleKey";
@@ -38,11 +37,12 @@ public final class DDPUtil{
     public final static String RESULT_MANAGER_KEY   = "ResultManagerKey";
     public final static String GAME_ANALYTICS_KEY   = "GameAnalyticsKey";
     public final static String ANALYTICS_GAME_ID_KEY= "gameId";
+    public final static String UNSET_GAME_ID_VALUE  = "UNSET";
     
     public final static String PICK_RESULT_KEY      = "PickResultKey";
     public final static String PICK_MANAGER_KEY     = "PickManagerKey";
     
-    public final static String LIVE_SCORE_PARSER_KEY= "LiveScoreParaserKey";
+    public final static String LIVE_SCORE_PARSER_KEY= "LiveScoreParserKey";
     
     public final static String GRR_IMG_PREFIX       = "images/GRR/GRR";
     public final static String GRR_IMG_POSTFIX      = ".gif";
@@ -52,7 +52,7 @@ public final class DDPUtil{
     public final static String DDP_GAME_PAGE_LINK   = "/WEB-INF/nfl.jsp";
     public final static String PICK_TAB_LINK        = "/pick.jsp";
     
-    public final static String UNSET_GAME_ID_VALUE  = "UNSET";
+    
     
     public final static Gson GSON_INSTANCE          = new GsonBuilder().create();
     public final static JsonParser JSON_PARSER      = new JsonParser();

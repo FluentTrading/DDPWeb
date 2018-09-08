@@ -37,9 +37,7 @@
 							
 							<td width="150px" align="center">
 								<select class="pickGrid-content" name="weekNumber">
-									<c:forEach var="week" items="${applicationScope[DDPUtil.PICK_MANAGER_KEY].getUnpickedWeeks( )}">
-    									<option value="${week}">${week}</option>
-    								</c:forEach>
+									<option value="${applicationScope[DDPUtil.PICK_MANAGER_KEY].getPickWeek( )}">${applicationScope[DDPUtil.PICK_MANAGER_KEY].getPickWeek( )}</option>
   								</select>  								
 							</td>
 							
@@ -55,8 +53,8 @@
 						
 							<td align="center">
 							  	<select class="pickGrid-content" name="team1">
-							  		<c:forEach var="entry1" items="${applicationScope[DDPUtil.PICK_MANAGER_KEY].getAllTeams().values()}">
-    									<option value="${entry1.getCamelCaseName( )}">${entry1.getCamelCaseName( )}</option>
+							  		<c:forEach var="entry1" items="${applicationScope[DDPUtil.PICK_MANAGER_KEY].getTeamsPlaying()}">
+    									<option value="${entry1}">${entry1}</option>
     								</c:forEach>
     								<option value="" selected>Select</option>
   								</select>
@@ -64,8 +62,8 @@
 							
 							<td align="center"> 
 							  	<select class="pickGrid-content" name="team2">
-							  		<c:forEach var="entry2" items="${applicationScope[DDPUtil.PICK_MANAGER_KEY].getAllTeams().values()}">
-    									<option value="${entry2.getCamelCaseName( )}">${entry2.getCamelCaseName( )}</option>
+							  		<c:forEach var="entry2" items="${applicationScope[DDPUtil.PICK_MANAGER_KEY].getTeamsPlaying()}">
+    									<option value="${entry2}">${entry2}</option>
     								</c:forEach>
     								<option value="" selected>Select</option>
   								</select>
@@ -75,8 +73,8 @@
 							
 							<td align="center">
 							  	<select class="pickGrid-content" name="team3">
-							  		<c:forEach var="entry3" items="${applicationScope[DDPUtil.PICK_MANAGER_KEY].getAllTeams().values()}">
-    									<option value="${entry3.getCamelCaseName( )}">${entry3.getCamelCaseName( )}</option>
+							  		<c:forEach var="entry3" items="${applicationScope[DDPUtil.PICK_MANAGER_KEY].getTeamsPlaying()}">
+    									<option value="${entry3}">${entry3}</option>
     								</c:forEach>
     								<option value="" selected>Select</option>
   								</select>

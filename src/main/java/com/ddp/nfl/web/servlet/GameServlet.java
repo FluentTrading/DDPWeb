@@ -57,14 +57,23 @@ public class GameServlet extends HttpServlet {
         }
                 
         
+        /*
         LiveScoreParser parser= (LiveScoreParser) context.getAttribute( LIVE_SCORE_PARSER_KEY );
         if( parser == null ) {
             handleError( metaInfo, SCORE_PARSER_MISSING, "Failed to lookup score parser!", request, response );
             return;
         }
-        
-        
+                
         Map<NFLTeam, LiveScore> map = parser.parseLiveScore( );
+        if( map.isEmpty( ) ) {
+            handleError( metaInfo, PARSE_ERROR, "FAILED to read NFL data!", request, response );
+            return;
+        }
+        */
+        
+        
+        JsonScoreParser jsonParser= (JsonScoreParser) context.getAttribute( "jsonParser" );
+        Map<NFLTeam, LiveScore> map = jsonParser.parseLiveScore( );
         if( map.isEmpty( ) ) {
             handleError( metaInfo, PARSE_ERROR, "FAILED to read NFL data!", request, response );
             return;

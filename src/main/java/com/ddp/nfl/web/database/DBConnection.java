@@ -106,7 +106,7 @@ public final class DBConnection{
                 DDPPlayer player= new DDPPlayer( playerId, name, nickName, email, deposit );
                 map.put( name,  player );
                 
-                LOGGER.info( "Retrieved Player {}", player );
+                LOGGER.info( "Retrieved {}", player );
             }
             
         }catch( SQLException e ) {
@@ -145,7 +145,7 @@ public final class DBConnection{
                 
                 NFLTeam team    = new NFLTeam( teamId, name, nickName, division, conf, city, state, roster );
                 map.put( team.getLowerCaseName( ),  team );
-                LOGGER.info( "Retrieved Team {}", team );
+                LOGGER.info( "Retrieved {}", team );
             }
             
         }catch( SQLException e ) {

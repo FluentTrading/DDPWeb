@@ -25,20 +25,15 @@ public class AnalyticsServlet extends HttpServlet{
      
     protected final void handleAnalyticsRequest( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
         
-        LoginBean loginBean     = ( LoginBean) request.getSession( ).getAttribute( LOGIN_RESULT_KEY );
-        if( loginBean == null ){
-            handleError( "User must be logged in before executog analytics calls.", request, response );
-            return;
-        }
-        
         String gameId           = request.getParameter( ANALYTICS_GAME_ID_KEY );
         boolean isGameIdUnset   = UNSET_GAME_ID_VALUE.equals( gameId );
         
         if( isGameIdUnset ){
-            handleGameIdUnset( loginBean, request, response );
+            //handleGameIdUnset( request, response );
+            //This will simply close the window now
                  
         }else if( isValid(gameId) ) {
-            handleGameIdSet( gameId, loginBean, request, response );
+            handleGameIdSet( gameId, request, response );
             
         }else {
             LOGGER.warn( "Analytics servlet not called from set/unset buttons.");
@@ -47,30 +42,16 @@ public class AnalyticsServlet extends HttpServlet{
     }
     
     
-    protected final void handleGameIdSet( String gameId, LoginBean loginBean, HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
+    protected final void handleGameIdSet( String gameId, HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
         
-        LOGGER.info( "[{}] has asked to set analytics for gameId [{}]", loginBean.getPlayer( ).getName( ), gameId );
+        LOGGER.info( "User has asked to set analytics for gameId [{}]", gameId );
         
         if( !isValid(gameId) ){
             handleError( "GameId selected is invalid.", request, response );
             return;
         }
         
-        loginBean.setGameId( gameId );
-        LOGGER.info( "Analytics gameId set to [{}] for user [{}]", gameId, loginBean.getPlayer( ).getName( ) );
-
-        handleSuccess( request, response );
-        
-    }
-    
-    
-    protected final void handleGameIdUnset( LoginBean loginBean, HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
-
-        LOGGER.info( "[{}] has asked to unset analytics", loginBean.getPlayer( ).getName( ) );
-        
-        String oldGameId    = loginBean.getGameId( );
-        loginBean.setGameId( null );
-        LOGGER.info( "Unset GameId for user {} from [{} -> {}]", loginBean.getPlayer( ).getName( ), oldGameId, loginBean.getGameId( ) );
+        //LOOK up GameAnalticsManager and call a method to return the html
         handleSuccess( request, response );
         
     }

@@ -56,11 +56,17 @@ public final class AppContextListener implements ServletContextListener{
 
 
 
-    protected final LiveScoreParser createLiveScoreParser( ScheduleManager schMan, ServletContext context  ) {
-        LiveScoreParser scoreParser = new LiveScoreParser( schMan );
+    protected final LiveScoreParser createLiveScoreParser( ScheduleManager schManager, ServletContext context ){
+        LiveScoreParser scoreParser = new LiveScoreParser( schManager );
         context.setAttribute( LIVE_SCORE_PARSER_KEY, scoreParser );
         LOGGER.info("Successfully created ScoreParser with key [{}]{}", LIVE_SCORE_PARSER_KEY, PRINT_NEWLINE);
    
+        
+        JsonScoreParser jsonParser  = new JsonScoreParser( schManager );
+        context.setAttribute( "jsonParser", jsonParser );
+        LOGGER.info("Successfully created ScoreParser with key [{}]{}", "jsonParser", PRINT_NEWLINE);
+   
+        
         return scoreParser;
     }
 
@@ -195,11 +201,6 @@ public final class AppContextListener implements ServletContextListener{
                 service.close( );
             }
                         
-            GameAnalyticsManager gameManager = (GameAnalyticsManager) ctx.getAttribute( GAME_ANALYTICS_KEY );
-            if( gameManager != null ) {
-                gameManager.stop();
-            }
-            
             LOGGER.info( "Successfully destroyed DDP Servlet context.");
             
         } catch (SQLException e) {

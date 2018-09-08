@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ page isELIgnored="false"%>
-<%@ page import="com.ddp.nfl.web.core.LoginBean,com.ddp.nfl.web.util.DDPUtil,com.ddp.nfl.web.match.GameResultManager,com.ddp.nfl.web.analytics.core.GameAnalyticsManager" %>
+<%@ page import="com.ddp.nfl.web.core.LoginBean,com.ddp.nfl.web.util.DDPUtil,com.ddp.nfl.web.match.GameResultManager" %>
 <%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
@@ -62,44 +62,6 @@
 
     			<c:otherwise>
     				
-    				
-    				<c:choose>
- 	   					<c:when test="${sessionScope[DDPUtil.LOGIN_RESULT_KEY] == null || !sessionScope[DDPUtil.LOGIN_RESULT_KEY].isValid()}">
- 	   						
- 	   						<center>
-								<img src=${DDPUtil.generateGRRImage() } title="King of Pop, Karate & Love!" height="270" width="480"/>
-							</center>
- 	   						
- 	   						<form action="login" method="POST">
-    							<div class="loginForm">
-    								<input type="text" placeholder="Enter user name" name="username" required>
-									<button type="submit">Login</button>
-    							</div>
-    						</form>
-    						
-						</c:when>
-					
-						<c:otherwise>  
-						
-							<c:if test="${sessionScope[DDPUtil.LOGIN_RESULT_KEY].isGameIdSet()}">
-								<c:if test="${applicationScope[DDPUtil.GAME_ANALYTICS_KEY] != null}">
-								
-								<div class="datagrid">	
-									${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGameAnalytics( sessionScope[DDPUtil.LOGIN_RESULT_KEY] )}
-									
-									<form action="analytics" method="POST">
-   										<div class="closeAnalytics">
-   											<button class="closeAnalytics" type="submit" name="${DDPUtil.ANALYTICS_GAME_ID_KEY}" value="${DDPUtil.UNSET_GAME_ID_VALUE}">
-   												<h4>Close</h4>
-   											</button>
-   										</div>
-	   								</form>
-	   								 
-								</div>
-								</c:if>  
-							</c:if>
-							
-								    					
     					<div class="datagrid" >
 							<table>
 							<form action="analytics" method="POST">
@@ -219,9 +181,7 @@
 							</table>
 							</form>
 						</div>
-    				</c:otherwise>
-    			</c:choose>
-    			
+    				    			
     		</c:otherwise>
  	   	</c:choose>
  	   		

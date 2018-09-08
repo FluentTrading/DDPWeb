@@ -36,10 +36,9 @@ public class PickServlet extends HttpServlet {
             handleError( ERROR_MESSAGE, request, response );
         }
          
-        PickActionType actionType   = PickActionType.get(request.getParameter("action"));
-        
+        PickActionType action   = PickActionType.get(request.getParameter("action"));
         boolean isPasswordValid = isPasswordValid( request );
-        boolean enforcePassword = (PickActionType.SAVE == actionType && !isPasswordValid);
+        boolean enforcePassword = (PickActionType.SAVE == action && !isPasswordValid);
         if( enforcePassword ) {
             handleError( "Unauthorized! You are not permissioned to save picks.", request, response );            
             return;
@@ -51,9 +50,9 @@ public class PickServlet extends HttpServlet {
             return;
         }
                 
-        PickResult pickResult   = handleAction( actionType, pickForWeek, pickManager, request );
+        PickResult pickResult   = handleAction( action, pickForWeek, pickManager, request );
         if( pickResult == null ){
-            handleError( ERROR_MESSAGE + "Failed to handle action " + actionType, request, response );
+            handleError( ERROR_MESSAGE + "Failed to handle action " + action, request, response );
             return;
         }
         
@@ -98,15 +97,16 @@ public class PickServlet extends HttpServlet {
     protected final PickResult loadPicks( String headerMsg, int pickForWeek, PickManager pickManager ){
         
         PickResult pickResult       = null;
+        
         try {
             
-            Collection<DDPPick> picks   = pickManager.getPickedTeamForWeek( pickForWeek );
-            boolean picksNotMade        = ( picks.isEmpty( ) );
+            Collection<DDPPick> picks= pickManager.loadTeamsPicked( pickForWeek );
+            boolean picksNotMade     = ( picks.isEmpty( ) );
             if( picksNotMade ){
                 return PickResult.createInvalid( "Picks have not been made for week " + pickForWeek );
             }
         
-            pickResult              =  PickResult.createValid( headerMsg, picks );
+            pickResult               = PickResult.createValid( headerMsg, picks );
         
         }catch( Exception e) {
             LOGGER.warn( "FAILED to load picks", e );
@@ -127,7 +127,6 @@ public class PickServlet extends HttpServlet {
             String team1        = request.getParameter("team1");
             String team2        = request.getParameter("team2");
             String team3        = request.getParameter("team3");
-            
             boolean isValid     = isValid(player) && isValid(team1) && isValid(team2) && isValid(team3);
             if( !isValid ) {
                 return PickResult.createInvalid( "Invalid selection, Player and all 3 teams must be selected!" );
@@ -136,7 +135,7 @@ public class PickServlet extends HttpServlet {
             team1               = team1.toLowerCase( );
             team2               = team2.toLowerCase( );
             team3               = team3.toLowerCase( );
-            pickResult          = pickManager.process( pickForWeek, player, team1, team2, team3 );
+            pickResult          = pickManager.savePicks( pickForWeek, player, team1, team2, team3 );
             
         }catch( Exception e) {
             LOGGER.warn( "FAILED to process picks", e );

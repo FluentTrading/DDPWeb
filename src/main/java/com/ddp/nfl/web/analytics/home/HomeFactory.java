@@ -32,7 +32,7 @@ public final class HomeFactory{
             String teamName     = safeParse( jObject, "abbr" );
             teamName            = isValid( teamName ) ? teamName.toLowerCase( ) : EMPTY;
             int to              = safeParseInt( jObject, "to" );
-            Map<String, Integer> sMap = parseScores( jObject );
+            Map<Quarter, Integer> sMap = parseScores( isHome, jObject );
             String players      = safeParse( jObject, "players" );
             team                = new TeamInfo( isHome, teamName, to, sMap, players );
             
@@ -43,230 +43,31 @@ public final class HomeFactory{
         return team;
     }
 
-    
-    protected final static Map<String, Integer> parseScores( JsonObject jObject ){
-        Map<String, Integer> map = new HashMap<>( );
+
+    public final static Map<Quarter, Integer> parseScores( boolean isHome, JsonObject jObject ){
+
+        String scoreKey     = (isHome) ? "home" : "away";
+        JsonObject keyObject= jObject.getAsJsonObject( scoreKey );
+        if( keyObject == null ) return  Collections.emptyMap( );
+        
+        JsonObject scoreObj = keyObject.getAsJsonObject( "score" );
+        if( scoreObj == null ) return  Collections.emptyMap( );
+        
+        
+        Map<Quarter, Integer> map = new HashMap<>( );
         
         try{
             
-            JsonObject scoreObj = jObject.getAsJsonObject( "score" );
             for( Entry<String, JsonElement> scoreEntry : scoreObj.entrySet( ) ) {
-                map.put( scoreEntry.getKey( ), scoreEntry.getValue( ).getAsInt( ) );
+                Quarter quarter = Quarter.get( scoreEntry.getKey( ) );
+                JsonElement elem= scoreEntry.getValue( );
+                int quarterScore= ( elem.isJsonNull( ) ? ZERO : elem.getAsInt( ) );
+                
+                map.put( quarter, quarterScore );
             }
             
         }catch(Exception e ){
             LOGGER.warn( "FAILED to parse Scores", e );
-        }
-          
-        return map;
-    }
-
-    protected final static StatsManager parseStats( JsonObject gameObj ){
-
-        JsonObject statsObject      = gameObj.getAsJsonObject( "stats" );
-        
-        Map<String, Passing> paMap  = parsePassing( statsObject );
-        Map<String, Rushing> ruMap  = parseRushing( statsObject );
-        
-        Map<String, Receiving> rcMap= parseReceiving( statsObject );
-        Map<String, Fumbles> fmMap  = parseFumbles( statsObject );
-        Map<String, Kicking> kcMap  = parseKicking( statsObject );
-        Map<String, Punting> ptMap  = parsePunting( statsObject );
-        Map<String, Kickret> krMap  = parseKickret( statsObject );
-        Map<String, Puntret> prMap  = parsePuntret( statsObject );
-        Map<String, Defense> dfMap  = parseDefense( statsObject );
-        Team team                   = parseTeam( statsObject );
-        
-        StatsManager stats       = new StatsManager( paMap, ruMap, rcMap, fmMap, 
-                                                    kcMap, ptMap, krMap, prMap, dfMap, team );
-        return stats;
-    }
-    
-    
-    protected final static Map<String, Passing> parsePassing( JsonObject gameObj ){
-        
-        Map<String, Passing> map = new HashMap<>( );
-        
-        try{
-            
-            JsonObject passing  = gameObj.getAsJsonObject( "passing" );
-            if( passing != null ) {
-                for( Entry<String, JsonElement> playerEntry : passing.entrySet( ) ) {
-                    Passing pass    = GSON_INSTANCE.fromJson( playerEntry.getValue( ), Passing.class );
-                    map.put( playerEntry.getKey( ), pass );
-                }
-            }
-            
-        }catch(Exception e ){
-            LOGGER.warn( "FAILED to parse Passing", e );
-        }
-          
-        return map;
-    }
-
-    
-    protected final static Map<String, Rushing> parseRushing( JsonObject gameObj ){
-        
-        Map<String, Rushing> map = new HashMap<>( );
-        
-        try{
-            
-            JsonObject rushing  = gameObj.getAsJsonObject( "rushing" );
-            
-            if( rushing != null ) {
-                for( Entry<String, JsonElement> playerEntry : rushing.entrySet( ) ) {
-                    map.put( playerEntry.getKey( ), GSON_INSTANCE.fromJson( playerEntry.getValue( ), Rushing.class ) );
-                }
-            }
-            
-        }catch(Exception e ){
-            LOGGER.warn( "FAILED to parse Rushing", e );
-        }
-          
-        return map;
-    }
-    
-
-    protected final static Map<String, Receiving> parseReceiving( JsonObject gameObj ){
-        
-        Map<String, Receiving> map = new HashMap<>( );
-        
-        try{
-            
-            JsonObject receiving  = gameObj.getAsJsonObject( "receiving" );
-            if( receiving != null ) {
-                for( Entry<String, JsonElement> playerEntry : receiving.entrySet( ) ) {
-                    map.put( playerEntry.getKey( ), GSON_INSTANCE.fromJson( playerEntry.getValue( ), Receiving.class ) );
-                }
-            }
-            
-        }catch(Exception e ){
-            LOGGER.warn( "FAILED to parse Receiving", e );
-        }
-          
-        return map;
-    }
-    
-    
-    protected final static Map<String, Fumbles> parseFumbles( JsonObject gameObj ){
-        
-        Map<String, Fumbles> map = new HashMap<>( );
-        
-        try{
-            
-            JsonObject fumbles  = gameObj.getAsJsonObject( "fumbles" );
-            if( fumbles != null ) {
-                for( Entry<String, JsonElement> playerEntry : fumbles.entrySet( ) ) {
-                    map.put( playerEntry.getKey( ), GSON_INSTANCE.fromJson( playerEntry.getValue( ), Fumbles.class ) );
-                }
-            }
-            
-        }catch(Exception e ){
-            LOGGER.warn( "FAILED to parse Fumbles", e );
-        }
-          
-        return map;
-    }
-    
-
-    protected final static Map<String, Kicking> parseKicking( JsonObject gameObj ){
-        
-        Map<String, Kicking> map = new HashMap<>( );
-        
-        try{
-            
-            JsonObject kicking  = gameObj.getAsJsonObject( "kicking" );
-            if( kicking != null ) {
-                for( Entry<String, JsonElement> playerEntry : kicking.entrySet( ) ) {
-                    map.put( playerEntry.getKey( ), GSON_INSTANCE.fromJson( playerEntry.getValue( ), Kicking.class ) );
-                }
-            }
-            
-        }catch(Exception e ){
-            LOGGER.warn( "FAILED to parse Kicking", e );
-        }
-          
-        return map;
-    }
-    
-    
-    protected final static Map<String, Punting> parsePunting( JsonObject gameObj ){
-        
-        Map<String, Punting> map = new HashMap<>( );
-        
-        try{
-            
-            JsonObject punting  = gameObj.getAsJsonObject( "punting" );
-            if( punting != null ) {
-                for( Entry<String, JsonElement> playerEntry : punting.entrySet( ) ) {
-                    map.put( playerEntry.getKey( ), GSON_INSTANCE.fromJson( playerEntry.getValue( ), Punting.class ) );
-                }
-            }
-            
-        }catch(Exception e ){
-            LOGGER.warn( "FAILED to parse Punting", e );
-        }
-          
-        return map;
-    }
-    
-    
-    protected final static Map<String, Kickret> parseKickret( JsonObject gameObj ){
-        
-        Map<String, Kickret> map = new HashMap<>( );
-        
-        try{
-            
-            JsonObject kickret  = gameObj.getAsJsonObject( "kickret" );
-            if( kickret != null ) {
-                for( Entry<String, JsonElement> playerEntry : kickret.entrySet( ) ) {
-                    map.put( playerEntry.getKey( ), GSON_INSTANCE.fromJson( playerEntry.getValue( ), Kickret.class ) );
-                }
-            }
-            
-        }catch(Exception e ){
-            LOGGER.warn( "FAILED to parse Kickret", e );
-        }
-          
-        return map;
-    }
-    
-    
-    protected final static Map<String, Puntret> parsePuntret( JsonObject gameObj ){
-        
-        Map<String, Puntret> map = new HashMap<>( );
-        
-        try{
-            
-            JsonObject puntret  = gameObj.getAsJsonObject( "puntret" );
-            if( puntret != null ) {
-                for( Entry<String, JsonElement> playerEntry : puntret.entrySet( ) ) {
-                    map.put( playerEntry.getKey( ), GSON_INSTANCE.fromJson( playerEntry.getValue( ), Puntret.class ) );
-                }
-            }
-            
-        }catch(Exception e ){
-            LOGGER.warn( "FAILED to parse Puntret", e );
-        }
-          
-        return map;
-    }
-
-    
-    protected final static Map<String, Defense> parseDefense( JsonObject gameObj ){
-        
-        Map<String, Defense> map = new HashMap<>( );
-        
-        try{
-            
-            JsonObject receiving  = gameObj.getAsJsonObject( "defense" );
-            
-            for( Entry<String, JsonElement> playerEntry : receiving.entrySet( ) ) {
-                map.put( playerEntry.getKey( ), GSON_INSTANCE.fromJson( playerEntry.getValue( ), Defense.class ) );
-            }
-            
-        }catch(Exception e ){
-            LOGGER.warn( "FAILED to parse Defense", e );
         }
           
         return map;

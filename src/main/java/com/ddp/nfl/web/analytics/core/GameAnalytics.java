@@ -1,6 +1,5 @@
 package com.ddp.nfl.web.analytics.core;
 
-import com.ddp.nfl.web.analytics.drives.*;
 import com.ddp.nfl.web.analytics.home.*;
 import com.ddp.nfl.web.analytics.summary.*;
 
@@ -12,7 +11,6 @@ public final class GameAnalytics{
     private final TeamInfo home;
     private final TeamInfo away;
     private final SummaryManager scrsummary;
-    private final DriveManager drives;
     private final String weather;
     private final String media;
     private final String yl;
@@ -25,7 +23,7 @@ public final class GameAnalytics{
     private final String posteam;
     private final String stadium;
     
-    public GameAnalytics( String gameId, int nextupdate, TeamInfo home, TeamInfo away, DriveManager drives,
+    public GameAnalytics( String gameId, int nextupdate, TeamInfo home, TeamInfo away,
             SummaryManager scrsummary, String weather, String media, String yl, String qtr, String note, int down,
             int togo, boolean redzone, String clock, String posteam, String stadium ){
     
@@ -33,7 +31,6 @@ public final class GameAnalytics{
         this.nextupdate = nextupdate;                 
         this.home       = home;
         this.away       = away;
-        this.drives     = drives;
         this.scrsummary = scrsummary;
         this.weather    = weather;
         this.media      = media;
@@ -66,9 +63,6 @@ public final class GameAnalytics{
         return away;
     }
 
-    public final DriveManager getDrives( ) {
-        return drives;
-    }
         
     public final SummaryManager getSummaryManager( ) {
         return scrsummary;

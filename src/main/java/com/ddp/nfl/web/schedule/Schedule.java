@@ -17,7 +17,7 @@ public final class Schedule{
     private final NFLTeam away;
     
     private final static int    DATE_LENGTH     = 8;
-    private final static Logger LOGGER          = LoggerFactory.getLogger( "MatchScore" );
+    private final static Logger LOGGER          = LoggerFactory.getLogger( "Schedule" );
     
     public Schedule( String gameEid, String gameDay, 
                      String gameTime, NFLTeam home, NFLTeam away ){
@@ -25,7 +25,7 @@ public final class Schedule{
         this.gameId         = gameEid;
         this.gameDayTime    = createGameDayTime( gameDay, gameTime );
         this.gameDate       = parseGameDate( gameEid );
-        this.gameSchedTime   = createScheduleTime( gameDay, gameDate, gameTime );
+        this.gameSchedTime  = createScheduleTime( gameDay, gameDate, gameTime );
         this.home           = home;
         this.away           = away;
         

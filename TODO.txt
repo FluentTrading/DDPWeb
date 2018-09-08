@@ -1,4 +1,10 @@
 
+
+Quarter cell wont show any color: just the game start time and during the game quarter and time remaining (Q1: 10:20)
+
+Show color in the entire score grid like last year.
+
+
 We are now using the full feed to power this app!
 =================================================
 1. For live score, we cannot only parse the game that are going on as we show info on all three games.
@@ -11,10 +17,12 @@ What we can do, it parse the games that are in future but only get the basics (m
 Should we pull this data in the background Thread??
 
 Where do we get team record from??
+Remove all the unnecessary analytics code!
 
 
 3. Cash Manager is throwing an error, commented out for now.
 4. We now have access to a lot more info, see what can be used.
+
 
 
 Rebooting:

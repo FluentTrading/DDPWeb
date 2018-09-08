@@ -11,12 +11,12 @@ public class TeamInfo{
     private final String teamAbbr;
     private final int to;
     private final String players;
-    private final Map<String, Integer> scoreMap;
+    private final Map<Quarter, Integer> scoreMap;
     
     private final static int DEFAULT_SCORE  = 0;
     
     
-    public TeamInfo( boolean isHome, String teamName, int to, Map<String, Integer> scoreMap, String players ){
+    public TeamInfo( boolean isHome, String teamName, int to, Map<Quarter, Integer> scoreMap, String players ){
         this.isHome = isHome;
         this.teamAbbr  = teamName;
         this.to     = to;
@@ -68,7 +68,7 @@ public class TeamInfo{
     }
         
     protected final int getScoreWithDefault( Quarter qEnum ){
-        Integer score = scoreMap.get( qEnum.get() );
+        Integer score = scoreMap.get( qEnum );
         return ( score != null ) ? score.intValue( ) : DEFAULT_SCORE;   
     }
     

@@ -19,6 +19,7 @@ import com.ddp.nfl.web.database.*;
 public final class ScheduleManager{
 
     private final boolean isValid;
+    private final Set<String> teamsPlaying;
     private final Map<String, Schedule> scheduleMap;
     
     private final static String URL_PREFIX  = "http://www.nfl.com/ajax/scorestrip?season=";
@@ -30,6 +31,7 @@ public final class ScheduleManager{
     public ScheduleManager( DDPMeta ddpMeta, DBService service ){
         this.scheduleMap    = parse( ddpMeta, service );
         this.isValid        = ( !scheduleMap.isEmpty( ) );
+        this.teamsPlaying   = createTeamsPlayingSet( scheduleMap );
     }
     
 
@@ -37,11 +39,6 @@ public final class ScheduleManager{
         return isValid;
     }
    
-    
-    public final Schedule get( String gameId ) {
-        return scheduleMap.get( gameId );
-    }
-
     
     public final int getScheduleCount( ) {
         return scheduleMap.size( );
@@ -52,11 +49,27 @@ public final class ScheduleManager{
         return scheduleMap;
     }
     
+    
+    public final Set<String> getTeamsPlaying( ){
+        return teamsPlaying;
+    }
+            
 
+    protected final Set<String> createTeamsPlayingSet( Map<String, Schedule> scheduleMap ){
+        Set<String> teamsSet = new HashSet<>( );
+        
+        for( Schedule scheule : scheduleMap.values( ) ){
+            teamsSet.add( scheule.getHomeTeam( ).getLowerCaseName( ) );
+            teamsSet.add( scheule.getAwayTeam( ).getLowerCaseName( ) );
+        }
+        
+        return teamsSet;
+        
+    }
+    
     //Used to display data on the schedules page
    //We use this map to display schedule where earliest game (smallest gid) is at first
     protected final Map<String, Schedule> parse( DDPMeta meta, DBService service ) {
-        
         String liveScoreUrl              = createScheduleUrl( meta );
         Map<String, Schedule> scheduleMap= parseSchedule( liveScoreUrl, service.getAllTeams( ) );
     
@@ -134,6 +147,7 @@ public final class ScheduleManager{
     protected final static String createScheduleUrl( DDPMeta meta ) {
         return createScheduleUrl( meta.getSeasonType( ), meta.getYear( ), meta.getWeek( ) );
     }
+    
     
     public final static String createScheduleUrl(  String seasonType, int year, int week ){
         

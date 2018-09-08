@@ -24,7 +24,7 @@ public final class GameAnalyticsHtml{
     
     public GameAnalyticsHtml( PickManager pickManager ){
         this.toErrorHtml= createErrorHtml( );
-        this.teamsMap   = pickManager.getAllTeamsByNickName( );
+        this.teamsMap   = pickManager.getTeamsByNickName( );
     }
   
     

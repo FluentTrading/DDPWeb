@@ -1,8 +1,7 @@
 package com.ddp.nfl.web.util;
 
 import javax.servlet.http.*;
-
-import com.ddp.nfl.web.core.LoginBean.*;
+import com.ddp.nfl.web.core.*;
 
 import static com.ddp.nfl.web.util.DDPUtil.*;
 

@@ -5,73 +5,60 @@ import java.util.*;
 
 import com.ddp.nfl.web.core.*;
 import com.ddp.nfl.web.database.*;
-import com.ddp.nfl.web.parser.*;
 import com.ddp.nfl.web.schedule.*;
 
 import static com.ddp.nfl.web.util.DDPUtil.*;
 
-
 public final class PickManager{
 
     private final DDPMeta meta;
-    private final int[] unpicked;
+    private final int pickWeek;
     private final DBService service;
     private final ScheduleManager schMan;
-    
-    private final Map<String, NFLTeam> nflTeams;
-    private final Map<String, NFLTeam> nflTeamsByNickName;
-    private final Map<String, DDPPlayer> players;
-    
-    private final static int NFL_TOTAL_PLAY_WEEK= 16;
-    private final static Logger LOGGER          = LoggerFactory.getLogger( "PickManager" );
+    private final Map<String, NFLTeam> teamsByNickName;
+    private final static Logger LOGGER  = LoggerFactory.getLogger( "PickManager" );
     
     
     public PickManager( DDPMeta meta, ScheduleManager schMan, DBService service ){
         this.meta       = meta;
         this.schMan     = schMan;
         this.service    = service;
-        this.nflTeams   = new TreeMap<>( service.getAllTeams( ));
-        this.nflTeamsByNickName = createMapping( nflTeams );
-        this.players    = new TreeMap<>( service.getAllPlayers( ));
-        this.unpicked   = getUnpickedWeeks( meta.getWeek( ) );
+        this.pickWeek   = meta.getWeek( );
+        this.teamsByNickName = createTeamsByNickName( service );
+        
     }
 
+
+    public final int getPickWeek( ){
+        return pickWeek;
+    }  
     
-    public final int[] getUnpickedWeeks( ){
-        return unpicked;
-    }
-        
     
     public final Map<String, DDPPlayer> getAllPlayers( ){
-        return players;
+        return service.getAllPlayers( );
+    }  
+  
+    
+    public final Set<String> getTeamsPlaying( ){
+        return schMan.getTeamsPlaying( );
+    }  
+    
+    
+    public final Map<String, NFLTeam> getTeamsByNickName( ){
+        return teamsByNickName;
+    }  
+    
+    
+        
+    public final Collection<DDPPick> loadTeamsPicked( int pickWeek ){
+        return service.loadPicks( pickWeek, meta ).values( );
     }
     
+    
+    public final PickResult savePicks( int pickForWeek, String player, String team1, String team2, String team3 ) {
 
-    public final Map<String, NFLTeam> getAllTeams( ) {
-        return nflTeams;
-    }
-    
-    
-    public final Map<String, NFLTeam> getAllTeamsByNickName( ) {
-        return nflTeamsByNickName;
-    }    
-    
-
-    public final Collection<DDPPick> getPickedTeamForWeek( int pickForWeek ){
-        return service.loadPicks( pickForWeek, meta ).values( );        
-    }
-    
-    
-    public final Set<NFLTeam> getPlayingTeamsForWeek( int weekNumber ){
-        return getPlayingTeams( weekNumber, meta, service.getAllTeams( ) );        
-    }
-                
-    
-    public final PickResult process( int pickForWeek, String player, String team1, String team2, String team3 ) {
-
-        Collection<DDPPick> picks   = getPickedTeamForWeek( pickForWeek );
-        Set<NFLTeam> playingTeams   = getPlayingTeamsForWeek( pickForWeek );
-        PickResult result           = validatePick( pickForWeek, player, team1, team2, team3, picks, playingTeams );
+        Collection<DDPPick> picks   = loadTeamsPicked( pickForWeek );
+        PickResult result           = validatePick( pickForWeek, player, team1, team2, team3, picks );
         if( !result.isValid( ) ){
             return result;
         }
@@ -92,8 +79,10 @@ public final class PickManager{
     //1. Ensure every player only has picked once.
     //2. Ensure every team picked is playing the week for which the pick was made.        
     //3. Ensure every team was only picked once.    
-    protected final PickResult validatePick( int pickForWeek, String player, String team1, String team2, String team3, Collection<DDPPick> picks, Set<NFLTeam> playingTeams ){
+    protected final PickResult validatePick( int pickForWeek, String player, String team1, 
+                                             String team2, String team3, Collection<DDPPick> picks ){
         
+        Collection<Schedule> scheuleMap = schMan.getSchedules( ).values( );
         DDPPick playerPicked        = hasPlayerPicked( player, picks );
         if( playerPicked != null ){
             return PickResult.createInvalid( "Player " + player + " had already picked " + playerPicked.toTeamString( ) );
@@ -105,22 +94,19 @@ public final class PickManager{
             return PickResult.createInvalid( player + " can't pick same team multiple times! " + team1 + " " + team2 + " " + team3 );
         }
         
-        
-        boolean isTeamPlaying1      = isTeamPlaying( team1, playingTeams );
-        if( !isTeamPlaying1 ){
+        boolean[] allTeamsPlaying   = allTeamsPlaying( team1, team2, team3, scheuleMap );
+        if( !allTeamsPlaying[ZERO] ){
             return PickResult.createInvalid( team1 + " are not playing in Week " + pickForWeek );
         }
         
-        boolean isTeamPlaying2      = isTeamPlaying( team2, playingTeams );
-        if( !isTeamPlaying2 ){
+        if( !allTeamsPlaying[ONE] ){
             return PickResult.createInvalid( team2 + " are not playing in Week " + pickForWeek );
         }
         
-        boolean isTeamPlaying3      = isTeamPlaying( team3, playingTeams );
-        if( !isTeamPlaying3 ){
+        if( !allTeamsPlaying[TWO] ){
             return PickResult.createInvalid( team3 + " are not playing in Week " + pickForWeek );
         }
-                
+        
         
         boolean teamWasPicked1      = wasTeamPicked( team1, picks );
         if( teamWasPicked1 ){
@@ -142,6 +128,11 @@ public final class PickManager{
     }
         
            
+    protected final boolean[] allTeamsPlaying( String team1, String team2, String team3, Collection<Schedule> scheuleMap ) {
+        Set<String> teamsPlaying = getTeamsPlaying( );
+        return new boolean[]{ teamsPlaying.contains(team1), teamsPlaying.contains(team1), teamsPlaying.contains(team1) };
+    }
+    
 
     protected final DDPPick createDDPPick( int pickOrder, int pickForWeek, String playerStr, String team1Str, String team2Str, String team3Str ){
 
@@ -185,8 +176,7 @@ public final class PickManager{
         
     }
            
-    
-    
+        
     public final boolean isTeamPlaying( String team, Set<NFLTeam> playingTeams ) {
         NFLTeam nflTeam = resolveTeam( team );
         boolean playing = playingTeams.contains( nflTeam );
@@ -227,16 +217,16 @@ public final class PickManager{
     
     
     protected final DDPPlayer resolvePlayer( String playerName ){
-        return getAllPlayers( ).get( playerName );
+        return service.getAllPlayers( ).get( playerName );
     }
 
 
     protected final NFLTeam resolveTeam( String teamName ){
-        return getAllTeams( ).get( teamName );
+        return service.getAllTeams( ).get( teamName );
     }
 
-    
-    protected final Map<String, NFLTeam> createMapping( Map<String, NFLTeam> nflTeams ) {
+    protected final Map<String, NFLTeam> createTeamsByNickName( DBService service ){
+        Map<String, NFLTeam> nflTeams = service.getAllTeams( );
         Map<String, NFLTeam> nickMap = new HashMap<>();
         for( NFLTeam team : nflTeams.values( ) ) {
             nickMap.put( team.getNickName( ), team );
@@ -244,44 +234,6 @@ public final class PickManager{
         
         return nickMap;
     }
-    
 
-    //If week 6 is current, show option for week 6 as well
-    protected final static int[] getUnpickedWeeks( int currWeek ){
-        int pickCount   = (NFL_TOTAL_PLAY_WEEK + ONE - currWeek);
-        int[] pickWeeks = new int[ pickCount];
-        
-        for( int i=0; i<pickCount; i++ ){
-            pickWeeks[i] = currWeek + i;
-        }
-        
-        return pickWeeks;
-        
-    }
-               
-
-    //When we pick teams, we need to know the teams that are playing for that week
-    protected final Set<NFLTeam> getPlayingTeams( int pickForWeek, DDPMeta meta, Map<String, NFLTeam> teamMap ){
-        
-        Set<NFLTeam> playingTeams  = new HashSet<>( );
-        
-        try {
-        
-            LOGGER.info("Parsing schedule for week [{}] to figure out playing teams!", pickForWeek);
-            String scheduleUrlForWeek   = ScheduleManager.createScheduleUrl( meta.getSeasonType( ), meta.getYear( ), pickForWeek );
-            Collection<Schedule> map    = ScheduleManager.parseSchedule( scheduleUrlForWeek, teamMap ).values( );
-            
-            for( Schedule schedule : map ) {
-                playingTeams.add( schedule.getHomeTeam( ) );
-                playingTeams.add( schedule.getAwayTeam( ) );
-            }
-            
-        }catch( Exception e ) {
-            LOGGER.warn("FAILED to get playing teams for week [{}]", pickForWeek, e );
-        }
-        
-        return playingTeams;
-        
-    }
     
 }
