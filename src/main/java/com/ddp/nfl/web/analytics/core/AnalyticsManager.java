@@ -42,22 +42,22 @@ public final class AnalyticsManager{
     
      
     public final String getGameOneSummary( GameResult result ){
-        return getGameSummary( result.getGame1Quarter( ), result.getMatch1Score( ) );
+        return getGameSummary( result.getGame1Quarter( ), result.getMy1Team( ), result.getMatch1Score( ) );
     }
     
     
     public final String getGameTwoSummary( GameResult result ){
-        return getGameSummary( result.getGame2Quarter( ), result.getMatch2Score( ) );
+        return getGameSummary( result.getGame2Quarter( ), result.getMy2Team( ), result.getMatch2Score( ) );
     }
 
     
     public final String getGameThreeSummary( GameResult result ){
-        return getGameSummary( result.getGame3Quarter( ), result.getMatch3Score( ) );
+        return getGameSummary( result.getGame3Quarter( ), result.getMy3Team( ), result.getMatch3Score( ) );
     }
 
 
     //Display the summary for the home team.
-    public final String getGameSummary( String quarter, LiveScore liveScore ){
+    public final String getGameSummary( String quarter, NFLTeam homeTeam, LiveScore liveScore ){
         
         String displayString    = quarter;
         
@@ -71,7 +71,7 @@ public final class AnalyticsManager{
             if( summMap == null ) return quarter;
             
             String rawQuarter   = liveScore.getRawQuarter( );
-            String homeNickName = liveScore.getHomeTeam( ).getNickName( );
+            String homeNickName = homeTeam.getNickName( );
         
             displayString       = (String) summMap.get( rawQuarter, homeNickName );
             displayString       = isValid(displayString) ? (quarter + NEWLINE + displayString) : quarter; 

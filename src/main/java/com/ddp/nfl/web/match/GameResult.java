@@ -324,15 +324,15 @@ public final class GameResult{
     }
 
     
-    protected final NFLTeam getMy1Team( ){
+    public final NFLTeam getMy1Team( ){
         return myPickedTeams[0];
     }
     
-    protected final NFLTeam getMy2Team( ){
+    public final NFLTeam getMy2Team( ){
         return myPickedTeams[1];
     }
     
-    protected final NFLTeam getMy3Team( ){
+    public final NFLTeam getMy3Team( ){
         return (myPickedTeams.length == 3) ? myPickedTeams[2] : null;
     }
     
