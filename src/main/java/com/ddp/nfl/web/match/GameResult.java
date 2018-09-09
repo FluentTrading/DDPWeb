@@ -131,11 +131,11 @@ public final class GameResult{
     
     
     public final String getGame1Quarter( ){
-        return getGameQuarterButton( getMatch1Score( ), getMy1TeamScore( ), getOpp1TeamScore( ) );        
+        return getGameQuarterInfo( getMatch1Score( ), getMy1TeamScore( ), getOpp1TeamScore( ) );        
     }
     
     public final String getGame2Quarter( ){
-        return getGameQuarterButton( getMatch2Score( ), getMy2TeamScore( ), getOpp2TeamScore( ) );        
+        return getGameQuarterInfo( getMatch2Score( ), getMy2TeamScore( ), getOpp2TeamScore( ) );        
     }
     
     public final String getGame3Quarter( ){
@@ -144,7 +144,7 @@ public final class GameResult{
             return EMPTY;
         }
         
-        return getGameQuarterButton( getMatch3Score( ), getMy3TeamScore( ), getOpp3TeamScore( ) );    
+        return getGameQuarterInfo( getMatch3Score( ), getMy3TeamScore( ), getOpp3TeamScore( ) );    
     }
     
 
@@ -195,32 +195,32 @@ public final class GameResult{
     
     //If home team has possession, adds a blinking green dot next to the name
     //
-    protected final String getHomeTeamDisplayName( NFLTeam team, LiveScore score ){
+    protected final String getHomeTeamDisplayName( NFLTeam team, LiveScore liveScore ){
         
         if( team == null ) return EMPTY;
         
         String teamName         = team.getCamelCaseName( );
-        boolean hasPossession   = teamHasPossession( team, score );
-        
-        if( score.isDelayed() || score.isHalftime( ) ) {
-            return teamName;
-        }
+        boolean hasPossession   = teamHasPossession( team, liveScore );
+        GameState gameState     = liveScore.getGameState( );
+        boolean delayedOrHalf   = ( GameState.DELAYED == gameState || GameState.HALFTIME == gameState );
+        if( delayedOrHalf ) return teamName;
         
         String displayName      = ( hasPossession ) ? (teamName + SPACE + BLINK_GREEN_DOT) : teamName;
         return displayName;
+        
     }
     
     
     protected final String getGameWinnerIcon( LiveScore liveScore, int homeScore, NFLTeam home, int awayScore, NFLTeam away ){
         
-        //Game NOT Started
-        boolean notStarted    = ( home == null || away == null );
-        if( notStarted ){
+        GameState gameState     = liveScore.getGameState( );
+                
+        if( GameState.NOT_STARTED == gameState ){
             return NFLTeam.getMissingTeamLogo( );
         }
         
         //Game is finished, if home team won, show the team logo, otherwise thumbs down
-        if( liveScore.isFinished( ) ) {
+        if( GameState.FINISHED == gameState ) {
             String teamIcon   = ( homeScore > awayScore ) ? home.getSquareTeamIcon( ) : NFLTeam.getGameLostLogo( );
             return teamIcon;
         }        
@@ -251,7 +251,7 @@ public final class GameResult{
     
     protected final String getMessageInfoClassName( LiveScore liveScore, int homeScore, int awayScore ){
     
-        if( liveScore.notStarted( ) ){
+        if( GameState.NOT_STARTED == liveScore.getGameState( ) ){
             return DivUtil.INFO_BAR_GAME_PENDING;
         }
         
@@ -270,7 +270,7 @@ public final class GameResult{
     
     protected final String getScoreClassName( LiveScore liveScore, int homeScore, int awayScore ){
         
-        if( liveScore.notStarted( ) ){
+        if( GameState.NOT_STARTED == liveScore.getGameState( ) ){
             return DivUtil.SCORE_BAR_GAME_PENDING;
         }
         
@@ -291,17 +291,22 @@ public final class GameResult{
     
     //In order to color the quarter button, we need to determine the score from player's perspective
     //Can't just use the live score home and away score.
-    protected final String getGameQuarterButton( LiveScore liveScore, int homeScore, int awayScore ){
+    protected final String getGameQuarterInfo( LiveScore liveScore, int homeScore, int awayScore ){
         
         StringBuilder builder   = new StringBuilder( );
+        
+        GameState gameState     = liveScore.getGameState( );
         String quarterInfo      = liveScore.getFormattedQuarter( );
 
-        if( liveScore.notStarted( ) ){
-            builder.append( quarterInfo ).append( SPACE ).append( AT ).append( SPACE ).append( liveScore.getStadium( ) );
+        if( GameState.NOT_STARTED == gameState ){
+            builder.append( quarterInfo )
+            .append( SPACE ).append( AT ).append( SPACE )
+            .append( liveScore.getStadium( ) );
+            
             return builder.toString( );
         }
 
-        if( liveScore.isFinished( ) ) {
+        if( GameState.FINISHED == gameState ){
             return quarterInfo;
         }
         
@@ -380,13 +385,14 @@ public final class GameResult{
     }
     
     
-    protected final boolean teamHasPossession( NFLTeam myTeam, LiveScore info ){
+    protected final boolean teamHasPossession( NFLTeam myTeam, LiveScore liveScore ){
         
-        if( myTeam == null || info == null ) {
+        if( myTeam == null || liveScore == null ) {
             return false;
         }
         
-        if( info.isPlaying( ) && myTeam.getNickName( ).equals(info.getPossessionTeam( ))){
+        boolean isPlaying   = (GameState.PLAYING == liveScore.getGameState( ));
+        if( isPlaying && myTeam.getNickName( ).equals(liveScore.getPossessionTeam( ))){
             return true;
         }
            

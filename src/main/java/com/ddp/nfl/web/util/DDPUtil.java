@@ -11,6 +11,7 @@ public final class DDPUtil{
     public final static int ONE                     = 1;
     public final static int TWO                     = 2;
     public final static int THREE                   = 3;
+    public final static int FOUR                    = 4;
     public final static int TEN                     = 10;
     public final static int NEGATIVE_ONE            = -1;
     
@@ -20,6 +21,7 @@ public final class DDPUtil{
     public final static String SPACE                = " ";
     public final static String SPACE_DASH           = " - ";
     public final static String COLON                = ":";
+    public final static String AMPERSAND            = "&";
     public final static String AT                   = "at";  
     public final static String PM_TIME              = "PM";
     public final static String L_BRACKET            = "[";

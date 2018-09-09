@@ -22,8 +22,8 @@ public final class AnalyticsManager{
     private final DownloadAnalyticsThread gameThread;
     private final Map<String, MultiKeyMap<String, String>> analyticsMap;
 
-    private final static int INTERVAL   = ONE;
-    private final static Logger LOGGER  = LoggerFactory.getLogger( "GameAnalyticsManager" );
+    private final static int INTERVAL       = TWO;
+    private final static Logger LOGGER      = LoggerFactory.getLogger( "AnalyticsManager" );
     
     
     public AnalyticsManager(  ){
@@ -54,37 +54,66 @@ public final class AnalyticsManager{
     public final String getGameThreeSummary( GameResult result ){
         return getGameSummary( result.getGame3Quarter( ), result.getMy3Team( ), result.getMatch3Score( ) );
     }
+    
 
+    public final String getGameOneDrive( GameResult result ){
+        return result.getMatch1Score( ).getDriveInfo( );
+    }
+    
+    
+    public final String getGameTwoDrive( GameResult result ){
+        return result.getMatch2Score( ).getDriveInfo( );
+    }
 
+    
+    public final String getGameThreeDrive( GameResult result ){
+        return result.getMatch3Score( ).getDriveInfo( );
+    }
+    
+    
+    public final String getGameOneQuarter( GameResult result ){
+        return result.getMatch1Score( ).getFormattedQuarter( );
+    }
+    
+    
+    public final String getGameTwoQuarter( GameResult result ){
+        return result.getMatch2Score( ).getFormattedQuarter( );
+    }
+
+    
+    public final String getGameThreeQuarter( GameResult result ){
+        return result.getMatch3Score( ).getFormattedQuarter( );
+    }
+    
+    
     //Display the summary for the home team.
-    public final String getGameSummary( String quarter, NFLTeam homeTeam, LiveScore liveScore ){
+    public final String getGameSummary( String fmtQuarter, NFLTeam homeTeam, LiveScore liveScore ){
         
-        String displayString    = quarter;
+        String gameSummary     = EMPTY;
         
         try {
             
-            boolean isPlaying   = liveScore.isPlaying( );
-            if( !isPlaying ) return quarter;
+            boolean isPlaying   = (GameState.PLAYING == liveScore.getGameState( ));
+            if( !isPlaying ) return EMPTY;
          
             String gameId       = liveScore.getGameId( );
             MultiKeyMap summMap = analyticsMap.get( gameId );
-            if( summMap == null ) return quarter;
+            if( summMap == null ) return EMPTY;
             
-            String rawQuarter   = liveScore.getRawQuarter( );
             String homeNickName = homeTeam.getNickName( );
+            String rawQuarter   = liveScore.getRawQuarter( );
+            gameSummary         = (String) summMap.get( rawQuarter, homeNickName );
+            gameSummary         = !isValid(gameSummary) ? EMPTY : gameSummary;       
         
-            displayString       = (String) summMap.get( rawQuarter, homeNickName );
-            displayString       = isValid(displayString) ? (quarter + NEWLINE + displayString) : quarter; 
-                    
         }catch (Exception e) {
             LOGGER.warn("Exception while looking up game summary", e);
         }
                 
-        return displayString; 
+        return gameSummary; 
                         
     }
     
- 
+     
     public final void gameStatusUpdate( Map<NFLTeam, LiveScore> scoreMap ){
         
         for( LiveScore score : scoreMap.values( ) ){
@@ -92,13 +121,14 @@ public final class AnalyticsManager{
             
             String gameId   = score.getGameId( );
             boolean exists  = gameIdSet.contains( gameId );
+            GameState state = score.getGameState( );
             
-            if( !exists && score.isPlaying( ) ){
+            if( !exists && (GameState.PLAYING == state) ){
                 gameIdSet.add( gameId );
                 //LOGGER.info( "Added GameId: {} for analytics.", gameId );
             }
         
-            if( exists && score.isFinished( ) ){
+            if( exists && (GameState.FINISHED == state) ){
                 boolean removed = gameIdSet.remove( gameId );
                 if( removed ){
                     //LOGGER.info( "GameId: {} ended, won't poll for analytics.", gameId );
@@ -174,9 +204,14 @@ public final class AnalyticsManager{
             
             String gameDayData  = LiveScoreParser.readUrl( fullGameUrl );
             JsonElement topElem = JSON_PARSER.parse( gameDayData );
-            JsonObject jObject  = topElem.getAsJsonObject( );
-            JsonObject gameObj  = jObject.getAsJsonObject( gameId );
+            boolean isJsonObj   = topElem.isJsonObject( );
+            if( !isJsonObj ) return;
             
+            JsonObject jObject  = topElem.getAsJsonObject( );
+            boolean isNull      = jObject.isJsonNull( );
+            if( isNull ) return;
+            
+            JsonObject gameObj  = jObject.getAsJsonObject( gameId );
             MultiKeyMap<String, String> summMap = SummaryManager.parseScoreSummary( gameObj );
             if( !summMap.isEmpty( ) ) {
                 analyticsMap.put( gameId, summMap );
@@ -189,20 +224,19 @@ public final class AnalyticsManager{
             
     
     public final static void main( String[] args ) throws Exception{
-        /*
+        
         AnalyticsManager test = new AnalyticsManager( );
         
         long startTimeNanos   = System.nanoTime( );
-        test.gameThread.downloadAnalyticsData( gameId ); 
+        test.gameThread.downloadAnalyticsData( "2018090908" ); 
         
-        MultiKeyMap summMap = test.analyticsMap.get( gameId );
+        MultiKeyMap summMap = test.analyticsMap.get( "2018090908" );
         
-        String phiQuarter4  = (String) summMap.get( 4, "PHI" );
-        System.out.println( phiQuarter4 );
+        System.out.println( summMap );
         
         long timeTakenNanos   = System.nanoTime( ) - startTimeNanos;
         LOGGER.info("Time Taken to prepare game summary [{} millis]", TimeUnit.MILLISECONDS.convert(timeTakenNanos, TimeUnit.NANOSECONDS) );
-        */
+     
     }
     
     

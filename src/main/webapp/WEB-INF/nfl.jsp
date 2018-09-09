@@ -13,9 +13,7 @@
 	<meta http-equiv="Content-Language" content="en">
 	
 	<title>|| DDP NFL Web ||</title>
-	<link rel="stylesheet" type="text/css" href="css/Login.css">
 	<link rel="stylesheet" type="text/css" href="css/DDPStyle.css">
-	<link rel="stylesheet" type="text/css" href="css/GameAnalytics.css">
 	<link rel="stylesheet" type="text/css" href="css/DivTableDesign.css">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/solid.css" integrity="sha384-VGP9aw4WtGH/uPAOseYxZ+Vz/vaTb1ehm1bwx92Fm8dTrE+3boLfF1SpAtB1z7HW" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/brands.css" integrity="sha384-rf1bqOAj3+pw6NqYrtaE1/4Se2NBwkIfeYbsFdtiR6TQz0acWiwJbv1IM/Nt/ite" crossorigin="anonymous">
@@ -125,15 +123,21 @@
   				</div>
   		
   				<div class="${gameResult.getGame1MsgInfoClass()}">
+  					<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGameOneDrive( gameResult )}</div>
+					<div class="rightQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGameOneQuarter( gameResult )}</div>
   					${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGameOneSummary( gameResult )}
 				</div>
   		
   				<div class="${gameResult.getGame2MsgInfoClass()}">
+  					<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGameTwoDrive( gameResult )}</div>
+					<div class="rightQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGameTwoQuarter( gameResult )}</div>
   					${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGameTwoSummary( gameResult )}			
 				</div>
 		
 				<c:if test="${gameResult.hasAll6Teams()}">
 					<div class="${gameResult.getGame3MsgInfoClass()}">
+						<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGameThreeDrive( gameResult )}</div>
+						<div class="rightQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGameThreeQuarter( gameResult )}</div>
 						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGameThreeSummary( gameResult )}
   					</div>
   				</c:if>

@@ -55,9 +55,12 @@ public final class SummaryManager{
 
 
     protected final static String toDisplayString( String quarter, String scoreType, String team, String[] playDrive ){
+        
         StringBuilder builder = new StringBuilder( 32 );
-        builder.append( team ).append( SPACE ).append( scoreType ).append( NEWLINE );
-        builder.append( playDrive[ZERO] );
+        
+        builder.append( NEWLINE )
+        .append( team ).append( SPACE ).append( scoreType ).append( NEWLINE )
+        .append( playDrive[ZERO] );
         
         return builder.toString( );
 

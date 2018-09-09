@@ -5,7 +5,6 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 import java.util.Map.*;
-import java.util.concurrent.*;
 
 import com.ddp.nfl.web.analytics.home.*;
 import com.ddp.nfl.web.analytics.summary.*;
@@ -97,30 +96,15 @@ public final class LiveScoreParser{
         int homeScore        = home.getTotalScore( );
         int awayScore        = away.getTotalScore( );
             
-        boolean notStarted   = parseGameNotStarted( rawQuarterStr );
-        boolean isFinished   = parseGameFinished( rawQuarterStr );
-        boolean isPlaying    = !notStarted && !isFinished;
-            
-        LiveScore liveScore  = new LiveScore( gameId, schedule, notStarted, isPlaying, isFinished, homeScore, 
+        GameState gameState  = GameState.parseState( rawQuarterStr );
+        LiveScore liveScore  = new LiveScore( gameId, schedule, gameState, homeScore, 
                                                   awayScore, teamPossession, timeRemaining, isRedzone, rawQuarterStr,
                                                   yl, togo, down, bp, stadium, note, summ);
 
         return liveScore;
 
     }
-    
-       
-    
    
-    protected final static boolean parseGameNotStarted( String rawQuarterStr ){
-        return EMPTY.equals( rawQuarterStr ) || "p".equalsIgnoreCase( rawQuarterStr ) || "Pregame".equalsIgnoreCase( rawQuarterStr );
-    }
-    
-    
-    protected final static boolean parseGameFinished( String rawQuarterStr ){
-        return "F".equals( rawQuarterStr ) || "FO".equals( rawQuarterStr )
-                || "Final".equals( rawQuarterStr );
-    }
     
           
     public final static String readUrl( String urlString ) throws Exception{
