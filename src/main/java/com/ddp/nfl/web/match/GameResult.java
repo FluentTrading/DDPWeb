@@ -131,11 +131,11 @@ public final class GameResult{
     
     
     public final String getGame1Quarter( ){
-        return getGameQuarterInfo( getMatch1Score( ), getMy1TeamScore( ), getOpp1TeamScore( ) );        
+        return getGameQuarterInfo( getMatch1Score( ) );        
     }
     
     public final String getGame2Quarter( ){
-        return getGameQuarterInfo( getMatch2Score( ), getMy2TeamScore( ), getOpp2TeamScore( ) );        
+        return getGameQuarterInfo( getMatch2Score( ) );        
     }
     
     public final String getGame3Quarter( ){
@@ -144,7 +144,7 @@ public final class GameResult{
             return EMPTY;
         }
         
-        return getGameQuarterInfo( getMatch3Score( ), getMy3TeamScore( ), getOpp3TeamScore( ) );    
+        return getGameQuarterInfo( getMatch3Score( ) );    
     }
     
 
@@ -291,7 +291,7 @@ public final class GameResult{
     
     //In order to color the quarter button, we need to determine the score from player's perspective
     //Can't just use the live score home and away score.
-    protected final String getGameQuarterInfo( LiveScore liveScore, int homeScore, int awayScore ){
+    protected final String getGameQuarterInfo( LiveScore liveScore ){
         
         StringBuilder builder   = new StringBuilder( );
         

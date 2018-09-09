@@ -40,34 +40,19 @@ public final class AnalyticsManager{
         LOGGER.info( "Successfully created analytics thread to run everuy {} minutes.", INTERVAL );
     }
     
-     
-    public final String getGameOneSummary( GameResult result ){
-        return getGameSummary( result.getGame1Quarter( ), result.getMy1Team( ), result.getMatch1Score( ) );
-    }
     
-    
-    public final String getGameTwoSummary( GameResult result ){
-        return getGameSummary( result.getGame2Quarter( ), result.getMy2Team( ), result.getMatch2Score( ) );
-    }
-
-    
-    public final String getGameThreeSummary( GameResult result ){
-        return getGameSummary( result.getGame3Quarter( ), result.getMy3Team( ), result.getMatch3Score( ) );
-    }
-    
-
     public final String getGameOneDrive( GameResult result ){
-        return result.getMatch1Score( ).getDriveInfo( );
+        return getFormattedDriveInfo( result.getMatch1Score( ) );
     }
     
     
     public final String getGameTwoDrive( GameResult result ){
-        return result.getMatch2Score( ).getDriveInfo( );
+        return getFormattedDriveInfo( result.getMatch2Score( ) );
     }
 
     
     public final String getGameThreeDrive( GameResult result ){
-        return result.getMatch3Score( ).getDriveInfo( );
+        return getFormattedDriveInfo( result.getMatch3Score( ) );
     }
     
     
@@ -85,9 +70,35 @@ public final class AnalyticsManager{
         return result.getMatch3Score( ).getFormattedQuarter( );
     }
     
+     
+    public final String getGameOneSummary( GameResult result ){
+        return getFormattedGameSummary( result.getGame1Quarter( ), result.getMy1Team( ), result.getMatch1Score( ) );
+    }
+    
+    
+    public final String getGameTwoSummary( GameResult result ){
+        return getFormattedGameSummary( result.getGame2Quarter( ), result.getMy2Team( ), result.getMatch2Score( ) );
+    }
+
+    
+    public final String getGameThreeSummary( GameResult result ){
+        return getFormattedGameSummary( result.getGame3Quarter( ), result.getMy3Team( ), result.getMatch3Score( ) );
+    }
+    
+    
+    
+    protected final String getFormattedDriveInfo( LiveScore liveScore ){
+        if( liveScore == null ) return EMPTY;
+        
+        boolean notStarted  = (GameState.NOT_STARTED == liveScore.getGameState( ));
+        String driveInfo    = (notStarted)? liveScore.getStadium( ) : liveScore.getDriveInfo( ); 
+        
+        return driveInfo;
+    }
+    
     
     //Display the summary for the home team.
-    public final String getGameSummary( String fmtQuarter, NFLTeam homeTeam, LiveScore liveScore ){
+    protected final String getFormattedGameSummary( String fmtQuarter, NFLTeam homeTeam, LiveScore liveScore ){
         
         String gameSummary     = EMPTY;
         
