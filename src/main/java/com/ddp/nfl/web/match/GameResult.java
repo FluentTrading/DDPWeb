@@ -90,16 +90,16 @@ public final class GameResult{
         
     //AWAY
     public final String getOpp1TeamName( ){
-        return getOpp1Team( ).getCamelCaseName( );
+        return getHomeTeamDisplayName( getOpp1Team( ), getMatch1Score( ) );
     }
     
     public final String getOpp2TeamName( ){
-        return getOpp2Team( ).getCamelCaseName( );
+        return getHomeTeamDisplayName( getOpp2Team( ), getMatch2Score( ) );
     }
     
     
     public final String getOpp3TeamName( ){
-        return ( getOpp3Team( ) == null ) ? EMPTY : getOpp3Team( ).getCamelCaseName( );         
+        return getHomeTeamDisplayName( getOpp3Team( ), getMatch3Score( ) );         
     }
     
     
@@ -200,11 +200,11 @@ public final class GameResult{
         if( team == null ) return EMPTY;
         
         String teamName         = team.getCamelCaseName( );
-        boolean hasPossession   = teamHasPossession( team, liveScore );
         GameState gameState     = liveScore.getGameState( );
         boolean delayedOrHalf   = ( GameState.DELAYED == gameState || GameState.HALFTIME == gameState );
         if( delayedOrHalf ) return teamName;
         
+        boolean hasPossession   = teamHasPossession( team, liveScore );
         String displayName      = ( hasPossession ) ? (teamName + SPACE + BLINK_GREEN_DOT) : teamName;
         return displayName;
         
@@ -396,8 +396,9 @@ public final class GameResult{
             return false;
         }
         
-        boolean isPlaying   = (GameState.PLAYING == liveScore.getGameState( ));
-        if( isPlaying && myTeam.getNickName( ).equals(liveScore.getPossessionTeam( ))){
+        boolean isPlaying   = GameState.PLAYING == liveScore.getGameState( );
+        boolean hasPossess  = myTeam.getNickName( ).equals(liveScore.getPossessionTeam( ));
+        if( isPlaying && hasPossess ){
             return true;
         }
            
