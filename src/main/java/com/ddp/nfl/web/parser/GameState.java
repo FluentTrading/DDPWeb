@@ -52,7 +52,8 @@ public enum GameState{
     
     protected final static boolean parseGameFinished( String rawQuarterStr ){
         return "F".equals( rawQuarterStr ) || "FO".equals( rawQuarterStr )
-                || "Final".equals( rawQuarterStr );
+                || "Final".equals( rawQuarterStr )
+                || "final overtime".equalsIgnoreCase( rawQuarterStr );
     }
     
     
