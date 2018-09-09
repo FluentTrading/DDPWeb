@@ -1,8 +1,15 @@
 
+Quarter cell wont show any color:
+Simulate the case when a game is going on:
 
-Quarter cell wont show any color: just the game start time and during the game quarter and time remaining (Q1: 10:20)
+1) It is tied at 0-0 and 14-14, what do we show at the info box and colors
+1) Home is winning
+1) Home is loosing 
+2) Redzone
+3) Possession as blinking football
+4) DO we parse the full feed in background thread and show more info?
 
-Show color in the entire score grid like last year.
+Do we show a background animation when no games are agoing on?
 
 
 We are now using the full feed to power this app!
@@ -37,14 +44,9 @@ Wednesday Night:
 
 Enhancements:
 ====================================================
-UI:
-1) Update Seahawks, Ramns, Colts logos?
 
 1. Chakka flag for the looser
 2. Team record should be available in analytics
-3. If multiple users are logged on to the servlet, how does the servlet know to display the game that the user click on?
-   Does it show the last game that was clicked on?
-
 
 Week Number:
 1) Currently, we put the week number in the web.xml.
@@ -67,16 +69,12 @@ Check game start date, week number and links to get scores.
 
 Schedule:
 1)	Show AM/PM in time
-2)	Show Stadium Location if possible
 3)  Group schedule by date (like CBS sports schedule) 
 4)  We have all the schedules downloaded with stadium info, should we store them in DB?
 
 
 Winnig Page:
 //Put Al bundy in the bg
-
-Rules Page:
-//Put Al bundy in the bg and add rules defined at the bottom
 
 
 Links:

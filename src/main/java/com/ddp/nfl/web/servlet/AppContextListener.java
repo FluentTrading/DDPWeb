@@ -7,13 +7,13 @@ import java.util.*;
 import javax.servlet.*;
 import javax.servlet.annotation.*;
 
+import com.ddp.nfl.web.analytics.core.*;
 import com.ddp.nfl.web.core.*;
 import com.ddp.nfl.web.database.*;
 import com.ddp.nfl.web.parser.*;
 import com.ddp.nfl.web.pickem.*;
 import com.ddp.nfl.web.schedule.*;
 import com.ddp.nfl.web.winnings.*;
-import com.ddp.nfl.web.analytics.core.*;
 
 import static com.ddp.nfl.web.util.DDPUtil.*;
 
@@ -46,8 +46,9 @@ public final class AppContextListener implements ServletContextListener{
         DBService service       = createDBService( ddpMeta, context );
         ScheduleManager schMan  = parseSchedule( ddpMeta, service, context );
         
-        LiveScoreParser parser  = createLiveScoreParser( schMan, context );
+        createLiveScoreParser( schMan, context );
         createPickManager( ddpMeta, schMan, service, context );
+        createGameCenter( context );
         //prepareWinningsCash( ddpMeta, parser, service, context );
                                 
         LOGGER.info( "DDP NFL Servlet context initialized!");
@@ -60,23 +61,27 @@ public final class AppContextListener implements ServletContextListener{
         LiveScoreParser scoreParser = new LiveScoreParser( schManager );
         context.setAttribute( LIVE_SCORE_PARSER_KEY, scoreParser );
         LOGGER.info("Successfully created ScoreParser with key [{}]{}", LIVE_SCORE_PARSER_KEY, PRINT_NEWLINE);
-   
-        
-        JsonScoreParser jsonParser  = new JsonScoreParser( schManager );
-        context.setAttribute( "jsonParser", jsonParser );
-        LOGGER.info("Successfully created ScoreParser with key [{}]{}", "jsonParser", PRINT_NEWLINE);
-   
         
         return scoreParser;
     }
 
 
 
-    protected final void createPickManager( DDPMeta meta, ScheduleManager schMan, DBService service, ServletContext context ){
+    protected final PickManager createPickManager( DDPMeta meta, ScheduleManager schMan, DBService service, ServletContext context ){
         PickManager pick    = new PickManager( meta, schMan, service );
         context.setAttribute( PICK_MANAGER_KEY, pick );
         LOGGER.info("Successfully created PickManager with key [{}]{}", PICK_MANAGER_KEY, PRINT_NEWLINE);
         
+        return pick;
+    }
+    
+    
+    protected final void createGameCenter( ServletContext context ) {
+        AnalyticsManager manager= new AnalyticsManager( );
+        manager.start( );
+        
+        context.setAttribute( GAME_ANALYTICS_KEY, manager );
+        LOGGER.info("Successfully stored game center manager with key [{}] {}", GAME_ANALYTICS_KEY, PRINT_NEWLINE);        
     }
     
     
@@ -201,6 +206,11 @@ public final class AppContextListener implements ServletContextListener{
                 service.close( );
             }
                         
+            AnalyticsManager game = (AnalyticsManager) ctx.getAttribute( GAME_ANALYTICS_KEY );
+            if( game != null ) {
+                game.stop( );
+            }
+            
             LOGGER.info( "Successfully destroyed DDP Servlet context.");
             
         } catch (SQLException e) {

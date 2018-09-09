@@ -28,12 +28,17 @@ public final class LiveScore{
     private final String timeRemaining;
     
     private final boolean isRedzone;
-    private final String quarter;
+    
+    private final String rawQuarterStr;
+    private final String formattedQuarter;
     
     private final String yl;
     private final int togo;
     private final int down;
+    private final int bp;
+    private final String stadium;
     private final String note;
+    
     private final SummaryManager summary; 
     
     private final static int    DATE_LENGTH     = 8;
@@ -45,7 +50,7 @@ public final class LiveScore{
                             int awayScore,
                             String teamPossession, String timeRemaining, 
                             boolean isRedzone, String rawQuarterStr,
-                            String yl, int togo, int down, String  note, SummaryManager summary ){
+                            String yl, int togo, int down, int bp, String stadium, String note, SummaryManager summary ){
         
         this.gameId         = gameId;
         this.schedule       = schedule;
@@ -58,11 +63,14 @@ public final class LiveScore{
         this.timeRemaining  = timeRemaining;
         this.teamPossession = teamPossession;
         this.isRedzone      = isRedzone;
-        this.quarter        = parseQuarter( notStarted, isFinished, schedule, rawQuarterStr, timeRemaining );
+        this.rawQuarterStr  = rawQuarterStr;
+        this.formattedQuarter= parseQuarter( notStarted, isFinished, schedule, rawQuarterStr, timeRemaining );
         
         this.yl             = yl;
         this.togo           = togo;
         this.down           = down;
+        this.bp             = bp;
+        this.stadium        = NFLStadium.getFormattedName(stadium);
         this.note           = note;
         this.summary        = summary;
     }
@@ -128,10 +136,13 @@ public final class LiveScore{
     }
     
     
-    public final String getQuarter( ){
-        return quarter;
+    public final String getFormattedQuarter( ){
+        return formattedQuarter;
     }
-       
+     
+    public final String getRawQuarter( ){
+        return rawQuarterStr;
+    }
 
     public final boolean isNotStarted( ) {
         return notStarted;
@@ -157,6 +168,16 @@ public final class LiveScore{
         return down;
     }
 
+    
+    public final int getBP( ) {
+        return bp;
+    }
+    
+    
+    public final String getStadium( ) {
+        return stadium;
+    }
+    
 
     public final String getNote( ) {
         return note;
@@ -219,7 +240,7 @@ public final class LiveScore{
                                             String quarterStr, String timeRemaining ) {
 
         //SHow the time when the game starts
-        if( notStarted ){
+        if( !isValid( quarterStr) || notStarted ){
             return schedule.getGameDayTime( );
         }
 
@@ -269,11 +290,13 @@ public final class LiveScore{
         .append( ", Home=" ).append( getHomeTeam( ).getCamelCaseName( )).append( ", HomeScore=" ).append( homeScore )
         .append( ", Away=" ).append( getAwayTeam( ).getCamelCaseName( ) ).append( ", AwayScore=" ).append( awayScore )
         .append( ", Possession=" ).append( teamPossession )
-        .append( ", quarter=" ).append( quarter )
+        .append( ", quarter=" ).append( formattedQuarter )
         .append( ", TimeLeft=" ).append( timeRemaining )
         .append( ", isRedzone=" ).append( isRedzone )
         .append( ", yl=" ).append( yl ).append( ", togo=" ).append( togo )
-        .append( ", down=" ).append( down ).append( ", note=" ).append( note );
+        .append( ", down=" ).append( down )
+        .append( ", bp=" ).append( bp ).append( ", stadium=" ).append( stadium )
+        .append( ", note=" ).append( note );
             
         if( summary != null ) {
             builder.append( summary );

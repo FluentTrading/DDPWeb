@@ -2,11 +2,14 @@ package com.ddp.nfl.web.servlet;
 
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.*;
+
 import org.slf4j.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
+import com.ddp.nfl.web.analytics.core.*;
 import com.ddp.nfl.web.core.*;
 import com.ddp.nfl.web.database.*;
 import com.ddp.nfl.web.match.*;
@@ -17,15 +20,17 @@ import static com.ddp.nfl.web.match.ResultCode.*;
 
 
 @WebServlet(name = "GameServlet", description = "Servlet to keep track of score", urlPatterns = {"/game"})
-public class GameServlet extends HttpServlet {
+public class GameServlet extends HttpServlet{
 
     private final static long serialVersionUID  = 1L;
     private final static Logger LOGGER          = LoggerFactory.getLogger( "GameServlet" );
+    
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         performService( request, response);
     }
+    
     
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         performService( request, response );
@@ -34,75 +39,53 @@ public class GameServlet extends HttpServlet {
          
     protected final void performService( HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         
-        ServletContext context  = request.getServletContext( );
+        long startTimeNanos         = System.nanoTime( );
+        ServletContext context      = request.getServletContext( );
         
-        DDPMeta metaInfo        = (DDPMeta) context.getAttribute( META_INFO_KEY );
+        DDPMeta metaInfo            = (DDPMeta) context.getAttribute( META_INFO_KEY );
         if( metaInfo == null ){
             handleError( metaInfo, META_MISSING, "Failed to locate Meta Info!", request, response );
             return;
         }
         
-        int weekNumber          = metaInfo.getWeek( );
-        DBService service       = (DBService) context.getAttribute( DB_SERVICE_KEY );
+        int weekNumber              = metaInfo.getWeek( );
+        DBService service           = (DBService) context.getAttribute( DB_SERVICE_KEY );
         if( service == null || !service.isValid( ) ) {
             handleError( metaInfo, DB_ERROR, "Failed to created DB connection!", request, response );
             return;
         }
         
         
-        boolean pickMade        = service.isPicksMade( );
+        boolean pickMade            = service.isPicksMade( );
         if( !pickMade ) {
             handleError( metaInfo, PICKS_NOT_MADE, "Picks for week " + weekNumber + " hasn't been made yet!", request, response );
             return;
         }
-                
+
         
-        /*
-        LiveScoreParser parser= (LiveScoreParser) context.getAttribute( LIVE_SCORE_PARSER_KEY );
-        if( parser == null ) {
-            handleError( metaInfo, SCORE_PARSER_MISSING, "Failed to lookup score parser!", request, response );
-            return;
-        }
-                
-        Map<NFLTeam, LiveScore> map = parser.parseLiveScore( );
-        if( map.isEmpty( ) ) {
-            handleError( metaInfo, PARSE_ERROR, "FAILED to read NFL data!", request, response );
-            return;
-        }
-        */
-        
-        
-        JsonScoreParser jsonParser= (JsonScoreParser) context.getAttribute( "jsonParser" );
+        LiveScoreParser jsonParser  = (LiveScoreParser) context.getAttribute( LIVE_SCORE_PARSER_KEY );
         Map<NFLTeam, LiveScore> map = jsonParser.parseLiveScore( );
         if( map.isEmpty( ) ) {
             handleError( metaInfo, PARSE_ERROR, "FAILED to read NFL data!", request, response );
             return;
         }
         
-        /*
-        String liveScoreUrl     = createLiveScoreUrl( metaInfo );
-        Map<NFLTeam, LiveScore> map = LiveScoreParser.parseLiveScore( liveScoreUrl, service.getAllTeams( ) );
-        if( map.isEmpty( ) ) {
-            handleError( metaInfo, PARSE_ERROR, "FAILED to read NFL data!", request, response );
-            return;
-        }
-        */
         
-        
-        /*
-        GameAnalyticsManager analytics  =  (GameAnalyticsManager) context.getAttribute( GAME_ANALYTICS_KEY );
+        AnalyticsManager analytics  = (AnalyticsManager) context.getAttribute( GAME_ANALYTICS_KEY );
         if( analytics != null ){
-            analytics.downloadAnalyticsData( );
+            analytics.gameStatusUpdate( map );
         }
-        */
         
-        GameResultManager result = GameResultFactory.packData( metaInfo, map, service );
-        handleSuccess( result, request, response );   
+        GameResultManager result    = GameResultFactory.packData( metaInfo, map, service );
+        handleSuccess( startTimeNanos, result, request, response );   
         
     }
     
 
-    protected final void handleSuccess( GameResultManager resultMan, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    protected final void handleSuccess( long startTimeNanos, GameResultManager resultMan, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        //long timeTakenNanos         = System.nanoTime( ) - startTimeNanos;
+        //LOGGER.info("Time Taken to service game servlet [{} millis]", TimeUnit.MILLISECONDS.convert(timeTakenNanos, TimeUnit.NANOSECONDS) );
+        
         request.setAttribute( RESULT_MANAGER_KEY, resultMan );
         request.getRequestDispatcher(DDP_GAME_PAGE_LINK).forward(request, response);
     }

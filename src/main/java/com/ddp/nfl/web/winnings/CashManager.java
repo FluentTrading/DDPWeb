@@ -133,8 +133,9 @@ public final class CashManager{
         
         int nflYear         = ddpMeta.getYear( );
         String seasonType   = ddpMeta.getSeasonType( );
-        Map<Integer, Collection<LiveScore>> resultPerWeek = new HashMap<>( );
         Map<String, NFLTeam> teamMap = service.getAllTeams( );
+        
+        Map<Integer, Collection<LiveScore>> resultPerWeek = new HashMap<>( );
         
         for( int week : weekArray ){
             String scheduleUrl  = ScheduleManager.createScheduleUrl( seasonType, nflYear, week );

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ page isELIgnored="false"%>
-<%@ page import="com.ddp.nfl.web.core.LoginBean,com.ddp.nfl.web.util.DDPUtil,com.ddp.nfl.web.match.GameResultManager" %>
+<%@ page import="com.ddp.nfl.web.match.GameResultManager,com.ddp.nfl.web.util.DDPUtil" %>
 <%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
@@ -16,6 +16,7 @@
 	<link rel="stylesheet" type="text/css" href="css/Login.css">
 	<link rel="stylesheet" type="text/css" href="css/DDPStyle.css">
 	<link rel="stylesheet" type="text/css" href="css/GameAnalytics.css">
+	<link rel="stylesheet" type="text/css" href="css/DivTableDesign.css">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/solid.css" integrity="sha384-VGP9aw4WtGH/uPAOseYxZ+Vz/vaTb1ehm1bwx92Fm8dTrE+3boLfF1SpAtB1z7HW" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/brands.css" integrity="sha384-rf1bqOAj3+pw6NqYrtaE1/4Se2NBwkIfeYbsFdtiR6TQz0acWiwJbv1IM/Nt/ite" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/fontawesome.css" integrity="sha384-1rquJLNOM3ijoueaaeS5m+McXPJCGdr5HcA03/VHXxcp2kX2sUrQDmFc3jR5i/C7" crossorigin="anonymous">
@@ -46,148 +47,110 @@
       
   <section id="content1">
 
- 	  <div>
+ 	<div>
     			 	   		
- 	   		<c:choose>
+ 	   	<c:choose>
  	   	
-            	<c:when test="${!requestScope[DDPUtil.RESULT_MANAGER_KEY].isValid( )}">
-            		<td align="center">
-            			<h1 style="color:#009DDC;">${requestScope[DDPUtil.RESULT_MANAGER_KEY].getDisplayMessage()}</h1>
-            			<center>
-							<img src=${DDPUtil.generateGRRImage() } title="King of Pop, Karate & Love!" height="270" width="480"/>
-						</center>
-					</td>			
-    			</c:when>
+           	<c:when test="${!requestScope[DDPUtil.RESULT_MANAGER_KEY].isValid( )}">
+           		<td align="center">
+           			<h1 style="color:#009DDC;" align="center">
+           				${requestScope[DDPUtil.RESULT_MANAGER_KEY].getDisplayMessage()}
+           			</h1>
+           			
+           			<center>
+						<img src=${DDPUtil.generateGRRImage() } title="King of Pop, Karate & Love!" height="270" width="480"/>
+					</center>
+				</td>			
+    		</c:when>
+    
+    	
+    	<c:otherwise>
+    
+    	
+    	<c:forEach items="${requestScope[DDPUtil.RESULT_MANAGER_KEY].getResultList( )}" var="gameResult">
     		
-
-    			<c:otherwise>
-    				
-    					<div class="datagrid" >
-							<table>
-							<form action="analytics" method="POST">
-							<c:forEach items="${requestScope[DDPUtil.RESULT_MANAGER_KEY].getResultList( )}" var="gameResult"> 
-  									
-  									<tr>
-  									
-  										<td valign="middle" align="center" width="10%">
-    										<img src="${gameResult.getPlayer( ).getIcon( )}" title=${gameResult.getPlayer( ).getName( )} height="52" width="52">
-    									</td>
-    									    				
-   										<td valign="middle" align="left" width="10%">
-   											${gameResult.getMy1TeamName( )}
-   										</td>
-    									
-    									    									
-    									<td valign="middle" align="left" width="5%">
-    										${gameResult.getMy1TeamScore( )}
-    									</td>
-    									
-    									<td valign="middle" align="center" width="4%">
-    										<img src="${gameResult.getGame1WinnerIcon()}" height="42" width="42"/>
-    									</td>    									
-    									
-    									<td valign="middle" align="left" width="10%">
-    								 		${gameResult.getMy2TeamName( )}
-    									</td>
-    									
-    									<td valign="middle" align="left" width="5%">
-    										${gameResult.getMy2TeamScore( )}
-    									</td>
-    									
-    									<td valign="middle" align="center" width="5%">
-    										<img src="${gameResult.getGame2WinnerIcon()}" height="42" width="42"/>						
-    									</td>
-    									
-    									
-    									<c:if test="${gameResult.hasAll6Teams()}">		
-    											
-    										<td valign="middle" align="left" width="10%">
-    											${gameResult.getMy3TeamName( )}
-    										</td>
-    										<td valign="middle" align="left" width="5%">
-    											${gameResult.getMy3TeamScore( )}
-    										</td>
-    										
-    										<td valign="middle" align="center" width="5%">
-    											<img src="${gameResult.getGame3WinnerIcon()}" height="42" width="42"/>
-    										</td>
-    										    										
-    									</c:if>
-    						    		
-    						    				
-  									</tr>
-  									
-  									<tr>
-  									
-  										<td valign="middle" align="center" width="10%">
-    										<bold>${gameResult.getHomeTotalScore( )}</bold>  											
-  										</td>
-  										    									
-    									<td valign="middle" align="left" width="10%">
-    										${gameResult.getOpp1TeamName( )}
-    									</td>
-    									
-    									
-    									<td valign="middle" align="left" width="5%">
-    										${gameResult.getOpp1TeamScore( )}
-    									</td>
-    									
-    									<td valign="middle" align="center" width="5%">
-    										${gameResult.getGame1Quarter( )}    										
-    									</td>    									    									
-    									    							
-    									
-    									<td valign="middle" align="left" width="10%">
-    										${gameResult.getOpp2TeamName( )}
-    									</td>
-    									
-    									<td valign="middle" align="left" width="5%">
-    										${gameResult.getOpp2TeamScore( )}
-    									</td>
-    									
-    									<td valign="middle" align="center" width="5%">
-    										${gameResult.getGame2Quarter( )}    																			
-    									</td>
-    									
-    									
-    									<c:if test="${gameResult.hasAll6Teams()}">
-    										<td valign="middle" align="left" width="10%">
-    											${gameResult.getOpp3TeamName( )}
-    										</td>
-    										
-    										<td valign="middle" align="left" width="5%">
-    											${gameResult.getOpp3TeamScore( )}
-    										</td>
-    										
-    										<td valign="middle" align="center" width="5%">    	
-    											${gameResult.getGame3Quarter( )}    																											
-    										</td>
-    									</c:if>
-    									    									
-  									</tr>
-  						  									
-  									<tr class="alt">
-  										<td></td>
-  										<td></td><td></td>
-  										<td></td><td></td>
-  										<td></td><td></td>
-  										<td></td><td></td>											
-  										<td></td><td></td>
-  										<td></td><td></td>
-  										<td></td>
-  									</tr>	
-									</c:forEach>	
-																	
-							</table>
-							</form>
+    		<div class="newGridTable" >
+    
+	   			<div class="firstRow">
+  		
+  					<div class="player-bar">
+  						<img src="${gameResult.getPlayer( ).getIcon( )}" title=${gameResult.getPlayer( ).getName( )} height="52" width="52">
+  					</div>
+  		
+  					<div class="${gameResult.getGame1ScoreClass()}">
+  						<div class="topLeft">${gameResult.getMy1TeamName( )}</div>
+  						<div class="topRight">${gameResult.getMy1TeamScore( )}</div>
+						<div class="bottomLeft">${gameResult.getOpp1TeamName( )}</div>
+						<div class="bottomRight">${gameResult.getOpp1TeamScore( )}</div>						
+					</div>
+  		
+  					<div class="icon-bar">
+  						<img src="${gameResult.getGame1WinnerIcon()}"/>
+			  		</div>
+  		
+  					<div class="${gameResult.getGame2ScoreClass()}">
+  						<div class="topLeft">${gameResult.getMy2TeamName( )}</div>
+						<div class="topRight">${gameResult.getMy2TeamScore( )}</div>
+						<div class="bottomLeft">${gameResult.getOpp2TeamName( )}</div>
+						<div class="bottomRight">${gameResult.getOpp2TeamScore( )}</div>
+					</div>
+  		
+  					<div class="icon-bar">
+  						<img src="${gameResult.getGame2WinnerIcon()}"/>
+  					</div>
+  		
+  					<c:if test="${gameResult.hasAll6Teams()}">		
+  						<div class="${gameResult.getGame3ScoreClass()}">
+  							<div class="topLeft">${gameResult.getMy3TeamName( )}</div>
+							<div class="topRight">${gameResult.getMy3TeamScore( )}</div>
+							<div class="bottomLeft">${gameResult.getOpp3TeamName( )}</div>
+							<div class="bottomRight">${gameResult.getOpp3TeamScore( )}</div>	
 						</div>
-    				    			
-    		</c:otherwise>
- 	   	</c:choose>
+  			
+  						<div class="icon-bar">
+  							<img src="${gameResult.getGame3WinnerIcon()}"/>
+  						</div>
+  					
+  					</c:if>
+  		
+			</div>
+		</div>
+
+		<div class="newGridTable" >
+   	
+   			<div class="secondRow">
+  		
+  				<div class="totalScore">
+  					${gameResult.getHomeTotalScore( )}
+  				</div>
+  		
+  				<div class="${gameResult.getGame1MsgInfoClass()}">
+  					${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGameOneSummary( gameResult )}
+				</div>
+  		
+  				<div class="${gameResult.getGame2MsgInfoClass()}">
+  					${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGameTwoSummary( gameResult )}			
+				</div>
+		
+				<c:if test="${gameResult.hasAll6Teams()}">
+					<div class="${gameResult.getGame3MsgInfoClass()}">
+						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGameThreeSummary( gameResult )}
+  					</div>
+  				</c:if>
+  		  		
+		</div>
+    
+    </div>  
+            
+    </c:forEach>	
+					    			
+   </c:otherwise>
+ 	</c:choose>
  	   		
  	   	
     </div>
-  		
+    
+    	
   </section>
     
     
@@ -323,7 +286,8 @@
 			</c:choose>	
     		
     		</div>
-    
+
+        
 	 </section>
 	
 </main>

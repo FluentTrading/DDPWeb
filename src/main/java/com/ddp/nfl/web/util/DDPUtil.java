@@ -1,11 +1,8 @@
 package com.ddp.nfl.web.util;
 
+import com.google.gson.*;
 import java.time.format.*;
 import java.util.concurrent.*;
-
-import com.google.gson.*;
-import com.ddp.nfl.web.core.*;
-import com.ddp.nfl.web.parser.*;
 
 
 public final class DDPUtil{
@@ -22,7 +19,8 @@ public final class DDPUtil{
     public final static String COMMA                = ",";
     public final static String SPACE                = " ";
     public final static String SPACE_DASH           = " - ";
-    public final static String COLON                = ":";    
+    public final static String COLON                = ":";
+    public final static String AT                   = "at";  
     public final static String PM_TIME              = "PM";
     public final static String L_BRACKET            = "[";
     public final static String R_BRACKET            = "]";
@@ -52,8 +50,6 @@ public final class DDPUtil{
     public final static String DDP_GAME_PAGE_LINK   = "/WEB-INF/nfl.jsp";
     public final static String PICK_TAB_LINK        = "/pick.jsp";
     
-    
-    
     public final static Gson GSON_INSTANCE          = new GsonBuilder().create();
     public final static JsonParser JSON_PARSER      = new JsonParser();
     
@@ -61,6 +57,9 @@ public final class DDPUtil{
     public final static DateTimeFormatter _YYYYMMDDD= DateTimeFormatter.ofPattern("yyyyMMdd");
     public final static DateTimeFormatter _HH_MM    = DateTimeFormatter.ofPattern("hh:mm");
     
+    
+    //public final static String JSON_MINI_SCORE_URL  = "http://localhost:8080/web/testdata/Game_Day_Mini.json";
+    public final static String JSON_MINI_SCORE_URL  = "http://www.nfl.com/liveupdate/scores/scores.json";
     
     public final static boolean isValid( String data ){
         return !( data == null || data.trim( ).isEmpty( ) );            

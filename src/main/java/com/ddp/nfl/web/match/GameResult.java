@@ -14,11 +14,6 @@ public final class GameResult{
     private final LiveScore[] myScores;
     private final NFLTeam[] myPickedTeams;
     
-    private final static String WIN_BUTTON_CLASS     = "winButton";
-    private final static String LOSS_BUTTON_CLASS    = "lossButton";
-    private final static String TIED_BUTTON_CLASS    = "tiedButton";
-    private final static String NO_START_BUTTON_CLASS= "nostartButton";
-    
         
     public GameResult( boolean hasAll6Teams, DDPPick pick, LiveScore[ ] myScores ){
         this.has6Teams      = hasAll6Teams;
@@ -43,6 +38,11 @@ public final class GameResult{
     }
     
     
+    public final LiveScore[] getLiveScores( ) {
+        return myScores;
+    }
+    
+        
     public final String getMy1TeamName( ){
         return getHomeTeamDisplayName( getMy1Team( ), getMatch1Score( ) );
     }
@@ -162,7 +162,34 @@ public final class GameResult{
         return getGameWinnerIcon( getMatch3Score( ), getMy3TeamScore( ), getMy3Team( ), getOpp3TeamScore( ), getOpp3Team( ) );
     }
       
+    //-----------------------
     
+    public final String getGame1MsgInfoClass( ){
+        return getMessageInfoClassName( getMatch1Score( ), getMy1TeamScore( ), getOpp1TeamScore( ) );
+    }
+    
+    public final String getGame2MsgInfoClass( ){
+        return getMessageInfoClassName( getMatch2Score( ), getMy2TeamScore( ), getOpp2TeamScore( ) );
+    }
+        
+    public final String getGame3MsgInfoClass( ){
+        return getMessageInfoClassName( getMatch3Score( ), getMy3TeamScore( ), getOpp3TeamScore( ) );
+    }   
+    
+    
+    public final String getGame1ScoreClass( ){
+        return getScoreClassName( getMatch1Score( ), getMy1TeamScore( ), getOpp1TeamScore( ) );
+    }
+    
+    public final String getGame2ScoreClass( ){
+        return getScoreClassName( getMatch2Score( ), getMy2TeamScore( ), getOpp2TeamScore( ) );
+    }
+        
+    public final String getGame3ScoreClass( ){
+        return getScoreClassName( getMatch3Score( ), getMy3TeamScore( ), getOpp3TeamScore( ) );
+    }   
+    
+        
     //UI shouldn't directly invoke these methods.
     //-----------------------------------------------------------
     
@@ -190,7 +217,7 @@ public final class GameResult{
         
         //Game is finished, if home team won, show the team logo, otherwise thumbs down
         if( liveScore.isFinished( ) ) {
-            String teamIcon   = ( homeScore > awayScore ) ? home.getRoundTeamIcon( ) : NFLTeam.getThumbsDownLogo( );
+            String teamIcon   = ( homeScore > awayScore ) ? home.getSquareTeamIcon( ) : NFLTeam.getGameLostLogo( );
             return teamIcon;
         }        
         
@@ -210,10 +237,48 @@ public final class GameResult{
         //Not in Redzone, home team is winning and hasPossession
         boolean homeTeamWin  = ( homeScore > awayScore );
         if( homeTeamWin  ){
-            return home.getRoundTeamIcon( );
+            return home.getSquareTeamIcon( );
         }
         
-        return NFLTeam.getThumbsDownLogo( );
+        return NFLTeam.getMissingTeamLogo( );
+        
+    }
+    
+    
+    protected final String getMessageInfoClassName( LiveScore liveScore, int homeScore, int awayScore ){
+    
+        if( liveScore.notStarted( ) ){
+            return DivUtil.INFO_BAR_GAME_PENDING;
+        }
+        
+        if( homeScore == awayScore ){
+            return DivUtil.INFO_BAR_GAME_TIED;
+        }
+        
+        if( homeScore > awayScore ){
+            return DivUtil.INFO_BAR_GAME_WON;
+        }
+        
+        return DivUtil.INFO_BAR_GAME_LOST;
+        
+    }
+    
+    
+    protected final String getScoreClassName( LiveScore liveScore, int homeScore, int awayScore ){
+        
+        if( liveScore.notStarted( ) ){
+            return DivUtil.SCORE_BAR_GAME_PENDING;
+        }
+        
+        if( homeScore == awayScore ){
+            return DivUtil.SCORE_BAR_GAME_TIED;
+        }
+        
+        if( homeScore > awayScore ){
+            return DivUtil.SCORE_BAR_GAME_WON;
+        }
+        
+        return DivUtil.SCORE_BAR_GAME_LOST;
         
     }
     
@@ -225,46 +290,21 @@ public final class GameResult{
     protected final String getGameQuarterButton( LiveScore liveScore, int homeScore, int awayScore ){
         
         StringBuilder builder   = new StringBuilder( );
-        String quarterInfo      = liveScore.getQuarter( );
-                        
-        //Game not started, not clickable & we show the time of the game
+        String quarterInfo      = liveScore.getFormattedQuarter( );
+
         if( liveScore.notStarted( ) ){
-            builder.append("<div class=").append( NO_START_BUTTON_CLASS ).append(">");
-            builder.append(  "<h4>" ).append( quarterInfo ).append(  "</h4>" );
-            builder.append( "</div>");
+            builder.append( quarterInfo ).append( SPACE ).append( AT ).append( SPACE ).append( liveScore.getStadium( ) );
             return builder.toString( );
         }
+
+        if( liveScore.isFinished( ) ) {
+            return quarterInfo;
+        }
         
-        String gameId       = liveScore.getGameId( );
-        String btnClassName = (homeScore == awayScore)? TIED_BUTTON_CLASS: (homeScore > awayScore ? WIN_BUTTON_CLASS : LOSS_BUTTON_CLASS);
+        return quarterInfo;
         
-        /*
-         * 
-        builder.append("<div class=\"").append( btnClassName ).append("\">");
-        builder.append("<button class=\"").append( btnClassName ).append("\"");
-        builder.append( " type=\"submit\"");
-        builder.append( " name=" ).append( ANALYTICS_GAME_ID_KEY );
-        builder.append( " value=\"" ).append( gameId ).append("\">");
-        builder.append(  "<h4>" );
-        builder.append( redzoneBlink );
-        builder.append("&nbsp");
-        builder.append( quarterString );
-        builder.append(  "</h4>" );
-        builder.append( "</button>");
-        builder.append( "</div>");
-        */
-        
-        
-        //Unclickable for now
-        builder.append("<div class=\"").append( btnClassName ).append("\">");
-        builder.append(  "<h4>" );
-        builder.append( quarterInfo );
-        builder.append(  "</h4>" );
-        builder.append( "</div>");
-        
-        return builder.toString( );
-    
     }
+  
     
     protected final int calcTotalScore( boolean home, LiveScore[] scores ){
         int totalScore = 0;
