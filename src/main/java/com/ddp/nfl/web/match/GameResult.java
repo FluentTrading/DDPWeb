@@ -255,6 +255,11 @@ public final class GameResult{
             return DivUtil.INFO_BAR_GAME_PENDING;
         }
         
+        if( GameState.FINISHED == liveScore.getGameState( ) ){
+            return DivUtil.INFO_BAR_GAME_FINISHED;
+        }
+        
+        
         if( homeScore == awayScore ){
             return DivUtil.INFO_BAR_GAME_TIED;
         }
