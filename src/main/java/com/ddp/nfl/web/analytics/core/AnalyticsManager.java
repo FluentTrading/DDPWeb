@@ -73,7 +73,7 @@ public final class AnalyticsManager{
             String homeNickName = liveScore.getHomeTeam( ).getNickName( );
         
             displayString       = (String) summMap.get( rawQuarter, homeNickName );
-            displayString       = !isValid(displayString) ? quarter : displayString; 
+            displayString       = isValid(displayString) ? (quarter + NEWLINE + displayString) : quarter; 
                         
         }catch (Exception e) {
             LOGGER.warn("Exception while looking up game summary", e);
