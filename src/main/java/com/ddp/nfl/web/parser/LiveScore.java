@@ -248,8 +248,8 @@ public final class LiveScore{
             return "Final";
         }
 
-        if( quarterStr.equalsIgnoreCase("H") ){
-            return "Half";
+        if( quarterStr.equalsIgnoreCase("H") || quarterStr.equalsIgnoreCase("Halftime") ){
+            return "Halftime";
         }
 
         if( quarterStr.equalsIgnoreCase("1")){

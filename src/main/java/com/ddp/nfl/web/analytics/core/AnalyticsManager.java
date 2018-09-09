@@ -55,7 +55,8 @@ public final class AnalyticsManager{
         return getGameSummary( result.getGame3Quarter( ), result.getMatch3Score( ) );
     }
 
-    
+
+    //Display the summary for the home team.
     public final String getGameSummary( String quarter, LiveScore liveScore ){
         
         String displayString    = quarter;
@@ -74,7 +75,7 @@ public final class AnalyticsManager{
         
             displayString       = (String) summMap.get( rawQuarter, homeNickName );
             displayString       = isValid(displayString) ? (quarter + NEWLINE + displayString) : quarter; 
-                        
+                    
         }catch (Exception e) {
             LOGGER.warn("Exception while looking up game summary", e);
         }
