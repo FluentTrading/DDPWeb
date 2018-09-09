@@ -28,6 +28,8 @@ public final class LiveScore{
     private final String timeRemaining;
     
     private final boolean isRedzone;
+    private final boolean isHalftime;
+    private final boolean isDelayed;
     
     private final String rawQuarterStr;
     private final String formattedQuarter;
@@ -44,6 +46,11 @@ public final class LiveScore{
     private final static int    DATE_LENGTH     = 8;
     private final static Logger LOGGER          = LoggerFactory.getLogger( "LiveScore" );
     
+    //NotStarted    = Game will start in the fuure.
+    //IsPlaying     = Game is being played or in halftime
+    //IsHalftime    = Game is in halftime
+    //IsDelayed     = Either delayed start or suspended in the middle (Weather)
+    //IsFinshed     = Game is finished
     public LiveScore(  String gameId, Schedule schedule,
                             boolean notStarted, boolean isPlaying, boolean isFinished, 
                             int homeScore, 
@@ -64,7 +71,9 @@ public final class LiveScore{
         this.teamPossession = teamPossession;
         this.isRedzone      = isRedzone;
         this.rawQuarterStr  = rawQuarterStr;
-        this.formattedQuarter= parseQuarter( notStarted, isFinished, schedule, rawQuarterStr, timeRemaining );
+        this.isDelayed      = rawQuarterStr.equalsIgnoreCase("Delayed") || rawQuarterStr.equalsIgnoreCase("Suspended");
+        this.isHalftime     = rawQuarterStr.equalsIgnoreCase("H") || rawQuarterStr.equalsIgnoreCase("Halftime");
+        this.formattedQuarter= parseQuarter( isDelayed, notStarted, isFinished, isHalftime, schedule, rawQuarterStr, timeRemaining );
         
         this.yl             = yl;
         this.togo           = togo;
@@ -99,7 +108,15 @@ public final class LiveScore{
     public final boolean isFinished( ){
         return isFinished;
     }
-
+    
+    public final boolean isHalftime( ){
+        return isHalftime;
+    }
+    
+    
+    public final boolean isDelayed( ){
+        return isDelayed;
+    }
     
     public final NFLTeam getHomeTeam( ){
         return schedule.getHomeTeam( );
@@ -236,8 +253,8 @@ public final class LiveScore{
     
 
     
-    public final static String parseQuarter( boolean notStarted, boolean isFinished, Schedule schedule,
-                                            String quarterStr, String timeRemaining ) {
+    public final static String parseQuarter( boolean isDelayed, boolean notStarted, boolean isFinished, boolean isHalftime, 
+                                            Schedule schedule, String quarterStr, String timeRemaining ) {
 
         //SHow the time when the game starts
         if( !isValid( quarterStr) || notStarted ){
@@ -248,10 +265,14 @@ public final class LiveScore{
             return "Final";
         }
 
-        if( quarterStr.equalsIgnoreCase("H") || quarterStr.equalsIgnoreCase("Halftime") ){
+        if( isHalftime ) {
             return "Halftime";
         }
-
+        
+        if( isDelayed ){
+            return "Delayed";
+        }
+        
         if( quarterStr.equalsIgnoreCase("1")){
             return "Q" + quarterStr + SPACE_DASH + timeRemaining;
 

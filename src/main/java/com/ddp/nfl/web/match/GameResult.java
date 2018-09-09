@@ -201,8 +201,12 @@ public final class GameResult{
         
         String teamName         = team.getCamelCaseName( );
         boolean hasPossession   = teamHasPossession( team, score );
-        String displayName      = ( hasPossession ) ? (teamName + SPACE + BLINK_GREEN_DOT) : teamName;
         
+        if( score.isDelayed() || score.isHalftime( ) ) {
+            return teamName;
+        }
+        
+        String displayName      = ( hasPossession ) ? (teamName + SPACE + BLINK_GREEN_DOT) : teamName;
         return displayName;
     }
     
