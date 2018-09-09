@@ -39,11 +39,7 @@ public final class LiveScore{
     private final static int    DATE_LENGTH     = 8;
     private final static Logger LOGGER          = LoggerFactory.getLogger( "LiveScore" );
     
-    //NotStarted    = Game will start in the fuure.
-    //IsPlaying     = Game is being played or in halftime
-    //IsHalftime    = Game is in halftime
-    //IsDelayed     = Either delayed start or suspended in the middle (Weather)
-    //IsFinshed     = Game is finished
+   
     public LiveScore(  String gameId, Schedule schedule, GameState gameState,
                             int homeScore, int awayScore,
                             String teamPossession, String timeRemaining, 

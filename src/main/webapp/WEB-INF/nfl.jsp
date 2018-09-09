@@ -82,7 +82,7 @@
 						<div class="bottomRight">${gameResult.getOpp1TeamScore( )}</div>						
 					</div>
   		
-  					<div class="icon-bar">
+  					<div class="team-icon-bar">
   						<img src="${gameResult.getGame1WinnerIcon()}"/>
 			  		</div>
   		
@@ -93,7 +93,7 @@
 						<div class="bottomRight">${gameResult.getOpp2TeamScore( )}</div>
 					</div>
   		
-  					<div class="icon-bar">
+  					<div class="team-icon-bar">
   						<img src="${gameResult.getGame2WinnerIcon()}"/>
   					</div>
   		
@@ -105,7 +105,7 @@
 							<div class="bottomRight">${gameResult.getOpp3TeamScore( )}</div>	
 						</div>
   			
-  						<div class="icon-bar">
+  						<div class="team-icon-bar">
   							<img src="${gameResult.getGame3WinnerIcon()}"/>
   						</div>
   					

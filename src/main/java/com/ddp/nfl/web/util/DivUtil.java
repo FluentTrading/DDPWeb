@@ -5,6 +5,8 @@ public class DivUtil{
     public final static String INFO_BAR_GAME_WON     = "info-bar-game-won";
     public final static String INFO_BAR_GAME_LOST    = "info-bar-game-lost";
     public final static String INFO_BAR_GAME_TIED    = "info-bar-game-tied";
+    
+    public final static String INFO_BAR_GAME_FINISHED= "info-bar-game-finished";
     public final static String INFO_BAR_GAME_PENDING = "info-bar-game-not-started";
     
     public final static String SCORE_BAR_GAME_WON    = "score-bar-game-won";
