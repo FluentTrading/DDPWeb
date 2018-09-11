@@ -42,7 +42,41 @@ public enum GameState{
         return GameState.UNKNOWN;
      
     }
-   
+       
+    
+    public final static boolean isNotStarted( LiveScore score ){
+        return ( GameState.NOT_STARTED == score.getGameState( ) );
+    }
+         
+    
+    public final static boolean isFinished( LiveScore score ) {
+        return ( GameState.FINISHED == score.getGameState( ) );
+    }
+    
+    
+    public final static boolean isPlaying( LiveScore score ) {
+        return ( GameState.PLAYING == score.getGameState( ) );
+    }
+
+    
+    public final static boolean isPlaying( GameState state ) {
+        return ( GameState.PLAYING == state );
+    }
+    
+    
+    public final static boolean isPlayingNotHalfTime( GameState state ){
+        return ( isPlaying(state) && !(GameState.HALFTIME == state));
+    }
+    
+  
+    public final static boolean isDelayed( LiveScore score ) {
+        return ( GameState.DELAYED == score.getGameState( ) );
+    }
+    
+    
+    public final static boolean isHalftime( LiveScore score ) {
+        return ( GameState.HALFTIME == score.getGameState( ) );
+    }
     
     
     protected final static boolean parseGameNotStarted( String rawQuarterStr ){
@@ -82,5 +116,9 @@ public enum GameState{
         }
         
     }
+
+
+
+
             
 }

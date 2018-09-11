@@ -123,22 +123,22 @@
   				</div>
   		
   				<div class="${gameResult.getGame1MsgInfoClass()}">
-  					<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGameOneDrive( gameResult )}</div>
-					<div class="rightQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGameOneQuarter( gameResult )}</div>
-  					${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGameOneSummary( gameResult )}
+  					<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Drive( gameResult )}</div>
+					<div class="rightQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Quarter( gameResult )}</div>
+  					${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Summary( gameResult )}
 				</div>
   		
   				<div class="${gameResult.getGame2MsgInfoClass()}">
-  					<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGameTwoDrive( gameResult )}</div>
-					<div class="rightQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGameTwoQuarter( gameResult )}</div>
-  					${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGameTwoSummary( gameResult )}			
+  					<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Drive( gameResult )}</div>
+					<div class="rightQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Quarter( gameResult )}</div>
+  					${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Summary( gameResult )}			
 				</div>
 		
 				<c:if test="${gameResult.hasAll6Teams()}">
 					<div class="${gameResult.getGame3MsgInfoClass()}">
-						<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGameThreeDrive( gameResult )}</div>
-						<div class="rightQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGameThreeQuarter( gameResult )}</div>
-						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGameThreeSummary( gameResult )}
+						<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Drive( gameResult )}</div>
+						<div class="rightQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Quarter( gameResult )}</div>
+						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Summary( gameResult )}
   					</div>
   				</c:if>
   		  		

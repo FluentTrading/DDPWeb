@@ -49,10 +49,12 @@ public final class GameResultManager{
     public final ResultCode getResultCode( ){
         return code;
     }
+    
         
     public final String getMessage( ){
         return message;
     }
+    
     
     public final String getDisplayMessage( ){
         return getMessage( );

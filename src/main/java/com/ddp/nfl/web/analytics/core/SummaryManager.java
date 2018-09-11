@@ -1,4 +1,4 @@
-package com.ddp.nfl.web.analytics.summary;
+package com.ddp.nfl.web.analytics.core;
 
 import org.slf4j.*;
 import java.util.Map.*;

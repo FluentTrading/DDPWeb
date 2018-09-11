@@ -1,11 +1,12 @@
 package com.ddp.nfl.web.analytics.home;
 
-import static com.ddp.nfl.web.util.DDPUtil.*;
-
 import org.slf4j.*;
 import java.util.*;
 import java.util.Map.*;
 import com.google.gson.*;
+
+import static com.ddp.nfl.web.util.DDPUtil.*;
+
 
 public final class HomeFactory{
     

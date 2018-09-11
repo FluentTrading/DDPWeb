@@ -3,10 +3,8 @@ package com.ddp.nfl.web.parser;
 import static com.ddp.nfl.web.util.DDPUtil.*;
 
 import org.slf4j.*;
-
 import java.time.*;
-
-import com.ddp.nfl.web.analytics.summary.*;
+import com.ddp.nfl.web.analytics.core.*;
 import com.ddp.nfl.web.core.*;
 import com.ddp.nfl.web.schedule.*;
 
@@ -57,7 +55,7 @@ public final class LiveScore{
         this.isRedzone      = isRedzone;
         this.rawQuarterStr  = rawQuarterStr;
         this.driveInfo      = parseDrive( gameState, down, togo, yl );
-        this.formattedQuarter= parseQuarter( gameState, schedule, rawQuarterStr, timeRemaining );
+        this.formattedQuarter= formatQuarter( gameState, schedule, rawQuarterStr, stadium, timeRemaining );
         
         this.stadium        = NFLStadium.getFormattedName(stadium);
         this.note           = note;
@@ -116,14 +114,16 @@ public final class LiveScore{
     }
     
     
-    public final String getFormattedQuarter( ){
+    public final String getDisplayableQuarter( ){
         return formattedQuarter;
     }
      
+    
     public final String getRawQuarter( ){
         return rawQuarterStr;
     }
 
+    
     public final String getTeamPossession( ) {
         return teamPossession;
     }
@@ -197,7 +197,7 @@ public final class LiveScore{
 
     protected final static String parseDrive( GameState state, int down, int togo, String yard ){
 
-        boolean isPlaying     = (GameState.PLAYING == state && GameState.HALFTIME != state );
+        boolean isPlaying     = GameState.isPlayingNotHalfTime(state);
         if( !isPlaying ) return EMPTY;
         
         StringBuilder builder = new StringBuilder( );
@@ -213,7 +213,7 @@ public final class LiveScore{
 
     
     
-    protected final static String parseQuarter( GameState state, Schedule schedule, String quarterStr, String timeRemaining ){
+    protected final static String formatQuarter( GameState state, Schedule schedule, String quarterStr, String stadium, String timeRemaining ){
 
         
         switch( state ) {

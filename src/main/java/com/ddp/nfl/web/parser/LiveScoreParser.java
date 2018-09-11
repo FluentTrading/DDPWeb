@@ -6,8 +6,8 @@ import java.net.*;
 import java.util.*;
 import java.util.Map.*;
 
+import com.ddp.nfl.web.analytics.core.*;
 import com.ddp.nfl.web.analytics.home.*;
-import com.ddp.nfl.web.analytics.summary.*;
 import com.ddp.nfl.web.core.*;
 import com.ddp.nfl.web.schedule.*;
 import com.google.gson.*;
@@ -40,7 +40,7 @@ public final class LiveScoreParser{
         
         try {
         
-            long startTime          = System.nanoTime( );
+            //long startTime          = System.nanoTime( );
             String jsonGameData     = readUrl( JSON_MINI_SCORE_URL );
             JsonElement topElement  = JSON_PARSER.parse( jsonGameData );
         
@@ -78,8 +78,8 @@ public final class LiveScoreParser{
         Schedule schedule   = scheduleMap.get( gameId );
 
         JsonObject gameObj  = element.getAsJsonObject( );
-        TeamInfo home       = create( true, gameObj );
-        TeamInfo away       = create( false, gameObj );
+        TeamInfo home       = createTeamInfo( true, gameObj );
+        TeamInfo away       = createTeamInfo( false, gameObj );
         SummaryManager summ = null;
         
         int bp              = safeParseInt( gameObj, "bp" );
@@ -134,7 +134,7 @@ public final class LiveScoreParser{
     }    
     
     
-    protected final static TeamInfo create( boolean isHome, JsonObject jObject ){
+    protected final static TeamInfo createTeamInfo( boolean isHome, JsonObject jObject ){
         
         TeamInfo team           = null; 
         
@@ -147,7 +147,7 @@ public final class LiveScoreParser{
             team                = new TeamInfo( isHome, teamName, to, sMap, null );
             
         }catch(Exception e ){
-            LOGGER.warn( "FAILED to parse TeamAnalytics for [{}]", jObject, e );
+            LOGGER.warn( "FAILED to parse TeamInfo for [{}]", jObject, e );
         }
                 
         return team;

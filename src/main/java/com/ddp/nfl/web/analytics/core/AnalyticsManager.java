@@ -2,10 +2,11 @@ package com.ddp.nfl.web.analytics.core;
 
 import org.apache.commons.collections4.map.*;
 import org.slf4j.*;
+
+import java.io.*;
 import java.util.*;
 import java.util.concurrent.*;
 
-import com.ddp.nfl.web.analytics.summary.*;
 import com.ddp.nfl.web.core.*;
 import com.ddp.nfl.web.match.*;
 import com.ddp.nfl.web.parser.*;
@@ -41,56 +42,56 @@ public final class AnalyticsManager{
     }
     
     
-    public final String getGameOneDrive( GameResult result ){
-        return getFormattedDriveInfo( result.getMatch1Score( ) );
+    public final String getGame1Drive( GameResult result ){
+        return getPlayDrive( result.getMatch1Score( ) );
     }
     
     
-    public final String getGameTwoDrive( GameResult result ){
-        return getFormattedDriveInfo( result.getMatch2Score( ) );
-    }
-
-    
-    public final String getGameThreeDrive( GameResult result ){
-        return getFormattedDriveInfo( result.getMatch3Score( ) );
-    }
-    
-    
-    public final String getGameOneQuarter( GameResult result ){
-        return result.getMatch1Score( ).getFormattedQuarter( );
-    }
-    
-    
-    public final String getGameTwoQuarter( GameResult result ){
-        return result.getMatch2Score( ).getFormattedQuarter( );
+    public final String getGame2Drive( GameResult result ){
+        return getPlayDrive( result.getMatch2Score( ) );
     }
 
     
-    public final String getGameThreeQuarter( GameResult result ){
-        return result.getMatch3Score( ).getFormattedQuarter( );
+    public final String getGame3Drive( GameResult result ){
+        return getPlayDrive( result.getMatch3Score( ) );
+    }
+    
+    
+    public final String getGame1Quarter( GameResult result ){
+        return result.getMatch1Score( ).getDisplayableQuarter( );
+    }
+    
+    
+    public final String getGame2Quarter( GameResult result ){
+        return result.getMatch2Score( ).getDisplayableQuarter( );
+    }
+
+    
+    public final String getGame3Quarter( GameResult result ){
+        return result.getMatch3Score( ).getDisplayableQuarter( );
     }
     
      
-    public final String getGameOneSummary( GameResult result ){
-        return getFormattedGameSummary( result.getGame1Quarter( ), result.getMy1Team( ), result.getMatch1Score( ) );
+    public final String getGame1Summary( GameResult result ){
+        return getGameSummary( result.getGame1Quarter( ), result.getMy1Team( ), result.getMatch1Score( ) );
     }
     
     
-    public final String getGameTwoSummary( GameResult result ){
-        return getFormattedGameSummary( result.getGame2Quarter( ), result.getMy2Team( ), result.getMatch2Score( ) );
+    public final String getGame2Summary( GameResult result ){
+        return getGameSummary( result.getGame2Quarter( ), result.getMy2Team( ), result.getMatch2Score( ) );
     }
 
     
-    public final String getGameThreeSummary( GameResult result ){
-        return getFormattedGameSummary( result.getGame3Quarter( ), result.getMy3Team( ), result.getMatch3Score( ) );
+    public final String getGame3Summary( GameResult result ){
+        return getGameSummary( result.getGame3Quarter( ), result.getMy3Team( ), result.getMatch3Score( ) );
     }
     
     
     
-    protected final String getFormattedDriveInfo( LiveScore liveScore ){
+    protected final String getPlayDrive( LiveScore liveScore ){
         if( liveScore == null ) return EMPTY;
         
-        boolean notStarted  = (GameState.NOT_STARTED == liveScore.getGameState( ));
+        boolean notStarted  = GameState.isNotStarted( liveScore );
         String driveInfo    = (notStarted)? liveScore.getStadium( ) : liveScore.getDriveInfo( ); 
         
         return driveInfo;
@@ -98,13 +99,13 @@ public final class AnalyticsManager{
     
     
     //Display the summary for the home team.
-    protected final String getFormattedGameSummary( String fmtQuarter, NFLTeam homeTeam, LiveScore liveScore ){
+    protected final String getGameSummary( String fmtQuarter, NFLTeam homeTeam, LiveScore liveScore ){
         
         String gameSummary     = EMPTY;
         
         try {
             
-            boolean isPlaying   = (GameState.PLAYING == liveScore.getGameState( ));
+            boolean isPlaying   = GameState.isPlaying( liveScore );
             if( !isPlaying ) return EMPTY;
          
             String gameId       = liveScore.getGameId( );
@@ -134,15 +135,15 @@ public final class AnalyticsManager{
             boolean exists  = gameIdSet.contains( gameId );
             GameState state = score.getGameState( );
             
-            if( !exists && (GameState.PLAYING == state) ){
+            if( !exists && GameState.isPlaying(state) ){
                 gameIdSet.add( gameId );
-                //LOGGER.info( "Added GameId: {} for analytics.", gameId );
+                LOGGER.info( "Added GameId: {} for analytics.", gameId );
             }
         
             if( exists && (GameState.FINISHED == state) ){
                 boolean removed = gameIdSet.remove( gameId );
                 if( removed ){
-                    //LOGGER.info( "GameId: {} ended, won't poll for analytics.", gameId );
+                    LOGGER.info( "GameId: {} ended, won't poll for analytics.", gameId );
                 }
             }
         
@@ -201,33 +202,29 @@ public final class AnalyticsManager{
             try {
                                 
                 String fullGameUrl = URL_PREFIX.replaceAll( GAME_ID_KEY, gameId );
-                downloadAnalyticsData( gameId, fullGameUrl );
+                
+                String gameDayData  = LiveScoreParser.readUrl( fullGameUrl );
+                JsonElement topElem = JSON_PARSER.parse( gameDayData );
+                boolean isJsonObj   = topElem.isJsonObject( );
+                if( !isJsonObj ) return;
+                
+                JsonObject jObject  = topElem.getAsJsonObject( );
+                boolean isNull      = jObject.isJsonNull( );
+                if( isNull ) return;
+                
+                JsonObject gameObj  = jObject.getAsJsonObject( gameId );
+                MultiKeyMap<String, String> summMap = SummaryManager.parseScoreSummary( gameObj );
+                if( !summMap.isEmpty( ) ) {
+                    analyticsMap.put( gameId, summMap );
+                }
             
+            }catch( EOFException e ){
+                LOGGER.warn( "Garbled message from game center for GameId:[{}]", gameId, e);
+                
             }catch( Exception e ){
                 LOGGER.warn( "FAILED to download game center data for GameId:[{}]", gameId, e);
             }
         
-        }
-    
-        
-        
-        protected final void downloadAnalyticsData( String gameId, String fullGameUrl ) throws Exception{
-            
-            String gameDayData  = LiveScoreParser.readUrl( fullGameUrl );
-            JsonElement topElem = JSON_PARSER.parse( gameDayData );
-            boolean isJsonObj   = topElem.isJsonObject( );
-            if( !isJsonObj ) return;
-            
-            JsonObject jObject  = topElem.getAsJsonObject( );
-            boolean isNull      = jObject.isJsonNull( );
-            if( isNull ) return;
-            
-            JsonObject gameObj  = jObject.getAsJsonObject( gameId );
-            MultiKeyMap<String, String> summMap = SummaryManager.parseScoreSummary( gameObj );
-            if( !summMap.isEmpty( ) ) {
-                analyticsMap.put( gameId, summMap );
-            }
-            
         }
         
    
