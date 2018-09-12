@@ -216,73 +216,72 @@
     
       <section id="content3">
     	
-    	<div class="wingrid">    	
-    		
-    		<c:choose>
+    			
+    	<div class="cashTable" >
+    
+	   		<c:choose>
 				
 				<c:when test="${applicationScope[DDPUtil.WINNINGS_MAP_KEY] != null}">
 					
-    				<div>
-						<table>
-								<c:forEach var="entry" items="${applicationScope[DDPUtil.WINNINGS_MAP_KEY]}">
+					<div class="cashHeaderRow">	
+  						<div class="cashHeader">Player</div>
+						<div class="cashHeader">Week</div>
+						<div class="cashHeader">Cash</div>
+						<div class="cashHeader">Points</div>
+						<div class="cashHeader">Teams</div>
+						<div class="cashHeader"></div>
+						<div class="cashHeader"></div>
+						<div class="cashHeader"></div>
+						<div class="cashHeader"></div>
+						<div class="cashHeader"></div>													
+					</div>
+							
+    				
+    				<c:forEach var="entry" items="${applicationScope[DDPUtil.WINNINGS_MAP_KEY]}">
 
-								<tr></tr>
-  								<tr>
-									<td align="center">Player</td>
-									<td align="center">Week</td>
-									<td align="center">Total</td>
-									<td align="center">Cash</td>
-									<td align="center">Result</td>
-									<td align="center"></td>
-									<td align="center"></td>									
-								</tr>
-								<tr>
+						<div class="cashSecondRow">
   					    								
-    								<td align="center">
-    									<img src=${entry.value.getPlayer( ).getIcon( )} title=${entry.value.getPlayer( ).getName()} height="64" width="64"/>    									
-    								</td>
+    						<div class="cashPlayer">
+    							<img src=${entry.value.getPlayer( ).getIcon( )} title=${entry.value.getPlayer( ).getName()} height="64" width="64"/>    									
+    						</div>
     								
-    								<td align="center">
-    									${entry.value.getWeekNumber( )}
-    								</td>
+    						<div class="cashData">
+    							${entry.value.getWeekNumber( )}
+    						</div>
     								
+    						<div class="cashData">
+    							$${entry.value.getCashWon( )}
+    						</div>
+    						
+    						<div class="cashData">
+    							${entry.value.getTotalScore( )}
+    						</div>
+    						
     								
-    								<td align="center">
-    									${entry.value.getTotalScore( )}
-    								</td>
-    								
-    								<td align="center">
-    									$${entry.value.getCashWon( )}
-    								</td>
-    								
-    								<td align="center">
-    									<img src=${entry.value.getTeam1().getSquareTeamIcon( )} title=${entry.value.getTeam1( ).getName()} height="42" width="42">
-    								</td>
-    								<td align="center">
-    									${entry.value.get_1Score( )}
-    								</td>
-    							    								
-    								<td align="center">
-    									<img src=${entry.value.getTeam2().getSquareTeamIcon( )} title=${entry.value.getTeam2( ).getName()} height="42" width="42">
-    								</td>
-    								<td align="center">
-    									${entry.value.get_2Score( )}
-    								</td>
-    								
-    								<c:if test="${entry.value.getTeam3() != null}">
-    									<td align="center">
-    										<img src=${entry.value.getTeam3().getSquareTeamIcon( )} title=${entry.value.getTeam3( ).getName()} height="42" width="42">
-    									</td>
-    									<td align="center">
-    										${entry.value.get_3Score( )}
-    									</td>
-    								</c:if>
-  								</tr>
+    						<div class="cashData">
+    							<img src=${entry.value.getTeam1().getSquareTeamIcon( )} title=${entry.value.getTeam1( ).getCamelCaseName()}>
+    						</div>
+    						
+    						<div class="cashData">
+    							<img src=${entry.value.getTeam2().getSquareTeamIcon( )} title=${entry.value.getTeam2( ).getCamelCaseName()}>
+    						</div>
+    						
+    							
+    						<c:if test="${entry.value.getTeam3() != null}">
+    							<div class="cashData">
+    								<img src=${entry.value.getTeam3().getSquareTeamIcon( )} title=${entry.value.getTeam3( ).getCamelCaseName()}>
+    							</div>
+    						</c:if>
+  						
+  						</div>
+  						
+  						<div class="cashAlternateRow" />
+  						
   								
-  							</c:forEach>
-  															
-						</table>
+  					</c:forEach>
+  						
 					</div> 		
+    			
     			</c:when>
 				<c:otherwise>
 					<h3>DDP Cash hasn't been awarded yet!</h3>

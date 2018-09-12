@@ -1,40 +1,6 @@
-
-Quarter cell wont show any color:
-Simulate the case when a game is going on:
-
-1) It is tied at 0-0 and 14-14, what do we show at the info box and colors
-1) Home is winning
-1) Home is loosing 
-2) Redzone
-3) Possession as blinking football
-4) DO we parse the full feed in background thread and show more info?
-
-Do we show a background animation when no games are agoing on?
-
-
-We are now using the full feed to power this app!
-=================================================
-1. For live score, we cannot only parse the game that are going on as we show info on all three games.
-What we can do, it parse the games that are in future but only get the basics (mostly from Schedule)
-           
-         //Also, if the game is not live, game center has no data for it.
-    //TODO: improve by checking time not just date           
-               
-2. Cache the data for games that has finished for the week.
-Should we pull this data in the background Thread??
-
-Where do we get team record from??
-Remove all the unnecessary analytics code!
-
-
-3. Cash Manager is throwing an error, commented out for now.
-4. We now have access to a lot more info, see what can be used.
-
-
-
 Rebooting:
 ====================================================
-Monday Night:
+Tuesday Night:
 	1) Update Week Number after the game.
 	2) Reboot so the winnings can be calculated.
 
@@ -45,36 +11,33 @@ Wednesday Night:
 Enhancements:
 ====================================================
 
-1. Chakka flag for the looser
-2. Team record should be available in analytics
+1) Show a background animation with teams picked when none of the games have started.
+2) Team record should be available in analytics
+3) Put Al bundy in the background on the winning Page:
 
-Week Number:
-1) Currently, we put the week number in the web.xml.
-   The link for current week isn't working anymore.
-   Don't try to read from DB with picks, as we could have bye week.
+
+6) With the data We now have access to a lot more info, see what can be used.
+Can we show these during the game or will it take too much screen space?
+Home -> Stats
+Away -> Stats
+CBS Game Center has for each team:
+Pass
+Rush
+Rec
+
 
 Picks:
+===================================================
 1)	In DBService, we load the teamMap when the context starts.
 	Therefore, if the website is running & we pick teams.
 	It won't get automatically reflected.
 	When we save the picks, we should also update the teamMap.
 
-
-Prod Check
-===============================
-Make analytics uncliackable if we dont finish.
-Remove all TODOs
-Check game start date, week number and links to get scores.
-
-
 Schedule:
+===================================================
 1)	Show AM/PM in time
 3)  Group schedule by date (like CBS sports schedule) 
-4)  We have all the schedules downloaded with stadium info, should we store them in DB?
 
-
-Winnig Page:
-//Put Al bundy in the bg
 
 
 Links:
@@ -87,66 +50,3 @@ https://burntsushi.net/stuff/nfldb/nfldb-condensed.pdf
 http://live.numberfire.com/nfl?week=8
 http://icoconvert.com/
 https://codepen.io/imprakash/pen/GgNMXO
-
-
-Rules:
- 		<div class="rulegrid">
-    		
-    		<div>
-    			<table>
-    			<tr>
-					<td><h3>Rules!</h3></td>
-				</tr>
-				<tr>
-					<h4>Every week, players picks three teams.</h4>
-					<h4>At the end of the week, we sum the points scored by each team.</h4>
-					<h4>Player with the highest total wins $50.</h4>
-				</tr>
-    
-    
-    			<tr>
-					<h3>U.I Info: Player</h3>
-				</tr>
-				<tr>
-					<h4>Player icon and his total points are shown in the first column.</h4>
-					<h4>Teams picked are shown on the top row and laid out in the order they were picked.</h4>					
-				</tr>
-				
-				<tr>
-					<h3>U.I Info: Points</h3>
-				</tr>
-				<tr>
-					<h4>Player with the highest total is on the top row.</h4>
-					<h4>If two player have the same total score, player who picked teams last wins.</h4>					
-				</tr>
-				
-				<tr>
-					<h3>U.I Info: Quarter Color</h3>
-				</tr>
-				<tr>
-					<h4>Gray = Game has not yet started.</h4>
-					<h4>Green= Your team is either winning or won</h4>
-					<h4>Red= Your team is either loosing or lost</h4>
-					<h4>Yellow= Your team is tied.</h4>										
-				</tr>
-				
-				<tr>
-					<h3>U.I Info: Quarter Text</h3>
-				</tr>
-				<tr>
-					<h4>If the game hasn't started, text will show start time in EST.</h4>
-					<h4>If the game is Finished, text will show "Final".</h4>
-					<h4>If the game is in play, text will show the Quarter and the time remaining (including half and overtime)</h4>
-				</tr>
-				
-				<tr>
-					<h3>U.I Info: Team Icon</h3>
-				</tr>
-				<tr>
-					<h4>If the game is finished, winning team's icon is shown.</h4>
-					<h4>If the game is in play & redzone gif is shown if your team is in the redzone.</h4>
-					<h4>If the game is in play & your team is winning, it's icon is shown.</h4>
-				</tr>
-				</table>
-			</div>
-    	</div>

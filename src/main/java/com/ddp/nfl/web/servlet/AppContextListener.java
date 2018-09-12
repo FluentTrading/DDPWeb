@@ -46,10 +46,10 @@ public final class AppContextListener implements ServletContextListener{
         DBService service       = createDBService( ddpMeta, context );
         ScheduleManager schMan  = parseSchedule( ddpMeta, service, context );
         
-        createLiveScoreParser( schMan, context );
+        LiveScoreParser parser  = createLiveScoreParser( schMan, context );
         createPickManager( ddpMeta, schMan, service, context );
         createGameCenter( context );
-        //prepareWinningsCash( ddpMeta, parser, service, context );
+        prepareWinningsCash( ddpMeta, parser, service, context );
                                 
         LOGGER.info( "DDP NFL Servlet context initialized!");
         

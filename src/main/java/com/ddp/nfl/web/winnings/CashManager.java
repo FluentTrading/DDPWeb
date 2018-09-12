@@ -17,41 +17,33 @@ public final class CashManager{
     private final LiveScoreParser parser;
     private final Map<Integer, CashWin> winnings;
     
-    private final static String NAME        = CashManager.class.getSimpleName( );
-    private final static Logger LOGGER      = LoggerFactory.getLogger( NAME );
+    private final static String NAME    = CashManager.class.getSimpleName( );
+    private final static Logger LOGGER  = LoggerFactory.getLogger( NAME );
            
-    
-    public CashManager(  DDPMeta ddpMeta, LiveScoreParser parser, DBService service ) {
+    public CashManager( DDPMeta ddpMeta, LiveScoreParser parser, DBService service ) {
         this.parser     = parser;
         this.winnings   = prepareWinnerPerWeek( ddpMeta, service );
     }
   
     
-    //TODO:: Hiding it for now, so I can release it after testing
-    public final Map<Integer, CashWin> getWinnings( ){
-        return null;
-    }
-    
-    
-    /*
     public final Map<Integer, CashWin> getWinnings( ){
         return winnings;
     }
-    */
-    
+        
     
     protected final Map<Integer, CashWin> prepareWinnerPerWeek( DDPMeta ddpMeta, DBService service ){
         
         Map<Integer, CashWin> map   = new TreeMap<>( );
-        int[] weekArray             = prepareWeekArray( ddpMeta.getWeek( ) );
+        int[] pastWeekArray         = getPastWeeks( ddpMeta.getWeek( ) );
                 
         //Players picks for all the weeks ( 1 to last week)
-        Map<Integer, Collection<DDPPick>> picksPerWeek= getPicksPerWeek( ddpMeta, weekArray, service );
+        Map<Integer, Collection<DDPPick>> picksPerWeekMap   = getPicksPerWeek( ddpMeta, pastWeekArray, service );
         
         //Results for all the weeks ( 1 to last week)
-        Map<Integer, Collection<LiveScore>> resultsPerWeek = getResultPerWeek( ddpMeta, weekArray, service );
+        Map<Integer, Collection<LiveScore>> resultsPerWeekMap = getResultPerWeek( ddpMeta, pastWeekArray, service );
         
-        for( Entry<Integer, Collection<DDPPick>> entry : picksPerWeek.entrySet( ) ) {
+        
+        for( Entry<Integer, Collection<DDPPick>> entry : picksPerWeekMap.entrySet( ) ) {
             
             int highestPoints    = 0;
             DDPPick winPick      = null;
@@ -59,10 +51,21 @@ public final class CashManager{
             int weekNumber       = entry.getKey( );
                         
             for( DDPPick ddpPick : entry.getValue( ) ){
-                Map<NFLTeam, Integer> points = getTeamPoints( weekNumber, ddpPick, resultsPerWeek );
-                int totalPoints  = getTotal( points );
-                             
-                if( totalPoints > highestPoints ) {
+                
+                Map<NFLTeam, Integer> points = getTeamPoints( weekNumber, ddpPick, resultsPerWeekMap );
+                int totalPoints     = getTotal( points );
+
+                //Winner has higher total points than everyone else
+                if( totalPoints > highestPoints ){
+                    winPick      = ddpPick;
+                    winScores    = points;
+                    highestPoints= totalPoints;
+                }
+
+                //Points are Tied
+                boolean pointsTie   = (totalPoints == highestPoints);
+                boolean pickedLater = (winPick != null && (ddpPick.getPickOrder( ) > winPick.getPickOrder( )));
+                if( pointsTie && pickedLater ) {
                     winPick      = ddpPick;
                     winScores    = points;
                     highestPoints= totalPoints;
@@ -169,12 +172,12 @@ public final class CashManager{
 
 
 
-    protected final int[] prepareWeekArray( int currentWeek ){
+    protected final int[] getPastWeeks( int currentWeek ){
         
-        int priorWeek   = (currentWeek == 1 ? 1 : currentWeek);
-        int[] weekArray = new int[ priorWeek];
+        int weekCount   = (currentWeek == ONE ? ONE : currentWeek);
+        int[] weekArray = new int[weekCount];
         
-        for( int i=0; i<priorWeek; i++ ){
+        for( int i=0; i<weekCount; i++ ){
             weekArray[i]= i + 1;
         }
             
@@ -196,22 +199,22 @@ public final class CashManager{
     }
 
     
-    /*
+    
     public static void main( String[] args ){
 
         System.setProperty("RDS_USERNAME", "ddpweb" );
         System.setProperty("RDS_PASSWORD", "1whynopass2");
         
-        DDPMeta ddpMeta     = new DDPMeta( "1.0", "REG", 2018, 2, 50);
+        DDPMeta ddpMeta     = new DDPMeta( "1.0", "REG", 2018, 1, 50);
         DBService service   = new DBService( ddpMeta, "com.mysql.cj.jdbc.Driver",
                                         "aa15utan83usopw.ceanhhiadqb0.us-east-2.rds.amazonaws.com", "3306", "WonneDB" );
         
-        CashManager cashMan = new CashManager( ddpMeta, service );
+        ScheduleManager schedule = new ScheduleManager( ddpMeta, service );
+        CashManager cashMan = new CashManager( ddpMeta, new LiveScoreParser(schedule), service );
         Map<Integer, CashWin> winnings     = cashMan.getWinnings( );
         
         System.out.println( winnings );
             
     }
-    */
-    
+        
 }

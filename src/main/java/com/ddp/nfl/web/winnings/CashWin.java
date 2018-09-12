@@ -11,11 +11,12 @@ public final class CashWin{
     private final int totalScore;
         
     private final NFLTeam team1;
-    private final NFLTeam team2;
-    private final NFLTeam team3;
-    
     private final int _1Score;
+    
+    private final NFLTeam team2;
     private final int _2Score;
+    
+    private final NFLTeam team3;
     private final int _3Score;
     
         
