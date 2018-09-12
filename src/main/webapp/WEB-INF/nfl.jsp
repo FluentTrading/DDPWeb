@@ -228,12 +228,7 @@
 						<div class="cashHeader">Week</div>
 						<div class="cashHeader">Cash</div>
 						<div class="cashHeader">Points</div>
-						<div class="cashHeader">Teams</div>
-						<div class="cashHeader"></div>
-						<div class="cashHeader"></div>
-						<div class="cashHeader"></div>
-						<div class="cashHeader"></div>
-						<div class="cashHeader"></div>													
+						<div class="cashHeader">Card</div>
 					</div>
 							
     				
@@ -257,21 +252,9 @@
     							${entry.value.getTotalScore( )}
     						</div>
     						
-    								
     						<div class="cashData">
-    							<img src=${entry.value.getTeam1().getSquareTeamIcon( )} title=${entry.value.getTeam1( ).getCamelCaseName()}>
+    							<a href="${entry.value.getCardLink()}" class="cashLink">${entry.value.getCardName()}</a>
     						</div>
-    						
-    						<div class="cashData">
-    							<img src=${entry.value.getTeam2().getSquareTeamIcon( )} title=${entry.value.getTeam2( ).getCamelCaseName()}>
-    						</div>
-    						
-    							
-    						<c:if test="${entry.value.getTeam3() != null}">
-    							<div class="cashData">
-    								<img src=${entry.value.getTeam3().getSquareTeamIcon( )} title=${entry.value.getTeam3( ).getCamelCaseName()}>
-    							</div>
-    						</c:if>
   						
   						</div>
   						

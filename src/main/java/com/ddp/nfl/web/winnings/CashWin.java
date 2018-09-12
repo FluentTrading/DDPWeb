@@ -19,6 +19,13 @@ public final class CashWin{
     private final NFLTeam team3;
     private final int _3Score;
     
+    private final String cardLink;
+    private final String cardName;
+    
+    private final static String WEEK_NAME   = "Week";
+    private final static String CARD_PREFIX = "images/cash/";
+    private final static String CARD_SUFFIX = ".jpg";
+    
         
     public CashWin( int weekNumber, DDPPick winPick, int cashWon, int totalScore, 
                     NFLTeam team1, int _1Score, NFLTeam team2, int _2Score, NFLTeam team3, int _3Score ){
@@ -33,7 +40,9 @@ public final class CashWin{
         this._2Score        = _2Score;
         this.team3          = team3;
         this._3Score        = _3Score;
-                   
+        this.cardLink       = CARD_PREFIX + WEEK_NAME + weekNumber + CARD_SUFFIX;
+        this.cardName       = WEEK_NAME + weekNumber;
+        
     }
 
     
@@ -90,6 +99,16 @@ public final class CashWin{
         return _3Score;
     }
 
+    
+    public final String getCardLink( ){
+        return cardLink;
+    }
+    
+    
+    public final String getCardName( ){
+        return cardName;
+    }
+    
 
     @Override
     public final String toString( ){
