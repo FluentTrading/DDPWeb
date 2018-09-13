@@ -15,7 +15,10 @@ public final class PickManager{
     private final int pickWeek;
     private final DBService service;
     private final ScheduleManager schMan;
-    private final Map<String, NFLTeam> teamsByNickName;
+    
+    private final Set<String> allTeamsForWeek; 
+    private final Map<String, DDPPlayer> allPlayers;
+    
     private final static Logger LOGGER  = LoggerFactory.getLogger( "PickManager" );
     
     
@@ -24,31 +27,26 @@ public final class PickManager{
         this.schMan     = schMan;
         this.service    = service;
         this.pickWeek   = meta.getWeek( );
-        this.teamsByNickName = createTeamsByNickName( service );
-        
+        this.allTeamsForWeek = populateTeamForThisWeek( );
+        this.allPlayers = new TreeMap<>( service.getAllPlayers( ) );
+                
     }
-
-
+   
+    
     public final int getPickWeek( ){
         return pickWeek;
     }  
     
     
     public final Map<String, DDPPlayer> getAllPlayers( ){
-        return service.getAllPlayers( );
+        return allPlayers;
     }  
   
     
     public final Set<String> getTeamsPlaying( ){
-        return schMan.getTeamsPlaying( );
+        return allTeamsForWeek;
     }  
-    
-    
-    public final Map<String, NFLTeam> getTeamsByNickName( ){
-        return teamsByNickName;
-    }  
-    
-    
+        
         
     public final Collection<DDPPick> loadTeamsPicked( int pickWeek ){
         return service.loadPicks( pickWeek, meta ).values( );
@@ -225,15 +223,14 @@ public final class PickManager{
         return service.getAllTeams( ).get( teamName );
     }
 
-    protected final Map<String, NFLTeam> createTeamsByNickName( DBService service ){
-        Map<String, NFLTeam> nflTeams = service.getAllTeams( );
-        Map<String, NFLTeam> nickMap = new HashMap<>();
-        for( NFLTeam team : nflTeams.values( ) ) {
-            nickMap.put( team.getNickName( ), team );
+   
+    protected final Set<String> populateTeamForThisWeek( ){
+        Set<String> teamWeek = new TreeSet<>();
+        for( String team : schMan.getTeamsPlaying( ) ) {
+            teamWeek.add( team.toUpperCase( ) );
         }
         
-        return nickMap;
+        return teamWeek;
     }
-
     
 }

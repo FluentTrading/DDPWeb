@@ -14,14 +14,12 @@ import static com.ddp.nfl.web.util.DDPUtil.*;
 
 public final class CashManager{
     
-    private final LiveScoreParser parser;
     private final Map<Integer, CashWin> winnings;
     
     private final static String NAME    = CashManager.class.getSimpleName( );
     private final static Logger LOGGER  = LoggerFactory.getLogger( NAME );
            
-    public CashManager( DDPMeta ddpMeta, LiveScoreParser parser, DBService service ) {
-        this.parser     = parser;
+    public CashManager( DDPMeta ddpMeta, DBService service ) {
         this.winnings   = prepareWinnerPerWeek( ddpMeta, service );
     }
   
@@ -40,7 +38,7 @@ public final class CashManager{
         Map<Integer, Collection<DDPPick>> picksPerWeekMap   = getPicksPerWeek( ddpMeta, pastWeekArray, service );
         
         //Results for all the weeks ( 1 to last week)
-        Map<Integer, Collection<LiveScore>> resultsPerWeekMap = getResultPerWeek( ddpMeta, pastWeekArray, service );
+        Map<Integer, Collection<Schedule>> resultsPerWeekMap = getResultPerWeek( ddpMeta, pastWeekArray, service );
         
         
         for( Entry<Integer, Collection<DDPPick>> entry : picksPerWeekMap.entrySet( ) ) {
@@ -105,17 +103,17 @@ public final class CashManager{
     }
     
     
-    protected final Map<NFLTeam, Integer> getTeamPoints( int week, DDPPick ddpPick, Map<Integer, Collection<LiveScore>> results ){
+    protected final Map<NFLTeam, Integer> getTeamPoints( int week, DDPPick ddpPick, Map<Integer, Collection<Schedule>> results ){
         
         NFLTeam[] myPickedTeams     = ddpPick.getTeams( );
         Map<NFLTeam, Integer> scores= new LinkedHashMap<>( );
         
-        Collection<LiveScore> res   = results.get( week );
+        Collection<Schedule> res   = results.get( week );
         
         for( NFLTeam nflTeam : myPickedTeams ){
             String myTeam   = nflTeam.getLowerCaseName( );
             
-            for( LiveScore result : res ){
+            for( Schedule result : res ){
                 
                 if( myTeam.equalsIgnoreCase(result.getHomeTeam( ).getLowerCaseName( )) ){
                     scores.put( result.getHomeTeam( ), result.getHomeScore( ) );
@@ -132,21 +130,28 @@ public final class CashManager{
     }
                 
     
-    protected final Map<Integer, Collection<LiveScore>> getResultPerWeek( DDPMeta ddpMeta, int[] weekArray, DBService service ){
+    protected final Map<Integer, Collection<Schedule>> getResultPerWeek( DDPMeta ddpMeta, int[] weekArray, DBService service ){
         
         int nflYear         = ddpMeta.getYear( );
         String seasonType   = ddpMeta.getSeasonType( );
         Map<String, NFLTeam> teamMap = service.getAllTeams( );
         
-        Map<Integer, Collection<LiveScore>> resultPerWeek = new HashMap<>( );
+        Map<Integer, Collection<Schedule>> resultPerWeek = new HashMap<>( );
         
         for( int week : weekArray ){
-            String scheduleUrl  = ScheduleManager.createScheduleUrl( seasonType, nflYear, week );
-            Map<String, Schedule> scheduleMap = ScheduleManager.parseSchedule( scheduleUrl, teamMap );
             
-            LOGGER.info( "Parsing live data to calculate winnings." );
-            Map<NFLTeam, LiveScore> liveScore = parser.parseLiveScore( scheduleMap );
-            resultPerWeek.put( week, liveScore.values( ) );
+            String scheduleUrl  = ScheduleManager.createScheduleUrl( seasonType, nflYear, week );
+            
+            try {
+            
+                LOGGER.info( "Parsing schedule data to calculate winnings." );
+                Map<String, Schedule> scheduleMap = ScheduleManager.parseSchedule( scheduleUrl, teamMap );
+                resultPerWeek.put( week, scheduleMap.values( ) );
+            
+            }catch (Exception e) {
+                LOGGER.warn( "FAILED to parse result for week [{}] using url [{}]", week, scheduleUrl );
+            }
+            
         }
         
         return resultPerWeek;
@@ -174,11 +179,11 @@ public final class CashManager{
 
     protected final int[] getPastWeeks( int currentWeek ){
         
-        int weekCount   = (currentWeek == ONE ? ONE : currentWeek);
+        int weekCount   = (currentWeek == ONE ? ONE : currentWeek - ONE);
         int[] weekArray = new int[weekCount];
         
         for( int i=0; i<weekCount; i++ ){
-            weekArray[i]= i + 1;
+            weekArray[i]= i + ONE;
         }
             
         LOGGER.info( "Will find winners for following weeks {}", weekArray);
@@ -209,8 +214,7 @@ public final class CashManager{
         DBService service   = new DBService( ddpMeta, "com.mysql.cj.jdbc.Driver",
                                         "aa15utan83usopw.ceanhhiadqb0.us-east-2.rds.amazonaws.com", "3306", "WonneDB" );
         
-        ScheduleManager schedule = new ScheduleManager( ddpMeta, service );
-        CashManager cashMan = new CashManager( ddpMeta, new LiveScoreParser(schedule), service );
+        CashManager cashMan = new CashManager( ddpMeta, service );
         Map<Integer, CashWin> winnings     = cashMan.getWinnings( );
         
         System.out.println( winnings );

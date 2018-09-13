@@ -14,20 +14,24 @@ public final class Schedule{
     private final String gameSchedTime;
         
     private final NFLTeam home;
+    private final int homeScore;
     private final NFLTeam away;
+    private final int awayScore;
     
     private final static int    DATE_LENGTH     = 8;
     private final static Logger LOGGER          = LoggerFactory.getLogger( "Schedule" );
     
-    public Schedule( String gameEid, String gameDay, 
-                     String gameTime, NFLTeam home, NFLTeam away ){
+    public Schedule( String gameEid, String gameDay, String gameTime, 
+                     NFLTeam home, int homeScore, NFLTeam away, int awayScore ){
         
         this.gameId         = gameEid;
         this.gameDayTime    = createGameDayTime( gameDay, gameTime );
         this.gameDate       = parseGameDate( gameEid );
         this.gameSchedTime  = createScheduleTime( gameDay, gameDate, gameTime );
         this.home           = home;
+        this.homeScore      = homeScore;
         this.away           = away;
+        this.awayScore      = awayScore;
         
     }
     
@@ -55,12 +59,22 @@ public final class Schedule{
     public final NFLTeam getHomeTeam( ){
         return home;
     }
+    
+    
+    public final int getHomeScore( ){
+        return homeScore;
+    }    
 
     
     public final NFLTeam getAwayTeam( ){
         return away;
     }
 
+    
+    public final int getAwayScore( ){
+        return awayScore;
+    }
+    
     
     protected final String createGameDayTime( String gameDay, String gameTime ){
         return gameDay + SPACE + gameTime;
@@ -120,7 +134,9 @@ public final class Schedule{
         .append( "GameId=" ).append( gameId )
         .append( ", ScheduleTime=" ).append( gameSchedTime )
         .append( ", Home=" ).append( home.getUpperCaseName( ) )
+        .append( ", HomeScore=" ).append( homeScore )
         .append( ", Away=" ).append( away.getUpperCaseName( ) )
+        .append( ", AwayScore=" ).append( awayScore )        
         .append( "]" );
         
         return builder.toString( );

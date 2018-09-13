@@ -46,10 +46,10 @@ public final class AppContextListener implements ServletContextListener{
         DBService service       = createDBService( ddpMeta, context );
         ScheduleManager schMan  = parseSchedule( ddpMeta, service, context );
         
-        LiveScoreParser parser  = createLiveScoreParser( schMan, context );
+        createLiveScoreParser( schMan, context );
         createPickManager( ddpMeta, schMan, service, context );
         createGameCenter( context );
-        prepareWinningsCash( ddpMeta, parser, service, context );
+        prepareWinningsCash( ddpMeta, service, context );
                                 
         LOGGER.info( "DDP NFL Servlet context initialized!");
         
@@ -85,10 +85,10 @@ public final class AppContextListener implements ServletContextListener{
     }
     
     
-    protected final void prepareWinningsCash( DDPMeta ddpMeta, LiveScoreParser parser, DBService service, ServletContext context ){
+    protected final void prepareWinningsCash( DDPMeta ddpMeta, DBService service, ServletContext context ){
         LOGGER.info("Attempting to calculate cash winnngs.");
         
-        CashManager cashManager     = new CashManager( ddpMeta, parser, service );
+        CashManager cashManager     = new CashManager( ddpMeta, service );
         Map<Integer, CashWin> winMap= cashManager.getWinnings( );
         boolean isWinningsValid     = (winMap != null && !winMap.isEmpty( ));
         if( isWinningsValid ){

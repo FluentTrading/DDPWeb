@@ -128,11 +128,13 @@ public final class ScheduleManager{
 
            String homeTeam  = safeParse( startElement, "hnn", EMPTY);
            NFLTeam home     = teamMap.get( homeTeam.toLowerCase( ) );
-                      
+           int homeScore    = safeParse( startElement, "hs", NEGATIVE_ONE);
+           
            String awayTeam  = safeParse( startElement, "vnn", EMPTY);
            NFLTeam away     = teamMap.get( awayTeam.toLowerCase( ) );
+           int awayScore    = safeParse( startElement, "vs", NEGATIVE_ONE);
            
-           schedule        = new Schedule( gameEid, gameDay, gameTime, home, away );
+           schedule        = new Schedule( gameEid, gameDay, gameTime, home, homeScore, away, awayScore );
            LOGGER.info( "{}", schedule );
                    
         }catch( Exception e ){

@@ -14,7 +14,7 @@ public final class GameResult{
     private final LiveScore[] myScores;
     private final NFLTeam[] myPickedTeams;
     
-        
+    
     public GameResult( boolean hasAll6Teams, DDPPick pick, LiveScore[ ] myScores ){
         this.has6Teams      = hasAll6Teams;
         this.pick           = pick;
@@ -368,6 +368,10 @@ public final class GameResult{
         if( !has6Teams ) return null;
         return myScores[2];        
     }
-       
+    
+    
+    protected final LiveScore[] getLiveScores( ){
+        return myScores;        
+    }
     
 }

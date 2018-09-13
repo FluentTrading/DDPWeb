@@ -64,7 +64,7 @@ public final class LiveScoreParser{
             
             
         }catch( Exception e ) {
-            LOGGER.warn( "FAILED to download game center data from:[{}]", JSON_MINI_SCORE_URL, e);
+            LOGGER.warn( "FAILED to parse live score from:[{}]", JSON_MINI_SCORE_URL, e);
         }
     
         return scores;
