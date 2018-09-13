@@ -46,7 +46,7 @@
   <section id="content1">
 
  	<div>
-    			 	   		
+ 				 	   		
  	   	<c:choose>
  	   	
            	<c:when test="${!requestScope[DDPUtil.RESULT_MANAGER_KEY].isValid( )}">
@@ -64,6 +64,9 @@
     	
     	<c:otherwise>
     
+    	<c:if test="${requestScope[DDPUtil.RESULT_MANAGER_KEY].hasAnyGamesStarted( )}">
+    		<img src="images/result/Ricky.jpg" class="backgroundImage" >
+    	</c:if>
     	
     	<c:forEach items="${requestScope[DDPUtil.RESULT_MANAGER_KEY].getResultList( )}" var="gameResult">
     		
@@ -228,7 +231,7 @@
 						<div class="cashHeader">Week</div>
 						<div class="cashHeader">Cash</div>
 						<div class="cashHeader">Points</div>
-						<div class="cashHeader">Card</div>
+						<div class="cashHeader">Details</div>
 					</div>
 							
     				

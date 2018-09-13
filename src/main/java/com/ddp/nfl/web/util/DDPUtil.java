@@ -71,8 +71,7 @@ public final class DDPUtil{
     public final static String SCORE_BAR_GAME_PENDING= "score-bar-game-not-started";
     
  
-    
-    //public final static String JSON_MINI_SCORE_URL  = "http://localhost:8080/web/testdata/Game_Day_Mini.json";
+    //public final static String JSON_MINI_SCORE_URL  = "http://localhost:8080/web/testdata/Live_Game_Day_Week2.json";
     public final static String JSON_MINI_SCORE_URL  = "http://www.nfl.com/liveupdate/scores/scores.json";
     
     public final static boolean isValid( String data ){

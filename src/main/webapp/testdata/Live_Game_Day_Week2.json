@@ -1,0 +1,722 @@
+{
+  "2018091300": {
+    "home": {
+      "score": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "T": null
+      },
+      "abbr": "CIN",
+      "to": null
+    },
+    "away": {
+      "score": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "T": null
+      },
+      "abbr": "BAL",
+      "to": null
+    },
+    "bp": 0,
+    "down": null,
+    "togo": null,
+    "clock": null,
+    "posteam": null,
+    "note": null,
+    "redzone": null,
+    "stadium": "Paul Brown Stadium",
+    "media": {
+      "radio": {
+        "home": null,
+        "away": null
+      },
+      "tv": "NFL NETWORK",
+      "sat": null,
+      "sathd": null
+    },
+    "yl": null,
+    "qtr": null
+  },
+  "2018091600": {
+    "home": {
+      "score": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "T": null
+      },
+      "abbr": "ATL",
+      "to": null
+    },
+    "away": {
+      "score": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "T": null
+      },
+      "abbr": "CAR",
+      "to": null
+    },
+    "bp": 0,
+    "down": null,
+    "togo": null,
+    "clock": null,
+    "posteam": null,
+    "note": null,
+    "redzone": null,
+    "stadium": "Mercedes-Benz Stadium",
+    "media": {
+      "radio": {
+        "home": null,
+        "away": null
+      },
+      "tv": "FOX",
+      "sat": null,
+      "sathd": null
+    },
+    "yl": null,
+    "qtr": null
+  },
+  "2018091601": {
+    "home": {
+      "score": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "T": null
+      },
+      "abbr": "BUF",
+      "to": null
+    },
+    "away": {
+      "score": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "T": null
+      },
+      "abbr": "LAC",
+      "to": null
+    },
+    "bp": 0,
+    "down": null,
+    "togo": null,
+    "clock": null,
+    "posteam": null,
+    "note": null,
+    "redzone": null,
+    "stadium": "New Era Field",
+    "media": {
+      "radio": {
+        "home": null,
+        "away": null
+      },
+      "tv": "CBS",
+      "sat": null,
+      "sathd": null
+    },
+    "yl": null,
+    "qtr": null
+  },
+  "2018091602": {
+    "home": {
+      "score": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "T": null
+      },
+      "abbr": "GB",
+      "to": null
+    },
+    "away": {
+      "score": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "T": null
+      },
+      "abbr": "MIN",
+      "to": null
+    },
+    "bp": 0,
+    "down": null,
+    "togo": null,
+    "clock": null,
+    "posteam": null,
+    "note": null,
+    "redzone": null,
+    "stadium": "Lambeau Field",
+    "media": {
+      "radio": {
+        "home": null,
+        "away": null
+      },
+      "tv": "FOX",
+      "sat": null,
+      "sathd": null
+    },
+    "yl": null,
+    "qtr": null
+  },
+  "2018091603": {
+    "home": {
+      "score": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "T": null
+      },
+      "abbr": "NO",
+      "to": null
+    },
+    "away": {
+      "score": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "T": null
+      },
+      "abbr": "CLE",
+      "to": null
+    },
+    "bp": 0,
+    "down": null,
+    "togo": null,
+    "clock": null,
+    "posteam": null,
+    "note": null,
+    "redzone": null,
+    "stadium": "Mercedes-Benz Superdome",
+    "media": {
+      "radio": {
+        "home": null,
+        "away": null
+      },
+      "tv": "FOX",
+      "sat": null,
+      "sathd": null
+    },
+    "yl": null,
+    "qtr": null
+  },
+  "2018091604": {
+    "home": {
+      "score": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "T": null
+      },
+      "abbr": "NYJ",
+      "to": null
+    },
+    "away": {
+      "score": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "T": null
+      },
+      "abbr": "MIA",
+      "to": null
+    },
+    "bp": 0,
+    "down": null,
+    "togo": null,
+    "clock": null,
+    "posteam": null,
+    "note": null,
+    "redzone": null,
+    "stadium": "MetLife Stadium",
+    "media": {
+      "radio": {
+        "home": null,
+        "away": null
+      },
+      "tv": "CBS",
+      "sat": null,
+      "sathd": null
+    },
+    "yl": null,
+    "qtr": null
+  },
+  "2018091605": {
+    "home": {
+      "score": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "T": null
+      },
+      "abbr": "PIT",
+      "to": null
+    },
+    "away": {
+      "score": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "T": null
+      },
+      "abbr": "KC",
+      "to": null
+    },
+    "bp": 0,
+    "down": null,
+    "togo": null,
+    "clock": null,
+    "posteam": null,
+    "note": null,
+    "redzone": null,
+    "stadium": "Heinz Field",
+    "media": {
+      "radio": {
+        "home": null,
+        "away": null
+      },
+      "tv": "CBS",
+      "sat": null,
+      "sathd": null
+    },
+    "yl": null,
+    "qtr": null
+  },
+  "2018091606": {
+    "home": {
+      "score": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "T": null
+      },
+      "abbr": "TB",
+      "to": null
+    },
+    "away": {
+      "score": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "T": null
+      },
+      "abbr": "PHI",
+      "to": null
+    },
+    "bp": 0,
+    "down": null,
+    "togo": null,
+    "clock": null,
+    "posteam": null,
+    "note": null,
+    "redzone": null,
+    "stadium": "Raymond James Stadium",
+    "media": {
+      "radio": {
+        "home": null,
+        "away": null
+      },
+      "tv": "FOX",
+      "sat": null,
+      "sathd": null
+    },
+    "yl": null,
+    "qtr": null
+  },
+  "2018091607": {
+    "home": {
+      "score": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "T": null
+      },
+      "abbr": "TEN",
+      "to": null
+    },
+    "away": {
+      "score": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "T": null
+      },
+      "abbr": "HOU",
+      "to": null
+    },
+    "bp": 0,
+    "down": null,
+    "togo": null,
+    "clock": null,
+    "posteam": null,
+    "note": null,
+    "redzone": null,
+    "stadium": "Nissan Stadium",
+    "media": {
+      "radio": {
+        "home": null,
+        "away": null
+      },
+      "tv": "CBS",
+      "sat": null,
+      "sathd": null
+    },
+    "yl": null,
+    "qtr": null
+  },
+  "2018091608": {
+    "home": {
+      "score": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "T": null
+      },
+      "abbr": "WAS",
+      "to": null
+    },
+    "away": {
+      "score": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "T": null
+      },
+      "abbr": "IND",
+      "to": null
+    },
+    "bp": 0,
+    "down": null,
+    "togo": null,
+    "clock": null,
+    "posteam": null,
+    "note": null,
+    "redzone": null,
+    "stadium": "FedExField",
+    "media": {
+      "radio": {
+        "home": null,
+        "away": null
+      },
+      "tv": "CBS",
+      "sat": null,
+      "sathd": null
+    },
+    "yl": null,
+    "qtr": null
+  },
+  "2018091609": {
+    "home": {
+      "score": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "T": null
+      },
+      "abbr": "LA",
+      "to": null
+    },
+    "away": {
+      "score": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "T": null
+      },
+      "abbr": "ARI",
+      "to": null
+    },
+    "bp": 0,
+    "down": null,
+    "togo": null,
+    "clock": null,
+    "posteam": null,
+    "note": null,
+    "redzone": null,
+    "stadium": "Los Angeles Memorial Coliseum",
+    "media": {
+      "radio": {
+        "home": null,
+        "away": null
+      },
+      "tv": "FOX",
+      "sat": null,
+      "sathd": null
+    },
+    "yl": null,
+    "qtr": null
+  },
+  "2018091610": {
+    "home": {
+      "score": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "T": null
+      },
+      "abbr": "SF",
+      "to": null
+    },
+    "away": {
+      "score": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "T": null
+      },
+      "abbr": "DET",
+      "to": null
+    },
+    "bp": 0,
+    "down": null,
+    "togo": null,
+    "clock": null,
+    "posteam": null,
+    "note": null,
+    "redzone": null,
+    "stadium": "Levi's® Stadium",
+    "media": {
+      "radio": {
+        "home": null,
+        "away": null
+      },
+      "tv": "FOX",
+      "sat": null,
+      "sathd": null
+    },
+    "yl": null,
+    "qtr": null
+  },
+  "2018091611": {
+    "home": {
+      "score": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "T": null
+      },
+      "abbr": "DEN",
+      "to": null
+    },
+    "away": {
+      "score": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "T": null
+      },
+      "abbr": "OAK",
+      "to": null
+    },
+    "bp": 0,
+    "down": null,
+    "togo": null,
+    "clock": null,
+    "posteam": null,
+    "note": null,
+    "redzone": null,
+    "stadium": "Broncos Stadium at Mile High",
+    "media": {
+      "radio": {
+        "home": null,
+        "away": null
+      },
+      "tv": "CBS",
+      "sat": null,
+      "sathd": null
+    },
+    "yl": null,
+    "qtr": null
+  },
+  "2018091612": {
+    "home": {
+      "score": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "T": null
+      },
+      "abbr": "JAC",
+      "to": null
+    },
+    "away": {
+      "score": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "T": null
+      },
+      "abbr": "NE",
+      "to": null
+    },
+    "bp": 0,
+    "down": null,
+    "togo": null,
+    "clock": null,
+    "posteam": null,
+    "note": null,
+    "redzone": null,
+    "stadium": "TIAA Bank Field",
+    "media": {
+      "radio": {
+        "home": null,
+        "away": null
+      },
+      "tv": "CBS",
+      "sat": null,
+      "sathd": null
+    },
+    "yl": null,
+    "qtr": null
+  },
+  "2018091613": {
+    "home": {
+      "score": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "T": null
+      },
+      "abbr": "DAL",
+      "to": null
+    },
+    "away": {
+      "score": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "T": null
+      },
+      "abbr": "NYG",
+      "to": null
+    },
+    "bp": 0,
+    "down": null,
+    "togo": null,
+    "clock": null,
+    "posteam": null,
+    "note": null,
+    "redzone": null,
+    "stadium": "AT&T Stadium",
+    "media": {
+      "radio": {
+        "home": null,
+        "away": null
+      },
+      "tv": "NBC",
+      "sat": null,
+      "sathd": null
+    },
+    "yl": null,
+    "qtr": null
+  },
+  "2018091700": {
+    "home": {
+      "score": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "T": null
+      },
+      "abbr": "CHI",
+      "to": null
+    },
+    "away": {
+      "score": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null,
+        "T": null
+      },
+      "abbr": "SEA",
+      "to": null
+    },
+    "bp": 0,
+    "down": null,
+    "togo": null,
+    "clock": null,
+    "posteam": null,
+    "note": null,
+    "redzone": null,
+    "stadium": "Soldier Field",
+    "media": {
+      "radio": {
+        "home": null,
+        "away": null
+      },
+      "tv": "ESPN",
+      "sat": null,
+      "sathd": null
+    },
+    "yl": null,
+    "qtr": null
+  }
+}

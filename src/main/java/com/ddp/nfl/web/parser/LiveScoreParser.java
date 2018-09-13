@@ -26,15 +26,8 @@ public final class LiveScoreParser{
         this.scheduleMap    = schManager.getSchedules( );
     }
     
-    
-    //Called by GameServlet to parse live score for the current week schedule
-    public final Map<NFLTeam, LiveScore> parseLiveScore( ){
-        return parseLiveScore( scheduleMap );
-    }
 
-    
-    //Called by CashManager to scores for past weeks to calculate winnings
-    public final Map<NFLTeam, LiveScore> parseLiveScore( Map<String, Schedule> scheduleMap ){
+    public final Map<NFLTeam, LiveScore> parseLiveScore( ){
                
         Map<NFLTeam, LiveScore> scores = new HashMap<>();
         

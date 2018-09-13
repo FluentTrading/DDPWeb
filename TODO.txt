@@ -14,14 +14,10 @@ http://www.nfl.com/liveupdate/scores/scores.json points to next week on Wed.
 
 Enhancements:
 ====================================================
-( Added a method to check this)
-1) Show a background animation when teams have been picked BUT none of the games have started.
+1) Team record should be available in analytics
+2) Winning page look bland. Put Al bundy in the background on the winning Page:
 
-2) Team record should be available in analytics
-3) Put Al bundy in the background on the winning Page:
-
-
-6) With the data We now have access to a lot more info, see what can be used.
+3) With the data We now have access to a lot more info, see what can be used.
 Can we show these during the game or will it take too much screen space?
 Home -> Stats
 Away -> Stats

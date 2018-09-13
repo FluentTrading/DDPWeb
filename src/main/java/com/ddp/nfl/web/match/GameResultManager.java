@@ -15,6 +15,7 @@ public final class GameResultManager{
     private final boolean noGamesStarted;
     private final List<GameResult> resultList;
     
+    
     public GameResultManager( DDPMeta meta, ResultCode code, String message, List<GameResult> resultList ){
         this.meta       = meta;
         this.code       = code;
@@ -69,7 +70,7 @@ public final class GameResultManager{
     }
     
     
-    public final boolean allGamesUnstarted( ){
+    public final boolean hasAnyGamesStarted( ){
         return noGamesStarted;
     } 
     

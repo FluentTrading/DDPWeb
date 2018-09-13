@@ -82,6 +82,7 @@ input:checked + label {
 		
 	/* SCHEDULE */
 	/* ----------------------------------------------- */
+	
 	.schedulegrid {
 		font: 18px/1 'Open Sans', sans-serif;
 		overflow: hidden;
@@ -129,14 +130,8 @@ input:checked + label {
   		display: table;
   		width: 100%;
   		font-family: 'Open Sans', sans-serif;
-  		/*
-  		background-image: url('../images/result/CashBackground.gif');
-    	background-repeat: no-repeat;
-    	background-repeat: no-repeat;
-    	*/
   	}
 
-	
 	.cashHeaderRow{
   		display: table-row;
   		background-color: #000000;
@@ -161,7 +156,7 @@ input:checked + label {
   		border: 0px solid #9FAFB4;
   		text-align: left;
 		font-size: 24px;
-		background-color: #a0a5a5;
+		background-color: #ffffff;
 	}
 	
 	

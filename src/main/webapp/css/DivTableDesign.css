@@ -2,9 +2,19 @@
 	/*--------------------------------------- */
 	/*--------------- First Row --------------*/
 	/*--------------------------------------- */
+	
+	.backgroundImage{
+		position:absolute;
+		background-repeat: no-repeat;
+		background-position:center;
+		z-index: 1;
+		opacity: 0.35;
+    	filter: alpha(opacity=50); /* For IE8 and earlier */
+    	/*padding: 100px 100px 10px 50px; /* Top, Right, Bottom, Left */
+	}
 
 	div.newGridTable {
-  		background-color: #ffffff;
+		background-color: #ffffff;	
   		border-collapse: collapse;
   		display: table;
   		width: 100%;
@@ -14,7 +24,7 @@
   		display: table-row;
   		width: 50%;
   		height: 75px;
-  		border: 0px solid #9FAFB4;  		
+  		border: 0px solid #9FAFB4;  	
 	}
 
 	.player-bar {
@@ -31,7 +41,6 @@
   		position: relative;
 		border: 0px solid red;
 	   	font-size: 20px;
-	   		 
 	}
 	
 	.score-bar-game-lost{
@@ -194,4 +203,5 @@
 	   	font-weight: bold;
 	   	padding: 0px 5px 0px 0px; /* Top, Right, Bottom, Left */
 	}
+	
 	
