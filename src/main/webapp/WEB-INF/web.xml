@@ -26,7 +26,7 @@
     
     <context-param>
         <param-name>CASH_PER_WEEK</param-name>
-        <param-value>50</param-value>
+        <param-value>40</param-value>
     </context-param>
         
     <context-param>

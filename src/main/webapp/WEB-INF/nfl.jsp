@@ -168,17 +168,21 @@
     		<c:choose>
 				<c:when test="${applicationScope[DDPUtil.SCHEDULE_KEY] != null}">
 					
+					<img src="images/result/AlBundy.jpg" class="scheduleBackgroundImage" >
+						
     				<div>
 						<table>
 							
 							<c:forEach var="entry" items="${applicationScope[DDPUtil.SCHEDULE_KEY].getSchedules( ).values()}">
 							
 									<tr>
-										<td align="center" width="15%"></td>
+										<td align="left" width="15%"></td>
   										
   										<td align="left">
     										${entry.getGameScheduleTime()}
 	   									</td>
+	   									
+	   									<td align="center" width="15%"></td>
 	   									
     									<td align="right">
     										${entry.getAwayTeam( ).getCamelCaseName( )}
