@@ -14,10 +14,9 @@ http://www.nfl.com/liveupdate/scores/scores.json points to next week on Wed.
 
 Enhancements:
 ====================================================
-1) Team record should be available in analytics
-2) Winning page look bland. Put Al bundy in the background on the winning Page:
+Change week to 1 and point to data stored in local game data file.
 
-3) With the data We now have access to a lot more info, see what can be used.
+1) With the data We now have access to a lot more info, see what can be used.
 Can we show these during the game or will it take too much screen space?
 Home -> Stats
 Away -> Stats
@@ -26,13 +25,8 @@ Pass
 Rush
 Rec
 
-
-Picks:
-===================================================
-1)	In DBService, we load the teamMap when the context starts.
-	Therefore, if the website is running & we pick teams.
-	It won't get automatically reflected.
-	When we save the picks, we should also update the teamMap.
+1) Team record should be available in analytics
+2) Winning page look bland.
 
 Schedule:
 ===================================================

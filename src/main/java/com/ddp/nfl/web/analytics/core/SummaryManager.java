@@ -3,6 +3,7 @@ package com.ddp.nfl.web.analytics.core;
 import org.slf4j.*;
 import java.util.Map.*;
 import com.google.gson.*;
+
 import org.apache.commons.collections4.map.*;
 
 import static com.ddp.nfl.web.util.DDPUtil.*;
@@ -10,22 +11,17 @@ import static com.ddp.nfl.web.util.DDPUtil.*;
 
 public final class SummaryManager{
     
-    
     private final static String DRIVE_KEY   = "Drive:";
     private final static String SUMMARY_KEY = "scrsummary";
     private final static String[] EMPTY_ARR = new String[] {EMPTY, EMPTY};
     private final static Logger LOGGER      = LoggerFactory.getLogger( "SummaryManager" );
     
-          
-    
-    //Quarter   -> Team, ScoreSummary
-    //1         -> PHI, ScoreSummary
-    @SuppressWarnings( "unchecked" )
-    public final static MultiKeyMap<String, String> parseScoreSummary( JsonObject gameObj ){
+   
+    @SuppressWarnings( {"unchecked", "rawtypes"} )
+    protected final static MultiKeyMap<String, String> parse( JsonObject gameObj ){
         
         //Reverse order so that we display Quarter 4 info before Quarter 1
-        //Map<Integer, Map<String, String>> summaryMap   = new TreeMap<>( Collections.reverseOrder() );
-        MultiKeyMap summaryMap      = MultiKeyMap.multiKeyMap( new LinkedMap(32) );
+        MultiKeyMap summaryMap      = MultiKeyMap.multiKeyMap( new LinkedMap<>(32) );
         
         try {        
             
@@ -53,7 +49,7 @@ public final class SummaryManager{
         return summaryMap;
     }
 
-
+  
     protected final static String toDisplayString( String quarter, String scoreType, String team, String[] playDrive ){
         
         StringBuilder builder = new StringBuilder( 32 );
@@ -78,4 +74,5 @@ public final class SummaryManager{
     
     }    
   
+
 }

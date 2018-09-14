@@ -129,12 +129,14 @@
   					<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Drive( gameResult )}</div>
 					<div class="rightQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Quarter( gameResult )}</div>
   					${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Summary( gameResult )}
+  					<div class="statsInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Stats( gameResult )}</div>
 				</div>
   		
   				<div class="${gameResult.getGame2MsgInfoClass()}">
   					<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Drive( gameResult )}</div>
 					<div class="rightQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Quarter( gameResult )}</div>
-  					${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Summary( gameResult )}			
+  					${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Summary( gameResult )}
+  					<div class="statsInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Stats( gameResult )}</div>			
 				</div>
 		
 				<c:if test="${gameResult.hasAll6Teams()}">
@@ -142,6 +144,7 @@
 						<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Drive( gameResult )}</div>
 						<div class="rightQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Quarter( gameResult )}</div>
 						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Summary( gameResult )}
+						<div class="statsInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Stats( gameResult )}</div>
   					</div>
   				</c:if>
   		  		

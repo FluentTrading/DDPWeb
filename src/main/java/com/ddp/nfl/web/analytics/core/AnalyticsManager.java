@@ -19,20 +19,19 @@ public final class AnalyticsManager{
 
     private ScheduledExecutorService executor;
     
-    private final Set<String> gameIdSet;
     private final DownloadAnalyticsThread gameThread;
+    private final Map<String, Map<String,String>> statsMap;
     private final Map<String, MultiKeyMap<String, String>> analyticsMap;
-
-    private final static int INTERVAL       = TWO;
+    
+    private final static int INTERVAL       = ONE;
     private final static Logger LOGGER      = LoggerFactory.getLogger( "AnalyticsManager" );
     
     
     public AnalyticsManager(  ){
-        this.gameIdSet      = ConcurrentHashMap.newKeySet( );
+        this.statsMap       = new ConcurrentHashMap<>( );
         this.analyticsMap   = new ConcurrentHashMap<>( );
+        this.gameThread     = new DownloadAnalyticsThread( );
         this.executor       = Executors.newSingleThreadScheduledExecutor( );
-        this.gameThread     = new DownloadAnalyticsThread( gameIdSet );
-        
     }
 
     
@@ -57,6 +56,7 @@ public final class AnalyticsManager{
     }
     
     
+    //-------- Game Quarter --------
     public final String getGame1Quarter( GameResult result ){
         return result.getMatch1Score( ).getDisplayableQuarter( );
     }
@@ -71,23 +71,35 @@ public final class AnalyticsManager{
         return result.getMatch3Score( ).getDisplayableQuarter( );
     }
     
-     
+        
+    //-------- Game Summary --------
     public final String getGame1Summary( GameResult result ){
         return getGameSummary( result.getGame1Quarter( ), result.getMy1Team( ), result.getMatch1Score( ) );
     }
     
-    
     public final String getGame2Summary( GameResult result ){
         return getGameSummary( result.getGame2Quarter( ), result.getMy2Team( ), result.getMatch2Score( ) );
     }
-
     
     public final String getGame3Summary( GameResult result ){
         return getGameSummary( result.getGame3Quarter( ), result.getMy3Team( ), result.getMatch3Score( ) );
     }
     
     
+    //-------- Game Stats --------
+    public final String getGame1Stats( GameResult result ){
+        return getGameStat( result.getMy1Team( ), result.getMatch1Score( ) );
+    }
     
+    public final String getGame2Stats( GameResult result ){
+        return getGameStat( result.getMy2Team( ), result.getMatch2Score( ) );
+    }
+        
+    public final String getGame3Stats( GameResult result ){
+        return getGameStat( result.getMy3Team( ), result.getMatch3Score( ) );
+    }
+
+
     protected final String getPlayDrive( LiveScore liveScore ){
         if( liveScore == null ) return EMPTY;
         
@@ -125,32 +137,38 @@ public final class AnalyticsManager{
                         
     }
     
-     
-    public final void gameStatusUpdate( Map<NFLTeam, LiveScore> scoreMap ){
+    
+    
+    protected final String getGameStat( NFLTeam homeTeam, LiveScore liveScore ) {
         
-        for( LiveScore score : scoreMap.values( ) ){
-            if( score == null ) continue;
+        String gameStat         = EMPTY;
+        
+        try {
             
-            String gameId   = score.getGameId( );
-            boolean exists  = gameIdSet.contains( gameId );
-            GameState state = score.getGameState( );
+            boolean isPlaying   = GameState.isPlaying( liveScore );
+            if( !isPlaying ) return EMPTY;
+         
+            String gameId       = liveScore.getGameId( );
+            Map<String,String> stats   = statsMap.get( gameId );
+            if( stats == null ) return EMPTY;
             
-            if( !exists && GameState.isPlaying(state) ){
-                gameIdSet.add( gameId );
-                LOGGER.info( "Added GameId: {} for analytics.", gameId );
-            }
+            String homeNickName = homeTeam.getNickName( );
+            gameStat            = (String) stats.get( homeNickName );
+            gameStat            = !isValid(gameStat) ? EMPTY : gameStat;       
         
-            if( exists && (GameState.FINISHED == state) ){
-                boolean removed = gameIdSet.remove( gameId );
-                if( removed ){
-                    LOGGER.info( "GameId: {} ended, won't poll for analytics.", gameId );
-                }
-            }
-        
+        }catch (Exception e) {
+            LOGGER.warn("Exception while looking up game stats", e);
         }
+                
+        return gameStat; 
         
     }
     
+    
+    public final void gameStatusUpdate( Map<NFLTeam, LiveScore> scoreMap ){
+        gameThread.gameStatusUpdate( scoreMap );
+    }
+
     
     public final void stop( ){
         executor.shutdown( );
@@ -163,13 +181,13 @@ public final class AnalyticsManager{
     private final class DownloadAnalyticsThread implements Runnable{
         
         private final Set<String> currentGameIdSet;
-                
+                        
         private final static String GAME_ID_KEY = "GAME_ID";
         private final static String URL_PREFIX  = "http://www.nfl.com/liveupdate/game-center/"+ GAME_ID_KEY + "/" + GAME_ID_KEY + "_gtd.json";
-                
-       
-        public DownloadAnalyticsThread( Set<String> currentGameIdSet ){
-            this.currentGameIdSet  = currentGameIdSet;
+         
+        
+        public DownloadAnalyticsThread(  ){
+            this.currentGameIdSet   = ConcurrentHashMap.newKeySet( );
         }
         
         
@@ -213,10 +231,17 @@ public final class AnalyticsManager{
                 if( isNull ) return;
                 
                 JsonObject gameObj  = jObject.getAsJsonObject( gameId );
-                MultiKeyMap<String, String> summMap = SummaryManager.parseScoreSummary( gameObj );
+                if( gameObj.isJsonNull( ) ) return;
+                
+                MultiKeyMap<String, String> summMap = SummaryManager.parse( gameObj );
                 if( !summMap.isEmpty( ) ) {
                     analyticsMap.put( gameId, summMap );
                 }
+                
+                Map<String, String> stats = StatsManager.parse( gameObj );
+                if( !stats.isEmpty( ) ) {
+                    statsMap.put( gameId, stats);
+                }               
             
             }catch( EOFException e ){
                 LOGGER.warn( "Garbled message from game center for GameId:[{}]", gameId, e);
@@ -227,25 +252,33 @@ public final class AnalyticsManager{
         
         }
         
+        
+        protected final void gameStatusUpdate( Map<NFLTeam, LiveScore> scoreMap ){
+            
+            for( LiveScore score : scoreMap.values( ) ){
+                if( score == null ) continue;
+                
+                String gameId   = score.getGameId( );
+                boolean exists  = currentGameIdSet.contains( gameId );
+                GameState state = score.getGameState( );
+                
+                if( !exists && GameState.isPlaying(state) ){
+                    currentGameIdSet.add( gameId );
+                    LOGGER.info( "Added GameId: {} for analytics.", gameId );
+                }
+            
+                if( exists && (GameState.FINISHED == state) ){
+                    boolean removed = currentGameIdSet.remove( gameId );
+                    if( removed ){
+                        LOGGER.info( "GameId: {} ended, won't poll for analytics.", gameId );
+                    }
+                }
+            
+            }
+            
+        }
    
     }    
-            
-    
-    public final static void main( String[] args ) throws Exception{
-        
-        AnalyticsManager test = new AnalyticsManager( );
-        
-        long startTimeNanos   = System.nanoTime( );
-        test.gameThread.downloadAnalyticsData( "2018090908" ); 
-        
-        MultiKeyMap summMap = test.analyticsMap.get( "2018090908" );
-        
-        System.out.println( summMap );
-        
-        long timeTakenNanos   = System.nanoTime( ) - startTimeNanos;
-        LOGGER.info("Time Taken to prepare game summary [{} millis]", TimeUnit.MILLISECONDS.convert(timeTakenNanos, TimeUnit.NANOSECONDS) );
-     
-    }
     
     
 }

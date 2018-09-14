@@ -205,3 +205,9 @@
 	}
 	
 	
+	.statsInfo{
+    	float:left;
+    	font-weight: plain;
+    	padding: 10px 5px 1px 0px; /* Top, Right, Bottom, Left */
+	}
+	
