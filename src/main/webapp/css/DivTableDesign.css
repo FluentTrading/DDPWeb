@@ -205,9 +205,24 @@
 	}
 	
 	
-	.statsInfo{
+	
+	/*--------------------------------------- */
+	/*--------------- Stats Row --------------*/
+	/*--------------------------------------- */
+ 	  	
+	.statsName{
     	float:left;
-    	font-weight: plain;
-    	padding: 10px 5px 1px 0px; /* Top, Right, Bottom, Left */
+    	font-weight: bold;
+    	padding: 0px 0px 0px 0px; /* Top, Right, Bottom, Left */    	
 	}
+	
+	.statsDesc{
+    	float:right;
+    	font-weight: plain;
+   		padding: 0px 0px 0px 0px; /* Top, Right, Bottom, Left */
+    	border: 0px solid #9FAFB4;
+	}
+	
+
+		
 	

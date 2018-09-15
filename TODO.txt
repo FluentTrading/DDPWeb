@@ -14,16 +14,9 @@ http://www.nfl.com/liveupdate/scores/scores.json points to next week on Wed.
 
 Enhancements:
 ====================================================
-Change week to 1 and point to data stored in local game data file.
-
-1) With the data We now have access to a lot more info, see what can be used.
-Can we show these during the game or will it take too much screen space?
-Home -> Stats
-Away -> Stats
-CBS Game Center has for each team:
-Pass
-Rush
-Rec
+1) Format Stats Data
+HAS BEEN formatted but it shows up on the same line as the drive and quarter info,
+Drive & Quarter should go on top of the score?
 
 1) Team record should be available in analytics
 2) Winning page look bland.

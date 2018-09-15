@@ -20,7 +20,7 @@ public final class AnalyticsManager{
     private ScheduledExecutorService executor;
     
     private final DownloadAnalyticsThread gameThread;
-    private final Map<String, Map<String,String>> statsMap;
+    private final Map<String, Map<String,Analytics>> statsMap;
     private final Map<String, MultiKeyMap<String, String>> analyticsMap;
     
     private final static int INTERVAL       = ONE;
@@ -87,15 +87,15 @@ public final class AnalyticsManager{
     
     
     //-------- Game Stats --------
-    public final String getGame1Stats( GameResult result ){
+    public final Analytics getGame1Stats( GameResult result ){
         return getGameStat( result.getMy1Team( ), result.getMatch1Score( ) );
     }
     
-    public final String getGame2Stats( GameResult result ){
+    public final Analytics getGame2Stats( GameResult result ){
         return getGameStat( result.getMy2Team( ), result.getMatch2Score( ) );
     }
         
-    public final String getGame3Stats( GameResult result ){
+    public final Analytics getGame3Stats( GameResult result ){
         return getGameStat( result.getMy3Team( ), result.getMatch3Score( ) );
     }
 
@@ -139,23 +139,22 @@ public final class AnalyticsManager{
     
     
     
-    protected final String getGameStat( NFLTeam homeTeam, LiveScore liveScore ) {
+    protected final Analytics getGameStat( NFLTeam homeTeam, LiveScore liveScore ) {
         
-        String gameStat         = EMPTY;
+        Analytics gameStat      = null;
         
         try {
             
             boolean isPlaying   = GameState.isPlaying( liveScore );
-            if( !isPlaying ) return EMPTY;
+            if( !isPlaying ) return null;
          
             String gameId       = liveScore.getGameId( );
-            Map<String,String> stats   = statsMap.get( gameId );
-            if( stats == null ) return EMPTY;
+            Map<String,Analytics> stats   = statsMap.get( gameId );
+            if( stats == null ) return null;
             
             String homeNickName = homeTeam.getNickName( );
-            gameStat            = (String) stats.get( homeNickName );
-            gameStat            = !isValid(gameStat) ? EMPTY : gameStat;       
-        
+            gameStat            = stats.get( homeNickName );
+            
         }catch (Exception e) {
             LOGGER.warn("Exception while looking up game stats", e);
         }
@@ -238,7 +237,7 @@ public final class AnalyticsManager{
                     analyticsMap.put( gameId, summMap );
                 }
                 
-                Map<String, String> stats = StatsManager.parse( gameObj );
+                Map<String, Analytics> stats = StatsManager.parse( gameObj );
                 if( !stats.isEmpty( ) ) {
                     statsMap.put( gameId, stats);
                 }               
