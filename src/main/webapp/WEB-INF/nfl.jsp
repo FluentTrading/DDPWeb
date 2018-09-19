@@ -128,53 +128,13 @@
   				<div class="${gameResult.getGame1MsgInfoClass()}">
   					<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Drive( gameResult )}</div>
 					<div class="rightQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Quarter( gameResult )}</div>
-  					${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Summary( gameResult )}
-  					
-  					<div class="statsName">
-						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Stats( gameResult ).getPassName()}
-					</div>
-					<div class="statsDesc">
-						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Stats( gameResult ).getPassDesc()}
-					</div>
-					<div class="statsName">
-						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Stats( gameResult ).getRushName()}
-					</div>
-					<div class="statsDesc">
-						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Stats( gameResult ).getRushDesc()}
-					</div>
-					<div class="statsName">
-						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Stats( gameResult ).getRecvName()}
-					</div>
-					<div class="statsDesc">
-						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Stats( gameResult ).getRecvDesc()}
-					</div>
-										
+  					${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Summary( gameResult )}										
 				</div>
   		
   				<div class="${gameResult.getGame2MsgInfoClass()}">
   					<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Drive( gameResult )}</div>
 					<div class="rightQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Quarter( gameResult )}</div>
   					${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Summary( gameResult )}
-  					
-  					<div class="statsName">
-						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Stats( gameResult ).getPassName()}
-					</div>
-					<div class="statsDesc">
-						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Stats( gameResult ).getPassDesc()}
-					</div>
-					<div class="statsName">
-						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Stats( gameResult ).getRushName()}
-					</div>
-					<div class="statsDesc">
-						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Stats( gameResult ).getRushDesc()}
-					</div>
-					<div class="statsName">
-						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Stats( gameResult ).getRecvName()}
-					</div>
-					<div class="statsDesc">
-						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Stats( gameResult ).getRecvDesc()}
-					</div>
-								
 				</div>
 		
 				<c:if test="${gameResult.hasAll6Teams()}">
@@ -183,7 +143,58 @@
 						<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Drive( gameResult )}</div>
 						<div class="rightQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Quarter( gameResult )}</div>
 						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Summary( gameResult )}
-						
+  					</div>
+  				</c:if>
+  		  		
+		</div>
+    
+    </div>
+    
+    
+    
+    <div class="newGridTable" >
+   	
+   			<div class="thirdRow">
+  		
+  				<div class="totalScore"></div>
+  		
+  				<div class="${gameResult.getGame1MsgInfoClass()}">
+  					<div class="statsName">
+						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Stats( gameResult ).getPassName()}
+					</div>
+					<div class="statsDesc">
+						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Stats( gameResult ).getPassDesc()}
+					</div>
+					
+					<div class="statsName">
+						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Stats( gameResult ).getRushName()}
+					</div>
+					<div class="statsDesc">
+						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Stats( gameResult ).getRushDesc()}
+					</div>
+					
+				</div>
+  		
+  				<div class="${gameResult.getGame2MsgInfoClass()}">
+  					<div class="statsName">
+						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Stats( gameResult ).getPassName()}
+					</div>
+					<div class="statsDesc">
+						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Stats( gameResult ).getPassDesc()}
+					</div>
+					
+					<div class="statsName">
+						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Stats( gameResult ).getRushName()}
+					</div>
+					<div class="statsDesc">
+						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Stats( gameResult ).getRushDesc()}
+					</div>
+					
+				</div>
+		
+				<c:if test="${gameResult.hasAll6Teams()}">
+				
+					<div class="${gameResult.getGame3MsgInfoClass()}">
 						<c:if test="${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Stats( gameResult ) != null}">
 						
 							<div class="statsName">
@@ -192,19 +203,14 @@
 							<div class="statsDesc">
 								${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Stats( gameResult ).getPassDesc()}
 							</div>
+							
 							<div class="statsName">
 								${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Stats( gameResult ).getRushName()}
 							</div>
 							<div class="statsDesc">
 								${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Stats( gameResult ).getRushDesc()}
 							</div>
-							<div class="statsName">
-								${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Stats( gameResult ).getRecvName()}
-							</div>
-							<div class="statsDesc">
-								${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Stats( gameResult ).getRecvDesc()}
-							</div>
-						
+					
 						</c:if>
   					</div>
   				</c:if>
@@ -212,6 +218,9 @@
 		</div>
     
     </div>  
+    
+    
+    
             
     </c:forEach>	
 					    			

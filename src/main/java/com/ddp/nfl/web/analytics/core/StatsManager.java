@@ -2,8 +2,6 @@ package com.ddp.nfl.web.analytics.core;
 
 import java.util.*;
 import java.util.Map.*;
-
-import com.ddp.nfl.web.analytics.core.Analytics.*;
 import com.google.gson.*;
 
 import static com.ddp.nfl.web.util.DDPUtil.*;
@@ -11,13 +9,8 @@ import static com.ddp.nfl.web.util.DDPUtil.*;
 
 public final class StatsManager{
     
-    public final static String PASS_NAME    = "Pass: ";
     public final static String PASSING_KEY  = "passing";
-    
-    public final static String RUSH_NAME    = "Rush: ";
     public final static String RUSHING_KEY  = "rushing";
-    
-    public final static String RECV_NAME    = "Recv: ";
     public final static String RECEIVING_KEY= "receiving";
     
     private final static String STATS_KEY   = "stats";
@@ -34,11 +27,11 @@ public final class StatsManager{
             String teamName         = homeObj.get( "abbr" ).getAsString( );
             JsonObject statsObj     = homeObj.getAsJsonObject( STATS_KEY );
             
-            String[] pass   = parsePassing( parseFirstPlay( PASSING_KEY, statsObj ) );
-            String[] rush   = parseRushing( parseFirstPlay( RUSHING_KEY, statsObj ) );
-            String[] recv = parseReceiving( parseFirstPlay( RECEIVING_KEY, statsObj ) );
+            String[] passingArray   = parsePassing( parseFirstPlay( PASSING_KEY, statsObj ) );
+            String[] rushingArray   = parseRushing( parseFirstPlay( RUSHING_KEY, statsObj ) );
+            String[] recvingArray   = parseReceiving( parseFirstPlay( RECEIVING_KEY, statsObj ) );
                    
-            Analytics analytics     = new Analytics( pass, rush, recv );
+            Analytics analytics     = new Analytics( passingArray, rushingArray, recvingArray );
             statsMap.put( teamName, analytics );
                         
         }
@@ -63,7 +56,7 @@ public final class StatsManager{
     
     protected final static String[] parsePassing( JsonElement element ){
         
-        String name = PASS_NAME + safeParse(element.getAsJsonObject( ), "name" );
+        String name = safeParse(element.getAsJsonObject( ), "name" );
         int yards   = negativeToZero(safeParseInt( element.getAsJsonObject( ), "yds" ));
         int tds     = negativeToZero(safeParseInt( element.getAsJsonObject( ), "tds" ));
         int ints    = negativeToZero(safeParseInt( element.getAsJsonObject( ), "ints" ));
@@ -80,7 +73,7 @@ public final class StatsManager{
     
     protected final static String[] parseRushing( JsonElement element ){
         
-        String name = RUSH_NAME + safeParse(element.getAsJsonObject( ), "name" );
+        String name = safeParse(element.getAsJsonObject( ), "name" );
         int attempts= negativeToZero(safeParseInt( element.getAsJsonObject( ), "att" ));
         int yards   = negativeToZero(safeParseInt( element.getAsJsonObject( ), "yds" ));
         int tds     = negativeToZero(safeParseInt( element.getAsJsonObject( ), "tds" ));
@@ -97,7 +90,7 @@ public final class StatsManager{
 
     protected final static String[] parseReceiving( JsonElement element ){
         
-        String name = RECV_NAME + safeParse(element.getAsJsonObject( ), "name" );
+        String name = safeParse(element.getAsJsonObject( ), "name" );
         int recv    = negativeToZero(safeParseInt( element.getAsJsonObject( ), "rec" ));
         int yards   = negativeToZero(safeParseInt( element.getAsJsonObject( ), "yds" ));
         int tds     = negativeToZero(safeParseInt( element.getAsJsonObject( ), "tds" ));

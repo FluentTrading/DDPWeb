@@ -272,7 +272,7 @@ public final class AnalyticsManager{
                         LOGGER.info( "GameId: {} ended, won't poll for analytics.", gameId );
                     }
                 }
-            
+                
             }
             
         }

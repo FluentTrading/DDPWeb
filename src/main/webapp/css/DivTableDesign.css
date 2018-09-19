@@ -209,17 +209,32 @@
 	/*--------------------------------------- */
 	/*--------------- Stats Row --------------*/
 	/*--------------------------------------- */
+	
+	.thirdRow{
+  		display: table-row;
+  		width: 100%;
+  		height: 20px;
+  		border: 0px solid #9FAFB4;
+  			
+  		color:#000000;
+  		background-color: #ffffff;
+		font-weight: plain;
+  		font-family: 'Open Sans', sans-serif;
+	}
+	
  	  	
 	.statsName{
     	float:left;
+    	font-size: 12px;
     	font-weight: bold;
-    	padding: 0px 0px 0px 0px; /* Top, Right, Bottom, Left */    	
+        padding: 0px 20px 3px 0px; /* Top, Right, Bottom, Left */	
 	}
 	
 	.statsDesc{
     	float:right;
+    	font-size: 12px;
     	font-weight: plain;
-   		padding: 0px 0px 0px 0px; /* Top, Right, Bottom, Left */
+   		padding: 0px 5px 3px 0px; /* Top, Right, Bottom, Left */
     	border: 0px solid #9FAFB4;
 	}
 	
