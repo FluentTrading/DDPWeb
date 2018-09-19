@@ -126,7 +126,7 @@ input:checked + label {
   		width: 100%;
   		font-family: 'Open Sans', sans-serif;
   	}
-
+  	
 	.cashHeaderRow{
   		display: table-row;
   		background-color: #000000;
@@ -148,7 +148,7 @@ input:checked + label {
 	.cashSecondRow{
   		display: table-row;
   		height: 30px;
-  		border: 0px solid #9FAFB4;
+  		border: 1px solid #9FAFB4;
   		text-align: left;
 		font-size: 24px;
 		background-color: #ffffff;
@@ -179,12 +179,6 @@ input:checked + label {
 	  	background-color: #3D9970;
 	}
 		
-	.cashAlternateRow{
-  		display: table-row;
-  		background-color: #a0a5a5;
-  		padding: 2px 10px 0px 0px; /* Top, Right, Bottom, Left */
-  		  		
-	}
 	
 	/* ----------------------------------------------- */
 	/* Analytics link buttons */

@@ -298,11 +298,11 @@
     	
     			
     	<div class="cashTable" >
-    
-	   		<c:choose>
+    		
+    		<c:choose>
 				
 				<c:when test="${applicationScope[DDPUtil.WINNINGS_MAP_KEY] != null}">
-					
+										
 					<div class="cashHeaderRow">	
   						<div class="cashHeader">Player</div>
 						<div class="cashHeader">Week</div>
@@ -337,8 +337,7 @@
     						</div>
   						
   						</div>
-  						
-  						<div class="cashAlternateRow" />
+  			
   						
   								
   					</c:forEach>
