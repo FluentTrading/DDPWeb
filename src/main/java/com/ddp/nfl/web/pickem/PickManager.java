@@ -220,7 +220,7 @@ public final class PickManager{
 
 
     protected final NFLTeam resolveTeam( String teamName ){
-        return service.getAllTeams( ).get( teamName );
+        return service.getAllTeams( ).get( teamName.toLowerCase( ) );
     }
 
    

@@ -55,7 +55,7 @@ public final class DDPUtil{
     public final static Gson GSON_INSTANCE          = new GsonBuilder().create();
     public final static JsonParser JSON_PARSER      = new JsonParser();
     
-    public final static String RED_ZONE_ICON        = "images/result/touchdown.gif";
+    public final static String RED_ZONE_ICON        = "images/misc/touchdown.gif";
     public final static DateTimeFormatter _YYYYMMDDD= DateTimeFormatter.ofPattern("yyyyMMdd");
     public final static DateTimeFormatter _HH_MM    = DateTimeFormatter.ofPattern("hh:mm");
     
@@ -71,7 +71,7 @@ public final class DDPUtil{
     public final static String SCORE_BAR_GAME_PENDING= "score-bar-game-not-started";
     
  
-    //public final static String JSON_MINI_SCORE_URL  = "http://localhost:8080/web/testdata/Live_Game_Day_Week1.json";
+   // public final static String JSON_MINI_SCORE_URL  = "http://localhost:8080/web/testdata/Live_Game_Day_Week3.json";
     public final static String JSON_MINI_SCORE_URL  = "http://www.nfl.com/liveupdate/scores/scores.json";
     
     public final static boolean isValid( String data ){

@@ -9,7 +9,7 @@
 <head>
 	
 	<meta charset="UTF-8">
-	<meta http-equiv="refresh" content="45"/>
+	<meta http-equiv="refresh" content="30"/>
 	<meta http-equiv="Content-Language" content="en">
 	
 	<title>|| DDP NFL Web ||</title>
@@ -65,7 +65,7 @@
     	<c:otherwise>
     
     	<c:if test="${requestScope[DDPUtil.RESULT_MANAGER_KEY].hasAnyGamesStarted( )}">
-    		<img src="images/result/Ricky.jpg" class="backgroundImage" >
+    		<img src="images/misc/Lynch.gif" class="backgroundImage" >
     	</c:if>
     	
     	<c:forEach items="${requestScope[DDPUtil.RESULT_MANAGER_KEY].getResultList( )}" var="gameResult">
@@ -100,20 +100,18 @@
   						<img src="${gameResult.getGame2WinnerIcon()}"/>
   					</div>
   		
-  					<c:if test="${gameResult.hasAll6Teams()}">		
-  						<div class="${gameResult.getGame3ScoreClass()}">
-  							<div class="topLeft">${gameResult.getMy3TeamName( )}</div>
-							<div class="topRight">${gameResult.getMy3TeamScore( )}</div>
-							<div class="bottomLeft">${gameResult.getOpp3TeamName( )}</div>
-							<div class="bottomRight">${gameResult.getOpp3TeamScore( )}</div>	
-						</div>
+  						
+  					<div class="${gameResult.getGame3ScoreClass()}">
+  						<div class="topLeft">${gameResult.getMy3TeamName( )}</div>
+						<div class="topRight">${gameResult.getMy3TeamScore( )}</div>
+						<div class="bottomLeft">${gameResult.getOpp3TeamName( )}</div>
+						<div class="bottomRight">${gameResult.getOpp3TeamScore( )}</div>	
+					</div>
   			
-  						<div class="team-icon-bar">
-  							<img src="${gameResult.getGame3WinnerIcon()}"/>
-  						</div>
-  					
-  					</c:if>
-  		
+  					<div class="team-icon-bar">
+  						<img src="${gameResult.getGame3WinnerIcon()}"/>
+  					</div>
+  					  		
 			</div>
 		</div>
 
@@ -137,15 +135,13 @@
   					${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Summary( gameResult )}
 				</div>
 		
-				<c:if test="${gameResult.hasAll6Teams()}">
 				
-					<div class="${gameResult.getGame3MsgInfoClass()}">
-						<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Drive( gameResult )}</div>
-						<div class="rightQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Quarter( gameResult )}</div>
-						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Summary( gameResult )}
-  					</div>
-  				</c:if>
-  		  		
+				<div class="${gameResult.getGame3MsgInfoClass()}">
+					<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Drive( gameResult )}</div>
+					<div class="rightQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Quarter( gameResult )}</div>
+					${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Summary( gameResult )}
+  				</div>
+  				  		  		
 		</div>
     
     </div>
@@ -190,31 +186,28 @@
 						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Stats( gameResult ).getRushDesc()}
 					</div>
 					
-				</div>
-		
-				<c:if test="${gameResult.hasAll6Teams()}">
+				</div>		
 				
-					<div class="${gameResult.getGame3MsgInfoClass()}">
-						<c:if test="${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Stats( gameResult ) != null}">
+				<div class="${gameResult.getGame3MsgInfoClass()}">
+					<c:if test="${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Stats( gameResult ) != null}">
 						
-							<div class="statsName">
-								${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Stats( gameResult ).getPassName()}
-							</div>
-							<div class="statsDesc">
-								${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Stats( gameResult ).getPassDesc()}
-							</div>
+						<div class="statsName">
+							${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Stats( gameResult ).getPassName()}
+						</div>
+						<div class="statsDesc">
+							${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Stats( gameResult ).getPassDesc()}
+						</div>
 							
-							<div class="statsName">
-								${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Stats( gameResult ).getRushName()}
-							</div>
-							<div class="statsDesc">
-								${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Stats( gameResult ).getRushDesc()}
-							</div>
-					
-						</c:if>
-  					</div>
-  				</c:if>
-  		  		
+						<div class="statsName">
+							${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Stats( gameResult ).getRushName()}
+						</div>
+						<div class="statsDesc">
+							${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Stats( gameResult ).getRushDesc()}
+						</div>
+				
+					</c:if>
+  				</div>
+  				  		  		
 		</div>
     
     </div>  
@@ -241,7 +234,7 @@
     		<c:choose>
 				<c:when test="${applicationScope[DDPUtil.SCHEDULE_KEY] != null}">
 					
-					<img src="images/result/AlBundy.jpg" class="scheduleBackgroundImage" >
+					<img src="images/misc/AlBundy.jpg" class="scheduleBackgroundImage" >
 						
     				<div>
 						<table>

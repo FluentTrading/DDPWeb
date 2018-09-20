@@ -266,7 +266,7 @@ public final class LiveScore{
         .append( "GameId=" ).append( gameId );
                         
         if( GameState.NOT_STARTED == gameState ) {
-            builder.append( "StartTime=" ).append( getGameScheduleTime( ) )
+            builder.append( ", StartTime=" ).append( getGameScheduleTime( ) )
             .append( ", Home=" ).append( getHomeTeam( ).getCamelCaseName( ) )
             .append( ", Away=" ).append( getAwayTeam( ).getCamelCaseName( ) );
         }

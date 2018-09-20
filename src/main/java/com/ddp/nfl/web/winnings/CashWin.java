@@ -23,7 +23,7 @@ public final class CashWin{
     private final String cardName;
     
     private final static String WEEK_NAME   = "Week";
-    private final static String CARD_PREFIX = "images/cash/";
+    private final static String CARD_PREFIX = "images/winnings/";
     private final static String CARD_SUFFIX = ".jpg";
     
         

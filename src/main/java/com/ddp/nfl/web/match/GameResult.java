@@ -9,24 +9,17 @@ import static com.ddp.nfl.web.util.DDPUtil.*;
 
 public final class GameResult{
     
-    private final boolean has6Teams;
     private final DDPPick pick;
     private final LiveScore[] myScores;
     private final NFLTeam[] myPickedTeams;
     
-    
-    public GameResult( boolean hasAll6Teams, DDPPick pick, LiveScore[ ] myScores ){
-        this.has6Teams      = hasAll6Teams;
+    public GameResult( DDPPick pick, LiveScore[ ] myScores ){
         this.pick           = pick;
         this.myPickedTeams  = pick.getTeams( );
         this.myScores       = myScores;
     }
 
 
-    public final boolean hasAll6Teams( ){
-        return has6Teams;
-    }    
-    
     
     public final DDPPick getPick( ) {
         return pick;
@@ -192,6 +185,7 @@ public final class GameResult{
     protected final String getTeamWithPossessionBlinker( NFLTeam team, LiveScore liveScore ){
         
         if( team == null ) return EMPTY;
+        if( liveScore == null ) return EMPTY;
         
         String teamName         = team.getCamelCaseName( );
         boolean delayedOrHalf   = ( GameState.isDelayed(liveScore) || GameState.isHalftime(liveScore) );
@@ -287,7 +281,7 @@ public final class GameResult{
     
     
     public final NFLTeam getMy3Team( ){
-        return (myPickedTeams.length == THREE) ? myPickedTeams[TWO] : null;
+        return myPickedTeams[TWO];
     }
     
     
@@ -365,7 +359,6 @@ public final class GameResult{
     
     
     public final LiveScore getMatch3Score( ){
-        if( !has6Teams ) return null;
         return myScores[2];        
     }
     

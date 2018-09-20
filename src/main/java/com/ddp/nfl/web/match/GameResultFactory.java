@@ -49,8 +49,7 @@ public final class GameResultFactory{
                     
         }
 
-        boolean hasAll6Teams    = (uniqueTeamsSet.size( ) == (myPickedTeams.length * 2));
-        GameResult gameResult   = new GameResult( hasAll6Teams, pick, myScores );
+        GameResult gameResult   = new GameResult( pick, myScores );
     
         return gameResult;
         
@@ -86,55 +85,5 @@ public final class GameResultFactory{
         
     }
    
-    //Andy -> Saints, Chargers, Raiders
-    //     -> Saints   21 vs Lions 7
-    //     -> Chargers 14 vs Raiders 14
-    
-    /*
-    public final static GameResult packData( DDPPick pick, Map<NFLTeam, NFLGameScore> scoreMap ){
-
-        int index                       = 0;
-        Set<String> uniqueTeamsSet      = new HashSet<>( );
-        NFLTeam[] myPickedTeams         = pick.getTeams( );
-        NFLSingleGameResult[] homeResult= new NFLSingleGameResult[ myPickedTeams.length ];
-        NFLSingleGameResult[] awayResult= new NFLSingleGameResult[ myPickedTeams.length ];
-        
-        for( NFLTeam myTeam : myPickedTeams ){
-            
-            NFLGameScore score      = scoreMap.get( myTeam );
-            if( score == null ) continue;
-            
-            if( myTeam.getId( ) == score.getHomeTeam( ).getId( ) ) {
-                homeResult[index]   = new NFLSingleGameResult( myTeam, score.getHomeScore( ) );
-                awayResult[index]   = getOtherTeamResult( myTeam, score );
-            }
-            
-            if( myTeam.getId( ) == score.getAwayTeam( ).getId( ) ) {
-                homeResult[index]   = new NFLSingleGameResult( score.getAwayTeam( ), score.getAwayScore( ) );
-                awayResult[index]   = getOtherTeamResult( score.getAwayTeam( ), score );
-            }
-
-            ++index;
-            uniqueTeamsSet.add( score.getHomeTeam( ).getName( ) );
-            uniqueTeamsSet.add( score.getAwayTeam( ).getName( ) ); 
-                    
-        }
-
-        boolean hasAll6Teams    = (uniqueTeamsSet.size( ) == (myPickedTeams.length * 2));
-        GameResult gameResult   = new GameResult( hasAll6Teams, pick, homeResult, awayResult );
-    
-        return gameResult;
-        
-    }
-    
-    
-    public final static NFLSingleGameResult getOtherTeamResult( NFLTeam myTeam, NFLGameScore score ){
-        NFLTeam team = ( myTeam.getId( ) == score.getHomeTeam( ).getId( )) ? score.getAwayTeam( ) : score.getHomeTeam( );
-        int teamScore= ( myTeam.getId( ) == score.getHomeTeam( ).getId( )) ? score.getAwayScore( ): score.getHomeScore( );
-        
-        return new NFLSingleGameResult( team, teamScore );
-    }
-    
-    */
    
 }

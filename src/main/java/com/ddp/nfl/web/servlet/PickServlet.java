@@ -132,9 +132,6 @@ public class PickServlet extends HttpServlet {
                 return PickResult.createInvalid( "Invalid selection, Player and all 3 teams must be selected!" );
             }
             
-            team1               = team1.toLowerCase( );
-            team2               = team2.toLowerCase( );
-            team3               = team3.toLowerCase( );
             pickResult          = pickManager.savePicks( pickForWeek, player, team1, team2, team3 );
             
         }catch( Exception e) {
