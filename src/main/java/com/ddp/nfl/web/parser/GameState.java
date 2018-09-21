@@ -15,6 +15,7 @@ public enum GameState{
     public final static String ST    = "st";
     public final static String ND    = "nd";
     public final static String RD    = "rd";
+    public final static String TH    = "th";
         
     
     public final static GameState parseState( String rawQuarter ) {
@@ -111,6 +112,9 @@ public enum GameState{
         }else if( down == THREE ) {
             return RD;
         
+        }else if( down == FOUR ) {
+            return TH;
+            
         }else {
             return EMPTY;
         }

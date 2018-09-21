@@ -6,6 +6,8 @@ import com.google.gson.*;
 
 import static com.ddp.nfl.web.util.DDPUtil.*;
 
+import org.slf4j.*;
+
 
 public final class StatsManager{
     
@@ -14,8 +16,10 @@ public final class StatsManager{
     public final static String RECEIVING_KEY= "receiving";
     
     private final static String STATS_KEY   = "stats";
+    private final static String[] EMPTY_ARRAY= new String[] {"", ""};
     private final static String[] TEAM_KEY  = new String[] {"home", "away"};
-        
+    private final static Logger LOGGER      = LoggerFactory.getLogger( "StatsManager" );
+    
    
     protected final static Map<String, Analytics> parse( JsonObject gameObj ){
         
@@ -56,51 +60,84 @@ public final class StatsManager{
     
     protected final static String[] parsePassing( JsonElement element ){
         
-        String name = safeParse(element.getAsJsonObject( ), "name" );
-        int yards   = negativeToZero(safeParseInt( element.getAsJsonObject( ), "yds" ));
-        int tds     = negativeToZero(safeParseInt( element.getAsJsonObject( ), "tds" ));
-        int ints    = negativeToZero(safeParseInt( element.getAsJsonObject( ), "ints" ));
+        if( element == null ) return EMPTY_ARRAY;
         
-        StringBuilder builder = new StringBuilder( );
-        builder.append( yards ).append( " yds" ).append( COMMA ).append( SPACE );
-        builder.append( tds ).append( " tds" ).append( COMMA ).append( SPACE );
-        builder.append( ints ).append( " int" );
+        String[] result = EMPTY_ARRAY;
         
-        return new String[] { name, builder.toString( ) };
+        try {
+            String name = safeParse(element.getAsJsonObject( ), "name" );
+            int yards   = negativeToZero(safeParseInt( element.getAsJsonObject( ), "yds" ));
+            int tds     = negativeToZero(safeParseInt( element.getAsJsonObject( ), "tds" ));
+            int ints    = negativeToZero(safeParseInt( element.getAsJsonObject( ), "ints" ));
+        
+            StringBuilder builder = new StringBuilder( );
+            builder.append( yards ).append( " yds" ).append( COMMA ).append( SPACE );
+            builder.append( tds ).append( " tds" ).append( COMMA ).append( SPACE );
+            builder.append( ints ).append( " int" );
+            
+            result      = new String[] { name, builder.toString( ) };
+            
+        }catch( Exception e ) {
+            LOGGER.warn("FAILED to parse passing for {}", element, e );
+        }
+        
+        return result;
          
     }
     
     
     protected final static String[] parseRushing( JsonElement element ){
         
-        String name = safeParse(element.getAsJsonObject( ), "name" );
-        int attempts= negativeToZero(safeParseInt( element.getAsJsonObject( ), "att" ));
-        int yards   = negativeToZero(safeParseInt( element.getAsJsonObject( ), "yds" ));
-        int tds     = negativeToZero(safeParseInt( element.getAsJsonObject( ), "tds" ));
+        if( element == null ) return EMPTY_ARRAY;
         
-        StringBuilder builder = new StringBuilder( );
-        builder.append( yards ).append( " yds" ).append( COMMA ).append( SPACE );
-        builder.append( tds ).append( " tds" ).append( COMMA ).append( SPACE );
-        builder.append( attempts ).append( " att" );
+        String[] result = EMPTY_ARRAY;
+        
+        try {
+            String name = safeParse(element.getAsJsonObject( ), "name" );
+            int attempts= negativeToZero(safeParseInt( element.getAsJsonObject( ), "att" ));
+            int yards   = negativeToZero(safeParseInt( element.getAsJsonObject( ), "yds" ));
+            int tds     = negativeToZero(safeParseInt( element.getAsJsonObject( ), "tds" ));
+        
+            StringBuilder builder = new StringBuilder( );
+            builder.append( yards ).append( " yds" ).append( COMMA ).append( SPACE );
+            builder.append( tds ).append( " tds" ).append( COMMA ).append( SPACE );
+            builder.append( attempts ).append( " att" );
                 
-        return new String[] { name, builder.toString( ) };
+            result      = new String[] { name, builder.toString( ) };
+            
+         }catch( Exception e ) {
+             LOGGER.warn("FAILED to parse rushing for {}", element, e);
+         }
+            
+         return result;
         
     }
     
 
     protected final static String[] parseReceiving( JsonElement element ){
         
-        String name = safeParse(element.getAsJsonObject( ), "name" );
-        int recv    = negativeToZero(safeParseInt( element.getAsJsonObject( ), "rec" ));
-        int yards   = negativeToZero(safeParseInt( element.getAsJsonObject( ), "yds" ));
-        int tds     = negativeToZero(safeParseInt( element.getAsJsonObject( ), "tds" ));
+        if( element == null ) return EMPTY_ARRAY;
         
-        StringBuilder builder = new StringBuilder( );
-        builder.append( yards ).append( " yds" ).append( COMMA ).append( SPACE );
-        builder.append( tds ).append( " tds" ).append( COMMA ).append( SPACE );
-        builder.append( recv ).append( " rec" );
-                
-        return new String[] { name, builder.toString( ) };
+        String[] result = EMPTY_ARRAY;
+        
+        try {
+            String name = safeParse(element.getAsJsonObject( ), "name" );
+            int recv    = negativeToZero(safeParseInt( element.getAsJsonObject( ), "rec" ));
+            int yards   = negativeToZero(safeParseInt( element.getAsJsonObject( ), "yds" ));
+            int tds     = negativeToZero(safeParseInt( element.getAsJsonObject( ), "tds" ));
+        
+            StringBuilder builder = new StringBuilder( );
+            builder.append( yards ).append( " yds" ).append( COMMA ).append( SPACE );
+            builder.append( tds ).append( " tds" ).append( COMMA ).append( SPACE );
+            builder.append( recv ).append( " rec" );
+            
+            result      = new String[] { name, builder.toString( ) };
+            
+        }catch( Exception e ) {
+            LOGGER.warn("FAILED to parse receiving for {}", element, e);
+        }
+           
+        return result;
         
     
     }

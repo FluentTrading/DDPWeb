@@ -21,7 +21,7 @@ public final class GameResultManager{
         this.code       = code;
         this.message    = message;
         this.resultList = resultList;
-        this.noGamesStarted = findIfAllGamesUnstarted( resultList );
+        this.noGamesStarted = noGamesStarted( resultList );
     }
     
     
@@ -70,12 +70,12 @@ public final class GameResultManager{
     }
     
     
-    public final boolean hasAnyGamesStarted( ){
+    public final boolean noGamesStarted( ){
         return noGamesStarted;
     } 
     
 
-    private final boolean findIfAllGamesUnstarted( List<GameResult> resultList ){
+    private final boolean noGamesStarted( List<GameResult> resultList ){
         
         if( resultList == null || resultList.isEmpty( ) ) return true;
         

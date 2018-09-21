@@ -9,7 +9,7 @@
 <head>
 	
 	<meta charset="UTF-8">
-	<meta http-equiv="refresh" content="30"/>
+	<meta http-equiv="refresh" content="20"/>
 	<meta http-equiv="Content-Language" content="en">
 	
 	<title>|| DDP NFL Web ||</title>
@@ -64,7 +64,7 @@
     	
     	<c:otherwise>
     
-    	<c:if test="${requestScope[DDPUtil.RESULT_MANAGER_KEY].hasAnyGamesStarted( )}">
+    	<c:if test="${requestScope[DDPUtil.RESULT_MANAGER_KEY].noGamesStarted( )}">
     		<img src="images/misc/Lynch.gif" class="backgroundImage" >
     	</c:if>
     	
@@ -126,7 +126,7 @@
   				<div class="${gameResult.getGame1MsgInfoClass()}">
   					<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Drive( gameResult )}</div>
 					<div class="rightQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Quarter( gameResult )}</div>
-  					${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Summary( gameResult )}										
+  					${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Summary( gameResult )}
 				</div>
   		
   				<div class="${gameResult.getGame2MsgInfoClass()}">
@@ -139,7 +139,7 @@
 				<div class="${gameResult.getGame3MsgInfoClass()}">
 					<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Drive( gameResult )}</div>
 					<div class="rightQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Quarter( gameResult )}</div>
-					${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Summary( gameResult )}
+					${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Summary( gameResult )}					
   				</div>
   				  		  		
 		</div>
@@ -152,7 +152,7 @@
    	
    			<div class="thirdRow">
   		
-  				<div class="totalScore"></div>
+  				<div class="thirdRowPaddingCell"></div>
   		
   				<div class="${gameResult.getGame1MsgInfoClass()}">
   					<div class="statsName">
