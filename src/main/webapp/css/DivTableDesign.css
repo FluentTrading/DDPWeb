@@ -8,7 +8,7 @@
 		background-repeat: no-repeat;
 		background-position:center bottom;
 		z-index: 1;
-		opacity: 0.75;
+		opacity: 0.50;
 		width:800px;
     	height:470px;
     	filter: alpha(opacity=50); /* For IE8 and earlier */
