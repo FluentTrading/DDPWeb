@@ -88,12 +88,11 @@ public final class AppContextListener implements ServletContextListener{
     protected final void prepareWinningsCash( DDPMeta ddpMeta, DBService service, ServletContext context ){
         LOGGER.info("Attempting to calculate cash winnngs.");
         
-        CashManager cashManager     = new CashManager( ddpMeta, service );
-        Map<Integer, CashWin> winMap= cashManager.getWinnings( );
-        boolean isWinningsValid     = (winMap != null && !winMap.isEmpty( ));
+        WinnerManager cashManager     = new WinnerManager( ddpMeta, service );
+        boolean isWinningsValid     = !cashManager.getWinSummary( ).isEmpty( );
         if( isWinningsValid ){
-            context.setAttribute( WINNINGS_MAP_KEY, winMap );
-            LOGGER.info("Successfully stored winnings with key [{}] {}{}", WINNINGS_MAP_KEY, winMap.values( ), PRINT_NEWLINE);
+            context.setAttribute( CASH_MANAGER_KEY, cashManager );
+            LOGGER.info("Successfully stored winnings with key [{}] {}", CASH_MANAGER_KEY, PRINT_NEWLINE);
         }
 
     }

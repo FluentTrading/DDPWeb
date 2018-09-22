@@ -33,7 +33,7 @@ public final class DDPUtil{
     public final static String DB_SERVICE_KEY       = "DBServiceKey";
     public final static String META_INFO_KEY        = "MetaInfoKey";
     public final static String SCHEDULE_KEY         = "ScheduleKey";
-    public final static String WINNINGS_MAP_KEY     = "WinningsMapKey";
+    public final static String CASH_MANAGER_KEY     = "CashManagerKey";
     public final static String RESULT_MANAGER_KEY   = "ResultManagerKey";
     public final static String GAME_ANALYTICS_KEY   = "GameAnalyticsKey";
     public final static String ANALYTICS_GAME_ID_KEY= "gameId";

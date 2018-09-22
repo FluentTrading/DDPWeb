@@ -1,15 +1,18 @@
 package com.ddp.nfl.web.winnings;
 
 import com.ddp.nfl.web.core.*;
+import java.util.concurrent.atomic.*;
+
+import static com.ddp.nfl.web.util.DDPUtil.*;
 
 
-public final class CashWin{
+public final class WinnerResult{
     
     private final DDPPick winPick;
     private final int weekNumber;
-    private final int cashWon;
     private final int totalScore;
-        
+    private final AtomicBoolean isWinner;
+    
     private final NFLTeam team1;
     private final int _1Score;
     
@@ -21,37 +24,43 @@ public final class CashWin{
     
     private final String cardLink;
     private final String cardName;
-    
+                
     private final static String WEEK_NAME   = "Week";
     private final static String CARD_PREFIX = "images/winnings/";
     private final static String CARD_SUFFIX = ".jpg";
     
-        
-    public CashWin( int weekNumber, DDPPick winPick, int cashWon, int totalScore, 
-                    NFLTeam team1, int _1Score, NFLTeam team2, int _2Score, NFLTeam team3, int _3Score ){
-        
+    
+    public WinnerResult( int weekNumber, DDPPick ddpPick, int totalPoints, NFLTeam[ ] teams, Integer[ ] scores ){
+
+        this.isWinner       = new AtomicBoolean( );
         this.weekNumber     = weekNumber;
-        this.winPick        = winPick;
-        this.cashWon        = cashWon;
-        this.totalScore     = totalScore;
-        this.team1          = team1;
-        this._1Score        = _1Score;
-        this.team2          = team2;
-        this._2Score        = _2Score;
-        this.team3          = team3;
-        this._3Score        = _3Score;
+        this.winPick        = ddpPick;
+        this.totalScore     = totalPoints;
+        this.team1          = teams[0];
+        this._1Score        = scores[0];
+        this.team2          = teams[1];
+        this._2Score        = scores[1];
+        this.team3          = teams[2];
+        this._3Score        = scores[2];
+        
         this.cardLink       = CARD_PREFIX + WEEK_NAME + weekNumber + CARD_SUFFIX;
         this.cardName       = WEEK_NAME + weekNumber;
         
     }
 
     
+
+    public final boolean isWinner( ){
+        return isWinner.get( );
+    }
+    
+    
     public final int getWeekNumber( ){
         return weekNumber;
     }
     
     
-    public final DDPPick getWinPick( ){
+    public final DDPPick getDDPPick( ){
         return winPick;
     }
 
@@ -60,10 +69,6 @@ public final class CashWin{
         return winPick.getPlayer( );
     }
      
-    
-    public final int getCashWon( ){
-        return cashWon;
-    }
     
     public final int getTotalScore( ){
         return totalScore;
@@ -109,12 +114,38 @@ public final class CashWin{
         return cardName;
     }
     
+    
+    public final void markWinner( ){
+        isWinner.set( true );
+    }
+        
+    
+    public final String getWeekNumberHtml( ){
+
+        StringBuilder builder = new StringBuilder( );
+        
+        if( isWinner( ) ) {
+            builder.append( "<a href=\"" ).append ( cardLink ).append( "\"");
+            builder.append( " class=\"cashLink\">" );
+            builder.append( " Week " ).append( weekNumber ).append( COLON );
+            builder.append( "</a>" );
+            
+        }else {
+            builder.append( "Week " ).append(  weekNumber ).append( COLON );
+        }
+           
+        return builder.toString( );
+            
+    }
+    
+    
 
     @Override
     public final String toString( ){
         StringBuilder builder = new StringBuilder( 128 );
-        builder.append( "CashWin [winPick=" ).append( winPick.getPlayer( ).getName( ) ).append( ", Week=" ).append( weekNumber );
-        builder.append( ", CashWon=" ).append( cashWon ).append( ", TotalScore=" ).append( totalScore );
+        builder.append( "WinnerResult [Player=" ).append( winPick.getPlayer( ).getName( ) ).append( ", Week=" ).append( weekNumber );
+        builder.append( ", isWinner=" ).append( isWinner( ) );
+        builder.append( ", TotalScore=" ).append( totalScore );
         builder.append( ", Team1=" ).append( team1.getLowerCaseName( ) );
         builder.append( ", Score=" ).append( _1Score );
         builder.append( ", Team2=" ).append( team2.getLowerCaseName( ) );
@@ -124,6 +155,7 @@ public final class CashWin{
         
         return builder.toString( );
     }
+
 
 
 }

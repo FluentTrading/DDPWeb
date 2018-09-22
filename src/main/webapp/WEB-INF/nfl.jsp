@@ -9,7 +9,7 @@
 <head>
 	
 	<meta charset="UTF-8">
-	<meta http-equiv="refresh" content="20"/>
+	<meta http-equiv="refresh" content="60"/>
 	<meta http-equiv="Content-Language" content="en">
 	
 	<title>|| DDP NFL Web ||</title>
@@ -290,53 +290,71 @@
       <section id="content3">
     	
     			
-    	<div class="cashTable" >
+    	<div class="cashTable">
     		
     		<c:choose>
 				
-				<c:when test="${applicationScope[DDPUtil.WINNINGS_MAP_KEY] != null}">
-										
-					<div class="cashHeaderRow">	
-  						<div class="cashHeader">Player</div>
-						<div class="cashHeader">Week</div>
-						<div class="cashHeader">Cash</div>
-						<div class="cashHeader">Points</div>
-						<div class="cashHeader">Details</div>
-					</div>
-							
-    				
-    				<c:forEach var="entry" items="${applicationScope[DDPUtil.WINNINGS_MAP_KEY]}">
+				<c:when test="${applicationScope[DDPUtil.CASH_MANAGER_KEY] != null}">
+					
+					<img src="images/misc/CashMoney.png" class="cashBackgroundImage" >
+						
+					<c:forEach var="entry" items="${applicationScope[DDPUtil.CASH_MANAGER_KEY].getWinSummary()}">
 
-						<div class="cashSecondRow">
-  					    								
+						<div class="cashRow">
+  					    					
     						<div class="cashPlayer">
-    							<img src=${entry.value.getPlayer( ).getIcon( )} title=${entry.value.getPlayer( ).getName()} height="64" width="64"/>    									
+    							${entry.value.getPlayer( ).getName()}    									
     						</div>
     								
-    						<div class="cashData">
-    							${entry.value.getWeekNumber( )}
-    						</div>
-    								
-    						<div class="cashData">
-    							$${entry.value.getCashWon( )}
-    						</div>
-    						
-    						<div class="cashData">
+    						<div class="cashTotalScore">
     							${entry.value.getTotalScore( )}
     						</div>
     						
-    						<div class="cashData">
-    							<a href="${entry.value.getCardLink()}" class="cashLink">${entry.value.getCardName()}</a>
+    						<div class="cashWeeksWon">
+    							$${entry.value.getTotalCash( )}
     						</div>
-  						
-  						</div>
-  			
-  						
-  								
+    						
+    					<c:forEach items="${entry.value.getResults( )}" var="winResult">
+    						
+    						<div class="cashDetailsRow">
+    							
+    							<div class="cashWeekNumber">
+    								${winResult.getWeekNumberHtml( )}
+    							</div>
+    							
+    							<div class="cashWeekScore">
+    								${winResult.getTotalScore( )}
+    							</div>
+    							
+    							<div class="cashDetails">
+    								${winResult.getTeam1( ).getNickName( )}
+    							</div>
+    							
+    							<div class="cashDetails">
+    								${winResult.get_1Score( )}
+    							</div>
+    							
+    							<div class="cashDetails">
+    								${winResult.getTeam2( ).getNickName( )}
+    							</div>
+    							
+    							<div class="cashDetails">
+    								${winResult.get_2Score( )}
+    							</div>
+    							
+    							<div class="cashDetails">
+    								${winResult.getTeam3( ).getNickName( )}
+    							</div>
+    							
+    							<div class="cashDetails">
+    								${winResult.get_3Score( )}
+    							</div>
+    							
+    						</div>
+    						</c:forEach>
+    				</div>
   					</c:forEach>
-  						
-					</div> 		
-    			
+  						    			
     			</c:when>
 				<c:otherwise>
 					<h3>DDP Cash hasn't been awarded yet!</h3>
