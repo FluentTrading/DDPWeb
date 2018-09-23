@@ -46,6 +46,7 @@ public enum GameState{
        
     
     public final static boolean isNotStarted( LiveScore score ){
+        if( score == null ) return true;
         return ( GameState.NOT_STARTED == score.getGameState( ) );
     }
          
@@ -56,6 +57,7 @@ public enum GameState{
     
     
     public final static boolean isPlaying( LiveScore score ) {
+        if( score == null ) return false;
         return ( GameState.PLAYING == score.getGameState( ) );
     }
 
