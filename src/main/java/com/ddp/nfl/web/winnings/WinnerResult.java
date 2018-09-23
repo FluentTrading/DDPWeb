@@ -14,13 +14,13 @@ public final class WinnerResult{
     private final AtomicBoolean isWinner;
     
     private final NFLTeam team1;
-    private final int _1Score;
+    private final String _1Score;
     
     private final NFLTeam team2;
-    private final int _2Score;
+    private final String _2Score;
     
     private final NFLTeam team3;
-    private final int _3Score;
+    private final String _3Score;
     
     private final String cardLink;
     private final String cardName;
@@ -37,11 +37,11 @@ public final class WinnerResult{
         this.winPick        = ddpPick;
         this.totalScore     = totalPoints;
         this.team1          = teams[0];
-        this._1Score        = scores[0];
+        this._1Score        = formatScore( scores[0] );
         this.team2          = teams[1];
-        this._2Score        = scores[1];
+        this._2Score        = formatScore( scores[1] );
         this.team3          = teams[2];
-        this._3Score        = scores[2];
+        this._3Score        = formatScore( scores[2] );
         
         this.cardLink       = CARD_PREFIX + WEEK_NAME + weekNumber + CARD_SUFFIX;
         this.cardName       = WEEK_NAME + weekNumber;
@@ -49,7 +49,6 @@ public final class WinnerResult{
     }
 
     
-
     public final boolean isWinner( ){
         return isWinner.get( );
     }
@@ -90,17 +89,17 @@ public final class WinnerResult{
     }
 
 
-    public final int get_1Score( ){
+    public final String get_1Score( ){
         return _1Score;
     }
 
 
-    public final int get_2Score( ){
+    public final String get_2Score( ){
         return _2Score;
     }
 
 
-    public final int get_3Score( ){
+    public final String get_3Score( ){
         return _3Score;
     }
 
@@ -119,6 +118,11 @@ public final class WinnerResult{
         isWinner.set( true );
     }
         
+
+    private final String formatScore( Integer score ) {
+        return ( score<10) ? "0"+score : String.valueOf(score);
+    }
+    
     
     public final String getWeekNumberHtml( ){
 

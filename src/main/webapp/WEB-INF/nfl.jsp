@@ -295,24 +295,23 @@
     		<c:choose>
 				
 				<c:when test="${applicationScope[DDPUtil.CASH_MANAGER_KEY] != null}">
-					
-					<img src="images/misc/CashMoney.png" class="cashBackgroundImage" >
-						
+											
 					<c:forEach var="entry" items="${applicationScope[DDPUtil.CASH_MANAGER_KEY].getWinSummary()}">
 
 						<div class="cashRow">
   					    					
     						<div class="cashPlayer">
-    							${entry.value.getPlayer( ).getName()}    									
+    							${entry.value.getPlayer( ).getName()}    	
     						</div>
     								
+    						<div class="cashAmount">
+    							${entry.value.getTotalCashFormatted( )}
+    						</div>
+    						
     						<div class="cashTotalScore">
     							${entry.value.getTotalScore( )}
     						</div>
     						
-    						<div class="cashWeeksWon">
-    							$${entry.value.getTotalCash( )}
-    						</div>
     						
     					<c:forEach items="${entry.value.getResults( )}" var="winResult">
     						
@@ -326,30 +325,35 @@
     								${winResult.getTotalScore( )}
     							</div>
     							
+    							
     							<div class="cashDetails">
-    								${winResult.getTeam1( ).getNickName( )}
+    								<div class="cashDetailsTeam">
+    									${winResult.getTeam1( ).getNickName( )}
+    								</div>
+    								<div class="cashDetailsScore">
+    									${winResult.get_1Score( )}
+    								</div>
     							</div>
     							
     							<div class="cashDetails">
-    								${winResult.get_1Score( )}
+    								<div class="cashDetailsTeam">
+    									${winResult.getTeam2( ).getNickName( )}
+    								</div>
+    								<div class="cashDetailsScore">
+    									${winResult.get_2Score( )}
+    								</div>
     							</div>
+    							
     							
     							<div class="cashDetails">
-    								${winResult.getTeam2( ).getNickName( )}
-    							</div>
-    							
-    							<div class="cashDetails">
-    								${winResult.get_2Score( )}
-    							</div>
-    							
-    							<div class="cashDetails">
-    								${winResult.getTeam3( ).getNickName( )}
-    							</div>
-    							
-    							<div class="cashDetails">
-    								${winResult.get_3Score( )}
-    							</div>
-    							
+    								<div class="cashDetailsTeam">
+    									${winResult.getTeam3( ).getNickName( )}
+    								</div>
+    								<div class="cashDetailsScore">
+    									${winResult.get_3Score( )}
+    								</div>    	
+    							</div>    	
+    							    							
     						</div>
     						</c:forEach>
     				</div>

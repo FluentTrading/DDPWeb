@@ -123,91 +123,82 @@ input:checked + label {
   		display: table;
   		width: 100%;
   		font-family: 'Open Sans', sans-serif;
+  		font-size: 20px;
   		color: #000000;
   		background-color: #ffffff;
   	}
   	
-  	
-  	.cashBackgroundImage{
-		position:absolute;
-		background-repeat: no-repeat;
-		background-position:center;
-		z-index: 1;
-		opacity: 0.25;
-    	filter: alpha(opacity=50); /* For IE8 and earlier */
-    }
-    
- 
+
 	.cashRow{
   		display: table-row;
-  		height: 40px;
-  		border-bottom: 1px solid #9FAFB4;
   		text-align: left;
-		font-size: 20px;
-
-		background-color: #ffffff;
+  		border-bottom: 1px solid #000000;  		
 	}
 	
 	
 	.cashPlayer{
 		display: table-cell;
   		font-weight: bold;
-  		border: 0px solid #000000;
-    	padding: 10px 30px 0px 20px; /* Top, Right, Bottom, Left */
+  		border-bottom: 1px solid #000000;
+    	padding: 10px 10px 0px 40px; /* Top, Right, Bottom, Left */
 	}
 	
+
+	.cashAmount{
+		display: table-cell;
+		font-weight: bold;
+		padding: 10px 10px 0px 30px; /* Top, Right, Bottom, Left */
+  	}		
+
 	.cashTotalScore{
 		display: table-cell;
-		text-align: left;
 		font-weight: bold;
-  		border: 0px solid #000000;
-  		padding: 0px 30px 0px 0px; /* Top, Right, Bottom, Left */
+		padding: 10px 10px 0px 30px; /* Top, Right, Bottom, Left */
 	}	
-		
-	.cashWeeksWon{
-		display: table-cell;
-		font-size: 18x;
-		font-weight: bold;
-  		border: 0px solid #000000;
-    	padding: 0px 0px 0px 20px; /* Top, Right, Bottom, Left */
-	}		
-		
+			
 		
 	.cashDetailsRow{
   		display: table-row;
-  		border: 0px solid #9FAFB4;
-  		font-size: 16px;
+  		border: 0px solid #9FAFB4;  		
 		background-color: #ffffff;
 	}
 	
 
 	.cashWeekNumber{
 		display: table-cell;
-		font-weight: bold;
 		border: 0px solid #000000;
-  		padding: 10px 10px 10px 50px; /* Top, Right, Bottom, Left */
+  		padding: 0px 20px 10px 20px; /* Top, Right, Bottom, Left */
 	}
     		
     .cashWeekScore{
 		display: table-cell;
-		font-weight: bold;
 		border: 0px solid #000000;
-  		padding: 5px 50px 5px 10px; /* Top, Right, Bottom, Left */
+  		padding: 0px 50px 0px 0px; /* Top, Right, Bottom, Left */
 	}
 	
 	.cashDetails{
 		display: table-cell;
+		width: 20%;
 		font-weight: plain;
-		border: 0px solid #000000;
-    	padding: 0px 30px 5px 0px; /* Top, Right, Bottom, Left */
+    }
+	
+	.cashDetailsTeam{
+		display: table-cell;
+		font-size: 16px;
+		float:left;
 	}
 		
+	.cashDetailsScore{
+		display: table-cell;
+		font-size: 16px;
+		float:right;
+		padding: 0px 20px 0px 0px; /* Top, Right, Bottom, Left */
+	}
 	
+		
 	a.cashLink{
 		text-decoration: none;
-  		font-size: 16px;
-  		background-color: #3D9970;
-  		
+  		background-color: #3D9970;  		
 	}
 		
 	
