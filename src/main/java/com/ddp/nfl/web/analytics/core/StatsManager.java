@@ -47,8 +47,11 @@ public final class StatsManager{
     
     protected final static JsonElement parseFirstPlay( String playType, JsonObject statsObj  ){
         
+        JsonElement playTypeElement = statsObj.get(playType);
+        if( playTypeElement == null ) return null;
+        
         JsonElement element = null;
-        for( Entry<String, JsonElement> entry : statsObj.get(playType).getAsJsonObject( ).entrySet( ) ){
+        for( Entry<String, JsonElement> entry : playTypeElement.getAsJsonObject( ).entrySet( ) ){
             element = entry.getValue( );
             break;
         }

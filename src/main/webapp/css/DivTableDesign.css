@@ -240,7 +240,7 @@
     	float:left;
     	font-size: 12px;
     	font-weight: bold;
-        padding: 0px 20px 3px 0px; /* Top, Right, Bottom, Left */	
+        padding: 0px 40px 3px 0px; /* Top, Right, Bottom, Left */	
 	}
 	
 	.statsDesc{
