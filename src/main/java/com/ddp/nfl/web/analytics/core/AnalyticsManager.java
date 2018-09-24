@@ -68,6 +68,7 @@ public final class AnalyticsManager{
 
     
     public final String getGame3Quarter( GameResult result ){
+        if( result == null || result.getMatch3Score( ) == null ) return EMPTY;
         return result.getMatch3Score( ).getDisplayableQuarter( );
     }
     
@@ -82,6 +83,7 @@ public final class AnalyticsManager{
     }
     
     public final String getGame3Summary( GameResult result ){
+        if( result == null ) return EMPTY;
         return getGameSummary( result.getGame3Quarter( ), result.getMy3Team( ), result.getMatch3Score( ) );
     }
     
