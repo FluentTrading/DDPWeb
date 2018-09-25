@@ -38,7 +38,7 @@
 
 	.score-bar-game-won{
 		display: table-cell;
-  		width: 20%;
+  		width: 25%;
   		background-color: #ffffff;
   		position: relative;
 		border: 0px solid red;
@@ -47,14 +47,14 @@
 	
 	.score-bar-game-lost{
 		display: table-cell;
-  		width: 20%;
+  		width: 25%;
   		position: relative;
 		padding: 2px 0px 0px 10px; /* Top, Right, Bottom, Left */
 	}
 	
 	.score-bar-game-not-started{
 		display: table-cell;
-  		width: 20%;
+  		width: 25%;
   		background-color: #ffffff;
   		position: relative;
 		border: 0px solid red;
@@ -63,7 +63,7 @@
 	
 	.score-bar-game-tied{
 		display: table-cell;
-  		width: 20%;
+  		width: 25%;
   		background-color: #ffffff;
   		position: relative;
 		border: 0px solid red;
@@ -240,7 +240,7 @@
     	float:left;
     	font-size: 12px;
     	font-weight: bold;
-        padding: 0px 40px 3px 0px; /* Top, Right, Bottom, Left */	
+        padding: 0px 30px 3px 0px; /* Top, Right, Bottom, Left */	
 	}
 	
 	.statsDesc{

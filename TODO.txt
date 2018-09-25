@@ -28,6 +28,17 @@ Schedule:
 
 
 
+
+Sep 11, 2018 	Paypal Wazim 																	$100
+Sep 11, 2018 	Paypal Kiran 																	$100 
+Sep 10, 2018	QuickPay with Zelle payment from GANDHI, ANAND BAC901a946aa		QuickPay credit	$100.00
+Sep 10, 2018	QuickPay with Zelle payment from ANKUR KUMAR 7476243848			QuickPay credit	$100.00
+Sep 10, 2018	QuickPay with Zelle payment from SARBJIT P SINGH 7476658351		QuickPay credit	$100.00
+Sep 10, 2018	QuickPay with Zelle payment from KANWAR P SINGH 7476869172		QuickPay credit	$100.00
+Sep 5, 	2018	QuickPay with Zelle payment from KANISHK J MEHTA CTIgqHsralok	QuickPay credit	$150.00
+
+
+
 Links:
 http://www.nfl.com/ajax/scorestrip?season=2017&seasonType=REG&week=2
 http://www.nfl.com/liveupdate/game-center/2017091701/2017091701_gtd.json
