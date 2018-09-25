@@ -144,7 +144,7 @@
 		
 	.info-bar-game-not-started {
 		display: table-cell;
-  		width: 30%;
+  		width: 31%;
   		text-align: left;
 	  	color:#000000;
 	   	background-color: #a0a5a5;
@@ -154,7 +154,7 @@
 		
 	.info-bar-game-finished{
 		display: table-cell;
-  		width: 30%;
+  		width: 31%;
   		text-align: left;
 	  	color:#000000;
 	   	background-color: #a0a5a5;
@@ -164,7 +164,7 @@
 	
 	.info-bar-game-won{
 		display: table-cell;
-  		width: 30%;
+  		width: 31%;
   		position: relative;
 		color:#000000;
 		font-size: 12px;
@@ -175,7 +175,7 @@
 				
 	.info-bar-game-lost{
 		display: table-cell;
-  		width: 30%;
+  		width: 31%;
   		position: relative;
 		font-size: 12px;
 		font-weight: plain;
@@ -186,7 +186,7 @@
 		
 	.info-bar-game-tied{
 		display: table-cell;
-  		width: 30%;
+  		width: 31%;
   		position: relative;
   		font-size: 12px;
 		font-weight: plain;
