@@ -65,7 +65,7 @@
     	<c:otherwise>
     
     	<c:if test="${requestScope[DDPUtil.RESULT_MANAGER_KEY].noGamesStarted( )}">
-    		<img src="images/misc/Lynch.gif" class="backgroundImage" >
+    		<img src="images/misc/Newton.gif" class="backgroundImage" >
     	</c:if>
     	
     	<c:forEach items="${requestScope[DDPUtil.RESULT_MANAGER_KEY].getResultList( )}" var="gameResult">
@@ -234,7 +234,7 @@
     		<c:choose>
 				<c:when test="${applicationScope[DDPUtil.SCHEDULE_KEY] != null}">
 					
-					<img src="images/misc/AlBundy.jpg" class="scheduleBackgroundImage" >
+					<img src="images/misc/Ricky.jpg" class="scheduleBackgroundImage" >
 						
     				<div>
 						<table>

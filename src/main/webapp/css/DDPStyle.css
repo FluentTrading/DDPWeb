@@ -96,9 +96,11 @@ input:checked + label {
 	.scheduleBackgroundImage{
 		position:absolute;
 		background-repeat: no-repeat;
-		background-position:center;
+		background-position:center bottom;
 		z-index: 1;
 		opacity: 0.15;
+		width:800px;
+    	height:700px;
     	filter: alpha(opacity=50); /* For IE8 and earlier */
     }
 			

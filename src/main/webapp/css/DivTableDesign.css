@@ -10,7 +10,7 @@
 		z-index: 1;
 		opacity: 0.50;
 		width:800px;
-    	height:470px;
+    	height:900px;
     	filter: alpha(opacity=50); /* For IE8 and earlier */
     	/*padding: 100px 100px 10px 50px; /* Top, Right, Bottom, Left */
 	}
