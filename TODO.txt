@@ -1,5 +1,8 @@
 Rebooting:
 ====================================================
+1. On Thursday, change refresh to 30 seconds
+
+
 Tuesday Night:
 	1) Update Week Number after the game.
 	2) Reboot so the winnings can be calculated.
@@ -14,21 +17,11 @@ http://www.nfl.com/liveupdate/scores/scores.json points to next week on Wed.
 
 Enhancements:
 ====================================================
-1) Format Stats Data
-HAS BEEN formatted but it shows up on the same line as the drive and quarter info,
-Drive & Quarter should go on top of the score?
-
 1) Team record should be available in analytics
-2) Winning page look bland.
-
-Schedule:
-===================================================
-1)	Show AM/PM in time
-3)  Group schedule by date (like CBS sports schedule) 
 
 
-
-
+Money Paid
+====================================================
 Sep 11, 2018 	Paypal Wazim 																	$100
 Sep 11, 2018 	Paypal Kiran 																	$100 
 Sep 10, 2018	QuickPay with Zelle payment from GANDHI, ANAND BAC901a946aa		QuickPay credit	$100.00

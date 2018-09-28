@@ -215,6 +215,9 @@ public final class LiveScore{
     
     protected final static String formatQuarter( GameState state, Schedule schedule, String quarterStr, String stadium, String timeRemaining ){
 
+        if( schedule == null ) {
+            return "Unknown";
+        }
         
         switch( state ) {
             

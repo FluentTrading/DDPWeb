@@ -162,7 +162,7 @@ public final class ScheduleManager{
         
     }
 
-    protected final static String safeParse( StartElement startElement, String key, String defaultVal ){
+    public final static String safeParse( StartElement startElement, String key, String defaultVal ){
         Attribute attr     = startElement.getAttributeByName(new QName(key));
         String value       = ( attr != null ) ? attr.getValue() : defaultVal;
         
@@ -170,7 +170,7 @@ public final class ScheduleManager{
     }
     
     
-    protected final static int safeParse( StartElement startElement, String key, int defaultVal ){
+    public final static int safeParse( StartElement startElement, String key, int defaultVal ){
         
         int value          = defaultVal;
         Attribute attr     = startElement.getAttributeByName(new QName(key));
