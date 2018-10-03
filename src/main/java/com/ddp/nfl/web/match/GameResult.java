@@ -163,20 +163,7 @@ public final class GameResult{
     public final String getGame3MsgInfoClass( ){
         return getMessageInfoClassName( getMatch3Score( ), getMy3TeamScore( ), getOpp3TeamScore( ) );
     }   
-    
-    
-    public final String getGame1ScoreClass( ){
-        return getScoreClassName( getMatch1Score( ), getMy1TeamScore( ), getOpp1TeamScore( ) );
-    }
-    
-    public final String getGame2ScoreClass( ){
-        return getScoreClassName( getMatch2Score( ), getMy2TeamScore( ), getOpp2TeamScore( ) );
-    }
-        
-    public final String getGame3ScoreClass( ){
-        return getScoreClassName( getMatch3Score( ), getMy3TeamScore( ), getOpp3TeamScore( ) );
-    }   
-    
+      
         
     //UI shouldn't directly invoke these methods.
     //-----------------------------------------------------------
@@ -247,25 +234,6 @@ public final class GameResult{
         }
         
         return INFO_BAR_GAME_LOST;
-        
-    }
-    
-    
-    protected final String getScoreClassName( LiveScore liveScore, int homeScore, int awayScore ){
-        
-        if( GameState.isNotStarted( liveScore ) ){
-            return SCORE_BAR_GAME_PENDING;
-        }
-        
-        if( homeScore == awayScore ){
-            return SCORE_BAR_GAME_TIED;
-        }
-        
-        if( homeScore > awayScore ){
-            return SCORE_BAR_GAME_WON;
-        }
-        
-        return SCORE_BAR_GAME_LOST;
         
     }
   

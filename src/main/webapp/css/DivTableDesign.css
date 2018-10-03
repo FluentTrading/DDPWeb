@@ -1,82 +1,47 @@
-		
-	/*--------------------------------------- */
-	/*--------------- First Row --------------*/
-	/*--------------------------------------- */
 	
-	.backgroundImage{
-		position:absolute;
-		background-repeat: no-repeat;
-		background-position:center bottom;
-		z-index: 1;
-		opacity: 0.50;
-		width:800px;
-    	height:900px;
-    	filter: alpha(opacity=50); /* For IE8 and earlier */
-    	/*padding: 100px 100px 10px 50px; /* Top, Right, Bottom, Left */
-	}
-
 	div.newGridTable {
 		background-color: #ffffff;	
   		border-collapse: collapse;
   		display: table;
   		width: 100%;
-  	}
-  		 		
-	.firstRow{
+  	}		
+
+	/*--------------------------------------- */
+	/*--------------- First Row --------------*/
+	/*--------------------------------------- */
+	
+	.scoreRow{
   		display: table-row;
   		width: 50%;
   		height: 75px;
   		border: 0px solid #9FAFB4;  	
 	}
 
-	.player-bar {
+	.player-icon-cell {
 		display: table-cell;
-  		width: 10%;
+  		width: 6%;
+  		align-self:center;
     	border: 0px solid #000000;
-    	padding: 10px 0px 0px 5px; /* Top, Right, Bottom, Left */
+    	padding: 0px 10px 0px 5px; /* Top, Right, Bottom, Left */
 	}
 
-	.score-bar-game-won{
-		display: table-cell;
-  		width: 25%;
-  		background-color: #ffffff;
-  		position: relative;
-		border: 0px solid red;
-	   	font-size: 20px;
-	}
-	
-	.score-bar-game-lost{
-		display: table-cell;
-  		width: 25%;
-  		position: relative;
-		padding: 2px 0px 0px 10px; /* Top, Right, Bottom, Left */
-	}
-	
-	.score-bar-game-not-started{
-		display: table-cell;
-  		width: 25%;
-  		background-color: #ffffff;
-  		position: relative;
-		border: 0px solid red;
-	   	font-size: 20px;
-	}
-	
-	.score-bar-game-tied{
-		display: table-cell;
-  		width: 25%;
-  		background-color: #ffffff;
-  		position: relative;
-		border: 0px solid red;
-	   	font-size: 20px;
-	}
-			
-	.team-icon-bar{
+	.team-icon-cell{
 		display: table-cell;
   		width: 10%;
   		position: relative;
     	background-color: #ffffff;
-    	padding: 5px 5px 0px 0px; /* Top, Right, Bottom, Left */
+    	padding: 11px 2px 0px 0px; /* Top, Right, Bottom, Left */
 	}		
+	
+
+	.score-cell-div{
+		display: table-cell;
+  		width: 20%;
+  		background-color: #ffffff;
+  		position: relative;
+		border: 0px solid red;
+	   	font-size: 18px;
+	}
 		
 	.topLeft {
     	position:absolute;
@@ -86,13 +51,13 @@
     	left:0;   
 	}
 
-
 	.topRight {
 	   	position:absolute;
     	margin:0;
     	padding:10px;
     	top:0;
     	right:0;
+    	font-weight: bold;
 	}
 		
 	.bottomLeft {
@@ -110,8 +75,21 @@
     	padding:10px;
     	bottom:0;
     	right:0;
+    	font-weight: bold;
 	}
 		
+	.backgroundImage{
+		position:absolute;
+		background-repeat: no-repeat;
+		background-position:center bottom;
+		z-index: 1;
+		opacity: 0.50;
+		width:800px;
+    	height:900px;
+    	filter: alpha(opacity=50); /* For IE8 and earlier */
+    	/*padding: 100px 100px 10px 50px; /* Top, Right, Bottom, Left */
+	}
+	
 		  	
 	/*--------------------------------------- */
 	/*--------------- Second Row --------------*/
@@ -119,7 +97,7 @@
 
 	.secondRow{
   		display: table-row;
-  		width: 100%;
+  		width: 50%;
   		height: 20px;
   		border: 0px solid #9FAFB4;
   			
@@ -136,62 +114,69 @@
   		display: table-cell;
   		width: 10%;
   		font-weight: bold;
-  		font-size: 16px;
+  		font-size: 18px;
   		text-align: center;
   		background-color: #a0a5a5;
-  		padding: 2px 10px 0px 0px; /* Top, Right, Bottom, Left */
+  		padding: 2px 20px 0px 0px; /* Top, Right, Bottom, Left */
+  		border: 0px solid #9FAFB4;
 	}
+		
 		
 	.info-bar-game-not-started {
 		display: table-cell;
-  		width: 31%;
+  		width: 30%;
   		text-align: left;
 	  	color:#000000;
 	   	background-color: #a0a5a5;
 	   	padding: 2px 0px 0px 10px; /* Top, Right, Bottom, Left */
+	   	border: 0px solid #9FAFB4;
 	}
 		
 		
 	.info-bar-game-finished{
 		display: table-cell;
-  		width: 31%;
+  		width: 30%;
   		text-align: left;
 	  	color:#000000;
 	   	background-color: #a0a5a5;
-	   	padding: 2px 0px 0px 10px; /* Top, Right, Bottom, Left */
+	   	border-right: 1px solid #9FAFB4;
+	   	padding: 2px 10px 0px 0px; /* Top, Right, Bottom, Left */
 	}
 	
 	
 	.info-bar-game-won{
 		display: table-cell;
-  		width: 31%;
+  		width: 30%;
   		position: relative;
 		color:#000000;
 		font-size: 12px;
 		font-weight: plain;
 	    background-color: #3D9970;
 	    padding: 2px 0px 0px 10px; /* Top, Right, Bottom, Left */
+	    border: 0px solid #9FAFB4;
 	}
 				
 	.info-bar-game-lost{
 		display: table-cell;
-  		width: 31%;
+  		width: 30%;
   		position: relative;
 		font-size: 12px;
 		font-weight: plain;
 		background-color: #FF4136;
 		padding: 2px 0px 0px 10px; /* Top, Right, Bottom, Left */
+		border: 0px solid #9FAFB4;
 	}
 	
 		
 	.info-bar-game-tied{
 		display: table-cell;
-  		width: 31%;
+  		width: 30%;
   		position: relative;
   		font-size: 12px;
 		font-weight: plain;
 		background-color:#FFDC00;
 		padding: 2px 0px 0px 10px; /* Top, Right, Bottom, Left */
+		border: 0px solid #9FAFB4;
 	}
 	
 	.leftDriveInfo{
@@ -199,14 +184,11 @@
     	font-weight: bold;
 	}
 
-
 	.rightQuarterInfo {
 	   	float:right;
 	   	font-weight: bold;
-	   	padding: 0px 5px 0px 0px; /* Top, Right, Bottom, Left */
+	   	padding: 0px 2px 0px 0px; /* Top, Right, Bottom, Left */
 	}
-	
-	
 	
 	/*--------------------------------------- */
 	/*--------------- Stats Row --------------*/

@@ -72,43 +72,42 @@
     		
     		<div class="newGridTable" >
     
-	   			<div class="firstRow">
+	   			<div class="scoreRow">
   		
-  					<div class="player-bar">
+  					<div class="player-icon-cell">
   						<img src="${gameResult.getPlayer( ).getIcon( )}" title=${gameResult.getPlayer( ).getName( )} height="52" width="52">
   					</div>
   		
-  					<div class="${gameResult.getGame1ScoreClass()}">
+  					<div class="score-cell-div">
   						<div class="topLeft">${gameResult.getMy1TeamName( )}</div>
   						<div class="topRight">${gameResult.getMy1TeamScore( )}</div>
 						<div class="bottomLeft">${gameResult.getOpp1TeamName( )}</div>
 						<div class="bottomRight">${gameResult.getOpp1TeamScore( )}</div>						
 					</div>
   		
-  					<div class="team-icon-bar">
-  						<img src="${gameResult.getGame1WinnerIcon()}"/>
+  					<div class="team-icon-cell">
+  						<img src="${gameResult.getGame1WinnerIcon()}" height="55" width="82"/>
 			  		</div>
   		
-  					<div class="${gameResult.getGame2ScoreClass()}">
+  					<div class="score-cell-div">
   						<div class="topLeft">${gameResult.getMy2TeamName( )}</div>
 						<div class="topRight">${gameResult.getMy2TeamScore( )}</div>
 						<div class="bottomLeft">${gameResult.getOpp2TeamName( )}</div>
 						<div class="bottomRight">${gameResult.getOpp2TeamScore( )}</div>
 					</div>
   		
-  					<div class="team-icon-bar">
+  					<div class="team-icon-cell">
   						<img src="${gameResult.getGame2WinnerIcon()}"/>
   					</div>
   		
-  						
-  					<div class="${gameResult.getGame3ScoreClass()}">
+  					<div class="score-cell-div">
   						<div class="topLeft">${gameResult.getMy3TeamName( )}</div>
 						<div class="topRight">${gameResult.getMy3TeamScore( )}</div>
 						<div class="bottomLeft">${gameResult.getOpp3TeamName( )}</div>
 						<div class="bottomRight">${gameResult.getOpp3TeamScore( )}</div>	
 					</div>
   			
-  					<div class="team-icon-bar">
+  					<div class="team-icon-cell">
   						<img src="${gameResult.getGame3WinnerIcon()}"/>
   					</div>
   					  		
