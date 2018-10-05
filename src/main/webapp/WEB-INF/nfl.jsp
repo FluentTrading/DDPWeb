@@ -126,20 +126,19 @@
   					<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Drive( gameResult )}</div>
 					<div class="rightQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Quarter( gameResult )}</div>
   					${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Summary( gameResult )}
-				</div>
+  				</div>
   		
   				<div class="${gameResult.getGame2MsgInfoClass()}">
   					<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Drive( gameResult )}</div>
 					<div class="rightQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Quarter( gameResult )}</div>
   					${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Summary( gameResult )}
-				</div>
+  				</div>
 		
-				
 				<div class="${gameResult.getGame3MsgInfoClass()}">
 					<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Drive( gameResult )}</div>
 					<div class="rightQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Quarter( gameResult )}</div>
-					${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Summary( gameResult )}					
-  				</div>
+					${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Summary( gameResult )}
+				</div>
   				  		  		
 		</div>
     
@@ -149,9 +148,9 @@
     
     <div class="newGridTable" >
    	
-   			<div class="thirdRow">
+   			<div class="statsRow">
   		
-  				<div class="thirdRowPaddingCell"></div>
+  				<div class="statsRowPaddingCell"></div>
   		
   				<div class="${gameResult.getGame1MsgInfoClass()}">
   					<div class="statsName">
