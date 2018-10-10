@@ -43,9 +43,6 @@ public final class DDPUtil{
     public final static String PICK_MANAGER_KEY     = "PickManagerKey";
     
     public final static String LIVE_SCORE_PARSER_KEY= "LiveScoreParserKey";
-    
-    public final static String GRR_IMG_PREFIX       = "images/GRR/GRR";
-    public final static String GRR_IMG_POSTFIX      = ".gif";
     public final static String BLINK_GREEN_DOT      = "<span class=\"dotBlink\"/>";
         
     public final static String GAME_SERVLET_LINK    = "/game";
@@ -98,7 +95,13 @@ public final class DDPUtil{
     
     public final static String generateGRRImage( ){
         int randomNum = ThreadLocalRandom.current().nextInt(1, 5 + 1);
-        return GRR_IMG_PREFIX + randomNum + GRR_IMG_POSTFIX;
+        return "images/GRR/GRR" + randomNum + ".gif";
+    }
+    
+    
+    public final static String generateBackgroundImage(){
+        int randomNum = ThreadLocalRandom.current().nextInt(1, 7 + 1);
+        return "images/misc/BG" + randomNum + ".gif";
     }
 
     

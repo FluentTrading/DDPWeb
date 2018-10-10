@@ -9,7 +9,7 @@
 <head>
 	
 	<meta charset="UTF-8">
-	<meta http-equiv="refresh" content="7200"/>
+	<meta http-equiv="refresh" content="25"/>
 	<meta http-equiv="Content-Language" content="en">
 	
 	<title>|| DDP NFL Web ||</title>
@@ -65,7 +65,7 @@
     	<c:otherwise>
     
     	<c:if test="${requestScope[DDPUtil.RESULT_MANAGER_KEY].noGamesStarted( )}">
-    		<img src="images/misc/Newton.gif" class="backgroundImage" >
+    		<img src=${DDPUtil.generateBackgroundImage()} class="backgroundImage">
     	</c:if>
     	
     	<c:forEach items="${requestScope[DDPUtil.RESULT_MANAGER_KEY].getResultList( )}" var="gameResult">

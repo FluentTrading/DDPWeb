@@ -142,20 +142,20 @@ input:checked + label {
 		display: table-cell;
   		font-weight: bold;
   		border-bottom: 1px solid #000000;
-    	padding: 10px 5px 0px 5px; /* Top, Right, Bottom, Left */
+    	padding: 10px 15px 0px 35px; /* Top, Right, Bottom, Left */
 	}
 	
 
 	.cashAmount{
 		display: table-cell;
 		font-weight: bold;
-		padding: 10px 5px 0px 5px; /* Top, Right, Bottom, Left */
+		padding: 10px 15px 0px 5px; /* Top, Right, Bottom, Left */
   	}		
 
 	.cashTotalScore{
 		display: table-cell;
 		font-weight: bold;
-		padding: 10px 5px 0px 5px; /* Top, Right, Bottom, Left */
+		padding: 10px 15px 0px 5px; /* Top, Right, Bottom, Left */
 	}	
 			
 		
@@ -169,13 +169,13 @@ input:checked + label {
 	.cashWeekNumber{
 		display: table-cell;
 		border: 0px solid #000000;
-  		padding: 0px 5px 10px 5px; /* Top, Right, Bottom, Left */
+  		padding: 0px 20px 10px 5px; /* Top, Right, Bottom, Left */
 	}
     		
     .cashWeekScore{
 		display: table-cell;
 		border: 0px solid #000000;
-  		padding: 0px 20px 0px 0px; /* Top, Right, Bottom, Left */
+  		padding: 0px 40px 0px 0px; /* Top, Right, Bottom, Left */
 	}
 	
 	.cashDetails{
