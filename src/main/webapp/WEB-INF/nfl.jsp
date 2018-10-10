@@ -9,7 +9,7 @@
 <head>
 	
 	<meta charset="UTF-8">
-	<meta http-equiv="refresh" content="25"/>
+	<meta http-equiv="refresh" content="7200"/>
 	<meta http-equiv="Content-Language" content="en">
 	
 	<title>|| DDP NFL Web ||</title>
@@ -320,9 +320,8 @@
     							</div>
     							
     							<div class="cashWeekScore">
-    								${winResult.getTotalScore( )}
-    							</div>
-    							
+    								${winResult.getTotalFormattedScore( )}
+    							</div>    							
     							
     							<div class="cashDetails">
     								<div class="cashDetailsTeam">

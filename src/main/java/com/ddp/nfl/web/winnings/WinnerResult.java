@@ -11,6 +11,7 @@ public final class WinnerResult{
     private final DDPPick winPick;
     private final int weekNumber;
     private final int totalScore;
+    private final String totalFormatted;
     private final AtomicBoolean isWinner;
     
     private final NFLTeam team1;
@@ -36,19 +37,20 @@ public final class WinnerResult{
         this.weekNumber     = weekNumber;
         this.winPick        = ddpPick;
         this.totalScore     = totalPoints;
+        this.totalFormatted = formatTotalScore(totalPoints);
         this.team1          = teams[0];
-        this._1Score        = formatScore( scores[0] );
+        this._1Score        = formatWeeklyScore( scores[0] );
         this.team2          = teams[1];
-        this._2Score        = formatScore( scores[1] );
+        this._2Score        = formatWeeklyScore( scores[1] );
         this.team3          = teams[2];
-        this._3Score        = formatScore( scores[2] );
+        this._3Score        = formatWeeklyScore( scores[2] );
         
         this.cardLink       = CARD_PREFIX + WEEK_NAME + weekNumber + CARD_SUFFIX;
         this.cardName       = WEEK_NAME + weekNumber;
         
     }
 
-    
+
     public final boolean isWinner( ){
         return isWinner.get( );
     }
@@ -73,6 +75,11 @@ public final class WinnerResult{
         return totalScore;
     }
 
+    
+    public final String getTotalFormattedScore( ){
+        return totalFormatted;
+    }
+    
 
     public final NFLTeam getTeam1( ){
         return team1;
@@ -119,8 +126,21 @@ public final class WinnerResult{
     }
         
 
-    private final String formatScore( Integer score ) {
-        return ( score<10) ? "0"+score : String.valueOf(score);
+    private final String formatWeeklyScore( Integer score ) {
+        return ( score < 10) ? "0"+score : String.valueOf(score);
+    }
+    
+    
+    private static final String formatTotalScore( int totalPoints ){
+        
+        if( totalPoints < 10 ) {
+            return "00" + totalPoints; 
+                    
+        }else if( totalPoints > 10 && totalPoints < 100 ) {
+            return "0" + totalPoints;
+        }
+        
+        return String.valueOf(totalPoints);
     }
     
     
