@@ -180,6 +180,7 @@ public final class GameResult{
         
         boolean hasPossession   = teamHasPossession( team, liveScore );
         String displayName      = ( hasPossession ) ? (teamName + SPACE + BLINK_GREEN_DOT) : teamName;
+        
         return displayName;
         
     }
