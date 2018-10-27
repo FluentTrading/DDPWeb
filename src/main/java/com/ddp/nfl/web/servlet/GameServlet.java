@@ -82,9 +82,6 @@ public class GameServlet extends HttpServlet{
     
 
     protected final void handleSuccess( long startTimeNanos, GameResultManager result, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        //long timeTakenNanos         = System.nanoTime( ) - startTimeNanos;
-        //LOGGER.info("Time Taken to service game servlet [{} millis]", TimeUnit.MILLISECONDS.convert(timeTakenNanos, TimeUnit.NANOSECONDS) );
-        
         request.setAttribute( RESULT_MANAGER_KEY, result );
         request.getRequestDispatcher(DDP_GAME_PAGE_LINK).forward(request, response);
     }
