@@ -302,12 +302,12 @@
     							${entry.value.getPlayer( ).getName()}    	
     						</div>
     								
-    						<div class="cashAmount">
-    							${entry.value.getTotalCashFormatted( )}
-    						</div>
-    						
     						<div class="cashTotalScore">
     							${entry.value.getTotalScore( )}
+    						</div>
+    						
+    						<div class="cashAmount">
+    							${entry.value.getTotalCashFormatted( )}
     						</div>
     						
     						
