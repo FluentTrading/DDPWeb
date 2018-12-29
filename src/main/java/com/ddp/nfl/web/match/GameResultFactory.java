@@ -5,19 +5,20 @@ import java.util.*;
 import com.ddp.nfl.web.core.*;
 import com.ddp.nfl.web.database.*;
 import com.ddp.nfl.web.parser.*;
+import com.ddp.nfl.web.winnings.*;
 
 
 public final class GameResultFactory{
     
     
-    public final static GameResultManager packData( DDPMeta meta, Map<NFLTeam, LiveScore> scoreMap, DBService service ){
+    public final static GameResultManager packData( DDPMeta meta, Map<NFLTeam, LiveScore> scoreMap, DBService dbService, WinnerManager cashManager ){
         
         List<GameResult> resultList     = new LinkedList<>( );
-        Map<Integer, DDPPick> pickMap   = service.getOrderedPicks( );
+        Map<Integer, DDPPick> pickMap   = dbService.getOrderedPicks( );
                 
         //For Each DDP Player
         for( DDPPick pick : pickMap.values( ) ){
-            GameResult result   = packData( pick, scoreMap );
+            GameResult result   = packData( pick, scoreMap, cashManager );
             resultList.add( result );
         }
         
@@ -29,7 +30,7 @@ public final class GameResultFactory{
     }
     
     
-    public final static GameResult packData( DDPPick pick, Map<NFLTeam, LiveScore> scoreMap ){
+    public final static GameResult packData( DDPPick pick, Map<NFLTeam, LiveScore> scoreMap, WinnerManager cashManager ){
 
         int index                   = 0;
         Set<String> uniqueTeamsSet  = new HashSet<>( );
@@ -48,8 +49,10 @@ public final class GameResultFactory{
             }
                     
         }
+        
+        int weeklyTotalScore    = cashManager.getPlayTotalScoreMap( ).get( pick.getPlayer( ) );
 
-        GameResult gameResult   = new GameResult( pick, myScores );
+        GameResult gameResult   = new GameResult( pick, myScores, weeklyTotalScore );
     
         return gameResult;
         
@@ -62,8 +65,8 @@ public final class GameResultFactory{
         Collections.sort( unsortedList, new Comparator<GameResult>(){
            
             public int compare( GameResult o1, GameResult o2 ){
-                int points1 = o1.getHomeTotalScore( );
-                int points2 = o2.getHomeTotalScore( );
+                int points1 = o1.getAllTotalHomeScore( );
+                int points2 = o2.getAllTotalHomeScore( );
                 
                 if( points1 != points2 ){
                     return ( points1 > points2) ? -1 : 1;

@@ -23,12 +23,12 @@ public final class WinnerResult{
     private final NFLTeam team3;
     private final String _3Score;
     
-    private final String cardLink;
-    private final String cardName;
+    private final String winImageLink;
+    private final String winImageName;
                 
-    private final static String WEEK_NAME   = "Week";
-    private final static String CARD_PREFIX = "images/winnings/";
-    private final static String CARD_SUFFIX = ".jpg";
+    private final static String WEEK_NAME        = "Week";
+    private final static String WIN_IMAGE_PREFIX = "images/winnings/";
+    private final static String WIN_IMAGE_SUFFIX = ".jpg";
     
     
     public WinnerResult( int weekNumber, DDPPick ddpPick, int totalPoints, NFLTeam[ ] teams, Integer[ ] scores ){
@@ -45,8 +45,8 @@ public final class WinnerResult{
         this.team3          = teams[2];
         this._3Score        = formatWeeklyScore( scores[2] );
         
-        this.cardLink       = CARD_PREFIX + WEEK_NAME + weekNumber + CARD_SUFFIX;
-        this.cardName       = WEEK_NAME + weekNumber;
+        this.winImageLink   = WIN_IMAGE_PREFIX + WEEK_NAME + weekNumber + WIN_IMAGE_SUFFIX;
+        this.winImageName   = WEEK_NAME + weekNumber;
         
     }
 
@@ -112,12 +112,12 @@ public final class WinnerResult{
 
     
     public final String getCardLink( ){
-        return cardLink;
+        return winImageLink;
     }
     
     
     public final String getCardName( ){
-        return cardName;
+        return winImageName;
     }
     
     
@@ -149,7 +149,7 @@ public final class WinnerResult{
         StringBuilder builder = new StringBuilder( );
         
         if( isWinner( ) ) {
-            builder.append( "<a href=\"" ).append ( cardLink ).append( "\"");
+            builder.append( "<a href=\"" ).append ( winImageLink ).append( "\"");
             builder.append( " class=\"cashLink\">" );
             builder.append( " Week " ).append( weekNumber ).append( COLON );
             builder.append( "</a>" );

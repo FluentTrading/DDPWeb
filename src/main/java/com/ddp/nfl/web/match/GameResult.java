@@ -12,15 +12,17 @@ public final class GameResult{
     private final DDPPick pick;
     private final LiveScore[] myScores;
     private final NFLTeam[] myPickedTeams;
+    private final int allTotalScore;
     
-    public GameResult( DDPPick pick, LiveScore[ ] myScores ){
+    public GameResult( DDPPick pick, LiveScore[ ] myScores, int weeklyTotalScore ){
         this.pick           = pick;
         this.myPickedTeams  = pick.getTeams( );
         this.myScores       = myScores;
+        this.allTotalScore  = getHomeTotalScore( ) + weeklyTotalScore;
     }
 
 
-    
+
     public final DDPPick getPick( ) {
         return pick;
     }
@@ -89,6 +91,12 @@ public final class GameResult{
     public final int getHomeTotalScore( ) {
         return getMy1TeamScore( ) + getMy2TeamScore( ) + getMy3TeamScore( );
     }
+    
+   
+    //Cumulative total
+    public final int getAllTotalHomeScore( ) {
+        return allTotalScore;
+    }   
     
         
     //AWAY

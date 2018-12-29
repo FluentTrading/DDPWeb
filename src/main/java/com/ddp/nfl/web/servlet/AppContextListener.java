@@ -87,7 +87,7 @@ public final class AppContextListener implements ServletContextListener{
     protected final void prepareWinningsCash( DDPMeta ddpMeta, DBService service, ServletContext context ){
         LOGGER.info("Attempting to calculate cash winnngs.");
         
-        WinnerManager cashManager     = new WinnerManager( ddpMeta, service );
+        WinnerManager cashManager   = new WinnerManager( ddpMeta, service );
         boolean isWinningsValid     = !cashManager.getWinSummary( ).isEmpty( );
         if( isWinningsValid ){
             context.setAttribute( CASH_MANAGER_KEY, cashManager );

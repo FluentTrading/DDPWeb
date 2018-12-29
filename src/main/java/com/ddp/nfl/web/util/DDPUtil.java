@@ -37,8 +37,7 @@ public final class DDPUtil{
     public final static String RESULT_MANAGER_KEY   = "ResultManagerKey";
     public final static String GAME_ANALYTICS_KEY   = "GameAnalyticsKey";
     public final static String ANALYTICS_GAME_ID_KEY= "gameId";
-    public final static String UNSET_GAME_ID_VALUE  = "UNSET";
-    
+            
     public final static String PICK_RESULT_KEY      = "PickResultKey";
     public final static String PICK_MANAGER_KEY     = "PickManagerKey";
     
@@ -68,17 +67,7 @@ public final class DDPUtil{
     public final static boolean isValid( String data ){
         return !( data == null || data.trim( ).isEmpty( ) );            
     }
-    
-    
-    public final static String padRight( String string, int n ){
-        return String.format("%1$-" + n + "s", string);  
-    }
-    
-
-    public final static String padLeft( String string, int n ){
-        return String.format("%1$" + n + "s", string);  
-    }
-    
+       
     
     public final static String toCamelCase( String word ){
         if( !isValid(word) ) return word;
@@ -94,8 +83,7 @@ public final class DDPUtil{
     
     
     public final static String generateGRRImage( ){
-        int randomNum = ThreadLocalRandom.current().nextInt(1, 5 + 1);
-        return "images/GRR/GRR" + randomNum + ".gif";
+        return "images/GRR/GRR.gif";
     }
     
     
@@ -137,11 +125,5 @@ public final class DDPUtil{
         return element.getAsBoolean( );
     }
     
-    
-    public final static void main( String[] args ) {
-        for( int i =0; i<100; i++ ) {
-        System.out.println(  generateGRRImage( ) );
-        }
-    }
     
 }

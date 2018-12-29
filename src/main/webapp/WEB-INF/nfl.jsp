@@ -24,25 +24,29 @@
 <body>
 
 <main>
-  
+       
   <input id="tab1" type="radio" name="tabs" checked>
   <label for="tab1">
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <i class="fas fa-football-ball"></i>
-  	NFL Week
+  	DDP Week
     <c:if test="${requestScope[DDPUtil.RESULT_MANAGER_KEY] != null}">
     	 ${requestScope[DDPUtil.RESULT_MANAGER_KEY].getMeta().getWeek( )}
     </c:if>  
   </label>
   
   <input id="tab2" type="radio" name="tabs">
-  <label for="tab2"><i class="fas fa-calendar-alt"></i> Schedule</label>
+  <label for="tab2">
+  <i class="fas fa-calendar-alt"></i> Schedule
+  </label>
     
   <input id="tab3" type="radio" name="tabs">
-  <label for="tab3"><i class="fas fa-dollar-sign"></i> Cash Money</label>
-      
+  <label for="tab3">
+  <i class="fas fa-dollar-sign"></i> Cash Money
+  </label>
+        
   <section id="content1">
 
  	<div>
@@ -73,7 +77,7 @@
     		<div class="newGridTable" >
     
 	   			<div class="scoreRow">
-  		
+  					
   					<div class="player-icon-cell">
   						<img src="${gameResult.getPlayer( ).getIcon( )}" title=${gameResult.getPlayer( ).getName( )} height="52" width="52">
   					</div>
@@ -117,11 +121,12 @@
 		<div class="newGridTable" >
    	
    			<div class="secondRow">
-  		
-  				<div class="totalScore">
-  					${gameResult.getHomeTotalScore( )}
+   			
+   				<div class="totalScore">
+  					${gameResult.getHomeTotalScore( )}  					
   				</div>
-  		
+
+  		  		
   				<div class="${gameResult.getGame1MsgInfoClass()}">
   					<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Drive( gameResult )}</div>
 					<div class="rightQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Quarter( gameResult )}</div>
@@ -150,8 +155,10 @@
    	
    			<div class="statsRow">
   		
-  				<div class="statsRowPaddingCell"></div>
-  		
+  				<div class="totalScore">
+  					${gameResult.getAllTotalHomeScore( )}
+  				</div>
+  				  		
   				<div class="${gameResult.getGame1MsgInfoClass()}">
   					<div class="statsName">
 						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Stats( gameResult ).getPassName()}

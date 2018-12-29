@@ -13,6 +13,7 @@ import com.ddp.nfl.web.core.*;
 import com.ddp.nfl.web.database.*;
 import com.ddp.nfl.web.match.*;
 import com.ddp.nfl.web.parser.*;
+import com.ddp.nfl.web.winnings.*;
 
 import static com.ddp.nfl.web.util.DDPUtil.*;
 import static com.ddp.nfl.web.match.ResultCode.*;
@@ -48,14 +49,14 @@ public class GameServlet extends HttpServlet{
         }
         
         int weekNumber              = metaInfo.getWeek( );
-        DBService service           = (DBService) context.getAttribute( DB_SERVICE_KEY );
-        if( service == null || !service.isValid( ) ) {
+        DBService dbService         = (DBService) context.getAttribute( DB_SERVICE_KEY );
+        if( dbService == null || !dbService.isValid( ) ) {
             handleError( metaInfo, DB_ERROR, "Failed to created DB connection!", request, response );
             return;
         }
         
         
-        boolean pickMade            = service.isPicksMade( );
+        boolean pickMade            = dbService.isPicksMade( );
         if( !pickMade ) {
             handleError( metaInfo, PICKS_NOT_MADE, "Picks for week " + weekNumber + " hasn't been made yet!", request, response );
             return;
@@ -75,7 +76,10 @@ public class GameServlet extends HttpServlet{
             analytics.gameStatusUpdate( map );
         }
         
-        GameResultManager result    = GameResultFactory.packData( metaInfo, map, service );
+        
+        WinnerManager cashManager   = (WinnerManager) context.getAttribute( CASH_MANAGER_KEY );
+                
+        GameResultManager result    = GameResultFactory.packData( metaInfo, map, dbService, cashManager );
         handleSuccess( startTimeNanos, result, request, response );   
         
     }

@@ -17,7 +17,9 @@ public final class WinnerManager{
     
     private final int[] pastWeekArray;
     private final Map<Integer, Set<WinnerResult>> weeklyResultMap;
+    private final Map<DDPPlayer, Integer> playerTotalScoreMap;
     private final Map<Integer, Collection<DDPPick>> picksPerWeekMap;
+    
                 
     private final static String NAME    = WinnerManager.class.getSimpleName( );
     private final static Logger LOGGER  = LoggerFactory.getLogger( NAME );
@@ -27,15 +29,21 @@ public final class WinnerManager{
         this.pastWeekArray      = getPastWeeks( ddpMeta.getWeek( ) );
         this.picksPerWeekMap    = getPicksPerWeek( ddpMeta, pastWeekArray, service );
         this.weeklyResultMap    = prepareWinner( ddpMeta, service );
+        this.playerTotalScoreMap= createPlayerTotalScoreMap( weeklyResultMap );
         this.summaryMap         = prepareWinnerSummary( weeklyResultMap );
         
     }
   
-    
+
     public final Map<Integer, WinnerSummary> getWinSummary( ){
         return summaryMap;
     }
    
+    
+    public final Map<DDPPlayer, Integer> getPlayTotalScoreMap( ){
+        return playerTotalScoreMap;
+    }
+    
     
     protected final Map<Integer, WinnerSummary> prepareWinnerSummary( Map<Integer, Set<WinnerResult>> weeklyResultMap ){
         
@@ -194,6 +202,26 @@ public final class WinnerManager{
     
     }
 
+    
+    protected final Map<DDPPlayer, Integer> createPlayerTotalScoreMap( Map<Integer, Set<WinnerResult>> weeklyResultMap ){
+        
+        Map<DDPPlayer, Integer> totalScoreMap = new HashMap<>();
+        
+        for( Set<WinnerResult> resultSet : weeklyResultMap.values( ) ) {
+            
+            for( WinnerResult result : resultSet ) {
+                DDPPlayer player    = result.getPlayer( );
+                int weekTotalScore  = result.getTotalScore( );
+                
+                Integer existingScore = totalScoreMap.get( player );
+                int allTotalScore     = (existingScore == null ) ? weekTotalScore : (weekTotalScore + existingScore);
+                totalScoreMap.put( player, allTotalScore );                
+            }
+        }
+        
+        return totalScoreMap;
+    }
+    
 
 
     protected final int[] getPastWeeks( int currentWeek ){

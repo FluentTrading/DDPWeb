@@ -54,6 +54,7 @@ label:before {
   margin-right: 10px;
 }
 
+label[for*='0']:before { }
 label[for*='1']:before { }
 label[for*='2']:before { }
 label[for*='3']:before { }
