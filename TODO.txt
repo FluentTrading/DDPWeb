@@ -1,7 +1,8 @@
 Tuesday Night:
 	1) Take a screen-shot of the game.
 	2) Update week Number in web.xml.
-	2) Redeploy so the winnings can be calculated.
+	3) Re-deploy so the winnings can be calculated.
+	4) NFL>jsp refresh should be set to 25 seconds.
 
 
 Enhancements:
