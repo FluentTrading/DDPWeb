@@ -33,7 +33,7 @@
   <i class="fas fa-football-ball"></i>
   	DDP Week
     <c:if test="${requestScope[DDPUtil.RESULT_MANAGER_KEY] != null}">
-    	 ${requestScope[DDPUtil.RESULT_MANAGER_KEY].getMeta().getWeek( )}
+    	 ${requestScope[DDPUtil.RESULT_MANAGER_KEY].getMeta().getGameWeek( )}
     </c:if>  
   </label>
   

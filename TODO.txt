@@ -1,35 +1,17 @@
-Rebooting:
-====================================================
-1. On Thursday, change refresh to 30 seconds
-
-
 Tuesday Night:
-	1) Update Week Number after the game.
-	2) Reboot so the winnings can be calculated.
-
-Wednesday Night:
-	1) So picks can be reloaded
-	
-
-NOTE:
-http://www.nfl.com/liveupdate/scores/scores.json points to next week on Wed.
+	1) Take a screen-shot of the game.
+	2) Update week Number in web.xml.
+	2) Redeploy so the winnings can be calculated.
 
 
 Enhancements:
-====================================================
-1) Team record should be available in analytics
+	1) Team record should be available in analytics & possibe in Schedule.
+	2) In "Pick", after teams are picked, the remaining teams should only show teams that are available.
+	3) In Player drop-down, sort it by the pick order.
 
 
-Money Paid
-====================================================
-Sep 11, 2018 	Paypal Wazim 																	$100
-Sep 11, 2018 	Paypal Kiran 																	$100 
-Sep 10, 2018	QuickPay with Zelle payment from GANDHI, ANAND BAC901a946aa		QuickPay credit	$100.00
-Sep 10, 2018	QuickPay with Zelle payment from ANKUR KUMAR 7476243848			QuickPay credit	$100.00
-Sep 10, 2018	QuickPay with Zelle payment from SARBJIT P SINGH 7476658351		QuickPay credit	$100.00
-Sep 10, 2018	QuickPay with Zelle payment from KANWAR P SINGH 7476869172		QuickPay credit	$100.00
-Sep 5, 	2018	QuickPay with Zelle payment from KANISHK J MEHTA CTIgqHsralok	QuickPay credit	$150.00
-
+NOTE:
+http://www.nfl.com/liveupdate/scores/scores.json points to next week on Wed.
 
 
 Links:

@@ -31,7 +31,7 @@ public final class DBConnection{
     
     
     protected final Map<Integer, DDPPick> loadPicks( Map<String, NFLTeam> teamMap, Map<String, DDPPlayer> playerMap ){
-        return loadPicks( ddpMeta.getYear( ), ddpMeta.getWeek( ), teamMap, playerMap );
+        return loadPicks( ddpMeta.getGameYear( ), ddpMeta.getGameWeek( ), teamMap, playerMap );
         
     }
     

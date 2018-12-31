@@ -147,7 +147,7 @@ public final class ScheduleManager{
     
     
     protected final static String createScheduleUrl( DDPMeta meta ) {
-        return createScheduleUrl( meta.getSeasonType( ), meta.getYear( ), meta.getWeek( ) );
+        return createScheduleUrl( meta.getSeasonType( ), meta.getGameYear( ), meta.getGameWeek( ) );
     }
     
     

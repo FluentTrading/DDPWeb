@@ -61,12 +61,12 @@ public final class GameResultFactory{
     
    protected final static List<GameResult> sortGameResult( List<GameResult> unsortedList ){
         
-        // Sorting the list based on values
+        // Sorting the list based on player's combined score.
         Collections.sort( unsortedList, new Comparator<GameResult>(){
            
             public int compare( GameResult o1, GameResult o2 ){
-                int points1 = o1.getAllTotalHomeScore( );
-                int points2 = o2.getAllTotalHomeScore( );
+                int points1 = o1.getHomeTotalScore( );
+                int points2 = o2.getHomeTotalScore( );
                 
                 if( points1 != points2 ){
                     return ( points1 > points2) ? -1 : 1;

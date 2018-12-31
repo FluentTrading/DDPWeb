@@ -39,7 +39,6 @@ public class GameServlet extends HttpServlet{
          
     protected final void performService( HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         
-        long startTimeNanos         = System.nanoTime( );
         ServletContext context      = request.getServletContext( );
         
         DDPMeta metaInfo            = (DDPMeta) context.getAttribute( META_INFO_KEY );
@@ -48,17 +47,23 @@ public class GameServlet extends HttpServlet{
             return;
         }
         
-        int weekNumber              = metaInfo.getWeek( );
+        
         DBService dbService         = (DBService) context.getAttribute( DB_SERVICE_KEY );
         if( dbService == null || !dbService.isValid( ) ) {
             handleError( metaInfo, DB_ERROR, "Failed to created DB connection!", request, response );
             return;
         }
         
+        boolean isSeasonOver        = metaInfo.isSeasonOver( );
+        if( isSeasonOver ) {
+            handleError( metaInfo, SEASON_FINISHED, "DDP NFL Season " + metaInfo.getGameYear( ) + " is over!", request, response );
+            return;
+        }
+        
         
         boolean pickMade            = dbService.isPicksMade( );
         if( !pickMade ) {
-            handleError( metaInfo, PICKS_NOT_MADE, "Picks for week " + weekNumber + " hasn't been made yet!", request, response );
+            handleError( metaInfo, PICKS_NOT_MADE, "Picks for week " + metaInfo.getGameWeek( ) + " hasn't been made yet!", request, response );
             return;
         }
 
@@ -80,24 +85,24 @@ public class GameServlet extends HttpServlet{
         WinnerManager cashManager   = (WinnerManager) context.getAttribute( CASH_MANAGER_KEY );
                 
         GameResultManager result    = GameResultFactory.packData( metaInfo, map, dbService, cashManager );
-        handleSuccess( startTimeNanos, result, request, response );   
+        handleSuccess( result, request, response );   
         
     }
-    
 
-    protected final void handleSuccess( long startTimeNanos, GameResultManager result, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+
+
+    protected final void handleSuccess( GameResultManager result, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         request.setAttribute( RESULT_MANAGER_KEY, result );
         request.getRequestDispatcher(DDP_GAME_PAGE_LINK).forward(request, response);
     }
     
 
-    protected final void handleError(  DDPMeta metaInfo, ResultCode code, String errorReason, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        LOGGER.warn("{} {}", code, errorReason );
+    protected final void handleError( DDPMeta metaInfo, ResultCode code, String errorReason, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        //LOGGER.warn("{} {}", code, errorReason );
         
         request.setAttribute( RESULT_MANAGER_KEY, GameResultManager.createInvalid( metaInfo, code, errorReason ) );
         request.getRequestDispatcher(DDP_GAME_PAGE_LINK).forward(request, response);
     }
-    
     
     
 }

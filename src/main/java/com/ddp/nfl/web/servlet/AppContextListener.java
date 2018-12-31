@@ -20,18 +20,19 @@ import static com.ddp.nfl.web.util.DDPUtil.*;
 @WebListener
 public final class AppContextListener implements ServletContextListener{
     
-    private final static String APP_VERSION_KEY = "APP_VERSION";
-    private final static String NFL_SEASON_KEY  = "NFL_SEASON_TYPE";
-    private final static String NFL_YEAR_KEY    = "NFL_YEAR";
-    private final static String NFL_WEEK_NUMBER = "NFL_WEEK_NUMBER";
-    private final static String CASH_PER_WEEK_KEY= "CASH_PER_WEEK";
-    private final static String RDS_DRIVER_TAG  = "RDS_DRIVER";
-    private final static String RDS_HOST_TAG    = "RDS_HOST";
-    private final static String RDS_PORT_TAG    = "RDS_PORT";
-    private final static String RDS_DB_NAME_TAG = "RDS_DB_NAME";
-    private final static String LOGGER_CFG_TAG  = "LOGGER_CONFIG";
+    private final static String APP_VERSION_KEY     = "APP_VERSION";
+    private final static String NFL_SEASON_OVER_KEY = "NFL_SEASON_OVER";
+    private final static String NFL_SEASON_KEY      = "NFL_SEASON_TYPE";
+    private final static String NFL_YEAR_KEY        = "NFL_YEAR";
+    private final static String NFL_WEEK_NUMBER     = "NFL_WEEK_NUMBER";
+    private final static String CASH_PER_WEEK_KEY   = "CASH_PER_WEEK";
+    private final static String RDS_DRIVER_TAG      = "RDS_DRIVER";
+    private final static String RDS_HOST_TAG        = "RDS_HOST";
+    private final static String RDS_PORT_TAG        = "RDS_PORT";
+    private final static String RDS_DB_NAME_TAG     = "RDS_DB_NAME";
+    private final static String LOGGER_CFG_TAG      = "LOGGER_CONFIG";
     
-    private final static Logger LOGGER          = LoggerFactory.getLogger( "DDPContextListener" );
+    private final static Logger LOGGER              = LoggerFactory.getLogger( "AppContextListener" );
 
     
     @Override
@@ -120,7 +121,7 @@ public final class AppContextListener implements ServletContextListener{
         ScheduleManager manager = new ScheduleManager( ddpMeta, service );
         context.setAttribute( SCHEDULE_KEY, manager );
         
-        LOGGER.info( "Stored [{}] game schedule for Week [{}] with Key: [{}]{}", manager.getScheduleCount( ), ddpMeta.getWeek( ), SCHEDULE_KEY, PRINT_NEWLINE );
+        LOGGER.info( "Stored [{}] game schedule for Week [{}] with Key: [{}]{}", manager.getScheduleCount( ), ddpMeta.getGameWeek( ), SCHEDULE_KEY, PRINT_NEWLINE );
      
         return manager;
     
@@ -150,12 +151,13 @@ public final class AppContextListener implements ServletContextListener{
         try {
             
             String version      = context.getInitParameter( APP_VERSION_KEY );
+            boolean seasonOver  = Boolean.parseBoolean( context.getInitParameter( NFL_SEASON_OVER_KEY ) );
             String nflSeason    = context.getInitParameter( NFL_SEASON_KEY );
             int nflYear         = Integer.parseInt( context.getInitParameter(NFL_YEAR_KEY) );
             int nflWeek         = Integer.parseInt( context.getInitParameter( NFL_WEEK_NUMBER ) );
             int cashPerWeek     = Integer.parseInt( context.getInitParameter( CASH_PER_WEEK_KEY ) );
             
-            metaData            = new DDPMeta( version, nflSeason, nflYear, nflWeek, cashPerWeek );
+            metaData            = new DDPMeta( version, seasonOver, nflSeason, nflYear, nflWeek, cashPerWeek );
             
             context.setAttribute( META_INFO_KEY, metaData );
             LOGGER.info( "Successfully created {} {}", metaData, PRINT_NEWLINE );

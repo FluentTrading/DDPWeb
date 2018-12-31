@@ -19,7 +19,7 @@ public final class DBService{
         this.dbConnection   = new DBConnection( ddpMeta, driverName, dbHost, dbPort, dbName );
         this.teamMap        = dbConnection.loadTeams( );
         this.playerMap      = dbConnection.loadPlayers( );
-        this.playerPickMap  = loadPicks( ddpMeta.getWeek( ),ddpMeta );
+        this.playerPickMap  = loadPicks( ddpMeta.getGameWeek( ),ddpMeta );
         this.isValid        = validate( );
         
     }
@@ -65,7 +65,7 @@ public final class DBService{
     
     
     public final Map<Integer, DDPPick> loadPicks( int week, DDPMeta meta ){
-        return dbConnection.loadPicks( meta.getYear( ), week, teamMap, playerMap );
+        return dbConnection.loadPicks( meta.getGameYear( ), week, teamMap, playerMap );
     }
         
     

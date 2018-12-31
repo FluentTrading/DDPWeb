@@ -26,7 +26,7 @@ public final class PickManager{
         this.meta       = meta;
         this.schMan     = schMan;
         this.service    = service;
-        this.pickWeek   = meta.getWeek( );
+        this.pickWeek   = meta.getGameWeek( );
         this.allTeamsForWeek = populateTeamForThisWeek( );
         this.allPlayers = new TreeMap<>( service.getAllPlayers( ) );
                 
@@ -61,7 +61,7 @@ public final class PickManager{
             return result;
         }
         
-        int year                    = meta.getYear( );
+        int year                    = meta.getGameYear( );
         int pickOrder               = picks.size( ) + ONE;
         DDPPick ddpPick             = createDDPPick( pickOrder, pickForWeek, player, team1, team2, team3 );
         boolean storedCorrectly     = service.upsertPick( year, pickForWeek, pickOrder, ddpPick );

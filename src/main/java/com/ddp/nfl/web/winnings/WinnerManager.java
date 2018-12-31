@@ -26,7 +26,7 @@ public final class WinnerManager{
            
     
     public WinnerManager( DDPMeta ddpMeta, DBService service ){
-        this.pastWeekArray      = getPastWeeks( ddpMeta.getWeek( ) );
+        this.pastWeekArray      = getPastWeeks( ddpMeta.getGameWeek( ) );
         this.picksPerWeekMap    = getPicksPerWeek( ddpMeta, pastWeekArray, service );
         this.weeklyResultMap    = prepareWinner( ddpMeta, service );
         this.playerTotalScoreMap= createPlayerTotalScoreMap( weeklyResultMap );
@@ -158,7 +158,7 @@ public final class WinnerManager{
     
     protected final Map<Integer, Collection<Schedule>> getResultPerWeek( DDPMeta ddpMeta, int[] weekArray, DBService service ){
         
-        int nflYear         = ddpMeta.getYear( );
+        int nflYear         = ddpMeta.getGameYear( );
         String seasonType   = ddpMeta.getSeasonType( );
         Map<String, NFLTeam> teamMap = service.getAllTeams( );
         
@@ -187,7 +187,7 @@ public final class WinnerManager{
 
     protected final Map<Integer, Collection<DDPPick>> getPicksPerWeek( DDPMeta ddpMeta, int[] weekArray, DBService service ){
         
-        int nflYear                 = ddpMeta.getYear( );
+        int nflYear                 = ddpMeta.getGameYear( );
         DBConnection connection     = service.getConnection( );
         Map<Integer, Collection<DDPPick>> pickPerWeek = new HashMap<>( );
         
@@ -284,7 +284,7 @@ public final class WinnerManager{
         System.setProperty("RDS_USERNAME", "ddpweb" );
         System.setProperty("RDS_PASSWORD", "1whynopass2");
         
-        DDPMeta ddpMeta     = new DDPMeta( "1.0", "REG", 2018, 3, 50);
+        DDPMeta ddpMeta     = new DDPMeta( "1.0", false, "REG", 2018, 3, 50);
         DBService service   = new DBService( ddpMeta, "com.mysql.cj.jdbc.Driver",
                                         "aa15utan83usopw.ceanhhiadqb0.us-east-2.rds.amazonaws.com", "3306", "WonneDB" );
         

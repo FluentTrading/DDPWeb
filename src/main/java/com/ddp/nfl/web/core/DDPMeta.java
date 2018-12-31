@@ -6,20 +6,22 @@ import static com.ddp.nfl.web.util.DDPUtil.*;
 public final class DDPMeta{
 
     private final String version;
+    private final boolean seasonOver;
     private final String seasonType;
-    private final int year;
-    private final int week;
+    private final int gameYear;
+    private final int gameWeek;
     private final int cashPerWeek;
     
-    public DDPMeta( String version, String seasonType, int year, int week, int cashPerWeek ){
+    public DDPMeta( String version, boolean seasonOver, String seasonType, int gameYear, int gameWeek, int cashPerWeek ){
         
         this.version    = version;
+        this.seasonOver = seasonOver;
         this.seasonType = seasonType;
-        this.year       = year;
-        this.week       = week;
+        this.gameYear   = gameYear;
+        this.gameWeek   = gameWeek;
         this.cashPerWeek= cashPerWeek;
                         
-        validate( seasonType, year, week, cashPerWeek );
+        validate( );
     }
 
    
@@ -33,13 +35,18 @@ public final class DDPMeta{
     }
   
     
-    public final int getYear( ){
-        return year;
+    public final int getGameYear( ){
+        return gameYear;
     }
 
     
-    public final int getWeek( ){
-        return week;
+    public final int getGameWeek( ){
+        return gameWeek;
+    }
+    
+    
+    public final boolean isSeasonOver( ){
+        return seasonOver;
     }
     
     
@@ -48,38 +55,42 @@ public final class DDPMeta{
     }
     
     
-    protected final void validate( String seasonType, int year, int week, int cashPerWeek ){
+    protected final void validate(  ){
         
         if( !isValid(seasonType) ){
             throw new RuntimeException("SeasonType " + seasonType + " is invalid" );
         }
         
-        if( !(year > 2010 && year < 2050) ){
-            throw new RuntimeException("NFL Year " + year + " is invalid" );
+        if( !(gameYear > 2010 && gameYear < 2050) ){
+            throw new RuntimeException("NFL game year " + gameYear + " is invalid" );
         }
         
-        if( week < ONE ){
-            throw new RuntimeException("NFL Week " + week + " is invalid" );
-        }
+        if( gameWeek < ONE ){
+            throw new RuntimeException("NFL game week " + gameWeek + " is invalid" );
+        }        
         
         if( cashPerWeek <= ONE ){
             throw new RuntimeException("Cash Per Week " + cashPerWeek + " is invalid" );
         }
           
     }
-    
-    
+
+
     @Override
-    public final String toString( ){
-        
+    public final String toString( ) {
         StringBuilder builder = new StringBuilder( 32 );
-        builder.append( "DDPMeta [version=" ).append( version ).append( ", seasonType=" ).append( seasonType );
-        builder.append( ", year=" ).append( year ).append( ", week=" ).append( week );
-        builder.append( ", CashPerWeek=" ).append( cashPerWeek ).append( "]" );
-    
+        
+        builder.append( "DDPMeta [version=" ).append( version )
+        .append( ", IsSeasonOver=" ).append( seasonOver )
+        .append( ", SeasonType=" ).append( seasonType )
+        .append( ", GameYear=" ).append( gameYear )
+        .append( ", GameWeek=" ).append( gameWeek )
+        .append( ", CashPerWeek=" ).append( cashPerWeek )
+        .append( "]" );
+        
         return builder.toString( );
-    
     }
+       
         
     
 }
