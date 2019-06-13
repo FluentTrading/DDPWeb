@@ -1,4 +1,4 @@
-CREATE TABLE `Players` (
+CREATE TABLE `DDPPlayer` (
   `Name` varchar(45) NOT NULL,
   `NickName` varchar(45) NOT NULL,
   `Email` varchar(45) NOT NULL,
@@ -6,3 +6,30 @@ CREATE TABLE `Players` (
   `IsActive` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`Email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Table to store information about Players'
+
+
+CREATE TABLE `DDPPick` (
+  `Year` int(11) NOT NULL,
+  `Week` int(11) NOT NULL,
+  `PickOrder` int(11) NOT NULL,
+  `Player` varchar(45) NOT NULL,
+  `Team1` varchar(45) NOT NULL,
+  `Team2` varchar(45) NOT NULL,
+  `Team3` varchar(45) NOT NULL,
+  PRIMARY KEY (`Player`,`Week`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Table to store the team picks per week';
+
+
+CREATE TABLE `NFLTeam` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Team` varchar(45) NOT NULL,
+  `NickName` varchar(15) NOT NULL,
+  `Division` varchar(45) NOT NULL,
+  `Conference` varchar(45) NOT NULL,
+  `City` varchar(45) NOT NULL,
+  `State` varchar(45) NOT NULL,
+  `Roster` varchar(45) NOT NULL,
+  PRIMARY KEY (`Id`,`Team`)
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1 COMMENT='Table to store information about teams';
+
+

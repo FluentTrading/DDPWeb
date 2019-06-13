@@ -11,7 +11,7 @@
     
     <context-param>
         <param-name>NFL_SEASON_OVER</param-name>
-        <param-value>true</param-value>
+        <param-value>false</param-value>
     </context-param>
     
     <context-param>
@@ -26,7 +26,7 @@
         
     <context-param>
         <param-name>NFL_WEEK_NUMBER</param-name>
-        <param-value>18</param-value>
+        <param-value>17</param-value>
     </context-param>
         
     <context-param>
