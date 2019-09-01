@@ -1,6 +1,8 @@
 package com.ddp.nfl.web.winnings;
 
 import org.slf4j.*;
+
+import java.time.*;
 import java.util.*;
 import java.util.Map.*;
 
@@ -16,6 +18,7 @@ public final class WinnerManager{
     private final Map<Integer, WinnerSummary> summaryMap;
     
     private final int[] pastWeekArray;
+    private final boolean winningsAvailable;
     private final Map<Integer, Set<WinnerResult>> weeklyResultMap;
     private final Map<DDPPlayer, Integer> playerTotalScoreMap;
     private final Map<Integer, Collection<DDPPick>> picksPerWeekMap;
@@ -26,6 +29,7 @@ public final class WinnerManager{
            
     
     public WinnerManager( DDPMeta ddpMeta, DBService service ){
+        this.winningsAvailable  = ddpMeta.getGameWeek( ) > 1;
         this.pastWeekArray      = getPastWeeks( ddpMeta.getGameWeek( ) );
         this.picksPerWeekMap    = getPicksPerWeek( ddpMeta, pastWeekArray, service );
         this.weeklyResultMap    = prepareWinner( ddpMeta, service );
@@ -35,6 +39,11 @@ public final class WinnerManager{
     }
   
 
+    public final boolean isWinningsNotAvailable() {
+        return !winningsAvailable;
+    }
+    
+    
     public final Map<Integer, WinnerSummary> getWinSummary( ){
         return summaryMap;
     }
@@ -74,45 +83,52 @@ public final class WinnerManager{
     
     
     protected final Map<Integer, Set<WinnerResult>> prepareWinner( DDPMeta ddpMeta, DBService service ){
-        Map<Integer, Collection<Schedule>> resultsPerWeekMap  = getResultPerWeek( ddpMeta, pastWeekArray, service );
-        Map<Integer, Set<WinnerResult>> winnerMap = getWeeklyResult( picksPerWeekMap, resultsPerWeekMap );
+        Map<String, TeamRecord> teamRecord                      = service.loadTeamRecord( );
+        Map<Integer, Collection<Schedule>> resultsPerWeekMap    = getResultPerWeek( ddpMeta, teamRecord, pastWeekArray, service );
+        Map<Integer, Set<WinnerResult>> winnerMap               = getWeeklyResult( picksPerWeekMap, resultsPerWeekMap );
                 
         return winnerMap;
         
     }
     
     
-    protected final Map<Integer, Set<WinnerResult>> getWeeklyResult( Map<Integer, Collection<DDPPick>> picksPerWeekMap, 
-            Map<Integer, Collection<Schedule>> resultsPerWeekMap ){
+    protected final Map<Integer, Set<WinnerResult>> getWeeklyResult( Map<Integer, Collection<DDPPick>> picksPerWeekMap, Map<Integer, Collection<Schedule>> resultsPerWeekMap ){
         
-        Map<Integer, Set<WinnerResult>> winnerResultMap   = new TreeMap<>( );
-        Comparator<WinnerResult> resultComparator = new WinnerComparator();
+        Map<Integer, Set<WinnerResult>> winnerResultMap     = new TreeMap<>( );
+        Comparator<WinnerResult> resultComparator           = new WinnerComparator();
         
-        for( Entry<Integer, Collection<DDPPick>> entry : picksPerWeekMap.entrySet( ) ) {
+        try {
+        
+            for( Entry<Integer, Collection<DDPPick>> entry : picksPerWeekMap.entrySet( ) ) {
             
-            int weekNumber       = entry.getKey( );
-            Collection<DDPPick> picks   = entry.getValue( );
-            Set<WinnerResult> set = winnerResultMap.get( weekNumber );
-            if( set == null ) {
-                set = new TreeSet<>( resultComparator );
+                int weekNumber              = entry.getKey( );
+                Collection<DDPPick> picks   = entry.getValue( );
+                Set<WinnerResult> winnerSet = winnerResultMap.get( weekNumber );
+                if( winnerSet == null ) {
+                    winnerSet = new TreeSet<>( resultComparator );
+                }
+            
+                for( DDPPick ddpPick : picks ){
+                    Map<NFLTeam, Integer> points = getTeamPoints( weekNumber, ddpPick, resultsPerWeekMap );
+                    int totalPoints     = getTotal( points );
+                    WinnerResult result = createWinnerResult( weekNumber, ddpPick, totalPoints, points );
+                                    
+                    winnerSet.add( result );
+                    winnerResultMap.put( weekNumber, winnerSet );    
+                }
+            
+                //Since the set is sorted, the first entry is the winner.
+                //NOTE: Tie is also handled in the comparator
+                if( !winnerSet.isEmpty( ) ) {
+                    WinnerResult first = (WinnerResult) (winnerSet.toArray( )[0]);
+                    first.markWinner( );
+                }
             }
             
-            for( DDPPick ddpPick : picks ){
-                Map<NFLTeam, Integer> points = getTeamPoints( weekNumber, ddpPick, resultsPerWeekMap );
-                int totalPoints     = getTotal( points );
-                WinnerResult result = createWinnerResult( weekNumber, ddpPick, totalPoints, points );
-                                
-                set.add( result );
-                winnerResultMap.put( weekNumber, set );    
-            }
-            
-            //Since the set is sorted, the first entry is the winner.
-            //NOTE: Tie is also handled in the comparator
-            WinnerResult first = (WinnerResult) (set.toArray( )[0]);
-            first.markWinner( );
-
+        }catch( Exception e ) {
+            LOGGER.error( "FAILED to prepare weekly result", e );
         }
-                
+        
         return winnerResultMap;
         
     }
@@ -137,6 +153,10 @@ public final class WinnerManager{
         Collection<Schedule> res   = results.get( week );
         
         for( NFLTeam nflTeam : myPickedTeams ){
+            if( nflTeam == null) {
+                continue;
+            }
+            
             String myTeam   = nflTeam.getLowerCaseName( );
             
             for( Schedule result : res ){
@@ -156,7 +176,7 @@ public final class WinnerManager{
     }
                 
     
-    protected final Map<Integer, Collection<Schedule>> getResultPerWeek( DDPMeta ddpMeta, int[] weekArray, DBService service ){
+    protected final Map<Integer, Collection<Schedule>> getResultPerWeek( DDPMeta ddpMeta, Map<String, TeamRecord> teamRecord, int[] weekArray, DBService service ){
         
         int nflYear         = ddpMeta.getGameYear( );
         String seasonType   = ddpMeta.getSeasonType( );
@@ -171,7 +191,7 @@ public final class WinnerManager{
             try {
             
                 LOGGER.info( "Parsing schedule data to calculate winnings." );
-                Map<String, Schedule> scheduleMap = ScheduleManager.parseSchedule( scheduleUrl, teamMap );
+                Map<String, Schedule> scheduleMap = ScheduleManager.parseSchedule( scheduleUrl, teamRecord, teamMap );
                 resultPerWeek.put( week, scheduleMap.values( ) );
             
             }catch (Exception e) {
@@ -284,7 +304,7 @@ public final class WinnerManager{
         System.setProperty("RDS_USERNAME", "ddpweb" );
         System.setProperty("RDS_PASSWORD", "1whynopass2");
         
-        DDPMeta ddpMeta     = new DDPMeta( "1.0", false, "REG", 2018, 3, 50);
+        DDPMeta ddpMeta     = new DDPMeta( "1.0", false, "REG", LocalDate.now( ), 1, 50);
         DBService service   = new DBService( ddpMeta, "com.mysql.cj.jdbc.Driver",
                                         "aa15utan83usopw.ceanhhiadqb0.us-east-2.rds.amazonaws.com", "3306", "WonneDB" );
         

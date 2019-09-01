@@ -3,6 +3,8 @@ package com.ddp.nfl.web.servlet;
 import org.slf4j.*;
 import java.io.*;
 import java.sql.*;
+import java.time.*;
+
 import javax.servlet.*;
 import javax.servlet.annotation.*;
 
@@ -23,7 +25,7 @@ public final class AppContextListener implements ServletContextListener{
     private final static String APP_VERSION_KEY     = "APP_VERSION";
     private final static String NFL_SEASON_OVER_KEY = "NFL_SEASON_OVER";
     private final static String NFL_SEASON_KEY      = "NFL_SEASON_TYPE";
-    private final static String NFL_YEAR_KEY        = "NFL_YEAR";
+    private final static String NFL_START_DATE_KEY  = "NFL_START_DATE";
     private final static String NFL_WEEK_NUMBER     = "NFL_WEEK_NUMBER";
     private final static String CASH_PER_WEEK_KEY   = "CASH_PER_WEEK";
     private final static String RDS_DRIVER_TAG      = "RDS_DRIVER";
@@ -127,22 +129,6 @@ public final class AppContextListener implements ServletContextListener{
     
     }
     
-    
-    protected final int parseYear( ServletContext context ) {
-        int yearNumber          = 0;
-        
-        try {
-       
-            String yearString   = context.getInitParameter( NFL_YEAR_KEY );
-            yearNumber          = Integer.parseInt( yearString );
-            
-        }catch( Exception e ) {
-            LOGGER.warn( "FAILED to parse param [{}] from context to get NFL year", NFL_YEAR_KEY, e );
-        }
-        
-        return yearNumber;
-    }
-    
         
     protected final DDPMeta createMetaData( ServletContext context ){
         
@@ -153,11 +139,11 @@ public final class AppContextListener implements ServletContextListener{
             String version      = context.getInitParameter( APP_VERSION_KEY );
             boolean seasonOver  = Boolean.parseBoolean( context.getInitParameter( NFL_SEASON_OVER_KEY ) );
             String nflSeason    = context.getInitParameter( NFL_SEASON_KEY );
-            int nflYear         = Integer.parseInt( context.getInitParameter(NFL_YEAR_KEY) );
+            LocalDate startDate = LocalDate.parse( context.getInitParameter( NFL_START_DATE_KEY ) );
             int nflWeek         = Integer.parseInt( context.getInitParameter( NFL_WEEK_NUMBER ) );
             int cashPerWeek     = Integer.parseInt( context.getInitParameter( CASH_PER_WEEK_KEY ) );
             
-            metaData            = new DDPMeta( version, seasonOver, nflSeason, nflYear, nflWeek, cashPerWeek );
+            metaData            = new DDPMeta( version, seasonOver, nflSeason, startDate, nflWeek, cashPerWeek );
             
             context.setAttribute( META_INFO_KEY, metaData );
             LOGGER.info( "Successfully created {} {}", metaData, PRINT_NEWLINE );

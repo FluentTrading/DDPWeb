@@ -55,8 +55,15 @@ public class GameServlet extends HttpServlet{
         }
         
         boolean isSeasonOver        = metaInfo.isSeasonOver( );
-        if( isSeasonOver ) {
+        if( isSeasonOver ){
             handleError( metaInfo, SEASON_FINISHED, "DDP NFL Season " + metaInfo.getGameYear( ) + " is over!", request, response );
+            return;
+        }
+        
+        
+        boolean hasSeasonStarted    = metaInfo.hasSeasonStarted( );
+        if( !hasSeasonStarted ) {
+            handleError( metaInfo, SEASON_NOT_STARTED, "DDP NFL Season starts on " + metaInfo.getStartDate( ), request, response );
             return;
         }
         

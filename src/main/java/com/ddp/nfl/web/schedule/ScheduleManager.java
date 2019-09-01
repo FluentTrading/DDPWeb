@@ -71,13 +71,14 @@ public final class ScheduleManager{
    //We use this map to display schedule where earliest game (smallest gid) is at first
     protected final Map<String, Schedule> parse( DDPMeta meta, DBService service ) {
         String liveScoreUrl              = createScheduleUrl( meta );
-        Map<String, Schedule> scheduleMap= parseSchedule( liveScoreUrl, service.getAllTeams( ) );
+        Map<String, TeamRecord> teamRecord= service.loadTeamRecord( );
+        Map<String, Schedule> scheduleMap= parseSchedule( liveScoreUrl, teamRecord, service.getAllTeams( ) );
     
         return scheduleMap;
     }
     
     
-    public final static Map<String, Schedule> parseSchedule( String scheduleUrl, Map<String, NFLTeam> teamMap ){
+    public final static Map<String, Schedule> parseSchedule( String scheduleUrl, Map<String, TeamRecord> teamRecord, Map<String, NFLTeam> teamMap ){
     
         LOGGER.info("Parsing Schedule from {}", scheduleUrl);
         
@@ -98,7 +99,7 @@ public final class ScheduleManager{
                    StartElement startElement= xmlEvent.asStartElement( );
                    
                    if( startElement.getName().getLocalPart().equals("g") ){
-                       Schedule schedule    = parseSchedule( startElement, teamMap );
+                       Schedule schedule    = parseSchedule( startElement, teamRecord, teamMap );
                        if( schedule != null ){
                            scheduleMap.put(schedule.getGameId( ), schedule );
                        }
@@ -116,25 +117,27 @@ public final class ScheduleManager{
     
     
     
-    protected final static Schedule parseSchedule( StartElement startElement, Map<String, NFLTeam> teamMap ){
+    protected final static Schedule parseSchedule( StartElement startElement, Map<String, TeamRecord> teamRecord, Map<String, NFLTeam> teamMap ){
         
-        Schedule schedule   = null;
+        Schedule schedule       = null;
         
         try{               
             
-           String gameEid   = safeParse( startElement, "eid", "EidMissing"); 
-           String gameDay   = safeParse( startElement, "d", EMPTY);
-           String gameTime  = safeParse( startElement, "t", EMPTY);
+           String gameEid       = safeParse( startElement, "eid", "EidMissing"); 
+           String gameDay       = safeParse( startElement, "d", EMPTY);
+           String gameTime      = safeParse( startElement, "t", EMPTY);
 
-           String homeTeam  = safeParse( startElement, "hnn", EMPTY);
-           NFLTeam home     = teamMap.get( homeTeam.toLowerCase( ) );
-           int homeScore    = safeParse( startElement, "hs", NEGATIVE_ONE);
+           String homeTeam      = safeParse( startElement, "hnn", EMPTY);
+           NFLTeam home         = teamMap.get( homeTeam.toLowerCase( ) );
+           int homeScore        = safeParse( startElement, "hs", ZERO);
+           TeamRecord homeRecord= teamRecord.get( homeTeam.toLowerCase( ) );
            
-           String awayTeam  = safeParse( startElement, "vnn", EMPTY);
-           NFLTeam away     = teamMap.get( awayTeam.toLowerCase( ) );
-           int awayScore    = safeParse( startElement, "vs", NEGATIVE_ONE);
+           String awayTeam      = safeParse( startElement, "vnn", EMPTY);
+           NFLTeam away         = teamMap.get( awayTeam.toLowerCase( ) );
+           int awayScore        = safeParse( startElement, "vs", ZERO);
+           TeamRecord awayRecord= teamRecord.get( awayTeam.toLowerCase( ) );
            
-           schedule        = new Schedule( gameEid, gameDay, gameTime, home, homeScore, away, awayScore );
+           schedule             = new Schedule( gameEid, gameDay, gameTime, home, homeScore, homeRecord, away, awayScore, awayRecord );
            LOGGER.info( "{}", schedule );
                    
         }catch( Exception e ){

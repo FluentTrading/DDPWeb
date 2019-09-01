@@ -5,8 +5,8 @@ import java.util.*;
 public final class WinnerComparator implements Comparator<WinnerResult>{
     
     @Override
-    public final int compare(WinnerResult z1, WinnerResult z2) {
-        
+    public final int compare( WinnerResult z1, WinnerResult z2 ){
+
         if (z1.getTotalScore( ) > z2.getTotalScore( ))
             return -1;
         

@@ -8,6 +8,7 @@ import static com.ddp.nfl.web.util.DDPUtil.*;
 
 public final class Schedule{
     
+    private final boolean isGameOver;
     private final String gameId;
     private final String gameDayTime;
     private final LocalDate gameDate;
@@ -15,14 +16,19 @@ public final class Schedule{
         
     private final NFLTeam home;
     private final int homeScore;
+    private final TeamRecord homeRecord;
+    
     private final NFLTeam away;
     private final int awayScore;
+    private final TeamRecord awayRecord;
     
     private final static int    DATE_LENGTH     = 8;
     private final static Logger LOGGER          = LoggerFactory.getLogger( "Schedule" );
     
+    
     public Schedule( String gameEid, String gameDay, String gameTime, 
-                     NFLTeam home, int homeScore, NFLTeam away, int awayScore ){
+                     NFLTeam home, int homeScore, TeamRecord homeRecord, 
+                     NFLTeam away, int awayScore, TeamRecord awayRecord ){
         
         this.gameId         = gameEid;
         this.gameDayTime    = createGameDayTime( gameDay, gameTime );
@@ -30,12 +36,20 @@ public final class Schedule{
         this.gameSchedTime  = createScheduleTime( gameDay, gameDate, gameTime );
         this.home           = home;
         this.homeScore      = homeScore;
+        this.homeRecord     = homeRecord;
         this.away           = away;
         this.awayScore      = awayScore;
+        this.awayRecord     = awayRecord;                
+        this.isGameOver     = gameDate.isBefore( LocalDate.now( ) );
         
     }
-    
 
+    
+    public final boolean isGameOver( ){
+        return isGameOver;
+    }
+    
+    
     public final String getGameId( ){
         return gameId;
     }
@@ -66,6 +80,11 @@ public final class Schedule{
     }    
 
     
+    public final TeamRecord getHomeRecord( ){
+        return homeRecord;
+    } 
+    
+    
     public final NFLTeam getAwayTeam( ){
         return away;
     }
@@ -76,9 +95,15 @@ public final class Schedule{
     }
     
     
+    public final TeamRecord getAwayRecord( ){
+        return awayRecord;
+    }
+    
+    
     protected final String createGameDayTime( String gameDay, String gameTime ){
         return gameDay + SPACE + gameTime;
     }
+    
   
     protected final String createScheduleTime( String gameDay, LocalDate gameDate, String gameTime ){
         
@@ -135,8 +160,10 @@ public final class Schedule{
         .append( ", ScheduleTime=" ).append( gameSchedTime )
         .append( ", Home=" ).append( home.getUpperCaseName( ) )
         .append( ", HomeScore=" ).append( homeScore )
+        .append( ", HomeRecord=" ).append( homeRecord )
         .append( ", Away=" ).append( away.getUpperCaseName( ) )
-        .append( ", AwayScore=" ).append( awayScore )        
+        .append( ", AwayScore=" ).append( awayScore )
+        .append( ", AwayRecord=" ).append( awayRecord )
         .append( "]" );
         
         return builder.toString( );

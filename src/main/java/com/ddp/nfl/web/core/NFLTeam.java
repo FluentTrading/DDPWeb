@@ -13,10 +13,8 @@ public final class NFLTeam{
     private final String city;
     private final String state;
     private final String rosterLink;
-    private final String teamRoundIcon;
     private final String teamSquareIcon;
         
-    private final static String NFL_ROUND_ICON_ID    = "2";
     private final static String NFL_SQUARE_ICON_ID   = "";
     private final static String NFL_LOGO_PREFIX      = "images/teams/";
     private final static String NFL_LOGO_SUFFIX      = ".png";
@@ -36,7 +34,6 @@ public final class NFLTeam{
         this.city           = city;
         this.state          = state;
         this.rosterLink     = rosterLink;
-        this.teamRoundIcon  = createRoundIcon( lowerCaseName );
         this.teamSquareIcon = createSquareIcon( lowerCaseName );
         
     }
@@ -59,11 +56,6 @@ public final class NFLTeam{
 
     public final String getCamelCaseName( ) {
         return camelCaseName;
-    }
-
-    
-    public final String getRoundTeamIcon( ) {
-        return teamRoundIcon;
     }
     
     public final String getSquareTeamIcon( ) {
@@ -96,11 +88,6 @@ public final class NFLTeam{
     
     public final static String getGameLostLogo( ){
         return GAME_LOST_LOGO;
-    }
-    
-    
-    protected final static String createRoundIcon( String teamName ){
-        return NFL_LOGO_PREFIX + teamName + NFL_ROUND_ICON_ID + NFL_LOGO_SUFFIX;
     }
     
     protected final static String createSquareIcon( String teamName ){

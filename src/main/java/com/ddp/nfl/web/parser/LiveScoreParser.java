@@ -1,18 +1,21 @@
 package com.ddp.nfl.web.parser;
 
+import static com.ddp.nfl.web.util.DDPUtil.*;
+
 import org.slf4j.*;
+
 import java.io.*;
 import java.net.*;
+import java.time.*;
 import java.util.*;
 import java.util.Map.*;
 
 import com.ddp.nfl.web.analytics.core.*;
 import com.ddp.nfl.web.analytics.home.*;
 import com.ddp.nfl.web.core.*;
+import com.ddp.nfl.web.database.*;
 import com.ddp.nfl.web.schedule.*;
 import com.google.gson.*;
-
-import static com.ddp.nfl.web.util.DDPUtil.*;
 
 
 public final class LiveScoreParser{
@@ -29,6 +32,11 @@ public final class LiveScoreParser{
 
     public final Map<NFLTeam, LiveScore> parseLiveScore( ){
                
+        for( Entry<String, Schedule> entry : scheduleMap.entrySet( ) ) {
+            System.out.println( entry.getKey( ) + " ==> " + entry.getValue( ) );
+        }
+        
+        
         Map<NFLTeam, LiveScore> scores = new HashMap<>();
         
         try {
@@ -43,9 +51,8 @@ public final class LiveScoreParser{
                 JsonElement element = entry.getValue( );
                 
                 LiveScore liveScore = parseLiveScore( gameId, element );
-                //LOGGER.info( "{}", liveScore );
-                
                 if( liveScore != null ){
+                    LOGGER.info( "{}", liveScore );
                     scores.put( liveScore.getHomeTeam( ), liveScore );
                     scores.put( liveScore.getAwayTeam( ), liveScore );
                 }
@@ -69,6 +76,10 @@ public final class LiveScoreParser{
     protected final LiveScore parseLiveScore( String gameId, JsonElement element ){
         
         Schedule schedule   = scheduleMap.get( gameId );
+        if( schedule == null ) {
+            LOGGER.error( "FAILED to find Schedule for gameId: {} ", gameId );
+            return null;
+        }
 
         JsonObject gameObj  = element.getAsJsonObject( );
         TeamInfo home       = createTeamInfo( true, gameObj );
@@ -149,7 +160,14 @@ public final class LiveScoreParser{
     
     
     public final static void main( String[] args ) {
-        LiveScoreParser parser = new LiveScoreParser(  null  );
+        System.setProperty("RDS_USERNAME", "ddpweb" );
+        System.setProperty("RDS_PASSWORD", "1whynopass2");
+    
+        DDPMeta ddpMeta     = new DDPMeta( "1.0", false, "REG", LocalDate.now( ), 1, 50);
+        DBService service   = new DBService( ddpMeta, "com.mysql.cj.jdbc.Driver",
+                                        "aa15utan83usopw.ceanhhiadqb0.us-east-2.rds.amazonaws.com", "3306", "WonneDB" );
+    
+        LiveScoreParser parser = new LiveScoreParser(  new ScheduleManager(ddpMeta, service)  );
         parser.parseLiveScore( );
     }
     

@@ -6,6 +6,7 @@ import java.util.*;
 import com.ddp.nfl.web.core.*;
 import com.ddp.nfl.web.database.*;
 import com.ddp.nfl.web.schedule.*;
+import com.ddp.nfl.web.winnings.*;
 
 import static com.ddp.nfl.web.util.DDPUtil.*;
 
@@ -153,13 +154,13 @@ public final class PickManager{
             
             NFLTeam team2   = resolveTeam( team2Str );
             if( team2 == null ) {
-                LOGGER.warn( "Discarding pick as we failed to look up Team1 using [{}]", team2Str );
+                LOGGER.warn( "Discarding pick as we failed to look up Team2 using [{}]", team2Str );
                 return null;
             }
                 
             NFLTeam team3   = resolveTeam( team3Str );
             if( team3 == null ) {
-                LOGGER.warn( "Discarding pick as we failed to look up Team1 using [{}]", team3Str );
+                LOGGER.warn( "Discarding pick as we failed to look up Team3 using [{}]", team3Str );
                 return null;
             }
                 
@@ -232,5 +233,6 @@ public final class PickManager{
         
         return teamWeek;
     }
+    
     
 }

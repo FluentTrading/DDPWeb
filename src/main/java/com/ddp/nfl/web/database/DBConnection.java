@@ -91,7 +91,7 @@ public final class DBConnection{
             
             LOGGER.info( "Loading all DDP players stored in the database." );
             
-            String query        = "SELECT * from " + DDP_PLAYER.getTableName( ) + " WHERE IsActive=1";
+            String query        = "SELECT * from " + DDP_PLAYER.getTableName( );
             LOGGER.info( "Executing query [{}]", query );
             
             ResultSet result    = connection.createStatement( ).executeQuery( query );
@@ -158,6 +158,41 @@ public final class DBConnection{
         
     }
 
+    
+    protected final Map<String, TeamRecord> loadTeamRecord( ){
+        
+        Map<String, TeamRecord> map = new HashMap<>( );
+        
+        try{
+            
+            LOGGER.info( "Loading all NFL team record from the database." );
+            
+            String query        = "SELECT * from " + TEAM_RECORD.getTableName( ) + " where Year=" + ddpMeta.getGameYear( );
+            LOGGER.info( "Executing query [{}]", query );
+            
+            ResultSet result    = connection.createStatement( ).executeQuery( query );
+            
+            while( result.next( ) ){
+                String name  = result.getString( "Team" );
+                int won      = result.getInt( "Won" );
+                int lost     = result.getInt( "Lost" );
+                int tied     = result.getInt( "Tied" );
+                
+                TeamRecord record = new TeamRecord( name, won, lost, tied );
+                map.put( name.toLowerCase( ), record );
+                LOGGER.info( "Retrieved {}", record );
+            }
+            
+        }catch( SQLException e ) {
+            LOGGER.warn( "Exception while getting Team record info from DB", e );   
+        }
+
+        LOGGER.info( "Successfully loaded [{}] team records{}", map.size( ), PRINT_NEWLINE );
+        
+        return map;
+        
+    }
+    
     
     protected final boolean upsertPick( int year, int pickForWeek, int pickOrder, DDPPick pick ){
 

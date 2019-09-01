@@ -6,12 +6,12 @@
    	
     <context-param>
         <param-name>APP_VERSION</param-name>
-        <param-value>2.0</param-value>
+        <param-value>3.0</param-value>
     </context-param>
     
     <context-param>
         <param-name>NFL_SEASON_OVER</param-name>
-        <param-value>true</param-value>
+        <param-value>false</param-value>
     </context-param>
     
     <context-param>
@@ -20,13 +20,13 @@
     </context-param>
     
     <context-param>
-        <param-name>NFL_YEAR</param-name>
-        <param-value>2018</param-value>
+        <param-name>NFL_START_DATE</param-name>
+        <param-value>2019-09-05</param-value>
     </context-param>
         
     <context-param>
         <param-name>NFL_WEEK_NUMBER</param-name>
-        <param-value>18</param-value>
+        <param-value>1</param-value>
     </context-param>
         
     <context-param>

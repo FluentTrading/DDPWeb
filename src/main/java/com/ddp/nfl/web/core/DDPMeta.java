@@ -2,26 +2,36 @@ package com.ddp.nfl.web.core;
 
 import static com.ddp.nfl.web.util.DDPUtil.*;
 
+import java.time.*;
+
 
 public final class DDPMeta{
 
     private final String version;
-    private final boolean seasonOver;
     private final String seasonType;
-    private final int gameYear;
+    private final LocalDate startDate;
     private final int gameWeek;
     private final int cashPerWeek;
+    private final boolean seasonStarted;
+    private final boolean seasonOver;
     
-    public DDPMeta( String version, boolean seasonOver, String seasonType, int gameYear, int gameWeek, int cashPerWeek ){
+    
+    public DDPMeta( String version, boolean seasonOver, String seasonType, LocalDate startDate, int gameWeek, int cashPerWeek ){
         
-        this.version    = version;
-        this.seasonOver = seasonOver;
-        this.seasonType = seasonType;
-        this.gameYear   = gameYear;
-        this.gameWeek   = gameWeek;
-        this.cashPerWeek= cashPerWeek;
-                        
+        this.version        = version;
+        this.seasonOver     = seasonOver;
+        this.seasonType     = seasonType;
+        this.startDate      = startDate;
+        this.gameWeek       = gameWeek;
+        this.cashPerWeek    = cashPerWeek;
+        this.seasonStarted  = startDate.isEqual(LocalDate.now( )) || startDate.isBefore(LocalDate.now( )); 
+       
         validate( );
+    }
+    
+    
+    public final boolean hasSeasonStarted( ){
+        return seasonStarted;
     }
 
    
@@ -33,10 +43,15 @@ public final class DDPMeta{
     public final String getSeasonType( ){
         return seasonType;
     }
+    
+    
+    public final LocalDate getStartDate( ){
+        return startDate;
+    }
   
     
     public final int getGameYear( ){
-        return gameYear;
+        return startDate.getYear( );
     }
 
     
@@ -61,10 +76,6 @@ public final class DDPMeta{
             throw new RuntimeException("SeasonType " + seasonType + " is invalid" );
         }
         
-        if( !(gameYear > 2010 && gameYear < 2050) ){
-            throw new RuntimeException("NFL game year " + gameYear + " is invalid" );
-        }
-        
         if( gameWeek < ONE ){
             throw new RuntimeException("NFL game week " + gameWeek + " is invalid" );
         }        
@@ -83,7 +94,7 @@ public final class DDPMeta{
         builder.append( "DDPMeta [version=" ).append( version )
         .append( ", IsSeasonOver=" ).append( seasonOver )
         .append( ", SeasonType=" ).append( seasonType )
-        .append( ", GameYear=" ).append( gameYear )
+        .append( ", StartDate=" ).append( startDate )
         .append( ", GameWeek=" ).append( gameWeek )
         .append( ", CashPerWeek=" ).append( cashPerWeek )
         .append( "]" );

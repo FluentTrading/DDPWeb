@@ -1,14 +1,16 @@
 Tuesday Night:
 	1) Take a screen-shot of the game.
 	2) Update week Number in web.xml.
+	3) Update team record in the table.
 	3) Re-deploy so the winnings can be calculated.
 	4) NFL>jsp refresh should be set to 25 seconds.
 
 
 Enhancements:
-	1) Team record should be available in analytics & possibe in Schedule.
-	2) In "Pick", after teams are picked, the remaining teams should only show teams that are available.
-	3) In Player drop-down, sort it by the pick order.
+	1) Team record should be available in analytics & possible in Schedule.
+	2) Highlight winning record in green and loosing in red.
+	3) In "Pick", after teams are picked, the remaining teams should only show teams that are available.
+	4  In Player drop-down, sort it by the pick order.
 
 
 NOTE:

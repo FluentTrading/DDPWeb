@@ -59,7 +59,9 @@ public final class DDPPick{
         builder.append( ", Teams: ");
         
         for( int i=0; i< teams.length; i++ ) {
-            builder.append( teams[i].getLowerCaseName( ) ).append( " " );
+            if( teams[i] != null ) {
+                builder.append( teams[i].getLowerCaseName( ) ).append( " " );
+            }
         }
         
         builder.append( "]" );        

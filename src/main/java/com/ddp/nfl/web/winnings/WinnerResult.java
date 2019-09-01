@@ -38,12 +38,12 @@ public final class WinnerResult{
         this.winPick        = ddpPick;
         this.totalScore     = totalPoints;
         this.totalFormatted = formatTotalScore(totalPoints);
-        this.team1          = teams[0];
-        this._1Score        = formatWeeklyScore( scores[0] );
-        this.team2          = teams[1];
-        this._2Score        = formatWeeklyScore( scores[1] );
-        this.team3          = teams[2];
-        this._3Score        = formatWeeklyScore( scores[2] );
+        this.team1          = (teams!= null && teams.length >= 1) ? teams[0] : null;
+        this._1Score        = formatWeeklyScore( scores, 0 );
+        this.team2          = (teams!= null && teams.length >= 2) ? teams[1] : null;
+        this._2Score        = formatWeeklyScore( scores, 1 );
+        this.team3          = (teams!= null && teams.length >= 3) ? teams[2] : null;
+        this._3Score        = formatWeeklyScore( scores, 2 );
         
         this.winImageLink   = WIN_IMAGE_PREFIX + WEEK_NAME + weekNumber + WIN_IMAGE_SUFFIX;
         this.winImageName   = WEEK_NAME + weekNumber;
@@ -126,7 +126,12 @@ public final class WinnerResult{
     }
         
 
-    private final String formatWeeklyScore( Integer score ) {
+    private final String formatWeeklyScore( Integer[ ] scores, int index ) {
+        if( scores == null || scores.length < (index+1) ) {
+            return "";
+        }
+        
+        int score = scores[index];
         return ( score < 10) ? "0"+score : String.valueOf(score);
     }
     

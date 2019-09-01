@@ -31,7 +31,7 @@
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <i class="fas fa-football-ball"></i>
-  	DDP Week
+  	2019 DDP Week
     <c:if test="${requestScope[DDPUtil.RESULT_MANAGER_KEY] != null}">
     	 ${requestScope[DDPUtil.RESULT_MANAGER_KEY].getMeta().getGameWeek( )}
     </c:if>  
@@ -217,9 +217,6 @@
     
     </div>  
     
-    
-    
-            
     </c:forEach>	
 					    			
    </c:otherwise>
@@ -239,44 +236,51 @@
     		<c:choose>
 				<c:when test="${applicationScope[DDPUtil.SCHEDULE_KEY] != null}">
 					
-					<img src="images/misc/Ricky.jpg" class="scheduleBackgroundImage" >
-						
-    				<div>
+					<div>
 						<table>
 							
 							<c:forEach var="entry" items="${applicationScope[DDPUtil.SCHEDULE_KEY].getSchedules( ).values()}">
 							
-									<tr>
-										<td align="left" width="15%"></td>
+								<c:choose>
+							    	<c:when test="${entry.isGameOver()}">
+        								<tr bgcolor="#a0a5a5">
+    								</c:when>
+    								<c:otherwise>
+        								<tr bgcolor="#ffffff">
+    								</c:otherwise>
+								</c:choose>
+    								
+										<td align="left" height="50" width="15%"></td>
   										
   										<td align="left">
-    										${entry.getGameScheduleTime()}
+    										<h5>${entry.getGameScheduleTime()}</h5>
 	   									</td>
 	   									
 	   									<td align="center" width="15%"></td>
-	   									
-    									<td align="right">
-    										${entry.getAwayTeam( ).getCamelCaseName( )}
+	   							    											
+    									<td align="right" bgcolor="${entry.getAwayRecord( ).getBgcolor()}">
+    										${entry.getAwayTeam( ).getCamelCaseName( )}&nbsp;
+    										<h6>${entry.getAwayRecord( ).getRecord( )}&nbsp;&nbsp;</h6>
     									</td>
     									
     									<td align="right">
-    										<img src=${entry.getAwayTeam().getRoundTeamIcon( )} title="${entry.getAwayTeam( ).getCamelCaseName( )}" height="42" width="42"/>
+    										<img src=${entry.getAwayTeam().getSquareTeamIcon( )} title="${entry.getAwayTeam( ).getCamelCaseName( )}" height="30" width="52"/>
     									</td>
     									
     									<td align="center" width="10%">
-    										<h5>at</h5>
+    										<h6>at</h6>
     									</td>
     									
     									<td align="center">
-    										<img src=${entry.getHomeTeam().getRoundTeamIcon( )} title="${entry.getHomeTeam( ).getCamelCaseName( )}" height="42" width="42"/>    									
+    										<img src=${entry.getHomeTeam().getSquareTeamIcon( )} title="${entry.getHomeTeam( ).getCamelCaseName( )}" height="30" width="52"/>    									
     									</td>
     									
-    									<td align="left">
-    										${entry.getHomeTeam( ).getCamelCaseName( )}    										
+    									<td align="left" bgcolor="${entry.getHomeRecord( ).getBgcolor()}">
+    										&nbsp;&nbsp;&nbsp;${entry.getHomeTeam( ).getCamelCaseName( )}
+    										<h6>&nbsp;&nbsp;&nbsp;&nbsp;${entry.getHomeRecord( ).getRecord( )}</h6>    										
     									</td>
     									
     									<td align="center" width="15%"></td>
-    									
     								</tr>
   								</c:forEach>																
 							
@@ -285,7 +289,7 @@
     		
     			</c:when>
 				<c:otherwise>
-					<h3>Schedule for this week isn't available!</h3>
+					<h3><center>Schedule for this week isn't available!</center></h3>
 				</c:otherwise>
 			</c:choose>	
    		</div>
@@ -299,7 +303,8 @@
     		
     		<c:choose>
 				
-				<c:when test="${applicationScope[DDPUtil.CASH_MANAGER_KEY] != null}">
+				<c:when test="${applicationScope[DDPUtil.CASH_MANAGER_KEY] != null} || ${applicationScope[DDPUtil.CASH_MANAGER_KEY].isWinningsNotAvailable()}">
+									
 											
 					<c:forEach var="entry" items="${applicationScope[DDPUtil.CASH_MANAGER_KEY].getWinSummary()}">
 
@@ -365,7 +370,7 @@
   						    			
     			</c:when>
 				<c:otherwise>
-					<h3>DDP Cash hasn't been awarded yet!</h3>
+					<h3><center>DDP Cash hasn't been awarded yet!<center></h3>
 				</c:otherwise>
 			</c:choose>	
     		
