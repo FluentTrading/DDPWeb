@@ -1,21 +1,20 @@
 package com.ddp.nfl.web.pickem;
 
+import static com.ddp.nfl.web.util.DDPUtil.*;
+
 import org.slf4j.*;
 import java.util.*;
-
 import com.ddp.nfl.web.core.*;
 import com.ddp.nfl.web.database.*;
 import com.ddp.nfl.web.schedule.*;
-import com.ddp.nfl.web.winnings.*;
 
-import static com.ddp.nfl.web.util.DDPUtil.*;
 
 public final class PickManager{
 
-    private final DDPMeta meta;
+    private final DDPMeta ddpMeta;
     private final int pickWeek;
     private final DBService service;
-    private final ScheduleManager schMan;
+    private final ScheduleManager scheduleManager;
     
     private final Set<String> allTeamsForWeek; 
     private final Map<String, DDPPlayer> allPlayers;
@@ -23,13 +22,13 @@ public final class PickManager{
     private final static Logger LOGGER  = LoggerFactory.getLogger( "PickManager" );
     
     
-    public PickManager( DDPMeta meta, ScheduleManager schMan, DBService service ){
-        this.meta       = meta;
-        this.schMan     = schMan;
-        this.service    = service;
-        this.pickWeek   = meta.getGameWeek( );
-        this.allTeamsForWeek = populateTeamForThisWeek( );
-        this.allPlayers = new TreeMap<>( service.getAllPlayers( ) );
+    public PickManager( DDPMeta ddpMeta, ScheduleManager scheduleManager, DBService service ){
+        this.ddpMeta        = ddpMeta;
+        this.service        = service;
+        this.scheduleManager= scheduleManager;
+        this.pickWeek       = ddpMeta.getGameWeek( );
+        this.allTeamsForWeek= populateTeamForThisWeek( );
+        this.allPlayers     = new TreeMap<>( service.getAllPlayers( ) );
                 
     }
    
@@ -50,7 +49,7 @@ public final class PickManager{
         
         
     public final Collection<DDPPick> loadTeamsPicked( int pickWeek ){
-        return service.loadPicks( pickWeek, meta ).values( );
+        return service.loadPicks( pickWeek, ddpMeta ).values( );
     }
     
     
@@ -62,7 +61,7 @@ public final class PickManager{
             return result;
         }
         
-        int year                    = meta.getGameYear( );
+        int year                    = ddpMeta.getGameYear( );
         int pickOrder               = picks.size( ) + ONE;
         DDPPick ddpPick             = createDDPPick( pickOrder, pickForWeek, player, team1, team2, team3 );
         boolean storedCorrectly     = service.upsertPick( year, pickForWeek, pickOrder, ddpPick );
@@ -82,7 +81,7 @@ public final class PickManager{
     protected final PickResult validatePick( int pickForWeek, String player, String team1, 
                                              String team2, String team3, Collection<DDPPick> picks ){
         
-        Collection<Schedule> scheuleMap = schMan.getSchedules( ).values( );
+        Collection<Schedule> scheuleMap = scheduleManager.getSchedules( ).values( );
         DDPPick playerPicked        = hasPlayerPicked( player, picks );
         if( playerPicked != null ){
             return PickResult.createInvalid( "Player " + player + " had already picked " + playerPicked.toTeamString( ) );
@@ -228,7 +227,7 @@ public final class PickManager{
    
     protected final Set<String> populateTeamForThisWeek( ){
         Set<String> teamWeek = new TreeSet<>();
-        for( String team : schMan.getTeamsPlaying( ) ) {
+        for( String team : scheduleManager.getTeamsPlaying( ) ) {
             teamWeek.add( team.toUpperCase( ) );
         }
         

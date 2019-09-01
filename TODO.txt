@@ -7,10 +7,9 @@ Tuesday Night:
 
 
 Enhancements:
-	1) Team record should be available in analytics & possible in Schedule.
-	2) Highlight winning record in green and loosing in red.
-	3) In "Pick", after teams are picked, the remaining teams should only show teams that are available.
-	4  In Player drop-down, sort it by the pick order.
+	1) Show team record in analytics.
+	2) In PickEm page player drop-down, sort it by the pick order.
+
 
 
 NOTE:
