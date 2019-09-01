@@ -70,10 +70,11 @@ public final class PickManager{
             return PickResult.createInvalid( "FAILED to save picks! Server on Fire Mon!" );
         }
         
+        cleanupSelection( player, team1, team2, team3 );
         return PickResult.createValid( "", picks );
         
     }
-    
+
 
     //1. Ensure every player only has picked once.
     //2. Ensure every team picked is playing the week for which the pick was made.        
@@ -234,5 +235,16 @@ public final class PickManager{
         return teamWeek;
     }
     
+
+    private final void cleanupSelection( String player, String team1, String team2, String team3 ) {
+        try {
+            allPlayers.remove( player );
+            allTeamsForWeek.remove( team1 );
+            allTeamsForWeek.remove( team2 );
+            allTeamsForWeek.remove( team3 );
+        }catch(Exception e ) {
+            LOGGER.error( "FAILED to clean up player and teams after selection", e );
+        }
+    }
     
 }

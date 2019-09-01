@@ -115,16 +115,16 @@
 				<c:forEach items="${requestScope[DDPUtil.PICK_RESULT_KEY].getPicks( )}" var="ddpPick"> 
 				<table>
   					<tr>
-  						<td>
+  						<td width="150px">
     						<img src=${ddpPick.getPlayer( ).getIcon( )} title="${ddpPick.getPlayer( ).getName( )}" height="64" width="64"/>  											
   						</td>
-  						<td>
+  						<td width="130px">
   							<h1>${ddpPick.getTeams()[0].getCamelCaseName()}</h1>
   						</td>
-  						<td>
+  						<td width="130px">
   							<h1>${ddpPick.getTeams()[1].getCamelCaseName()}</h1>
   						</td>
-  						<td>
+  						<td width="130px">
   							<h1>${ddpPick.getTeams()[2].getCamelCaseName()}</h1>
   						</td>  					
   					</tr>	

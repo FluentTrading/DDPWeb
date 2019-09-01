@@ -32,11 +32,6 @@ public final class LiveScoreParser{
 
     public final Map<NFLTeam, LiveScore> parseLiveScore( ){
                
-        for( Entry<String, Schedule> entry : scheduleMap.entrySet( ) ) {
-            System.out.println( entry.getKey( ) + " ==> " + entry.getValue( ) );
-        }
-        
-        
         Map<NFLTeam, LiveScore> scores = new HashMap<>();
         
         try {
@@ -52,7 +47,7 @@ public final class LiveScoreParser{
                 
                 LiveScore liveScore = parseLiveScore( gameId, element );
                 if( liveScore != null ){
-                    LOGGER.info( "{}", liveScore );
+                    //LOGGER.info( "{}", liveScore );
                     scores.put( liveScore.getHomeTeam( ), liveScore );
                     scores.put( liveScore.getAwayTeam( ), liveScore );
                 }
@@ -77,7 +72,7 @@ public final class LiveScoreParser{
         
         Schedule schedule   = scheduleMap.get( gameId );
         if( schedule == null ) {
-            LOGGER.error( "FAILED to find Schedule for gameId: {} ", gameId );
+            //LOGGER.error( "FAILED to find Schedule for gameId: {} ", gameId );
             return null;
         }
 
