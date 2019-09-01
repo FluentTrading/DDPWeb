@@ -29,7 +29,7 @@ public final class WinnerManager{
            
     
     public WinnerManager( DDPMeta ddpMeta, DBService service ){
-        this.winningsAvailable  = ddpMeta.getGameWeek( ) > 1;
+        this.winningsAvailable  = ddpMeta.hasSeasonStarted( );
         this.pastWeekArray      = getPastWeeks( ddpMeta.getGameWeek( ) );
         this.picksPerWeekMap    = getPicksPerWeek( ddpMeta, pastWeekArray, service );
         this.weeklyResultMap    = prepareWinner( ddpMeta, service );

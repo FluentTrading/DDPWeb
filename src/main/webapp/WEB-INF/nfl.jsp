@@ -253,32 +253,34 @@
 										<td align="left" height="50" width="15%"></td>
   										
   										<td align="left">
-    										<h5>${entry.getGameScheduleTime()}</h5>
+    										<h4>${entry.getGameScheduleTime()}</h4>
 	   									</td>
 	   									
-	   									<td align="center" width="15%"></td>
-	   							    											
-    									<td align="right" bgcolor="${entry.getAwayRecord( ).getBgcolor()}">
-    										${entry.getAwayTeam( ).getCamelCaseName( )}&nbsp;
-    										<h6>${entry.getAwayRecord( ).getRecord( )}&nbsp;&nbsp;</h6>
-    									</td>
-    									
-    									<td align="right">
+	   									<td align="left" height="50" width="10%"></td>
+	   									
+	   									<td align="left">
+    										<h3>${entry.getAwayTeam().getCamelCaseName()}</h3>
+    										<h5 style="color:${entry.getAwayRecord( ).getBgcolor()};">${entry.getAwayRecord( ).getRecord( )}</h5>
+	   									</td>
+	   									
+	   				
+	   									<td align="right">
     										<img src=${entry.getAwayTeam().getSquareTeamIcon( )} title="${entry.getAwayTeam( ).getCamelCaseName( )}" height="30" width="52"/>
     									</td>
     									
     									<td align="center" width="10%">
-    										<h6>at</h6>
+    										<h6>At</h6>
     									</td>
     									
-    									<td align="center">
+    									<td align="left">
     										<img src=${entry.getHomeTeam().getSquareTeamIcon( )} title="${entry.getHomeTeam( ).getCamelCaseName( )}" height="30" width="52"/>    									
     									</td>
-    									
-    									<td align="left" bgcolor="${entry.getHomeRecord( ).getBgcolor()}">
-    										&nbsp;&nbsp;&nbsp;${entry.getHomeTeam( ).getCamelCaseName( )}
-    										<h6>&nbsp;&nbsp;&nbsp;&nbsp;${entry.getHomeRecord( ).getRecord( )}</h6>    										
-    									</td>
+    			
+    									<td align="left">
+    										<h3>&nbsp;${entry.getHomeTeam().getCamelCaseName()}</h3>
+    										<h5 style="color:${entry.getHomeRecord( ).getBgcolor()};">${entry.getHomeRecord( ).getRecord( )}</h5>
+	   									</td>
+	   										    				
     									
     									<td align="center" width="15%"></td>
     								</tr>
