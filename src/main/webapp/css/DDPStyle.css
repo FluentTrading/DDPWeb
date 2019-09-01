@@ -58,6 +58,7 @@ label[for*='0']:before { }
 label[for*='1']:before { }
 label[for*='2']:before { }
 label[for*='3']:before { }
+label[for*='4']:before { }
 
 
 label:hover {
@@ -76,7 +77,8 @@ input:checked + label {
 
 #tab1:checked ~ #content1,
 #tab2:checked ~ #content2,
-#tab3:checked ~ #content3{
+#tab3:checked ~ #content3,
+#tab4:checked ~ #content4{
   display: block;
 }
 
@@ -204,6 +206,26 @@ input:checked + label {
   		background-color: #3D9970;  		
 	}
 		
+	
+	
+	/*** Archive */
+
+	div.archiveTable {
+  		border-collapse: collapse;
+  		display: table;
+  		width: 100%;
+  		font-family: 'Open Sans', sans-serif;
+  		font-size: 20px;
+  		color: #000000;
+  		background-color: #ffffff;
+  	}
+  	
+
+	.archiveRow{
+  		display: table-row;
+  		text-align: left;
+  		border-bottom: 1px solid #000000;  		
+	}
 	
 	/* ----------------------------------------------- */
 	/* Analytics link buttons */

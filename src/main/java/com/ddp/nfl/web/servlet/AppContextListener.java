@@ -9,6 +9,7 @@ import javax.servlet.*;
 import javax.servlet.annotation.*;
 
 import com.ddp.nfl.web.analytics.core.*;
+import com.ddp.nfl.web.archive.*;
 import com.ddp.nfl.web.core.*;
 import com.ddp.nfl.web.database.*;
 import com.ddp.nfl.web.parser.*;
@@ -52,6 +53,7 @@ public final class AppContextListener implements ServletContextListener{
         createPickManager( ddpMeta, schMan, service, context );
         createGameCenter( context );
         prepareWinningsCash( ddpMeta, service, context );
+        prepareArchiveReader( ddpMeta, context );
                                 
         LOGGER.info( "DDP NFL Servlet context initialized!");
         
@@ -99,6 +101,14 @@ public final class AppContextListener implements ServletContextListener{
 
     }
     
+    protected final void prepareArchiveReader( DDPMeta ddpMeta, ServletContext context ) {
+        LOGGER.info("Attempting to read archived images.");
+        
+        ArchiveManager archiveManager= new ArchiveManager( ddpMeta );
+        context.setAttribute( ARCHIVE_MANAGER_KEY, archiveManager );
+                
+    }
+       
 
     protected final DBService createDBService( DDPMeta ddpMeta, ServletContext context ){
         

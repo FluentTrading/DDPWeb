@@ -15,11 +15,11 @@ public final class WinnerSummary{
     private final List<WinnerResult> results;
     
     public WinnerSummary( DDPPlayer player, int totalScore, Set<Integer> weeksWon, List<WinnerResult> results ){
-        this.totalScore = totalScore;
-        this.player = player;
-        this.fmtTotalCash = formatTotalCash( weeksWon);
-        this.weeksWon = formatWeeksWon(weeksWon);
-        this.results = results;
+        this.totalScore     = totalScore;
+        this.player         = player;
+        this.fmtTotalCash   = formatTotalCash( weeksWon);
+        this.weeksWon       = formatWeeksWon(weeksWon);
+        this.results        = results;
     }
 
     

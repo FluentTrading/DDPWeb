@@ -9,7 +9,7 @@
 <head>
 	
 	<meta charset="UTF-8">
-	<meta http-equiv="refresh" content="432000"/>
+	<meta http-equiv="refresh" content="25"/>
 	<meta http-equiv="Content-Language" content="en">
 	
 	<title>|| DDP NFL Web ||</title>
@@ -27,12 +27,11 @@
        
   <input id="tab1" type="radio" name="tabs" checked>
   <label for="tab1">
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <i class="fas fa-football-ball"></i>
-  	2019 DDP Week
-    <c:if test="${requestScope[DDPUtil.RESULT_MANAGER_KEY] != null}">
+  	<c:if test="${requestScope[DDPUtil.RESULT_MANAGER_KEY] != null}">
+    	 ${requestScope[DDPUtil.RESULT_MANAGER_KEY].getMeta().getGameYear( )}
+    	 Week
     	 ${requestScope[DDPUtil.RESULT_MANAGER_KEY].getMeta().getGameWeek( )}
     </c:if>  
   </label>
@@ -44,7 +43,12 @@
     
   <input id="tab3" type="radio" name="tabs">
   <label for="tab3">
-  <i class="fas fa-dollar-sign"></i> Cash Money
+  <i class="fas fa-dollar-sign"></i> Cash
+  </label>
+  
+  <input id="tab4" type="radio" name="tabs">
+  <label for="tab4">
+  <i class="fas fa-award"></i> Archive ${requestScope[DDPUtil.RESULT_MANAGER_KEY].getMeta().getGameYear( )-1}
   </label>
         
   <section id="content1">
@@ -55,13 +59,23 @@
  	   	
            	<c:when test="${!requestScope[DDPUtil.RESULT_MANAGER_KEY].isValid( )}">
            		<td align="center">
-           			<h1 style="color:#009DDC;" align="center">
-           				${requestScope[DDPUtil.RESULT_MANAGER_KEY].getDisplayMessage()}
-           			</h1>
-           			
+                    			
            			<center>
 						<img src=${DDPUtil.generateGRRImage() } title="King of Pop, Karate & Love!" height="270" width="480"/>
 					</center>
+					
+					<h3 align="center">
+           				&nbsp;
+           			</h3>
+           					
+					<h3 style="color:#009DDC;" align="center">
+           				${requestScope[DDPUtil.RESULT_MANAGER_KEY].getDisplayMessage()}
+           			</h3>
+           	           			
+           			<h3 align="center">
+           				&nbsp;
+           			</h3>
+           			
 				</td>			
     		</c:when>
     
@@ -372,7 +386,23 @@
   						    			
     			</c:when>
 				<c:otherwise>
+							
+					<h3 align="center">
+           				&nbsp;
+           			</h3>
+           						
+					<h3 align="center">
+           				&nbsp;
+           			</h3>
 					<h3><center>DDP Cash hasn't been awarded yet!<center></h3>
+								
+					<h3 align="center">
+           				&nbsp;
+           			</h3>
+           						
+					<h3 align="center">
+           				&nbsp;
+           			</h3>
 				</c:otherwise>
 			</c:choose>	
     		
@@ -380,7 +410,30 @@
 
         
 	 </section>
-	
+	 
+	 
+	  <section id="content4">
+	  	  
+	  	   	<div class="archiveTable">
+	      	<c:choose>
+				
+				<c:when test="${applicationScope[DDPUtil.ARCHIVE_MANAGER_KEY] != null}">
+					<c:forEach var="entry" items="${applicationScope[DDPUtil.ARCHIVE_MANAGER_KEY].getArchivedImages()}">
+						<div class="archiveRow">
+    						<center>
+								<img src="${entry}"/>
+							</center>
+    					</div>
+    				</c:forEach>
+    			</c:when>
+				<c:otherwise>
+					<h3><center>Archive is empty.<center></h3>
+				</c:otherwise>					
+	  		
+	  		</c:choose>		  	
+	  		</div>
+	  </section>
+		
 </main>
   
 </body>

@@ -105,7 +105,7 @@ public class GameServlet extends HttpServlet{
     
 
     protected final void handleError( DDPMeta metaInfo, ResultCode code, String errorReason, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        //LOGGER.warn("{} {}", code, errorReason );
+        LOGGER.warn("{} {}", code, errorReason );
         
         request.setAttribute( RESULT_MANAGER_KEY, GameResultManager.createInvalid( metaInfo, code, errorReason ) );
         request.getRequestDispatcher(DDP_GAME_PAGE_LINK).forward(request, response);

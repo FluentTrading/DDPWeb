@@ -1,8 +1,9 @@
 package com.ddp.nfl.web.util;
 
-import com.google.gson.*;
 import java.time.format.*;
 import java.util.concurrent.*;
+
+import com.google.gson.*;
 
 
 public final class DDPUtil{
@@ -34,6 +35,8 @@ public final class DDPUtil{
     public final static String META_INFO_KEY        = "MetaInfoKey";
     public final static String SCHEDULE_KEY         = "ScheduleKey";
     public final static String CASH_MANAGER_KEY     = "CashManagerKey";
+    public final static String ARCHIVE_MANAGER_KEY  = "ArchiveManagerKey";
+    
     public final static String RESULT_MANAGER_KEY   = "ResultManagerKey";
     public final static String GAME_ANALYTICS_KEY   = "GameAnalyticsKey";
     public final static String ANALYTICS_GAME_ID_KEY= "gameId";
@@ -85,7 +88,7 @@ public final class DDPUtil{
     public final static String generateGRRImage( ){
         return "images/GRR/GRR.gif";
     }
-    
+   
     
     public final static String generateBackgroundImage(){
         int randomNum = ThreadLocalRandom.current().nextInt(1, 7 + 1);
@@ -127,3 +130,4 @@ public final class DDPUtil{
     
     
 }
+
