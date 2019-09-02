@@ -7,11 +7,10 @@ Tuesday Night:
 
 
 Enhancements:
+	0) Show the main page with animation + picks made till the same starts.
 	1) Show team record in analytics.
 	2) In PickEm page player drop-down, sort it by the pick order.
-	3) In archive, there is an extra line.
-
-
+	
 
 NOTE:
 http://www.nfl.com/liveupdate/scores/scores.json points to next week on Wed.

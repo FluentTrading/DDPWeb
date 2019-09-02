@@ -6,7 +6,7 @@
    	
     <context-param>
         <param-name>APP_VERSION</param-name>
-        <param-value>3.0</param-value>
+        <param-value>4.0</param-value>
     </context-param>
     
     <context-param>
