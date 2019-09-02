@@ -19,6 +19,8 @@ public final class PickManager{
     private final Set<String> allTeamsForWeek; 
     private final Map<String, DDPPlayer> allPlayers;
     
+    private final Collection<DDPPick> currentWeekPick; 
+    
     private final static Logger LOGGER  = LoggerFactory.getLogger( "PickManager" );
     
     
@@ -29,7 +31,8 @@ public final class PickManager{
         this.pickWeek       = ddpMeta.getGameWeek( );
         this.allTeamsForWeek= populateTeamForThisWeek( );
         this.allPlayers     = new TreeMap<>( service.getAllPlayers( ) );
-                
+        this.currentWeekPick= loadTeamsPicked( ddpMeta.getGameWeek( ) );
+                        
     }
    
     
@@ -47,6 +50,11 @@ public final class PickManager{
         return allTeamsForWeek;
     }  
         
+    
+    public final Collection<DDPPick> getCurrentWeekPicks( ){
+        return currentWeekPick;
+    }
+    
         
     public final Collection<DDPPick> loadTeamsPicked( int pickWeek ){
         return service.loadPicks( pickWeek, ddpMeta ).values( );

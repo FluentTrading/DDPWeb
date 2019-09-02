@@ -21,13 +21,20 @@ public final class DDPPick{
         return pickOrder;
     }
     
+    
     public final DDPPlayer getPlayer( ){
         return player;
     }
     
+    
     public final NFLTeam[] getTeams( ){
         return teams;
     }    
+    
+    
+    public final boolean arePicksMade( ){
+        return ( player != null && teams != null && teams.length == 3);
+    }
     
     
     public final String toTeamString( ) {

@@ -84,15 +84,10 @@ public final class DDPUtil{
         return builder.toString( );
     }
     
-    
-    public final static String generateGRRImage( ){
-        return "images/GRR/GRR.gif";
-    }
-   
-    
-    public final static String generateBackgroundImage(){
+       
+    public final static String generateMainImage(){
         int randomNum = ThreadLocalRandom.current().nextInt(1, 7 + 1);
-        return "images/misc/BG" + randomNum + ".gif";
+        return "images/main/" + randomNum + ".gif";
     }
 
     

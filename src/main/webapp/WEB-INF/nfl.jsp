@@ -58,33 +58,46 @@
  	   	<c:choose>
  	   	
            	<c:when test="${!requestScope[DDPUtil.RESULT_MANAGER_KEY].isValid( )}">
-           		<td align="center">
-                    			
-           			<center>
-						<img src=${DDPUtil.generateGRRImage() } title="King of Pop, Karate & Love!" height="270" width="480"/>
+           		<td>
+           			<br>
+                	<center>						
+						<img src=${DDPUtil.generateMainImage()}>
 					</center>
-					
-					<h3 align="center">
-           				&nbsp;
-           			</h3>
-           					
-					<h3 style="color:#009DDC;" align="center">
-           				${requestScope[DDPUtil.RESULT_MANAGER_KEY].getDisplayMessage()}
-           			</h3>
-           	           			
-           			<h3 align="center">
-           				&nbsp;
-           			</h3>
-           			
+					<br>
+					<br>
 				</td>			
+				
+				<c:if test="${applicationScope[DDPUtil.PICK_MANAGER_KEY] != null}">
+				<table>
+				<tr>
+					<c:forEach items="${applicationScope[DDPUtil.PICK_MANAGER_KEY].getCurrentWeekPicks( )}" var="pick">
+						<c:if test="${pick.arePicksMade()}">
+							<td width=100px" align="center"> 
+								<img src=${pick.getPlayer( ).getIcon( )} title="${pick.getPlayer( ).getName( )}" height="48" width="48"/>
+								<h6 style="color:#ffffff;">${pick.getTeams()[0].getCamelCaseName()}</h6>
+								<h6 style="color:#ffffff;">${pick.getTeams()[1].getCamelCaseName()}</h6>
+								<h6 style="color:#ffffff;">${pick.getTeams()[2].getCamelCaseName()}</h6>
+							</td>
+						</c:if>					  				
+  					</c:forEach>
+  				</tr>
+  				</table>
+  				</c:if>
+  				
+  				<td>
+  				<center>
+  					<h3 style="color:#ffffff;">
+						<br>
+           					${requestScope[DDPUtil.RESULT_MANAGER_KEY].getDisplayMessage()}
+           				<br>
+           			</h3>
+           		</center>
+           		</td>
+           			
     		</c:when>
-    
-    	
+        	
     	<c:otherwise>
-    
-    	<c:if test="${requestScope[DDPUtil.RESULT_MANAGER_KEY].noGamesStarted( )}">
-    		<img src=${DDPUtil.generateBackgroundImage()} class="backgroundImage">
-    	</c:if>
+
     	
     	<c:forEach items="${requestScope[DDPUtil.RESULT_MANAGER_KEY].getResultList( )}" var="gameResult">
     		
