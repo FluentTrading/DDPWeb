@@ -63,10 +63,10 @@ public class GameServlet extends HttpServlet{
         
         boolean hasSeasonStarted    = metaInfo.hasSeasonStarted( );
         if( !hasSeasonStarted ) {
-            handleError( metaInfo, SEASON_NOT_STARTED, "DDP NFL Season starts on " + metaInfo.getStartDate( ), request, response );
+            handleError( metaInfo, SEASON_NOT_STARTED, "DDP NFL starts on " + metaInfo.getStartDate( ), request, response );
             return;
         }
-        
+               
         
         boolean pickMade            = dbService.isPicksMade( );
         if( !pickMade ) {
@@ -78,10 +78,10 @@ public class GameServlet extends HttpServlet{
         LiveScoreParser jsonParser  = (LiveScoreParser) context.getAttribute( LIVE_SCORE_PARSER_KEY );
         Map<NFLTeam, LiveScore> map = jsonParser.parseLiveScore( );
         if( map.isEmpty( ) ) {
-            handleError( metaInfo, PARSE_ERROR, "FAILED to read NFL data!", request, response );
+            handleError( metaInfo, PARSE_ERROR, "NFL data for week " +  metaInfo.getGameWeek( ) + " is not yet available.", request, response );
             return;
         }
-        
+                
         
         AnalyticsManager analytics  = (AnalyticsManager) context.getAttribute( GAME_ANALYTICS_KEY );
         if( analytics != null ){
@@ -105,7 +105,7 @@ public class GameServlet extends HttpServlet{
     
 
     protected final void handleError( DDPMeta metaInfo, ResultCode code, String errorReason, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        LOGGER.warn("{} {}", code, errorReason );
+        //LOGGER.warn("{} {}", code, errorReason );
         
         request.setAttribute( RESULT_MANAGER_KEY, GameResultManager.createInvalid( metaInfo, code, errorReason ) );
         request.getRequestDispatcher(DDP_GAME_PAGE_LINK).forward(request, response);
