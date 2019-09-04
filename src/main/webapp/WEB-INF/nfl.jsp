@@ -296,7 +296,7 @@
     									</td>
     									
     									<td align="center" width="10%">
-    										<h6>At</h6>
+    										<h6>AT</h6>
     									</td>
     									
     									<td align="left">
@@ -305,10 +305,9 @@
     			
     									<td align="left">
     										<h3>&nbsp;${entry.getHomeTeam().getCamelCaseName()}</h3>
-    										<h5 style="color:${entry.getHomeRecord( ).getBgcolor()};">${entry.getHomeRecord( ).getRecord( )}</h5>
+    										<h5 style="color:${entry.getHomeRecord( ).getBgcolor()};">&nbsp;${entry.getHomeRecord( ).getRecord( )}</h5>
 	   									</td>
-	   										    				
-    									
+	   										    				    									
     									<td align="center" width="15%"></td>
     								</tr>
   								</c:forEach>																

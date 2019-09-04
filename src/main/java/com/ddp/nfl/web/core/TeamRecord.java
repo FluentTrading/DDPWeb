@@ -59,11 +59,7 @@ public final class TeamRecord{
     private final static String calcBGColor( int won, int lost, int tied  ){
         
         int total       = (won + lost + tied);
-        if( total == 0 ){
-            return "#FFFFFF";
-        }
-        
-        if( won > lost ){
+        if( total == 0 || won > lost ){
             return "#3D9970";
         }else{
             return "#FF4136";
