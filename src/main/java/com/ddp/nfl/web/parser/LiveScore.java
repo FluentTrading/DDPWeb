@@ -30,6 +30,7 @@ public final class LiveScore{
     private final String formattedQuarter;
     
     private final String stadium;
+    private final String tvStation;
     private final String note;
     
     private final SummaryManager summary; 
@@ -42,7 +43,7 @@ public final class LiveScore{
                             int homeScore, int awayScore,
                             String teamPossession, String timeRemaining, 
                             boolean isRedzone, String rawQuarterStr,
-                            String yl, int togo, int down, int bp, String stadium, String note, SummaryManager summary ){
+                            String yl, int togo, int down, int bp, String stadium, String tvStation, String note, SummaryManager summary ){
         
         this.gameId         = gameId;
         this.schedule       = schedule;
@@ -58,6 +59,7 @@ public final class LiveScore{
         this.formattedQuarter= formatQuarter( gameState, schedule, rawQuarterStr, stadium, timeRemaining );
         
         this.stadium        = NFLStadium.getFormattedName(stadium);
+        this.tvStation      = tvStation;
         this.note           = note;
         this.summary        = summary;
     }
@@ -138,6 +140,10 @@ public final class LiveScore{
         return stadium;
     }
     
+    
+    public final String getTVStation( ) {
+        return tvStation;
+    }
 
     public final String getNote( ) {
         return note;
@@ -282,6 +288,7 @@ public final class LiveScore{
         .append( ", TimeLeft=" ).append( timeRemaining )
         .append( ", isRedzone=" ).append( isRedzone )
         .append( ", Drive=" ).append( driveInfo ).append( ", stadium=" ).append( stadium )
+        .append( ", tvStation=" ).append( tvStation )
         .append( ", note=" ).append( note );
             
         if( summary != null ) {

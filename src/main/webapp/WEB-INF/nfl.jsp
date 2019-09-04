@@ -73,7 +73,7 @@
 					<c:forEach items="${applicationScope[DDPUtil.PICK_MANAGER_KEY].getCurrentWeekPicks( )}" var="pick">
 						<c:if test="${pick.arePicksMade()}">
 							<td width=100px" align="center"> 
-								<img src=${pick.getPlayer( ).getIcon( )} title="${pick.getPlayer( ).getName( )}" height="48" width="48"/>
+								<img src=${pick.getPlayer( ).getIcon( )} title="${pick.getPlayer( ).getName( )}" height="52" width="52"/>
 								<h6 style="color:#ffffff;">${pick.getTeams()[0].getCamelCaseName()}</h6>
 								<h6 style="color:#ffffff;">${pick.getTeams()[1].getCamelCaseName()}</h6>
 								<h6 style="color:#ffffff;">${pick.getTeams()[2].getCamelCaseName()}</h6>

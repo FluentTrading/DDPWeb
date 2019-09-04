@@ -112,7 +112,22 @@ public final class DDPUtil{
         return element.getAsString( );
     }
     
+    
+    public final static String safeParse( JsonObject gameObj, String key1, String key2 ) {
+        if( !gameObj.has(key1) ) return EMPTY;
+        
+        JsonObject object1 = gameObj.getAsJsonObject( key1 );
+        if( object1 == null ) return EMPTY;
+        if( object1.isJsonNull( ) ) return EMPTY;
+        
+        JsonElement element =   object1.get( key2 );
+        if( element == null ) return EMPTY;
+        if( element.isJsonNull( ) ) return EMPTY;
+        
+        return element.getAsString( );
+    }
 
+    
     public final static boolean safeParseBoolean( JsonObject gameObj, String key ) {
        if( !gameObj.has(key) ) return false;
         

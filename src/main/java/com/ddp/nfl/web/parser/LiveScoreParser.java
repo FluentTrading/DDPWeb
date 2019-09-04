@@ -91,6 +91,8 @@ public final class LiveScoreParser{
         boolean isRedzone   = safeParseBoolean( gameObj, "redzone");
         String timeRemaining= safeParse( gameObj, "clock" );;
         String teamPossession= safeParse( gameObj, "posteam" );
+        
+        String tvStation     = safeParse( gameObj, "media", "tv" );
                         
         int homeScore        = home.getTotalScore( );
         int awayScore        = away.getTotalScore( );
@@ -98,7 +100,7 @@ public final class LiveScoreParser{
         GameState gameState  = GameState.parseState( rawQuarterStr );
         LiveScore liveScore  = new LiveScore( gameId, schedule, gameState, homeScore, 
                                                   awayScore, teamPossession, timeRemaining, isRedzone, rawQuarterStr,
-                                                  yl, togo, down, bp, stadium, note, summ);
+                                                  yl, togo, down, bp, stadium, tvStation, note, summ);
 
         return liveScore;
 
