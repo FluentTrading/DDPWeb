@@ -109,7 +109,7 @@ public final class DDPUtil{
         if( element == null ) return EMPTY;
         if( element.isJsonNull( ) ) return EMPTY;
         
-        return element.getAsString( );
+        return element.getAsString( ).trim( );
     }
     
     
@@ -124,7 +124,7 @@ public final class DDPUtil{
         if( element == null ) return EMPTY;
         if( element.isJsonNull( ) ) return EMPTY;
         
-        return element.getAsString( );
+        return element.getAsString( ).trim( );
     }
 
     

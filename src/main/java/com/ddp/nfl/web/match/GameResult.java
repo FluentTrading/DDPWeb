@@ -31,7 +31,7 @@ public final class GameResult{
     public final DDPPlayer getPlayer( ) {
         return pick.getPlayer( );
     }
-    
+        
         
     public final String getMy1TeamName( ){
         return getTeamWithPossessionBlinker( getMy1Team( ), getMatch1Score( ) );
@@ -61,8 +61,7 @@ public final class GameResult{
         return getTeamWithPossessionBlinker( getOpp3Team( ), getMatch3Score( ) );         
     }
     
-    
-    
+        
     public final int getMy1TeamScore( ){
         NFLTeam myTeam    = getMy1Team( );
         LiveScore info    = getMatch1Score( );
@@ -98,10 +97,23 @@ public final class GameResult{
         return allTotalScore;
     }   
     
+    
+    public final String getMy1TeamRecord( ){
+        return getMatch1Score().getHomeRecord( );
+    }
+    
+    public final String getMy2TeamRecord( ){
+        return getMatch2Score().getHomeRecord( );
+    }
+    
+    
+    public final String getMy3TeamRecord( ){
+        return getMatch3Score().getHomeRecord( );
+    }
+    
         
     //AWAY
-
-    
+    //----------------------------------------------------------------------
     
     public final int getOpp1TeamScore( ){
         LiveScore info   = getMatch1Score( );
@@ -127,6 +139,20 @@ public final class GameResult{
 
     public final int getAwayTotalScore( ) {
         return getOpp1TeamScore( ) + getOpp2TeamScore( ) + getOpp3TeamScore( );
+    }
+    
+    
+    public final String getOpp1TeamRecord( ){
+        return getMatch1Score().getAwayRecord( );
+    }
+    
+    public final String getOpp2TeamRecord( ){
+        return getMatch2Score().getAwayRecord( );
+    }
+    
+    
+    public final String getOpp3TeamRecord( ){
+        return getMatch3Score().getAwayRecord( );
     }
     
     
@@ -159,6 +185,19 @@ public final class GameResult{
     }
       
     //-----------------------
+
+    public final String getMatch1TvStation( ){
+        return getMatch1Score().getTVStation( );
+    }
+    
+    public final String getMatch2TvStation( ){
+        return getMatch2Score().getTVStation( );
+    }
+    
+    public final String getMatch3TvStation( ){
+        return getMatch3Score().getTVStation( );
+    }
+    
     
     public final String getGame1MsgInfoClass( ){
         return getMessageInfoClassName( getMatch1Score( ), getMy1TeamScore( ), getOpp1TeamScore( ) );
@@ -171,7 +210,7 @@ public final class GameResult{
     public final String getGame3MsgInfoClass( ){
         return getMessageInfoClassName( getMatch3Score( ), getMy3TeamScore( ), getOpp3TeamScore( ) );
     }   
-      
+    
         
     //UI shouldn't directly invoke these methods.
     //-----------------------------------------------------------

@@ -56,7 +56,7 @@ public final class LiveScore{
         this.isRedzone      = isRedzone;
         this.rawQuarterStr  = rawQuarterStr;
         this.driveInfo      = parseDrive( gameState, down, togo, yl );
-        this.formattedQuarter= formatQuarter( gameState, schedule, rawQuarterStr, stadium, timeRemaining );
+        this.formattedQuarter= formatQuarter( gameState, schedule, rawQuarterStr, tvStation, stadium, timeRemaining );
         
         this.stadium        = NFLStadium.getFormattedName(stadium);
         this.tvStation      = tvStation;
@@ -64,7 +64,6 @@ public final class LiveScore{
         this.summary        = summary;
     }
     
-
 
     public final String getGameId( ) {
         return gameId;
@@ -86,13 +85,17 @@ public final class LiveScore{
     }
 
     
+    public final String getHomeRecord( ){
+        return schedule.getHomeRecord( ).getRecord( );
+    }
+    
     public final int getHomeScore( ){
         return homeScore;
     }
 
     
-    public final NFLTeam getAwayTeam( ){
-        return schedule.getAwayTeam( );
+    public final String getAwayRecord( ){
+        return schedule.getAwayRecord( ).getRecord( );
     }
 
     
@@ -100,6 +103,10 @@ public final class LiveScore{
         return awayScore;
     }
     
+    
+    public final NFLTeam getAwayTeam( ){
+        return schedule.getAwayTeam( );
+    }
     
     public final boolean isRedzone( ){
         return isRedzone;
@@ -219,7 +226,7 @@ public final class LiveScore{
 
     
     
-    protected final static String formatQuarter( GameState state, Schedule schedule, String quarterStr, String stadium, String timeRemaining ){
+    protected final static String formatQuarter( GameState state, Schedule schedule, String quarterStr, String tvStation, String stadium, String timeRemaining ){
 
         if( schedule == null ) {
             return "Unknown";
@@ -228,7 +235,7 @@ public final class LiveScore{
         switch( state ) {
             
             case NOT_STARTED:
-                return schedule.getGameDayTime( );
+                return tvStation + " " + schedule.getGameDayTime( );
                 
             case FINISHED:
                 return "Final";

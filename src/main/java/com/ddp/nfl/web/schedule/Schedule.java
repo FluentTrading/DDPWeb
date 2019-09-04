@@ -1,19 +1,23 @@
 package com.ddp.nfl.web.schedule;
 
-import org.slf4j.*;
-import java.time.*;
-import com.ddp.nfl.web.core.*;
-
 import static com.ddp.nfl.web.util.DDPUtil.*;
+
+import org.slf4j.*;
+
+import java.time.*;
+import java.time.temporal.*;
+
+import com.ddp.nfl.web.core.*;
 
 public final class Schedule{
     
     private final boolean isGameOver;
     private final String gameId;
-    private final String gameDayTime;
+    private final String gameDay;
+    private final String gameTime; 
+    
     private final LocalDate gameDate;
-    private final String gameSchedTime;
-        
+            
     private final NFLTeam home;
     private final int homeScore;
     private final TeamRecord homeRecord;
@@ -31,9 +35,9 @@ public final class Schedule{
                      NFLTeam away, int awayScore, TeamRecord awayRecord ){
         
         this.gameId         = gameEid;
-        this.gameDayTime    = createGameDayTime( gameDay, gameTime );
+        this.gameDay        = gameDay;
+        this.gameTime       = gameTime;
         this.gameDate       = parseGameDate( gameEid );
-        this.gameSchedTime  = createScheduleTime( gameDay, gameDate, gameTime );
         this.home           = home;
         this.homeScore      = homeScore;
         this.homeRecord     = homeRecord;
@@ -56,7 +60,7 @@ public final class Schedule{
     
     
     public final String getGameDayTime( ){
-        return gameDayTime;
+        return gameDay + SPACE + gameTime;
     }
      
     
@@ -66,7 +70,7 @@ public final class Schedule{
     
     
     public final String getGameScheduleTime( ) {
-        return gameSchedTime;
+        return createScheduleTime( gameDay, gameDate, gameTime );
     }
     
     
@@ -98,35 +102,41 @@ public final class Schedule{
     public final TeamRecord getAwayRecord( ){
         return awayRecord;
     }
-    
-    
-    protected final String createGameDayTime( String gameDay, String gameTime ){
-        return gameDay + SPACE + gameTime;
-    }
-    
+ 
   
     protected final String createScheduleTime( String gameDay, LocalDate gameDate, String gameTime ){
         
-        StringBuilder builder   = new StringBuilder( 32 );
+        LocalDate today      = LocalDate.now( );
+        StringBuilder builder= new StringBuilder( 32 );
         
-        int monthValue       = gameDate.getMonthValue( );
-        int dateValue        = gameDate.getDayOfMonth( );
+        if( ChronoUnit.DAYS.between(today, gameDate) == 1 ){
+            builder.append( "Tomorrow" );
         
-        builder.append( gameDay ).append( ", " );
+        }else if( ChronoUnit.DAYS.between(today, gameDate) == 0 ){
+            builder.append( "Today" );
         
-        if( monthValue < TEN ) {
-            builder.append( ZERO ).append( monthValue ).append( "/" );
         }else {
-            builder.append( monthValue ).append( "/" );
+        
+            int monthValue       = gameDate.getMonthValue( );
+            int dateValue        = gameDate.getDayOfMonth( );
+        
+            builder.append( gameDay ).append( ", " );
+        
+            if( monthValue < TEN ) {
+                builder.append( ZERO ).append( monthValue ).append( "/" );
+            }else {
+                builder.append( monthValue ).append( "/" );
+            }
+        
+            if( dateValue < TEN ) {
+                builder.append( ZERO ).append( dateValue ).append( SPACE );
+            }else {
+                builder.append( dateValue );
+            }
+        
         }
         
-        if( dateValue < TEN ) {
-            builder.append( ZERO ).append( dateValue ).append( SPACE );
-        }else {
-            builder.append( dateValue ).append( SPACE);
-        }
-        
-        builder.append( gameTime );    
+        builder.append( SPACE).append( gameTime );    
                  
         return builder.toString( );
     }
@@ -157,7 +167,7 @@ public final class Schedule{
         
         builder.append( "Schedule[")
         .append( "GameId=" ).append( gameId )
-        .append( ", ScheduleTime=" ).append( gameSchedTime )
+        .append( ", ScheduleTime=" ).append( getGameScheduleTime( ) )
         .append( ", Home=" ).append( home.getUpperCaseName( ) )
         .append( ", HomeScore=" ).append( homeScore )
         .append( ", HomeRecord=" ).append( homeRecord )

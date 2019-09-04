@@ -98,6 +98,9 @@
         	
     	<c:otherwise>
 
+		<c:if test="${requestScope[DDPUtil.RESULT_MANAGER_KEY].noGamesStarted( )}">
+    		<img src=${DDPUtil.generateMainImage()} class="backgroundImage">
+    	</c:if>
     	
     	<c:forEach items="${requestScope[DDPUtil.RESULT_MANAGER_KEY].getResultList( )}" var="gameResult">
     		
@@ -286,7 +289,7 @@
 	   									<td align="left" height="50" width="10%"></td>
 	   									
 	   									<td align="left">
-    										<h3>${entry.getAwayTeam().getCamelCaseName()}</h3>
+    										<h4>${entry.getAwayTeam().getCamelCaseName()}</h4>
     										<h5 style="color:${entry.getAwayRecord( ).getBgcolor()};">${entry.getAwayRecord( ).getRecord( )}</h5>
 	   									</td>
 	   									
@@ -304,7 +307,7 @@
     									</td>
     			
     									<td align="left">
-    										<h3>&nbsp;${entry.getHomeTeam().getCamelCaseName()}</h3>
+    										<h4>&nbsp;${entry.getHomeTeam().getCamelCaseName()}</h4>
     										<h5 style="color:${entry.getHomeRecord( ).getBgcolor()};">&nbsp;${entry.getHomeRecord( ).getRecord( )}</h5>
 	   									</td>
 	   										    				    									
