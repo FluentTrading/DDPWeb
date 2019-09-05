@@ -1,11 +1,14 @@
-Thursday Before the game.
-1) Ensure refresh in nfl.jsp is set to 25 seconds.
-2) Ensure all picks are made.
-3) Ensure the Schedule link is publishing relevant data. http://www.nfl.com/ajax/scorestrip?season=2019&seasonType=REG&week=1
-4) Ensure the nfl live game url is publishing relevant data. http://www.nfl.com/liveupdate/scores/scores.json
+
+Thursday Before the game
+==================================================
+	1) Ensure refresh in nfl.jsp is set to 25 seconds.
+	2) Ensure all picks are made.
+	3) Ensure the Schedule link is publishing relevant data. http://www.nfl.com/ajax/scorestrip?season=2019&seasonType=REG&week=1
+	4) Ensure the nfl live game url is publishing relevant data. http://www.nfl.com/liveupdate/scores/scores.json
 
 
-Tuesday Night:
+Tuesday Night
+==================================================
 	1) Take a screen-shot of the game.
 	2) Update week Number in web.xml.
 	3) Update team record in the table.
@@ -14,9 +17,7 @@ Tuesday Night:
 	
 
 Enhancements:
-	0) Show the main page with animation + picks made till the same starts.
 	1) Show team record in analytics.
-	2) In PickEm page player drop-down, sort it by the pick order.
 	
 
 NOTE:
