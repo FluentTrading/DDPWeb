@@ -14,13 +14,12 @@ public final class GameResult{
     private final NFLTeam[] myPickedTeams;
     private final int allTotalScore;
     
-    public GameResult( DDPPick pick, LiveScore[ ] myScores, int weeklyTotalScore ){
+    public GameResult( int weekNumber, DDPPick pick, LiveScore[ ] myScores, int weeklyTotalScore ){
         this.pick           = pick;
         this.myPickedTeams  = pick.getTeams( );
         this.myScores       = myScores;
-        this.allTotalScore  = getHomeTotalScore( ) + weeklyTotalScore;
+        this.allTotalScore  = calculateAllTotal( weekNumber, weeklyTotalScore );
     }
-
 
 
     public final DDPPick getPick( ) {
@@ -96,7 +95,7 @@ public final class GameResult{
     public final int getAllTotalHomeScore( ) {
         return allTotalScore;
     }   
-    
+     
     
     public final String getMy1TeamRecord( ){
         return getMatch1Score().getHomeRecord( );
@@ -182,6 +181,19 @@ public final class GameResult{
     
     public final String getGame3WinnerIcon( ){
         return getGameWinnerIcon( getMatch3Score( ), getMy3TeamScore( ), getMy3Team( ), getOpp3TeamScore( ), getOpp3Team( ) );
+    }
+    
+    
+    public final boolean isGame1Finished( ){
+        return GameState.isFinished(getMatch1Score( ));
+    }
+    
+    public final boolean isGame2Finished( ){
+        return GameState.isFinished(getMatch2Score( ));
+    }
+    
+    public final boolean isGame3Finished( ){
+        return GameState.isFinished(getMatch3Score( ));
     }
       
     //-----------------------
@@ -382,5 +394,12 @@ public final class GameResult{
     protected final LiveScore[] getLiveScores( ){
         return myScores;        
     }
+    
+    
+    private final int calculateAllTotal( int weekNumber, int weeklyTotalScore ){
+        return ( weekNumber == 1 ) ? (weeklyTotalScore) : (getHomeTotalScore( ) + weeklyTotalScore);
+    }
+
+    
     
 }

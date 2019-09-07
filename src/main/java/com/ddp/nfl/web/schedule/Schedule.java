@@ -27,6 +27,7 @@ public final class Schedule{
     private final TeamRecord awayRecord;
     
     private final static int    DATE_LENGTH     = 8;
+    private final static ZoneId EST_ZONE        = ZoneId.of( "America/New_York" );
     private final static Logger LOGGER          = LoggerFactory.getLogger( "Schedule" );
     
     
@@ -106,14 +107,20 @@ public final class Schedule{
   
     protected final String createScheduleTime( String gameDay, LocalDate gameDate, String gameTime ){
         
-        LocalDate today      = LocalDate.now( );
         StringBuilder builder= new StringBuilder( 32 );
         
-        if( ChronoUnit.DAYS.between(today, gameDate) == 1 ){
-            builder.append( "Tomorrow" );
+        LocalTime  timeNow   = LocalTime.now(EST_ZONE);
+        ZonedDateTime today  = ZonedDateTime.now( EST_ZONE );
+        ZonedDateTime zGame  = ZonedDateTime.of( gameDate, timeNow, EST_ZONE);
         
-        }else if( ChronoUnit.DAYS.between(today, gameDate) == 0 ){
+        if( ChronoUnit.DAYS.between(today, zGame) == 0 ){
             builder.append( "Today" );
+            
+            if( !isGameOver ) {
+                builder.append(SPACE).append( "Live" );                
+            }else {
+                builder.append(SPACE).append( gameTime );    
+            }
         
         }else {
         
@@ -134,10 +141,10 @@ public final class Schedule{
                 builder.append( dateValue );
             }
         
-        }
+            builder.append( SPACE).append( gameTime );
         
-        builder.append( SPACE).append( gameTime );    
-                 
+        }
+                         
         return builder.toString( );
     }
     

@@ -18,7 +18,7 @@ public final class GameResultFactory{
                 
         //For Each DDP Player
         for( DDPPick pick : pickMap.values( ) ){
-            GameResult result   = packData( pick, scoreMap, cashManager );
+            GameResult result   = packData( meta.getGameWeek( ), pick, scoreMap, cashManager );
             resultList.add( result );
         }
         
@@ -30,7 +30,7 @@ public final class GameResultFactory{
     }
     
     
-    public final static GameResult packData( DDPPick pick, Map<NFLTeam, LiveScore> scoreMap, WinnerManager cashManager ){
+    public final static GameResult packData( int weekNumber, DDPPick pick, Map<NFLTeam, LiveScore> scoreMap, WinnerManager cashManager ){
 
         int index                   = 0;
         Set<String> uniqueTeamsSet  = new HashSet<>( );
@@ -52,7 +52,7 @@ public final class GameResultFactory{
         
         int weeklyTotalScore    = cashManager.getPlayTotalScoreMap( ).get( pick.getPlayer( ) );
 
-        GameResult gameResult   = new GameResult( pick, myScores, weeklyTotalScore );
+        GameResult gameResult   = new GameResult( weekNumber, pick, myScores, weeklyTotalScore );
     
         return gameResult;
         

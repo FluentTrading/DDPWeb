@@ -26,7 +26,7 @@
 	}
 
 
-	.team-icon-cell{
+	.team-icon-cell-live{
 		display: table-cell;
   		width: 10%;
   		position: relative;
@@ -34,11 +34,27 @@
     	padding: 11px 2px 0px 0px; /* Top, Right, Bottom, Left */
 	}		
 	
+	.team-icon-cell-finished{
+		display: table-cell;
+  		width: 10%;
+  		position: relative;
+    	background-color: #a0a5a5;
+    	padding: 11px 2px 0px 0px; /* Top, Right, Bottom, Left */
+	}	
 	
-	.score-cell-div{
+	.score-cell-div-live{
 		display: table-cell;
   		width: 20%;
   		background-color: #ffffff;
+  		position: relative;
+		border: 0px solid red;
+	   	font-size: 18px;
+	}
+	
+	.score-cell-div-finished{
+		display: table-cell;
+  		width: 20%;
+  		background-color: #a0a5a5;
   		position: relative;
 		border: 0px solid red;
 	   	font-size: 18px;

@@ -112,37 +112,67 @@
   						<img src="${gameResult.getPlayer( ).getIcon( )}" title=${gameResult.getPlayer( ).getName( )} height="52" width="52">
   					</div>
   		
-  					<div class="score-cell-div">
+  					<c:if test="${gameResult.isGame1Finished()}">
+  						<div class="score-cell-div-finished">
+  					</c:if>
+  					<c:if test="${not gameResult.isGame1Finished()}">
+  						<div class="score-cell-div-live">
+  					</c:if>
   						<div class="topLeft">${gameResult.getMy1TeamName( )}</div>
   						<div class="topRight">${gameResult.getMy1TeamScore( )}</div>
 						<div class="bottomLeft">${gameResult.getOpp1TeamName( )}</div>
 						<div class="bottomRight">${gameResult.getOpp1TeamScore( )}</div>						
 					</div>
   		
-  					<div class="team-icon-cell">
+  					<c:if test="${gameResult.isGame1Finished()}">
+  						<div class="team-icon-cell-finished">
+  					</c:if>
+  					<c:if test="${not gameResult.isGame1Finished()}">
+  						<div class="team-icon-cell-live">
+  					</c:if>
   						<img src="${gameResult.getGame1WinnerIcon()}" height="55" width="82"/>
 			  		</div>
   		
-  					<div class="score-cell-div">
+  					<c:if test="${gameResult.isGame2Finished()}">
+  						<div class="score-cell-div-finished">
+  					</c:if>
+  					<c:if test="${not gameResult.isGame2Finished()}">
+  						<div class="score-cell-div-live">
+  					</c:if>
   						<div class="topLeft">${gameResult.getMy2TeamName( )}</div>
 						<div class="topRight">${gameResult.getMy2TeamScore( )}</div>
 						<div class="bottomLeft">${gameResult.getOpp2TeamName( )}</div>
 						<div class="bottomRight">${gameResult.getOpp2TeamScore( )}</div>
 					</div>
   		
-  					<div class="team-icon-cell">
-  						<img src="${gameResult.getGame2WinnerIcon()}"/>
+  					<c:if test="${gameResult.isGame2Finished()}">
+  						<div class="team-icon-cell-finished">
+  					</c:if>
+  					<c:if test="${not gameResult.isGame2Finished()}">
+  						<div class="team-icon-cell-live">
+  					</c:if>
+  						<img src="${gameResult.getGame2WinnerIcon()}" height="55" width="82"/>
   					</div>
   		
-  					<div class="score-cell-div">
+  					<c:if test="${gameResult.isGame3Finished()}">
+  						<div class="score-cell-div-finished">
+  					</c:if>
+  					<c:if test="${not gameResult.isGame3Finished()}">
+  						<div class="score-cell-div-live">
+  					</c:if>
   						<div class="topLeft">${gameResult.getMy3TeamName( )}</div>
 						<div class="topRight">${gameResult.getMy3TeamScore( )}</div>
 						<div class="bottomLeft">${gameResult.getOpp3TeamName( )}</div>
 						<div class="bottomRight">${gameResult.getOpp3TeamScore( )}</div>	
 					</div>
   			
-  					<div class="team-icon-cell">
-  						<img src="${gameResult.getGame3WinnerIcon()}"/>
+  					<c:if test="${gameResult.isGame3Finished()}">
+  						<div class="team-icon-cell-finished">
+  					</c:if>
+  					<c:if test="${not gameResult.isGame3Finished()}">
+  						<div class="team-icon-cell-live">
+  					</c:if>
+  						<img src="${gameResult.getGame3WinnerIcon()}" height="55" width="82"/>
   					</div>
   					  		
 			</div>
@@ -155,7 +185,6 @@
    				<div class="totalScore">
   					${gameResult.getHomeTotalScore( )}  					
   				</div>
-
   		  		
   				<div class="${gameResult.getGame1MsgInfoClass()}">
   					<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Drive( gameResult )}</div>
