@@ -5,7 +5,6 @@ import static com.ddp.nfl.web.util.DDPUtil.*;
 import org.slf4j.*;
 
 import java.time.*;
-import java.time.temporal.*;
 
 import com.ddp.nfl.web.core.*;
 
@@ -27,7 +26,6 @@ public final class Schedule{
     private final TeamRecord awayRecord;
     
     private final static int    DATE_LENGTH     = 8;
-    private final static ZoneId EST_ZONE        = ZoneId.of( "America/New_York" );
     private final static Logger LOGGER          = LoggerFactory.getLogger( "Schedule" );
     
     
@@ -109,42 +107,25 @@ public final class Schedule{
         
         StringBuilder builder= new StringBuilder( 32 );
         
-        LocalTime  timeNow   = LocalTime.now(EST_ZONE);
-        ZonedDateTime today  = ZonedDateTime.now( EST_ZONE );
-        ZonedDateTime zGame  = ZonedDateTime.of( gameDate, timeNow, EST_ZONE);
+        int monthValue       = gameDate.getMonthValue( );
+        int dateValue        = gameDate.getDayOfMonth( );
         
-        if( ChronoUnit.DAYS.between(today, zGame) == 0 ){
-            builder.append( "Today" );
-            
-            if( !isGameOver ) {
-                builder.append(SPACE).append( "Live" );                
-            }else {
-                builder.append(SPACE).append( gameTime );    
-            }
+        builder.append( gameDay ).append( ", " );
         
+        if( monthValue < TEN ) {
+            builder.append( ZERO ).append( monthValue ).append( "/" );
         }else {
-        
-            int monthValue       = gameDate.getMonthValue( );
-            int dateValue        = gameDate.getDayOfMonth( );
-        
-            builder.append( gameDay ).append( ", " );
-        
-            if( monthValue < TEN ) {
-                builder.append( ZERO ).append( monthValue ).append( "/" );
-            }else {
-                builder.append( monthValue ).append( "/" );
-            }
-        
-            if( dateValue < TEN ) {
-                builder.append( ZERO ).append( dateValue ).append( SPACE );
-            }else {
-                builder.append( dateValue );
-            }
-        
-            builder.append( SPACE).append( gameTime );
-        
+            builder.append( monthValue ).append( "/" );
         }
-                         
+        
+        if( dateValue < TEN ) {
+            builder.append( ZERO ).append( dateValue ).append( SPACE );
+        }else {
+            builder.append( dateValue );
+        }
+        
+        builder.append( SPACE).append( gameTime );
+        
         return builder.toString( );
     }
     

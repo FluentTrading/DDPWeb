@@ -397,7 +397,7 @@ public final class GameResult{
     
     
     private final int calculateAllTotal( int weekNumber, int weeklyTotalScore ){
-        return ( weekNumber == 1 ) ? (weeklyTotalScore) : (getHomeTotalScore( ) + weeklyTotalScore);
+        return ( weekNumber == 1 ) ? (getHomeTotalScore( ) ) : (getHomeTotalScore( ) + weeklyTotalScore);
     }
 
     
