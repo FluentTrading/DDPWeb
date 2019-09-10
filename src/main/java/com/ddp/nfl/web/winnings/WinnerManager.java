@@ -18,31 +18,22 @@ public final class WinnerManager{
     private final Map<Integer, WinnerSummary> summaryMap;
     
     private final int[] pastWeekArray;
-    private final boolean winningsAvailable;
     private final Map<Integer, Set<WinnerResult>> weeklyResultMap;
     private final Map<DDPPlayer, Integer> playerTotalScoreMap;
     private final Map<Integer, Collection<DDPPick>> picksPerWeekMap;
-    
-                
+                    
     private final static String NAME    = WinnerManager.class.getSimpleName( );
     private final static Logger LOGGER  = LoggerFactory.getLogger( NAME );
            
-    
     public WinnerManager( DDPMeta ddpMeta, DBService service ){
-        this.winningsAvailable  = ddpMeta.hasSeasonStarted( );
         this.pastWeekArray      = getPastWeeks( ddpMeta.getGameWeek( ) );
         this.picksPerWeekMap    = getPicksPerWeek( ddpMeta, pastWeekArray, service );
         this.weeklyResultMap    = prepareWinner( ddpMeta, service );
         this.playerTotalScoreMap= createPlayerTotalScoreMap( weeklyResultMap );
-        this.summaryMap         = prepareWinnerSummary( weeklyResultMap );
+        this.summaryMap         = prepareWinnerSummary( ddpMeta, weeklyResultMap );
         
     }
   
-
-    public final boolean isWinningsNotAvailable() {
-        return !winningsAvailable;
-    }
-    
     
     public final Map<Integer, WinnerSummary> getWinSummary( ){
         return summaryMap;
@@ -54,30 +45,46 @@ public final class WinnerManager{
     }
     
     
-    protected final Map<Integer, WinnerSummary> prepareWinnerSummary( Map<Integer, Set<WinnerResult>> weeklyResultMap ){
+    protected final Map<Integer, WinnerSummary> prepareWinnerSummary( DDPMeta ddpMeta, Map<Integer, Set<WinnerResult>> weeklyResultMap ){
         
-        Map<Integer, WinnerSummary> map = new TreeMap<>( Collections.reverseOrder( ));
-        Map<DDPPlayer, List<WinnerResult>> resultPerPlayer = prepareResultPerPlayer( weeklyResultMap );
+        Map<Integer, WinnerSummary> winnerSummaryMap        = new TreeMap<>( Collections.reverseOrder( ));
+        Map<DDPPlayer, List<WinnerResult>> resultPerPlayer  = prepareResultPerPlayer( weeklyResultMap );
         
         for( Entry<DDPPlayer, List<WinnerResult>> entry : resultPerPlayer.entrySet( ) ){
         
-            int totalPoint  = 0;
-            DDPPlayer player= entry.getKey( );
-            Set<Integer> weeksWon = new TreeSet<>();
-                        
+            int totalPoint          = 0;
+            DDPPlayer player        = entry.getKey( );
+            boolean isTier1Player   = player.isTier1( );
+            Set<Integer> weeksT1Won = new TreeSet<>();
+            Set<Integer> weeksT2Won = new TreeSet<>();
+            
             for( WinnerResult result : entry.getValue( ) ){
-                totalPoint += result.getTotalScore( );
-                if( result.isWinner( ) ){
-                    weeksWon.add( result.getWeekNumber( ) );
+                totalPoint          += result.getTotalScore( );
+                
+                if( isTier1Player ) {
+                    if( result.isWinner( ) ){
+                        weeksT1Won.add( result.getWeekNumber( ) );
+                    }
+                
+                    if( result.isSecondWinner( ) ){
+                        weeksT2Won.add( result.getWeekNumber( ) );
+                    }
+                    
+                }else{
+                    if( result.isWinner( ) ){
+                        weeksT2Won.add( result.getWeekNumber( ) );
+                    }
                 }
+                
             }
 
-            map.put( totalPoint, new WinnerSummary(player, totalPoint, weeksWon, entry.getValue( )) );
-        
+            WinnerSummary winnerSummary = new WinnerSummary( ddpMeta, player, totalPoint, weeksT1Won, weeksT2Won, entry.getValue( ) );
+            winnerSummaryMap.put( totalPoint, winnerSummary );      
+            
+            System.out.println( winnerSummary );
         }
-        
-        
-        return map;
+                
+        return winnerSummaryMap;
                 
     }
     
@@ -116,12 +123,30 @@ public final class WinnerManager{
                     winnerSet.add( result );
                     winnerResultMap.put( weekNumber, winnerSet );    
                 }
-            
+                
                 //Since the set is sorted, the first entry is the winner.
                 //NOTE: Tie is also handled in the comparator
-                if( !winnerSet.isEmpty( ) ) {
-                    WinnerResult first = (WinnerResult) (winnerSet.toArray( )[0]);
+                
+                //Since we have two tiers of winners: 
+                //If the overall winner is a Tier1 Player, then we have just 1 winner.
+                //If the overall winner is a Tier2 Player, then we need to find the highest score among T2 winner (we have 2 winners).
+                if( !winnerSet.isEmpty( ) ){
+                    WinnerResult first   = (WinnerResult) (winnerSet.toArray( )[0]);
+                    DDPPlayer firstWinner= first.getPlayer( );
                     first.markWinner( );
+                    System.out.println( first.getPlayer( ).getName( ) + " is the first winner.");
+                    
+                    //First winner is not a Tier 1 player, find the highest score among tier1 players
+                    if( !firstWinner.isTier1( ) ) {
+                        for( WinnerResult result : winnerSet ) {
+                            if( result.getPlayer( ).isTier1( ) ) {
+                                result.markSecondWinner( );
+                                System.out.println( result.getPlayer( ).getName( ) + " is the second winner.");
+                                break;
+                            }
+                        }
+                    }
+                                        
                 }
             }
             
@@ -178,9 +203,9 @@ public final class WinnerManager{
     
     protected final Map<Integer, Collection<Schedule>> getResultPerWeek( DDPMeta ddpMeta, Map<String, TeamRecord> teamRecord, int[] weekArray, DBService service ){
         
-        int nflYear         = ddpMeta.getGameYear( );
-        String seasonType   = ddpMeta.getSeasonType( );
-        Map<String, NFLTeam> teamMap = service.getAllTeams( );
+        int nflYear                     = ddpMeta.getGameYear( );
+        String seasonType               = ddpMeta.getSeasonType( );
+        Map<String, NFLTeam> teamMap    = service.getAllTeams( );
         
         Map<Integer, Collection<Schedule>> resultPerWeek = new HashMap<>( );
         
@@ -304,11 +329,12 @@ public final class WinnerManager{
         System.setProperty("RDS_USERNAME", "ddpweb" );
         System.setProperty("RDS_PASSWORD", "1whynopass2");
         
-        DDPMeta ddpMeta     = new DDPMeta( "1.0", false, "REG", LocalDate.now( ), 1, 50);
+        DDPMeta ddpMeta     = new DDPMeta( "1.0", false, "REG", LocalDate.now( ), 1, 50, 40);
         DBService service   = new DBService( ddpMeta, "com.mysql.cj.jdbc.Driver",
                                         "aa15utan83usopw.ceanhhiadqb0.us-east-2.rds.amazonaws.com", "3306", "WonneDB" );
         
         WinnerManager cashMan = new WinnerManager( ddpMeta, service );
+        /*
         Map<Integer, WinnerSummary> result = cashMan.getWinSummary( );
         
         for( Entry<Integer, WinnerSummary> entry : result.entrySet( ) ) {
@@ -327,7 +353,7 @@ public final class WinnerManager{
             }
             
         }
-        
+        */
         
     }
         

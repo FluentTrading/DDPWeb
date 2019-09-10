@@ -26,13 +26,19 @@
         
     <context-param>
         <param-name>NFL_WEEK_NUMBER</param-name>
-        <param-value>1</param-value>
+        <param-value>2</param-value>
     </context-param>
         
     <context-param>
-        <param-name>CASH_PER_WEEK</param-name>
+        <param-name>CASH_PER_WEEK_T1</param-name>
+        <param-value>50</param-value>
+    </context-param>
+    
+    <context-param>
+        <param-name>CASH_PER_WEEK_T2</param-name>
         <param-value>40</param-value>
     </context-param>
+    
         
     <context-param>
         <param-name>LOGGER_CONFIG</param-name>

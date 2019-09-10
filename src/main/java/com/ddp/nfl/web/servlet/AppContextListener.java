@@ -28,7 +28,8 @@ public final class AppContextListener implements ServletContextListener{
     private final static String NFL_SEASON_KEY      = "NFL_SEASON_TYPE";
     private final static String NFL_START_DATE_KEY  = "NFL_START_DATE";
     private final static String NFL_WEEK_NUMBER     = "NFL_WEEK_NUMBER";
-    private final static String CASH_PER_WEEK_KEY   = "CASH_PER_WEEK";
+    private final static String CASH_PER_WEEK_T1_KEY= "CASH_PER_WEEK_T1";
+    private final static String CASH_PER_WEEK_T2_KEY= "CASH_PER_WEEK_T2";
     private final static String RDS_DRIVER_TAG      = "RDS_DRIVER";
     private final static String RDS_HOST_TAG        = "RDS_HOST";
     private final static String RDS_PORT_TAG        = "RDS_PORT";
@@ -151,9 +152,10 @@ public final class AppContextListener implements ServletContextListener{
             String nflSeason    = context.getInitParameter( NFL_SEASON_KEY );
             LocalDate startDate = LocalDate.parse( context.getInitParameter( NFL_START_DATE_KEY ) );
             int nflWeek         = Integer.parseInt( context.getInitParameter( NFL_WEEK_NUMBER ) );
-            int cashPerWeek     = Integer.parseInt( context.getInitParameter( CASH_PER_WEEK_KEY ) );
+            int cashPerWeekT1   = Integer.parseInt( context.getInitParameter( CASH_PER_WEEK_T1_KEY ) );
+            int cashPerWeekT2   = Integer.parseInt( context.getInitParameter( CASH_PER_WEEK_T2_KEY ) );
             
-            metaData            = new DDPMeta( version, seasonOver, nflSeason, startDate, nflWeek, cashPerWeek );
+            metaData            = new DDPMeta( version, seasonOver, nflSeason, startDate, nflWeek, cashPerWeekT1, cashPerWeekT2 );
             
             context.setAttribute( META_INFO_KEY, metaData );
             LOGGER.info( "Successfully created {} {}", metaData, PRINT_NEWLINE );

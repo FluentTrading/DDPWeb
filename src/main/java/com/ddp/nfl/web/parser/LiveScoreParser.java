@@ -160,7 +160,7 @@ public final class LiveScoreParser{
         System.setProperty("RDS_USERNAME", "ddpweb" );
         System.setProperty("RDS_PASSWORD", "1whynopass2");
     
-        DDPMeta ddpMeta     = new DDPMeta( "1.0", false, "REG", LocalDate.now( ), 1, 50);
+        DDPMeta ddpMeta     = new DDPMeta( "1.0", false, "REG", LocalDate.now( ), 1, 50, 50 );
         DBService service   = new DBService( ddpMeta, "com.mysql.cj.jdbc.Driver",
                                         "aa15utan83usopw.ceanhhiadqb0.us-east-2.rds.amazonaws.com", "3306", "WonneDB" );
     

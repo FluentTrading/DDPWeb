@@ -11,19 +11,21 @@ public final class DDPMeta{
     private final String seasonType;
     private final LocalDate startDate;
     private final int gameWeek;
-    private final int cashPerWeek;
+    private final int cashPerWeekT1;
+    private final int cashPerWeekT2;
     private final boolean seasonStarted;
     private final boolean seasonOver;
     
     
-    public DDPMeta( String version, boolean seasonOver, String seasonType, LocalDate startDate, int gameWeek, int cashPerWeek ){
+    public DDPMeta( String version, boolean seasonOver, String seasonType, LocalDate startDate, int gameWeek, int cashPerWeekT1, int cashPerWeekT2 ){
         
         this.version        = version;
         this.seasonOver     = seasonOver;
         this.seasonType     = seasonType;
         this.startDate      = startDate;
         this.gameWeek       = gameWeek;
-        this.cashPerWeek    = cashPerWeek;
+        this.cashPerWeekT1  = cashPerWeekT1;
+        this.cashPerWeekT2  = cashPerWeekT2;
         this.seasonStarted  = startDate.isEqual(LocalDate.now( )) || startDate.isBefore(LocalDate.now( )); 
        
         validate( );
@@ -65,8 +67,13 @@ public final class DDPMeta{
     }
     
     
-    public final int getCashPerWeek( ){
-        return cashPerWeek;
+    public final int getCashPerWeekT1( ){
+        return cashPerWeekT1;
+    }
+    
+    
+    public final int getCashPerWeekT2( ){
+        return cashPerWeekT2;
     }
     
     
@@ -80,8 +87,12 @@ public final class DDPMeta{
             throw new RuntimeException("NFL game week " + gameWeek + " is invalid" );
         }        
         
-        if( cashPerWeek <= ONE ){
-            throw new RuntimeException("Cash Per Week " + cashPerWeek + " is invalid" );
+        if( cashPerWeekT1 <= ONE ){
+            throw new RuntimeException("T1 Cash Per Week " + cashPerWeekT1 + " is invalid" );
+        }
+        
+        if( cashPerWeekT2 <= ONE ){
+            throw new RuntimeException("T2 Cash Per Week " + cashPerWeekT2 + " is invalid" );
         }
           
     }
@@ -96,7 +107,8 @@ public final class DDPMeta{
         .append( ", SeasonType=" ).append( seasonType )
         .append( ", StartDate=" ).append( startDate )
         .append( ", GameWeek=" ).append( gameWeek )
-        .append( ", CashPerWeek=" ).append( cashPerWeek )
+        .append( ", CashPerWeekT1=" ).append( cashPerWeekT1 )
+        .append( ", CashPerWeekT2=" ).append( cashPerWeekT2 )
         .append( "]" );
         
         return builder.toString( );

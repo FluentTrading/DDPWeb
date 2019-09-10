@@ -9,6 +9,7 @@ public final class DDPPlayer{
     private final String email;
     private final String icon;
     private final int deposit;
+    private final boolean isTier1;
     
     private final static String PLAYER_LOGO_PREFIX   = "images/players/";
     private final static String PLAYER_LOGO_SUFFIX   = ".ico";
@@ -19,6 +20,7 @@ public final class DDPPlayer{
         this.nickName   = nickName;
         this.email      = email;
         this.deposit    = deposit;
+        this.isTier1    = (deposit == 300);
         this.icon       = createPlayerIcon( name );
     }
     
@@ -26,6 +28,7 @@ public final class DDPPlayer{
     public final int getId( ){
         return id;
     }
+    
     
     public final String getName( ){
         return name;
@@ -36,17 +39,26 @@ public final class DDPPlayer{
         return icon;
     }
     
+    
     public final String getNickName( ) {
         return nickName;
     }
     
+    
     public final String getEmail( ) {
         return email;
     }
+    
 
     public final int getDepositAmount( ) {
         return deposit;
     }
+    
+    
+    public final boolean isTier1( ){
+        return isTier1;
+    }
+    
     
     protected final static String createPlayerIcon( String playerName ){
         return PLAYER_LOGO_PREFIX + playerName + PLAYER_LOGO_SUFFIX;
@@ -61,7 +73,11 @@ public final class DDPPlayer{
         builder.append( ", NickName=" ).append( nickName );
         builder.append( ", Email=" ).append( email );
         builder.append( ", Amount=" ).append( deposit );
+        builder.append( ", isTier1=" ).append( isTier1 );
         builder.append( "]" );
+        
         return builder.toString( );
     }
+    
 }
+

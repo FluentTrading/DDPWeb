@@ -9,7 +9,7 @@
 <head>
 	
 	<meta charset="UTF-8">
-	<meta http-equiv="refresh" content="25"/>
+	<meta http-equiv="refresh" content="15000"/>
 	<meta http-equiv="Content-Language" content="en">
 	
 	<title>|| DDP NFL Web ||</title>
@@ -363,7 +363,7 @@
     		
     		<c:choose>
 				
-				<c:when test="${applicationScope[DDPUtil.CASH_MANAGER_KEY] != null} || ${applicationScope[DDPUtil.CASH_MANAGER_KEY].isWinningsNotAvailable()}">
+				<c:when test="${applicationScope[DDPUtil.CASH_MANAGER_KEY] != null}">
 									
 											
 					<c:forEach var="entry" items="${applicationScope[DDPUtil.CASH_MANAGER_KEY].getWinSummary()}">

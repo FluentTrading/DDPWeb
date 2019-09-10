@@ -14,12 +14,13 @@ public final class WinnerSummary{
     private final String weeksWon;
     private final List<WinnerResult> results;
     
-    public WinnerSummary( DDPPlayer player, int totalScore, Set<Integer> weeksWon, List<WinnerResult> results ){
+    public WinnerSummary( DDPMeta ddpMeta, DDPPlayer player, int totalScore, Set<Integer> weeksT1Won, Set<Integer> weeksT2Won, List<WinnerResult> results ){
         this.totalScore     = totalScore;
         this.player         = player;
-        this.fmtTotalCash   = formatTotalCash( weeksWon);
-        this.weeksWon       = formatWeeksWon(weeksWon);
         this.results        = results;
+        this.weeksWon       = formatWeeksWon( weeksT1Won, weeksT2Won );
+        this.fmtTotalCash   = formatTotalCash( ddpMeta, player, weeksT1Won, weeksT2Won );
+    
     }
 
     
@@ -47,20 +48,41 @@ public final class WinnerSummary{
     }
     
     
-    private final String formatTotalCash( Set<Integer> weeksWon ){
-        int totalCash = weeksWon.size( ) * 40;
-        String fmtCash= (totalCash == ZERO) ? "$00" : "$"+totalCash;
+    private final String formatTotalCash( DDPMeta ddpMeta, DDPPlayer player, Set<Integer> weeksT1Won, Set<Integer> weeksT2Won ){
+        
+        int totalCashEarned     = 0;
+        
+        if( player.isTier1( ) ) {
+            totalCashEarned     += weeksT1Won.size( ) * (ddpMeta.getCashPerWeekT1( ) + ddpMeta.getCashPerWeekT2( ));
+            totalCashEarned     += weeksT2Won.size( ) * (ddpMeta.getCashPerWeekT1( ));
+        }else {
+            totalCashEarned     += weeksT2Won.size( ) * (ddpMeta.getCashPerWeekT2( ));
+        }
+        
+        String fmtCash          = (totalCashEarned == ZERO) ? "$00" : "$"+totalCashEarned;
         
         return fmtCash;
     }
-
+    
         
-    private final String formatWeeksWon( Set<Integer> weeksWon ){
+    private final String formatWeeksWon( Set<Integer> weeksT1Won, Set<Integer> weeksT2Won ){
         StringBuilder builder = new StringBuilder( );
-        for( Integer week : weeksWon ) {
+        for( Integer week : weeksT1Won ) {
             builder.append(  week ).append( SPACE );
         }
         
+        for( Integer week : weeksT2Won ) {
+            builder.append(  week ).append( SPACE );
+        }
+        
+        return builder.toString( );
+    }
+
+
+    @Override
+    public String toString( ) {
+        StringBuilder builder = new StringBuilder( );
+        builder.append( "WinnerSummary [totalScore=" ).append( totalScore ).append( ", fmtTotalCash=" ).append( fmtTotalCash ).append( ", player=" ).append( player ).append( ", weeksWon=" ).append( weeksWon ).append( ", results=" ).append( results ).append( "]" );
         return builder.toString( );
     }
         
