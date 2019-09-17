@@ -15,9 +15,11 @@ import static com.ddp.nfl.web.util.DDPUtil.*;
 
 public final class WinnerManager{
     
-    private final Map<Integer, WinnerSummary> summaryMap;
+    private final List<WinnerSummary> winnerSummaryList;
     
     private final int[] pastWeekArray;
+    
+    private final WinnerSummaryComparator summaryComparator;
     private final Map<Integer, Set<WinnerResult>> weeklyResultMap;
     private final Map<DDPPlayer, Integer> playerTotalScoreMap;
     private final Map<Integer, Collection<DDPPick>> picksPerWeekMap;
@@ -26,17 +28,18 @@ public final class WinnerManager{
     private final static Logger LOGGER  = LoggerFactory.getLogger( NAME );
            
     public WinnerManager( DDPMeta ddpMeta, DBService service ){
+        this.summaryComparator  = new WinnerSummaryComparator( );
         this.pastWeekArray      = getPastWeeks( ddpMeta.getGameWeek( ) );
         this.picksPerWeekMap    = getPicksPerWeek( ddpMeta, pastWeekArray, service );
         this.weeklyResultMap    = prepareWinner( ddpMeta, service );
         this.playerTotalScoreMap= createPlayerTotalScoreMap( weeklyResultMap );
-        this.summaryMap         = prepareWinnerSummary( ddpMeta, weeklyResultMap );
+        this.winnerSummaryList  = prepareWinnerSummary( ddpMeta, weeklyResultMap );
         
     }
   
     
-    public final Map<Integer, WinnerSummary> getWinSummary( ){
-        return summaryMap;
+    public final List<WinnerSummary> getWinSummary( ){
+        return winnerSummaryList;
     }
    
     
@@ -45,9 +48,9 @@ public final class WinnerManager{
     }
     
     
-    protected final Map<Integer, WinnerSummary> prepareWinnerSummary( DDPMeta ddpMeta, Map<Integer, Set<WinnerResult>> weeklyResultMap ){
+    protected final List<WinnerSummary> prepareWinnerSummary( DDPMeta ddpMeta, Map<Integer, Set<WinnerResult>> weeklyResultMap ){
         
-        Map<Integer, WinnerSummary> winnerSummaryMap        = new TreeMap<>( Collections.reverseOrder( ));
+        List<WinnerSummary> winnerSummaryList               = new ArrayList<>( );
         Map<DDPPlayer, List<WinnerResult>> resultPerPlayer  = prepareResultPerPlayer( weeklyResultMap );
         
         for( Entry<DDPPlayer, List<WinnerResult>> entry : resultPerPlayer.entrySet( ) ){
@@ -79,19 +82,18 @@ public final class WinnerManager{
             }
 
             WinnerSummary winnerSummary = new WinnerSummary( ddpMeta, player, totalPoint, weeksT1Won, weeksT2Won, entry.getValue( ) );
-            winnerSummaryMap.put( totalPoint, winnerSummary );      
+            winnerSummaryList.add( winnerSummary );      
             
-            System.out.println( winnerSummary );
         }
-                
-        return winnerSummaryMap;
+         
+        Collections.sort( winnerSummaryList, summaryComparator );
+        return winnerSummaryList;
                 
     }
     
     
     protected final Map<Integer, Set<WinnerResult>> prepareWinner( DDPMeta ddpMeta, DBService service ){
-        Map<String, TeamRecord> teamRecord                      = service.loadTeamRecord( );
-        Map<Integer, Collection<Schedule>> resultsPerWeekMap    = getResultPerWeek( ddpMeta, teamRecord, pastWeekArray, service );
+        Map<Integer, Collection<Schedule>> resultsPerWeekMap    = getResultPerWeek( ddpMeta, pastWeekArray, service );
         Map<Integer, Set<WinnerResult>> winnerMap               = getWeeklyResult( picksPerWeekMap, resultsPerWeekMap );
                 
         return winnerMap;
@@ -201,7 +203,7 @@ public final class WinnerManager{
     }
                 
     
-    protected final Map<Integer, Collection<Schedule>> getResultPerWeek( DDPMeta ddpMeta, Map<String, TeamRecord> teamRecord, int[] weekArray, DBService service ){
+    protected final Map<Integer, Collection<Schedule>> getResultPerWeek( DDPMeta ddpMeta, int[] weekArray, DBService service ){
         
         int nflYear                     = ddpMeta.getGameYear( );
         String seasonType               = ddpMeta.getSeasonType( );
@@ -216,7 +218,7 @@ public final class WinnerManager{
             try {
             
                 LOGGER.info( "Parsing schedule data to calculate winnings." );
-                Map<String, Schedule> scheduleMap = ScheduleManager.parseSchedule( scheduleUrl, teamRecord, teamMap );
+                Map<String, Schedule> scheduleMap = ScheduleManager.parseSchedule( scheduleUrl, teamMap );
                 resultPerWeek.put( week, scheduleMap.values( ) );
             
             }catch (Exception e) {

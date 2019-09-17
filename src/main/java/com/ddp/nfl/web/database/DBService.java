@@ -11,7 +11,6 @@ public final class DBService{
     private final boolean isValid;
     private final DBConnection dbConnection;
     private final Map<String, NFLTeam> teamMap;
-    private final Map<String, TeamRecord> recordMap;
     private final Map<String, DDPPlayer> playerMap;
     private final Map<Integer, DDPPick> playerPickMap;
     
@@ -20,7 +19,6 @@ public final class DBService{
         this.dbConnection   = new DBConnection( ddpMeta, driverName, dbHost, dbPort, dbName );
         this.teamMap        = dbConnection.loadTeams( );
         this.playerMap      = dbConnection.loadPlayers( );
-        this.recordMap      = dbConnection.loadTeamRecord( );
         this.playerPickMap  = loadPicks( ddpMeta.getGameWeek( ),ddpMeta );
         this.isValid        = validate( );
         
@@ -69,13 +67,7 @@ public final class DBService{
     public final Map<Integer, DDPPick> loadPicks( int week, DDPMeta meta ){
         return dbConnection.loadPicks( meta.getGameYear( ), week, teamMap, playerMap );
     }
-        
-    
-    public final Map<String, TeamRecord> loadTeamRecord( ) {
-        return recordMap;
-    }
-    
-    
+            
     public final boolean upsertPick( int year, int pickForWeek, int pickOrder, DDPPick ddpPick  ){
         return dbConnection.upsertPick( year, pickForWeek, pickOrder, ddpPick );
     }

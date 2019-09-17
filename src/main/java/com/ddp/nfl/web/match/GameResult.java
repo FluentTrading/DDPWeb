@@ -95,20 +95,6 @@ public final class GameResult{
     public final int getAllTotalHomeScore( ) {
         return allTotalScore;
     }   
-     
-    
-    public final String getMy1TeamRecord( ){
-        return getMatch1Score().getHomeRecord( );
-    }
-    
-    public final String getMy2TeamRecord( ){
-        return getMatch2Score().getHomeRecord( );
-    }
-    
-    
-    public final String getMy3TeamRecord( ){
-        return getMatch3Score().getHomeRecord( );
-    }
     
         
     //AWAY
@@ -138,20 +124,6 @@ public final class GameResult{
 
     public final int getAwayTotalScore( ) {
         return getOpp1TeamScore( ) + getOpp2TeamScore( ) + getOpp3TeamScore( );
-    }
-    
-    
-    public final String getOpp1TeamRecord( ){
-        return getMatch1Score().getAwayRecord( );
-    }
-    
-    public final String getOpp2TeamRecord( ){
-        return getMatch2Score().getAwayRecord( );
-    }
-    
-    
-    public final String getOpp3TeamRecord( ){
-        return getMatch3Score().getAwayRecord( );
     }
     
     

@@ -85,20 +85,11 @@ public final class LiveScore{
     }
 
     
-    public final String getHomeRecord( ){
-        return schedule.getHomeRecord( ).getRecord( );
-    }
-    
     public final int getHomeScore( ){
         return homeScore;
     }
 
-    
-    public final String getAwayRecord( ){
-        return schedule.getAwayRecord( ).getRecord( );
-    }
-
-    
+        
     public final int getAwayScore( ){
         return awayScore;
     }

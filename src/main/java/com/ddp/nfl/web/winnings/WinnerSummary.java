@@ -11,14 +11,16 @@ public final class WinnerSummary{
     private final int totalScore;
     private final String fmtTotalCash;
     private final DDPPlayer player;
-    private final String weeksWon;
+    private final int totalWeeksWon;
+    private final String fmtWeeksWon;
     private final List<WinnerResult> results;
     
     public WinnerSummary( DDPMeta ddpMeta, DDPPlayer player, int totalScore, Set<Integer> weeksT1Won, Set<Integer> weeksT2Won, List<WinnerResult> results ){
         this.totalScore     = totalScore;
         this.player         = player;
         this.results        = results;
-        this.weeksWon       = formatWeeksWon( weeksT1Won, weeksT2Won );
+        this.totalWeeksWon  = weeksT1Won.size( ) + weeksT2Won.size( );
+        this.fmtWeeksWon    = formatWeeksWon( weeksT1Won, weeksT2Won );
         this.fmtTotalCash   = formatTotalCash( ddpMeta, player, weeksT1Won, weeksT2Won );
     
     }
@@ -32,9 +34,12 @@ public final class WinnerSummary{
         return player;
     }
 
-
-    public final String getWeeksWon( ) {
-        return weeksWon;
+    public final int getTotalWeeksWon( ) {
+        return totalWeeksWon;
+    }
+    
+    public final String getFmtWeeksWon( ) {
+        return fmtWeeksWon;
     }
     
 
@@ -82,7 +87,7 @@ public final class WinnerSummary{
     @Override
     public String toString( ) {
         StringBuilder builder = new StringBuilder( );
-        builder.append( "WinnerSummary [totalScore=" ).append( totalScore ).append( ", fmtTotalCash=" ).append( fmtTotalCash ).append( ", player=" ).append( player ).append( ", weeksWon=" ).append( weeksWon ).append( ", results=" ).append( results ).append( "]" );
+        builder.append( "WinnerSummary [totalScore=" ).append( totalScore ).append( ", fmtTotalCash=" ).append( fmtTotalCash ).append( ", player=" ).append( player ).append( ", weeksWon=" ).append( fmtWeeksWon ).append( ", results=" ).append( results ).append( "]" );
         return builder.toString( );
     }
         

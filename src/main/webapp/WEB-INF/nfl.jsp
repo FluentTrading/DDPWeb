@@ -9,7 +9,7 @@
 <head>
 	
 	<meta charset="UTF-8">
-	<meta http-equiv="refresh" content="25"/>
+	<meta http-equiv="refresh" content="60000"/>
 	<meta http-equiv="Content-Language" content="en">
 	
 	<title>|| DDP NFL Web ||</title>
@@ -319,10 +319,8 @@
 	   									
 	   									<td align="left">
     										<h4>${entry.getAwayTeam().getCamelCaseName()}</h4>
-    										<h5 style="color:${entry.getAwayRecord( ).getBgcolor()};">${entry.getAwayRecord( ).getRecord( )}</h5>
 	   									</td>
 	   									
-	   				
 	   									<td align="right">
     										<img src=${entry.getAwayTeam().getSquareTeamIcon( )} title="${entry.getAwayTeam( ).getCamelCaseName( )}" height="30" width="52"/>
     									</td>
@@ -337,8 +335,7 @@
     			
     									<td align="left">
     										<h4>&nbsp;${entry.getHomeTeam().getCamelCaseName()}</h4>
-    										<h5 style="color:${entry.getHomeRecord( ).getBgcolor()};">&nbsp;${entry.getHomeRecord( ).getRecord( )}</h5>
-	   									</td>
+    									</td>
 	   										    				    									
     									<td align="center" width="15%"></td>
     								</tr>
@@ -371,19 +368,19 @@
 						<div class="cashRow">
   					    					
     						<div class="cashPlayer">
-    							${entry.value.getPlayer( ).getName()}    	
+    							${entry.getPlayer( ).getName()}    	
     						</div>
     								
     						<div class="cashTotalScore">
-    							${entry.value.getTotalScore( )}
+    							${entry.getTotalScore( )}
     						</div>
     						
     						<div class="cashAmount">
-    							${entry.value.getTotalCashFormatted( )}
+    							${entry.getTotalCashFormatted( )}
     						</div>
     						
     						
-    					<c:forEach items="${entry.value.getResults( )}" var="winResult">
+    					<c:forEach items="${entry.getResults( )}" var="winResult">
     						
     						<div class="cashDetailsRow">
     							
