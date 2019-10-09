@@ -26,7 +26,7 @@
         
     <context-param>
         <param-name>NFL_WEEK_NUMBER</param-name>
-        <param-value>3</param-value>
+        <param-value>6</param-value>
     </context-param>
         
     <context-param>
@@ -52,7 +52,7 @@
     
     <context-param>
         <param-name>RDS_HOST</param-name>
-        <param-value>aa15utan83usopw.ceanhhiadqb0.us-east-2.rds.amazonaws.com</param-value>
+        <param-value>aa8aqa2tq7rwt6.c1gjjbaz1bio.us-east-2.rds.amazonaws.com</param-value>
     </context-param>
     
     <context-param>
@@ -62,7 +62,7 @@
     
   	<context-param>
         <param-name>RDS_DB_NAME</param-name>
-        <param-value>WonneDB</param-value>
+        <param-value>DDPWebb</param-value>
     </context-param>
 
     

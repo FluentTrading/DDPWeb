@@ -17,7 +17,7 @@ import static com.ddp.nfl.web.util.DDPUtil.*;
 public class PickServlet extends HttpServlet {
 
     private final static long serialVersionUID  = 1L;
-    private final static String EXPECTED_PASS   = "nopass";
+    private final static String EXPECTED_PASS   = "1whynopass";
     private final static String PASS_SESSION_KEY= "isLoggedIn";
     private final static String ERROR_MESSAGE   = "Internal Error! ";
     private final static Logger LOGGER          = LoggerFactory.getLogger( "PickServlet" );
