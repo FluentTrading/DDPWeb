@@ -12,7 +12,9 @@ public final class NFLStadium{
         FMT_STADIUM_NAME_MAP.put( "Oakland-Alameda County Coliseum", "Oakland Coliseum" );
         FMT_STADIUM_NAME_MAP.put( "Los Angeles Memorial Coliseum", "LA Memorial Coliseum" );
         FMT_STADIUM_NAME_MAP.put( "Broncos Stadium at Mile High", "Mile High" );
+        FMT_STADIUM_NAME_MAP.put( "Empower Field at Mile High", "Mile High" );
         FMT_STADIUM_NAME_MAP.put( "ROKiT Field at Dignity Health Sports Park", "ROKiT Field" );
+        FMT_STADIUM_NAME_MAP.put( "Tottenham Hotspur Stadium", "Tottenham" );
     }
     
     
