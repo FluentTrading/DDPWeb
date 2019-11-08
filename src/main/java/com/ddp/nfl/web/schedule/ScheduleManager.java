@@ -6,6 +6,7 @@ import org.slf4j.*;
 
 import java.io.*;
 import java.net.*;
+import java.nio.charset.*;
 import java.util.*;
 
 import javax.xml.namespace.*;
@@ -88,7 +89,7 @@ public final class ScheduleManager{
             InputStream inStream            = new URL( scheduleUrl ).openStream( );
             
             XMLInputFactory inputFactory    = XMLInputFactory.newInstance( );
-            XMLEventReader xmlEventReader   = inputFactory.createXMLEventReader(inStream);
+            XMLEventReader xmlEventReader   = inputFactory.createXMLEventReader(inStream, StandardCharsets.UTF_8.name( ));
         
             while( xmlEventReader.hasNext() ){
                 

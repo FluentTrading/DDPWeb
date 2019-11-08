@@ -136,14 +136,12 @@ public final class WinnerManager{
                     WinnerResult first   = (WinnerResult) (winnerSet.toArray( )[0]);
                     DDPPlayer firstWinner= first.getPlayer( );
                     first.markWinner( );
-                    System.out.println( first.getPlayer( ).getName( ) + " is the first winner.");
-                    
+                                        
                     //First winner is not a Tier 1 player, find the highest score among tier1 players
                     if( !firstWinner.isTier1( ) ) {
                         for( WinnerResult result : winnerSet ) {
                             if( result.getPlayer( ).isTier1( ) ) {
                                 result.markSecondWinner( );
-                                System.out.println( result.getPlayer( ).getName( ) + " is the second winner.");
                                 break;
                             }
                         }

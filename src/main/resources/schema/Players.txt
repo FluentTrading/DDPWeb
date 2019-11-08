@@ -32,3 +32,9 @@ CREATE TABLE `NFLTeam` (
 ) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1 COMMENT='Table to store information about teams';
 
 
+
+
+INSERT INTO `DDPWebb`.`DDPPick` (`Year`, `Week`, `PickOrder`, `Player`, `Team1`, `Team2`, `Team3`)
+VALUES (2019, 10, 9, "Vic", "seahawks", "lions", "giants" );
+
+
