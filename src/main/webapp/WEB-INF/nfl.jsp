@@ -9,7 +9,7 @@
 <head>
 	
 	<meta charset="UTF-8">
-	<meta http-equiv="refresh" content="25"/>
+	<meta http-equiv="refresh" content="60000"/>
 	<meta http-equiv="Content-Language" content="en">
 	
 	<title>|| DDP NFL Web ||</title>
@@ -48,7 +48,7 @@
   
   <input id="tab4" type="radio" name="tabs">
   <label for="tab4">
-  <i class="fas fa-award"></i> Archive ${requestScope[DDPUtil.RESULT_MANAGER_KEY].getMeta().getGameYear( )-1}
+  <i class="fas fa-award"></i> Archive 2019
   </label>
         
   <section id="content1">

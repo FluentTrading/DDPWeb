@@ -105,7 +105,7 @@ public final class AppContextListener implements ServletContextListener{
     protected final void prepareArchiveReader( DDPMeta ddpMeta, ServletContext context ) {
         LOGGER.info("Attempting to read archived images.");
         
-        ArchiveManager archiveManager= new ArchiveManager( ddpMeta );
+        ArchiveManager archiveManager= new ArchiveManager( );
         context.setAttribute( ARCHIVE_MANAGER_KEY, archiveManager );
                 
     }

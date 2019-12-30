@@ -60,14 +60,13 @@ public class GameServlet extends HttpServlet{
             return;
         }
         
-        /*
+       
         boolean hasSeasonStarted    = metaInfo.hasSeasonStarted( );
         if( !hasSeasonStarted ) {
             handleError( metaInfo, SEASON_NOT_STARTED, "DDP NFL starts on " + metaInfo.getStartDate( ), request, response );
             return;
         }
-        */
-               
+                      
         
         boolean pickMade            = dbService.isPicksMade( );
         if( !pickMade ) {
