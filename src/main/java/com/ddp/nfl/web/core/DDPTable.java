@@ -3,7 +3,6 @@ package com.ddp.nfl.web.core;
 public enum DDPTable{
     
     NFL_TEAM    ( "NFLTeam"),
-    TEAM_RECORD ( "TeamRecord"),
     DDP_PLAYER  ( "DDPPlayer"),
     DDP_PICK    ( "DDPPick"),
     UNKNOWN     ("");

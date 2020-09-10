@@ -157,15 +157,23 @@ public final class LiveScoreParser{
     
     
     public final static void main( String[] args ) {
-        System.setProperty("RDS_USERNAME", "ddpweb" );
-        System.setProperty("RDS_PASSWORD", "1whynopass2");
+        System.setProperty("RDS_USERNAME", "Administrator" );
+        System.setProperty("RDS_PASSWORD", "$one1a1-moti2");
     
-        DDPMeta ddpMeta     = new DDPMeta( "1.0", false, "REG", LocalDate.now( ), 1, 50, 50 );
+        DDPMeta ddpMeta     = new DDPMeta( "1.0", false, "REG", LocalDate.now( ), 1, 50 );
         DBService service   = new DBService( ddpMeta, "com.mysql.cj.jdbc.Driver",
-                                        "aa15utan83usopw.ceanhhiadqb0.us-east-2.rds.amazonaws.com", "3306", "WonneDB" );
-    
+                                        "ddp-nfl-db-instance.czsstheiepfi.us-east-1.rds.amazonaws.com", "3306", "ddpnfldb" );
+            
+        String scheduleUrl = "http://static.nfl.com/ajax/scorestrip?season=2020&seasonType=REG&week=1";
+
+        Map<String, Schedule> scheduleMap = ScheduleManager.parseSchedule( scheduleUrl, service.getAllTeams( ));
+        System.out.println( scheduleMap );
+
+        /*
         LiveScoreParser parser = new LiveScoreParser(  new ScheduleManager(ddpMeta, service)  );
         parser.parseLiveScore( );
+        */
+        
     }
     
     

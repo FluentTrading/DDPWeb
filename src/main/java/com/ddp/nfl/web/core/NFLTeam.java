@@ -10,9 +10,7 @@ public final class NFLTeam{
     private final String nickName;
     private final String division;
     private final String conference;
-    private final String city;
-    private final String state;
-    private final String rosterLink;
+    private final String city;    
     private final String teamSquareIcon;
         
     private final static String NFL_SQUARE_ICON_ID   = "";
@@ -21,8 +19,7 @@ public final class NFLTeam{
     private final static String MISSING_TEAM_LOGO    = NFL_LOGO_PREFIX + "Missing" + NFL_LOGO_SUFFIX;
     private final static String GAME_LOST_LOGO       = NFL_LOGO_PREFIX + "loss.png";
     
-    public NFLTeam( int id, String camelCaseName, String nickName, String division, String conference, 
-                    String city, String state, String rosterLink ){
+    public NFLTeam( int id, String camelCaseName, String nickName, String division, String conference, String city ){
         
         this.id             = id;
         this.camelCaseName  = camelCaseName;
@@ -32,8 +29,6 @@ public final class NFLTeam{
         this.division       = division;
         this.conference     = conference;
         this.city           = city;
-        this.state          = state;
-        this.rosterLink     = rosterLink;
         this.teamSquareIcon = createSquareIcon( lowerCaseName );
         
     }
@@ -73,15 +68,7 @@ public final class NFLTeam{
     public final String getCity( ) {
         return city;
     }
-    
-    public final String getState( ) {
-        return state;
-    }
-    
-    public final String getRosterLink( ) {
-        return rosterLink;
-    }
-       
+           
     public final static String getMissingTeamLogo( ){
         return MISSING_TEAM_LOGO;
     }
@@ -139,11 +126,7 @@ public final class NFLTeam{
         builder.append( ", conference=" );
         builder.append( conference );
         builder.append( ", city=" );
-        builder.append( city );
-        builder.append( ", state=" );
-        builder.append( state );
-        builder.append( ", rosterLink=" );
-        builder.append( rosterLink );
+        builder.append( city );        
         builder.append( "]" );
         
         return builder.toString( );

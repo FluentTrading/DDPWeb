@@ -6,12 +6,12 @@
    	
     <context-param>
         <param-name>APP_VERSION</param-name>
-        <param-value>4.0</param-value>
+        <param-value>5.0</param-value>
     </context-param>
     
     <context-param>
         <param-name>NFL_SEASON_OVER</param-name>
-        <param-value>true</param-value>
+        <param-value>false</param-value>
     </context-param>
     
     <context-param>
@@ -21,25 +21,19 @@
     
     <context-param>
         <param-name>NFL_START_DATE</param-name>
-        <param-value>2019-09-05</param-value>
+        <param-value>2020-09-11</param-value>
     </context-param>
         
     <context-param>
         <param-name>NFL_WEEK_NUMBER</param-name>
-        <param-value>18</param-value>
+        <param-value>1</param-value>
     </context-param>
         
     <context-param>
-        <param-name>CASH_PER_WEEK_T1</param-name>
+        <param-name>CASH_PER_WEEK</param-name>
         <param-value>50</param-value>
     </context-param>
-    
-    <context-param>
-        <param-name>CASH_PER_WEEK_T2</param-name>
-        <param-value>40</param-value>
-    </context-param>
-    
-        
+            
     <context-param>
         <param-name>LOGGER_CONFIG</param-name>
         <param-value>WEB-INF/logback.xml</param-value>
@@ -52,7 +46,7 @@
     
     <context-param>
         <param-name>RDS_HOST</param-name>
-        <param-value>aa8aqa2tq7rwt6.c1gjjbaz1bio.us-east-2.rds.amazonaws.com</param-value>
+        <param-value>ddp-nfl-db-instance.czsstheiepfi.us-east-1.rds.amazonaws.com</param-value>
     </context-param>
     
     <context-param>
@@ -62,7 +56,7 @@
     
   	<context-param>
         <param-name>RDS_DB_NAME</param-name>
-        <param-value>DDPWebb</param-value>
+        <param-value>ddpnfldb</param-value>
     </context-param>
 
     

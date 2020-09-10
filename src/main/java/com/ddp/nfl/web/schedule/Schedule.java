@@ -139,9 +139,9 @@ public final class Schedule{
         builder.append( "Schedule[")
         .append( "GameId=" ).append( gameId )
         .append( ", ScheduleTime=" ).append( getGameScheduleTime( ) )
-        .append( ", Home=" ).append( home.getUpperCaseName( ) )
+        .append( ", Home=" ).append( home )
         .append( ", HomeScore=" ).append( homeScore )
-        .append( ", Away=" ).append( away.getUpperCaseName( ) )
+        .append( ", Away=" ).append( away )
         .append( ", AwayScore=" ).append( awayScore )
         .append( "]" );
         

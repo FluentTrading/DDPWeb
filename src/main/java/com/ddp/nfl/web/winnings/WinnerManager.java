@@ -57,31 +57,18 @@ public final class WinnerManager{
         
             int totalPoint          = 0;
             DDPPlayer player        = entry.getKey( );
-            boolean isTier1Player   = player.isTier1( );
-            Set<Integer> weeksT1Won = new TreeSet<>();
-            Set<Integer> weeksT2Won = new TreeSet<>();
-            
+            Set<Integer> weeksWon   = new TreeSet<>();
+                        
             for( WinnerResult result : entry.getValue( ) ){
                 totalPoint          += result.getTotalScore( );
                 
-                if( isTier1Player ) {
-                    if( result.isWinner( ) ){
-                        weeksT1Won.add( result.getWeekNumber( ) );
-                    }
-                
-                    if( result.isSecondWinner( ) ){
-                        weeksT2Won.add( result.getWeekNumber( ) );
-                    }
-                    
-                }else{
-                    if( result.isWinner( ) ){
-                        weeksT2Won.add( result.getWeekNumber( ) );
-                    }
+                if( result.isWinner( ) ){
+                     weeksWon.add( result.getWeekNumber( ) );
                 }
                 
             }
 
-            WinnerSummary winnerSummary = new WinnerSummary( ddpMeta, player, totalPoint, weeksT1Won, weeksT2Won, entry.getValue( ) );
+            WinnerSummary winnerSummary = new WinnerSummary( ddpMeta, player, totalPoint, weeksWon, entry.getValue( ) );
             winnerSummaryList.add( winnerSummary );      
             
         }
@@ -129,24 +116,9 @@ public final class WinnerManager{
                 //Since the set is sorted, the first entry is the winner.
                 //NOTE: Tie is also handled in the comparator
                 
-                //Since we have two tiers of winners: 
-                //If the overall winner is a Tier1 Player, then we have just 1 winner.
-                //If the overall winner is a Tier2 Player, then we need to find the highest score among T2 winner (we have 2 winners).
                 if( !winnerSet.isEmpty( ) ){
-                    WinnerResult first   = (WinnerResult) (winnerSet.toArray( )[0]);
-                    DDPPlayer firstWinner= first.getPlayer( );
-                    first.markWinner( );
-                                        
-                    //First winner is not a Tier 1 player, find the highest score among tier1 players
-                    if( !firstWinner.isTier1( ) ) {
-                        for( WinnerResult result : winnerSet ) {
-                            if( result.getPlayer( ).isTier1( ) ) {
-                                result.markSecondWinner( );
-                                break;
-                            }
-                        }
-                    }
-                                        
+                    WinnerResult first   = (WinnerResult) (winnerSet.toArray( )[0]);                    
+                    first.markWinner( );                                        
                 }
             }
             
@@ -323,38 +295,6 @@ public final class WinnerManager{
         
     }
     
-    
-    public static void main( String[] args ){
 
-        System.setProperty("RDS_USERNAME", "ddpweb" );
-        System.setProperty("RDS_PASSWORD", "1whynopass2");
-        
-        DDPMeta ddpMeta     = new DDPMeta( "1.0", false, "REG", LocalDate.now( ), 1, 50, 40);
-        DBService service   = new DBService( ddpMeta, "com.mysql.cj.jdbc.Driver",
-                                        "aa15utan83usopw.ceanhhiadqb0.us-east-2.rds.amazonaws.com", "3306", "WonneDB" );
-        
-        WinnerManager cashMan = new WinnerManager( ddpMeta, service );
-        /*
-        Map<Integer, WinnerSummary> result = cashMan.getWinSummary( );
-        
-        for( Entry<Integer, WinnerSummary> entry : result.entrySet( ) ) {
-            
-            WinnerSummary summary = entry.getValue( );
-            
-            System.out.println( summary.getPlayer( ).getName( ) + " " + summary.getTotalScore( ) + " " 
-                    + summary.getWeeksWon( ));
-
-            for( WinnerResult winResult : summary.getResults( ) ) {
-                System.out.println( "Week: " + winResult.getWeekNumber( ) + " " + winResult.getTeam1( ).getCamelCaseName( ) 
-                        + " : " +  winResult.get_1Score( ) +
-                        " " + winResult.getTeam2( ).getCamelCaseName( ) + " : " +  winResult.get_3Score( ) +
-                        " " + winResult.getTeam3( ).getCamelCaseName( ) + " : " +  winResult.get_3Score( ) + ", Total: " + winResult.getTotalScore( ) +
-                        " " + winResult.getCardLink( ) );    
-            }
-            
-        }
-        */
-        
-    }
         
 }

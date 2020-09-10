@@ -25,7 +25,7 @@ public final class DBConnection{
     public DBConnection( DDPMeta ddpMeta, String driverName, String dbHost, String dbPort, String dbName ){
         this.ddpMeta            = ddpMeta;
         this.connection         = createConnection( driverName, dbHost, dbPort, dbName );
-        this.connected          = ( connection != null );
+        this.connected          = validateConnection( );
         this.pickPrepStatement  = preparePickStatement( connection );
     }
     
@@ -99,11 +99,10 @@ public final class DBConnection{
             while( result.next( ) ){
                 int playerId    = result.getInt( "Id" );
                 String name     = result.getString( "Name" );
-                String nickName = result.getString( "NickName" );
-                String email    = result.getString( "Email" );
+                String nickName = result.getString( "NickName" );                
                 int deposit     = result.getInt( "Deposit" );
                 
-                DDPPlayer player= new DDPPlayer( playerId, name, nickName, email, deposit );
+                DDPPlayer player= new DDPPlayer( playerId, name, nickName, deposit );
                 map.put( name,  player );
                 
                 LOGGER.info( "Retrieved {}", player );
@@ -140,10 +139,8 @@ public final class DBConnection{
                 String division = result.getString( "Division" );
                 String conf     = result.getString( "Conference" );
                 String city     = result.getString( "City" );
-                String state    = result.getString( "State" );
-                String roster   = result.getString( "Roster" );
                 
-                NFLTeam team    = new NFLTeam( teamId, name, nickName, division, conf, city, state, roster );
+                NFLTeam team    = new NFLTeam( teamId, name, nickName, division, conf, city );
                 map.put( team.getLowerCaseName( ),  team );
                 LOGGER.info( "Retrieved {}", team );
             }
@@ -235,13 +232,22 @@ public final class DBConnection{
             LOGGER.info("Successfully connected to database: [{}]{}", dbName, PRINT_NEWLINE);
             
         }catch( Exception e) { 
-            LOGGER.error("FAILED to connect to DB [{}:{}] [{}] [{}]", hostname, port, dbName, userName, e );
+            LOGGER.error("FAILED to connect to DB [{}:{}] [{}] [{}]", hostname, port, dbName, userName, e );            
         }
         
         return connection;
         
     }    
 
+    
+    protected final boolean validateConnection( ) {
+        if( connection == null ) {
+            throw new RuntimeException("Exiting as we FAILED to connect to database!"); 
+        }
+        
+        return true;
+    }
+    
     
     public final void close( ) throws SQLException {
         

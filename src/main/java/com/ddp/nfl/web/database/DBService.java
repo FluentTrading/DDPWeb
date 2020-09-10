@@ -13,6 +13,7 @@ public final class DBService{
     private final Map<String, NFLTeam> teamMap;
     private final Map<String, DDPPlayer> playerMap;
     private final Map<Integer, DDPPick> playerPickMap;
+        
     
     public DBService( DDPMeta ddpMeta, String driverName, String dbHost, String dbPort, String dbName ){
         

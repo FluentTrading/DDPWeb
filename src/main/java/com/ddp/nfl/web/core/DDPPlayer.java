@@ -5,22 +5,18 @@ public final class DDPPlayer{
     
     private final int id;
     private final String name;
-    private final String nickName;
-    private final String email;
+    private final String nickName;    
     private final String icon;
     private final int deposit;
-    private final boolean isTier1;
     
     private final static String PLAYER_LOGO_PREFIX   = "images/players/";
     private final static String PLAYER_LOGO_SUFFIX   = ".ico";
     
-    public DDPPlayer( int id, String name, String nickName, String email, int deposit ){
+    public DDPPlayer( int id, String name, String nickName, int deposit ){
         this.id         = id;
         this.name       = name;
-        this.nickName   = nickName;
-        this.email      = email;
-        this.deposit    = deposit;
-        this.isTier1    = (deposit == 300);
+        this.nickName   = nickName;        
+        this.deposit    = deposit;    
         this.icon       = createPlayerIcon( name );
     }
     
@@ -45,20 +41,10 @@ public final class DDPPlayer{
     }
     
     
-    public final String getEmail( ) {
-        return email;
-    }
-    
-
     public final int getDepositAmount( ) {
         return deposit;
     }
-    
-    
-    public final boolean isTier1( ){
-        return isTier1;
-    }
-    
+           
     
     protected final static String createPlayerIcon( String playerName ){
         return PLAYER_LOGO_PREFIX + playerName + PLAYER_LOGO_SUFFIX;
@@ -66,14 +52,12 @@ public final class DDPPlayer{
     
     
     @Override
-    public final String toString( ) {
+    public final String toString( ){
         StringBuilder builder = new StringBuilder( 32 );
         builder.append( "DDPPlayer [Id=" ).append( id );
         builder.append( ", Name=" ).append( name );
-        builder.append( ", NickName=" ).append( nickName );
-        builder.append( ", Email=" ).append( email );
+        builder.append( ", NickName=" ).append( nickName );        
         builder.append( ", Amount=" ).append( deposit );
-        builder.append( ", isTier1=" ).append( isTier1 );
         builder.append( "]" );
         
         return builder.toString( );

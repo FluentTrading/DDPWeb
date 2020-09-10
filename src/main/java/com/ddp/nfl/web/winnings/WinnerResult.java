@@ -13,8 +13,7 @@ public final class WinnerResult{
     private final int totalScore;
     private final String totalFormatted;
     private final AtomicBoolean isWinner;
-    private final AtomicBoolean isSecondWinner;
-    
+        
     private final NFLTeam team1;
     private final String _1Score;
     
@@ -34,8 +33,7 @@ public final class WinnerResult{
     
     public WinnerResult( int weekNumber, DDPPick ddpPick, int totalPoints, NFLTeam[ ] teams, Integer[ ] scores ){
 
-        this.isWinner       = new AtomicBoolean( );
-        this.isSecondWinner = new AtomicBoolean( );
+        this.isWinner       = new AtomicBoolean( );        
         this.weekNumber     = weekNumber;
         this.winPick        = ddpPick;
         this.totalScore     = totalPoints;
@@ -55,11 +53,6 @@ public final class WinnerResult{
 
     public final boolean isWinner( ){
         return isWinner.get( );
-    }
-    
-    
-    public final boolean isSecondWinner( ){
-        return isSecondWinner.get( );
     }
     
     
@@ -131,11 +124,6 @@ public final class WinnerResult{
     public final void markWinner( ){
         isWinner.set( true );
     }
-    
-    
-    public final void markSecondWinner( ){
-        isSecondWinner.set( true );
-    }
         
 
     private final String formatWeeklyScore( Integer[ ] scores, int index ) {
@@ -165,7 +153,7 @@ public final class WinnerResult{
 
         StringBuilder builder = new StringBuilder( );
         
-        if( isWinner( ) || isSecondWinner( ) ) {
+        if( isWinner( ) ){
             builder.append( "<a href=\"" ).append ( winImageLink ).append( "\"");
             builder.append( " class=\"cashLink\">" );
             builder.append( " Week " ).append( weekNumber ).append( COLON );
@@ -185,8 +173,7 @@ public final class WinnerResult{
     public final String toString( ){
         StringBuilder builder = new StringBuilder( 128 );
         builder.append( "WinnerResult [Player=" ).append( winPick.getPlayer( ).getName( ) ).append( ", Week=" ).append( weekNumber );
-        builder.append( ", isWinner=" ).append( isWinner( ) );
-        builder.append( ", isSecondWinner=" ).append( isSecondWinner( ) );
+        builder.append( ", isWinner=" ).append( isWinner( ) );        
         builder.append( ", TotalScore=" ).append( totalScore );
         builder.append( ", Team1=" ).append( team1.getLowerCaseName( ) );
         builder.append( ", Score=" ).append( _1Score );

@@ -23,7 +23,7 @@ public final class ScheduleManager{
     private final Set<String> teamsPlaying;
     private final Map<String, Schedule> scheduleMap;
     
-    private final static String URL_PREFIX  = "http://www.nfl.com/ajax/scorestrip?season=";
+    private final static String URL_PREFIX  = "http://static.nfl.com/ajax/scorestrip?season=";
     private final static String SEASON_PART = "&seasonType=";
     private final static String WEEK_PART   = "&week=";
     private final static Logger LOGGER      = LoggerFactory.getLogger( "ScheduleManager" );
@@ -60,8 +60,8 @@ public final class ScheduleManager{
         Set<String> teamsSet = new HashSet<>( );
         
         for( Schedule scheule : scheduleMap.values( ) ){
-            teamsSet.add( scheule.getHomeTeam( ).getLowerCaseName( ) );
-            teamsSet.add( scheule.getAwayTeam( ).getLowerCaseName( ) );
+            teamsSet.add( scheule.getHomeTeam( ) == null ? "" : scheule.getHomeTeam( ).getLowerCaseName( ) );
+            teamsSet.add( scheule.getAwayTeam( ) == null ? "" : scheule.getAwayTeam( ).getLowerCaseName( ) );
         }
         
         return teamsSet;
@@ -71,8 +71,8 @@ public final class ScheduleManager{
     //Used to display data on the schedules page
    //We use this map to display schedule where earliest game (smallest gid) is at first
     protected final Map<String, Schedule> parse( DDPMeta meta, DBService service ) {
-        String liveScoreUrl              = createScheduleUrl( meta );
-        Map<String, Schedule> scheduleMap= parseSchedule( liveScoreUrl, service.getAllTeams( ) );
+        String weeklyScheduleUrl         = createScheduleUrl( meta );
+        Map<String, Schedule> scheduleMap= parseSchedule( weeklyScheduleUrl, service.getAllTeams( ) );
     
         return scheduleMap;
     }
@@ -129,10 +129,17 @@ public final class ScheduleManager{
 
            String homeTeam      = safeParse( startElement, "hnn", EMPTY);
            NFLTeam home         = teamMap.get( homeTeam.toLowerCase( ) );
+           if( home == null ) {
+               LOGGER.error( "FAILED to lookup team from hnn=" + homeTeam );
+           }
            int homeScore        = safeParse( startElement, "hs", ZERO);
                       
            String awayTeam      = safeParse( startElement, "vnn", EMPTY);
            NFLTeam away         = teamMap.get( awayTeam.toLowerCase( ) );
+           if( away == null ) {
+               LOGGER.error( "FAILED to lookup team from vnn=" + awayTeam );
+           }
+           
            int awayScore        = safeParse( startElement, "vs", ZERO);
            
            schedule             = new Schedule( gameEid, gameDay, gameTime, home, homeScore, away, awayScore );
@@ -182,6 +189,7 @@ public final class ScheduleManager{
                  
         return value;
     }
+    
 
 
 }

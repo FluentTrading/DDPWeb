@@ -15,13 +15,13 @@ public final class WinnerSummary{
     private final String fmtWeeksWon;
     private final List<WinnerResult> results;
     
-    public WinnerSummary( DDPMeta ddpMeta, DDPPlayer player, int totalScore, Set<Integer> weeksT1Won, Set<Integer> weeksT2Won, List<WinnerResult> results ){
+    public WinnerSummary( DDPMeta ddpMeta, DDPPlayer player, int totalScore, Set<Integer> weeksWon, List<WinnerResult> results ){
         this.totalScore     = totalScore;
         this.player         = player;
         this.results        = results;
-        this.totalWeeksWon  = weeksT1Won.size( ) + weeksT2Won.size( );
-        this.fmtWeeksWon    = formatWeeksWon( weeksT1Won, weeksT2Won );
-        this.fmtTotalCash   = formatTotalCash( ddpMeta, player, weeksT1Won, weeksT2Won );
+        this.totalWeeksWon  = weeksWon.size( );
+        this.fmtWeeksWon    = formatWeeksWon( weeksWon );
+        this.fmtTotalCash   = formatTotalCash( ddpMeta, player, weeksWon );
     
     }
 
@@ -53,33 +53,21 @@ public final class WinnerSummary{
     }
     
     
-    private final String formatTotalCash( DDPMeta ddpMeta, DDPPlayer player, Set<Integer> weeksT1Won, Set<Integer> weeksT2Won ){
+    private final String formatTotalCash( DDPMeta ddpMeta, DDPPlayer player, Set<Integer> weeksWon ){
         
-        int totalCashEarned     = 0;
-        
-        if( player.isTier1( ) ) {
-            totalCashEarned     += weeksT1Won.size( ) * (ddpMeta.getCashPerWeekT1( ) + ddpMeta.getCashPerWeekT2( ));
-            totalCashEarned     += weeksT2Won.size( ) * (ddpMeta.getCashPerWeekT1( ));
-        }else {
-            totalCashEarned     += weeksT2Won.size( ) * (ddpMeta.getCashPerWeekT2( ));
-        }
-        
+        int totalCashEarned     = weeksWon.size( ) * ddpMeta.getCashPerWeek( );
         String fmtCash          = (totalCashEarned == ZERO) ? "$00" : "$"+totalCashEarned;
         
         return fmtCash;
     }
     
         
-    private final String formatWeeksWon( Set<Integer> weeksT1Won, Set<Integer> weeksT2Won ){
+    private final String formatWeeksWon( Set<Integer> weeksWon ){
         StringBuilder builder = new StringBuilder( );
-        for( Integer week : weeksT1Won ) {
-            builder.append(  week ).append( SPACE );
+        for( Integer week : weeksWon ){
+            builder.append( week ).append( SPACE );
         }
-        
-        for( Integer week : weeksT2Won ) {
-            builder.append(  week ).append( SPACE );
-        }
-        
+                
         return builder.toString( );
     }
 
