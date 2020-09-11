@@ -60,6 +60,39 @@ public final class GameResult{
         return getTeamWithPossessionBlinker( getOpp3Team( ), getMatch3Score( ) );         
     }
     
+    
+    
+    public final String getMy1TeamIcon( ){
+        return getTeamIcon( getMy1Team( ));
+    }
+
+    
+    public final String getMy2TeamIcon( ){
+        return getTeamIcon( getMy2Team( ));
+    }
+
+    
+    public final String getMy3TeamIcon( ){
+        return getTeamIcon( getMy3Team( ));
+    }
+    
+
+
+    public final String getOpp1TeamIcon( ){
+        return getTeamIcon( getOpp1Team( ));
+    }
+
+        
+    public final String getOpp2TeamIcon( ){
+        return getTeamIcon( getOpp2Team( ));
+    }
+
+
+    public final String getOpp3TeamIcon( ){
+        return getTeamIcon( getOpp3Team( ));
+    }
+    
+    
         
     public final int getMy1TeamScore( ){
         NFLTeam myTeam    = getMy1Team( );
@@ -127,6 +160,62 @@ public final class GameResult{
     }
     
     
+    public final String getGame1NotStartedMessage( ){
+        return getGameNotStartedMessage( getMatch1Score( ) );
+    }
+    
+    
+    public final String getGame2NotStartedMessage( ){
+        return getGameNotStartedMessage( getMatch2Score( ) );
+    }
+    
+    
+    public final String getGame3NotStartedMessage( ){
+        return getGameNotStartedMessage( getMatch3Score( ) );
+    }
+    
+    
+    public final String getGameNotStartedMessage( LiveScore score ){
+        if( score == null ) return "Missing";
+        return score.getAwayTeam( ).getNickName( ) + " at " +
+                score.getHomeTeam( ).getNickName( ) + " " +
+                score.getGameTime( );
+
+    }
+    
+    
+    public final String getGame1FinishedMessage( ){
+        return getGameFinishedMessage( getMy1TeamScore( ), getOpp1TeamScore( ), getMatch1Score( ) );
+    }
+    
+    
+    public final String getGame2FinishedMessage( ){
+        return getGameFinishedMessage(  getMy2TeamScore( ), getOpp2TeamScore( ),getMatch2Score( ) );
+    }
+    
+    
+    public final String getGame3FinishedMessage( ){
+        return getGameFinishedMessage(  getMy3TeamScore( ), getOpp3TeamScore( ),getMatch3Score( ) );
+    }
+    
+    public final String getGameFinishedMessage( int myScore, int awayScore, LiveScore score ){
+        if( score == null ) return "Missing";
+                
+        if( myScore > awayScore ){
+            return score.getHomeTeam( ).getCamelCaseName( ) + " won by " + (myScore-awayScore);
+        }else if( myScore == awayScore ){
+            return  "Game tied";
+        }else {
+            return score.getAwayTeam( ).getCamelCaseName( ) + " lost by " + Math.abs(myScore-awayScore);
+        }
+    }
+    
+    
+    public final boolean didMyTeamWin( int myScore, int awayScore ){
+        return ( myScore > awayScore );
+    }
+    
+    
     public final String getGame1Quarter( ){
         return getMatch1Score( ).getDisplayableQuarter( );        
     }
@@ -167,6 +256,34 @@ public final class GameResult{
     public final boolean isGame3Finished( ){
         return GameState.isFinished(getMatch3Score( ));
     }
+    
+    
+    public final boolean isGame1NotStarted( ){
+        return GameState.isNotStarted(getMatch1Score( ));
+    }
+    
+    public final boolean isGame2NotStarted( ){
+        return GameState.isNotStarted(getMatch2Score( ));
+    }
+    
+    public final boolean isGame3NotStarted( ){
+        return GameState.isNotStarted(getMatch3Score( ));
+    }
+
+    
+    public final boolean isGame1Playing( ){
+        return GameState.isPlaying(getMatch1Score( ));
+    }
+    
+    public final boolean isGame2Playing( ){
+        return GameState.isPlaying(getMatch2Score( ));
+    }
+    
+    public final boolean isGame3Playing( ){
+        return GameState.isPlaying(getMatch3Score( ));
+    }
+    
+    
       
     //-----------------------
 
@@ -195,9 +312,28 @@ public final class GameResult{
         return getMessageInfoClassName( getMatch3Score( ), getMy3TeamScore( ), getOpp3TeamScore( ) );
     }   
     
+    
+    public final String getGame1ResultDivClasss( ){
+        return getResultCellDivClassName( getMatch1Score( ), getMy1TeamScore( ), getOpp1TeamScore( ) );
+    }
+    
+    public final String getGame2ResultDivClasss( ){
+        return getResultCellDivClassName( getMatch2Score( ), getMy2TeamScore( ), getOpp2TeamScore( ) );
+    }
+        
+    public final String getGame3ResultDivClasss( ){
+        return getResultCellDivClassName( getMatch3Score( ), getMy3TeamScore( ), getOpp3TeamScore( ) );
+    }  
+    
         
     //UI shouldn't directly invoke these methods.
     //-----------------------------------------------------------
+    
+    protected final String getTeamIcon( NFLTeam team ){
+        if( team == null ) return EMPTY;
+        return team.getSquareTeamIcon( );        
+    }
+    
     
     //If home team has possession, adds a blinking green dot next to the name
     protected final String getTeamWithPossessionBlinker( NFLTeam team, LiveScore liveScore ){
@@ -205,7 +341,8 @@ public final class GameResult{
         if( team == null ) return EMPTY;
         if( liveScore == null ) return EMPTY;
         
-        String teamName         = team.getCamelCaseName( );
+        //String teamName         = team.getCamelCaseName( );
+        String teamName         = team.getNickName( );
         boolean delayedOrHalf   = ( GameState.isDelayed(liveScore) || GameState.isHalftime(liveScore) );
         if( delayedOrHalf ) return teamName;
         
@@ -247,27 +384,42 @@ public final class GameResult{
     }
     
     
+    
     protected final String getMessageInfoClassName( LiveScore liveScore, int homeScore, int awayScore ){
     
         if( GameState.isNotStarted( liveScore ) ){
-            return INFO_BAR_GAME_PENDING;
-        }
+            return "info-bar-game-not-started";
         
-        if( GameState.isFinished( liveScore ) ){
-            return INFO_BAR_GAME_FINISHED;
-        }
-                
-        if( homeScore == awayScore ){
-            return INFO_BAR_GAME_TIED;
-        }
+        }else if( homeScore == awayScore ){
+            return "info-bar-game-tied";
         
-        if( homeScore > awayScore ){
-            return INFO_BAR_GAME_WON;
-        }
+        }else if( homeScore > awayScore ){
+            return "info-bar-game-won";
         
-        return INFO_BAR_GAME_LOST;
+        }else {        
+            return "info-bar-game-lost";
+        }
         
     }
+    
+    
+    protected final String getResultCellDivClassName( LiveScore liveScore, int homeScore, int awayScore ){
+        
+        if( GameState.isNotStarted( liveScore ) ){
+            return "result-cell-not-started";
+        
+        }else if( homeScore == awayScore ){
+            return "result-cell-tied";
+        
+        }else if( homeScore > awayScore ){
+            return "result-cell-won";
+            
+        }else {
+            return "result-cell-lost";
+        }
+        
+    }
+    
   
    
     public final NFLTeam getMy1Team( ){

@@ -74,6 +74,10 @@ public final class LiveScore{
         return schedule.getGameScheduleTime( );
     }
     
+    public final String getGameTime( ) {
+        return schedule.getGameDayTime( );
+    }
+    
 
     public final GameState getGameState( ) {
         return gameState;
@@ -226,7 +230,7 @@ public final class LiveScore{
         switch( state ) {
             
             case NOT_STARTED:
-                return tvStation + " " + schedule.getGameDayTime( );
+                return schedule.getGameDayTime( ) + " on " + tvStation;
                 
             case FINISHED:
                 return "Final";

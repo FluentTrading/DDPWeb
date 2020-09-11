@@ -9,7 +9,7 @@
 <head>
 	
 	<meta charset="UTF-8">
-	<meta http-equiv="refresh" content="60000"/>
+	<meta http-equiv="refresh" content="25"/>
 	<meta http-equiv="Content-Language" content="en">
 	
 	<title>|| DDP NFL Web ||</title>
@@ -109,116 +109,153 @@
 	   			<div class="scoreRow">
   					
   					<div class="player-icon-cell">
-  						<img src="${gameResult.getPlayer( ).getIcon( )}" title=${gameResult.getPlayer( ).getName( )} height="52" width="52">
+  						<img src="${gameResult.getPlayer( ).getIcon( )}" title=${gameResult.getPlayer( ).getName( )} height="75" width="75">
   					</div>
-  		
-  					<c:if test="${gameResult.isGame1Finished()}">
-  						<div class="score-cell-div-finished">
-  					</c:if>
-  					<c:if test="${not gameResult.isGame1Finished()}">
-  						<div class="score-cell-div-live">
-  					</c:if>
-  						<div class="topLeft">${gameResult.getMy1TeamName( )}</div>
-  						<div class="topRight">${gameResult.getMy1TeamScore( )}</div>
-						<div class="bottomLeft">${gameResult.getOpp1TeamName( )}</div>
-						<div class="bottomRight">${gameResult.getOpp1TeamScore( )}</div>						
+  					
+  					
+  					<div class="score-cell-div">
+  						<div class="topLeft"><img src="${gameResult.getMy1TeamIcon( )}" height="52" width="52"></div>
+  						<div class="bottomLeft"><img src="${gameResult.getOpp1TeamIcon( )}" height="52" width="52"></div>
+  										
+  										
+  						<div class="${gameResult.getGame1MsgInfoClass()}">		
+							<div class="topRight">${gameResult.getMy1TeamScore( )}</div>  						
+  							<div class="bottomRight">${gameResult.getOpp1TeamScore( )}</div>
+  						</div>				
+  						
 					</div>
-  		
-  					<c:if test="${gameResult.isGame1Finished()}">
-  						<div class="team-icon-cell-finished">
-  					</c:if>
-  					<c:if test="${not gameResult.isGame1Finished()}">
-  						<div class="team-icon-cell-live">
-  					</c:if>
-  						<img src="${gameResult.getGame1WinnerIcon()}" height="55" width="82"/>
-			  		</div>
-  		
-  					<c:if test="${gameResult.isGame2Finished()}">
-  						<div class="score-cell-div-finished">
-  					</c:if>
-  					<c:if test="${not gameResult.isGame2Finished()}">
-  						<div class="score-cell-div-live">
-  					</c:if>
-  						<div class="topLeft">${gameResult.getMy2TeamName( )}</div>
-						<div class="topRight">${gameResult.getMy2TeamScore( )}</div>
-						<div class="bottomLeft">${gameResult.getOpp2TeamName( )}</div>
-						<div class="bottomRight">${gameResult.getOpp2TeamScore( )}</div>
+					
+							
+					<div class="spacer-cell"></div>
+								
+  					<div class="score-cell-div">
+  						<div class="topLeft"><img src="${gameResult.getMy2TeamIcon( )}" height="52" width="52"></div>
+  						<div class="bottomLeft"><img src="${gameResult.getOpp2TeamIcon( )}" height="52" width="52"></div>
+  						
+  						<div class="${gameResult.getGame2MsgInfoClass()}">		
+  							<div class="topRight">${gameResult.getMy2TeamScore( )}</div>  						
+  							<div class="bottomRight">${gameResult.getOpp2TeamScore( )}</div>
+  						</div>																		
 					</div>
-  		
-  					<c:if test="${gameResult.isGame2Finished()}">
-  						<div class="team-icon-cell-finished">
-  					</c:if>
-  					<c:if test="${not gameResult.isGame2Finished()}">
-  						<div class="team-icon-cell-live">
-  					</c:if>
-  						<img src="${gameResult.getGame2WinnerIcon()}" height="55" width="82"/>
-  					</div>
-  		
-  					<c:if test="${gameResult.isGame3Finished()}">
-  						<div class="score-cell-div-finished">
-  					</c:if>
-  					<c:if test="${not gameResult.isGame3Finished()}">
-  						<div class="score-cell-div-live">
-  					</c:if>
-  						<div class="topLeft">${gameResult.getMy3TeamName( )}</div>
-						<div class="topRight">${gameResult.getMy3TeamScore( )}</div>
-						<div class="bottomLeft">${gameResult.getOpp3TeamName( )}</div>
-						<div class="bottomRight">${gameResult.getOpp3TeamScore( )}</div>	
+					
+					<div class="spacer-cell"></div>
+					
+					<div class="score-cell-div">
+  						<div class="topLeft"><img src="${gameResult.getMy3TeamIcon( )}" height="52" width="52"></div>
+  						<div class="bottomLeft"><img src="${gameResult.getOpp3TeamIcon( )}" height="52" width="52"></div>
+  						
+  						<div class="${gameResult.getGame3MsgInfoClass()}">
+  							<div class="topRight">${gameResult.getMy3TeamScore( )}</div>  						
+  							<div class="bottomRight">${gameResult.getOpp3TeamScore( )}</div>
+  						</div>																		
 					</div>
-  			
-  					<c:if test="${gameResult.isGame3Finished()}">
-  						<div class="team-icon-cell-finished">
-  					</c:if>
-  					<c:if test="${not gameResult.isGame3Finished()}">
-  						<div class="team-icon-cell-live">
-  					</c:if>
-  						<img src="${gameResult.getGame3WinnerIcon()}" height="55" width="82"/>
-  					</div>
-  					  		
+					
+					
+					<div class="spacer-cell"></div>
+								  						
 			</div>
 		</div>
+		
 
+		<!--------------------------------------------- Second Row --------------------------------------------------------->
+		
 		<div class="newGridTable" >
    	
    			<div class="secondRow">
    			
    				<div class="totalScore">
   					${gameResult.getHomeTotalScore( )}  					
-  				</div>
-  		  		
-  				<div class="${gameResult.getGame1MsgInfoClass()}">
-  					<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Drive( gameResult )}</div>
-					<div class="rightQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Quarter( gameResult )}</div>
-  					${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Summary( gameResult )}
-  				</div>
-  		
-  				<div class="${gameResult.getGame2MsgInfoClass()}">
-  					<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Drive( gameResult )}</div>
-					<div class="rightQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Quarter( gameResult )}</div>
-  					${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Summary( gameResult )}
-  				</div>
-		
-				<div class="${gameResult.getGame3MsgInfoClass()}">
-					<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Drive( gameResult )}</div>
-					<div class="rightQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Quarter( gameResult )}</div>
-					${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Summary( gameResult )}
-				</div>
-  				  		  		
-		</div>
+  				</div>  				
+  				
+  				
+  				<c:if test="${gameResult.isGame1NotStarted()}">
+  					<div class="result-cell-not-started">
+  						<div class="leftDriveInfo">${gameResult.getGame1NotStartedMessage( )}</div>
+  					</div>
+  				</c:if>
+  				
+  				
+  				<c:if test="${gameResult.isGame1Playing()}">
+  					<div class="result-cell-live">
+  						<div class="rightQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Quarter( gameResult )}</div>
+  						<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Drive( gameResult )}</div>					
+  						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Summary( gameResult )}  			
+  					</div>
+  				</c:if>
+  				
+  				
+  				<c:if test="${gameResult.isGame1Finished()}">
+  					<div class="${gameResult.getGame1ResultDivClasss()}">
+  						<div class="leftDriveInfo">${gameResult.getGame1FinishedMessage( )}</div>
+  					</div>
+  				</c:if>
+  				
+				
+				
+				<c:if test="${gameResult.isGame2NotStarted()}">
+  					<div class="result-cell-not-started">
+  						<div class="leftDriveInfo">${gameResult.getGame2NotStartedMessage( )}</div>
+  					</div>
+  				</c:if>
+  				
+  				
+  				<c:if test="${gameResult.isGame2Playing()}">
+  					<div class="result-cell-live">
+  						<div class="rightQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Quarter( gameResult )}</div>
+  						<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Drive( gameResult )}</div>					
+  						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Summary( gameResult )}  			
+  					</div>
+  				</c:if>
+  				
+  				
+  				<c:if test="${gameResult.isGame2Finished()}">
+  					<div class="${gameResult.getGame2ResultDivClasss()}">
+  						<div class="leftDriveInfo">${gameResult.getGame2FinishedMessage( )}</div>
+  					</div>
+  				</c:if>
+  				
+  				
+				
+				<c:if test="${gameResult.isGame3NotStarted()}">
+  					<div class="result-cell-not-started">
+  						<div class="leftDriveInfo">${gameResult.getGame3NotStartedMessage( )}</div>
+  					</div>
+  				</c:if>
+  				
+  				
+  				<c:if test="${gameResult.isGame3Playing()}">
+  					<div class="result-cell-live">
+  						<div class="rightQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Quarter( gameResult )}</div>
+  						<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Drive( gameResult )}</div>					
+  						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Summary( gameResult )}  			
+  					</div>
+  				</c:if>
+  				
+  				
+  				<c:if test="${gameResult.isGame3Finished()}">
+  					<div class="${gameResult.getGame3ResultDivClasss()}">
+  						<div class="leftDriveInfo">${gameResult.getGame3FinishedMessage( )}</div>
+  					</div>
+  				</c:if>
+  				
+  				
+
+  			</div>
     
     </div>
     
     
+    <!--------------------------------------------- Third Row --------------------------------------------------------->
     
     <div class="newGridTable" >
    	
    			<div class="statsRow">
   		
   				<div class="totalScore">
-  					${gameResult.getAllTotalHomeScore( )}
+  					<!-- ${gameResult.getAllTotalHomeScore( )} -->
   				</div>
   				  		
-  				<div class="${gameResult.getGame1MsgInfoClass()}">
+  				<div class="stats-cell">
   					<div class="statsName">
 						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Stats( gameResult ).getPassName()}
 					</div>
@@ -235,7 +272,7 @@
 					
 				</div>
   		
-  				<div class="${gameResult.getGame2MsgInfoClass()}">
+  				<div class="stats-cell">
   					<div class="statsName">
 						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Stats( gameResult ).getPassName()}
 					</div>
@@ -252,7 +289,7 @@
 					
 				</div>		
 				
-				<div class="${gameResult.getGame3MsgInfoClass()}">
+				<div class="stats-cell">
 					<c:if test="${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Stats( gameResult ) != null}">
 						
 						<div class="statsName">
@@ -288,7 +325,9 @@
   </section>
     
     
-   	<section id="content2">
+  
+  
+  <section id="content2">
     	
     	<div class="schedulegrid">    	
     	
@@ -302,10 +341,10 @@
 							
 								<c:choose>
 							    	<c:when test="${entry.isGameOver()}">
-        								<tr bgcolor="#a0a5a5">
+        								<tr bgcolor="#3F4148">        								
     								</c:when>
     								<c:otherwise>
-        								<tr bgcolor="#ffffff">
+        								<tr bgcolor="#6F7178">
     								</c:otherwise>
 								</c:choose>
     								

@@ -128,14 +128,16 @@ public final class ScheduleManager{
            String gameTime      = safeParse( startElement, "t", EMPTY);
 
            String homeTeam      = safeParse( startElement, "hnn", EMPTY);
-           NFLTeam home         = teamMap.get( homeTeam.toLowerCase( ) );
+           String newHomeTeam   = NFLTeam.resolveOverriddenName( homeTeam );
+           NFLTeam home         = teamMap.get( newHomeTeam.toLowerCase( ) );
            if( home == null ) {
                LOGGER.error( "FAILED to lookup team from hnn=" + homeTeam );
            }
            int homeScore        = safeParse( startElement, "hs", ZERO);
                       
            String awayTeam      = safeParse( startElement, "vnn", EMPTY);
-           NFLTeam away         = teamMap.get( awayTeam.toLowerCase( ) );
+           String newAwayTeam   = NFLTeam.resolveOverriddenName( awayTeam );
+           NFLTeam away         = teamMap.get( newAwayTeam.toLowerCase( ) );
            if( away == null ) {
                LOGGER.error( "FAILED to lookup team from vnn=" + awayTeam );
            }

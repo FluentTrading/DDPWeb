@@ -27,8 +27,14 @@ http://www.nfl.com/ajax/scorestrip?season=2017&seasonType=REG&week=2
 http://www.nfl.com/liveupdate/game-center/2017091701/2017091701_gtd.json
 http://www.nfl.com/widget/gc/2011/tabs/cat-post-playbyplay?gameId=2012020500
 
-https://jsonformatter.org/json-pretty-print
-https://burntsushi.net/stuff/nfldb/nfldb-condensed.pdf
 http://live.numberfire.com/nfl?week=8
-http://icoconvert.com/
 https://codepen.io/imprakash/pen/GgNMXO
+http://loodibee.com/nfl/
+http://icoconvert.com/
+
+
+##### 2020
+1. Rename images/teams2/Missing.png to white_cell_spacer.png
+
+
+

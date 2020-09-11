@@ -13,7 +13,7 @@ body {
   font: 20px/1 'Open Sans', sans-serif;
   font-family: 'Open Sans', sans-serif;
   color: #000000;
-  background: #9FAFB4; /* Color of the rest of the page */
+  background: #6F7178; /* Color of the rest of the page */
   padding: 0px 0px 0px 0px; /* Top, Right, Bottom, Left */ 
 }
 
@@ -89,24 +89,13 @@ input:checked + label {
 	.schedulegrid {
 		font: 18px/1 'Open Sans', sans-serif;
 		overflow: hidden;
-		background: #ffffff;
+		background: #3F4148;
 		border: 0px solid #9FAFB4;	
   		white-space: nowrap;
   		font-weight: bold;   		
 	}
 
 
-	.scheduleBackgroundImage{
-		position:absolute;
-		background-repeat: no-repeat;
-		background-position:center bottom;
-		z-index: 1;
-		opacity: 0.15;
-		width:800px;
-    	height:700px;
-    	filter: alpha(opacity=50); /* For IE8 and earlier */
-    }
-			
 	.schedulegrid table { 
 		border-collapse: collapse; 
 		width: 100%; 
@@ -114,9 +103,9 @@ input:checked + label {
 		
 	
 	.schedulegrid table tr {
-		border-left: 0px solid #9FAFB4;
-		border-right: 0px solid #9FAFB4;
-		border-bottom: 1px solid #9FAFB4;
+		border-left: 0px solid #ffffff;
+		border-right: 0px solid #ffffff;
+		border-bottom: 1px solid #ffffff;
 	}
 	
 
@@ -130,21 +119,21 @@ input:checked + label {
   		font-family: 'Open Sans', sans-serif;
   		font-size: 20px;
   		color: #000000;
-  		background-color: #ffffff;
+  		background-color: #3F4148;
   	}
   	
 
 	.cashRow{
   		display: table-row;
   		text-align: left;
-  		border-bottom: 1px solid #000000;  		
+  		border-bottom: 1px solid #ffffff;  		
 	}
 	
 	
 	.cashPlayer{
 		display: table-cell;
   		font-weight: bold;
-  		border-bottom: 1px solid #000000;
+  		border-bottom: 1px solid #ffffff;
     	padding: 10px 15px 0px 35px; /* Top, Right, Bottom, Left */
 	}
 	
@@ -165,7 +154,7 @@ input:checked + label {
 	.cashDetailsRow{
   		display: table-row;
   		border: 0px solid #9FAFB4;  		
-		background-color: #ffffff;
+		background-color: #3F4148;
 	}
 	
 
@@ -337,3 +326,15 @@ input:checked + label {
 	}
 	
 	
+	
+	.blinking{
+    	animation:blinkingText 1.2s infinite;
+	}
+	
+	@keyframes blinkingText{
+    	0%{     color: #000;   		}
+    	49%{    color: #000; 		}
+    	60%{    color: transparent; }
+    	99%{    color:transparent;  }
+    	100%{   color: #000;   		}
+	}

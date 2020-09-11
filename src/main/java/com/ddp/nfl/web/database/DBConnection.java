@@ -53,13 +53,13 @@ public final class DBConnection{
             while( result.next( ) ){
                 int pickOrder   = result.getInt( "PickOrder" );
                 String name     = result.getString( "Player" );
-                String team1    = result.getString( "Team1" );
+                String team1    = NFLTeam.resolveOverriddenName( result.getString( "Team1" ));
                 team1           = isValid(team1) ? team1.toLowerCase( ) : EMPTY;
                 
-                String team2    = result.getString( "Team2" );
+                String team2    = NFLTeam.resolveOverriddenName( result.getString( "Team2" ));
                 team2           = isValid(team2) ? team2.toLowerCase( ) : EMPTY;
                 
-                String team3    = result.getString( "Team3" );
+                String team3    = NFLTeam.resolveOverriddenName( result.getString( "Team3" ));
                 team3           = isValid(team3) ? team3.toLowerCase( ) : EMPTY;
                 
                 NFLTeam[] teams = new NFLTeam[]{ teamMap.get(team1), teamMap.get(team2), teamMap.get(team3) };
@@ -135,12 +135,13 @@ public final class DBConnection{
             while( result.next( ) ){
                 int teamId      = result.getInt( "Id" );
                 String name     = result.getString( "Team" );
+                String newName  = NFLTeam.resolveOverriddenName( name );
                 String nickName = result.getString( "NickName" );
                 String division = result.getString( "Division" );
                 String conf     = result.getString( "Conference" );
                 String city     = result.getString( "City" );
                 
-                NFLTeam team    = new NFLTeam( teamId, name, nickName, division, conf, city );
+                NFLTeam team    = new NFLTeam( teamId, newName, nickName, division, conf, city );
                 map.put( team.getLowerCaseName( ),  team );
                 LOGGER.info( "Retrieved {}", team );
             }

@@ -1,5 +1,6 @@
 package com.ddp.nfl.web.core;
 
+import java.util.*;
 
 public final class NFLTeam{
 
@@ -12,12 +13,21 @@ public final class NFLTeam{
     private final String conference;
     private final String city;    
     private final String teamSquareIcon;
-        
+   
+    
     private final static String NFL_SQUARE_ICON_ID   = "";
-    private final static String NFL_LOGO_PREFIX      = "images/teams/";
+    private final static String NFL_LOGO_PREFIX      = "images/teams2/";
     private final static String NFL_LOGO_SUFFIX      = ".png";
     private final static String MISSING_TEAM_LOGO    = NFL_LOGO_PREFIX + "Missing" + NFL_LOGO_SUFFIX;
     private final static String GAME_LOST_LOGO       = NFL_LOGO_PREFIX + "loss.png";
+    private final static Map<String, String> NAME_OVERRIDE_MAP = new HashMap<>();
+    
+    
+    static {
+        NAME_OVERRIDE_MAP.put( "football team", "Redskins");
+        NAME_OVERRIDE_MAP.put( "Football Team", "Redskins");
+    }
+    
     
     public NFLTeam( int id, String camelCaseName, String nickName, String division, String conference, String city ){
         
@@ -79,6 +89,12 @@ public final class NFLTeam{
     
     protected final static String createSquareIcon( String teamName ){
         return NFL_LOGO_PREFIX + teamName + NFL_SQUARE_ICON_ID + NFL_LOGO_SUFFIX;
+    }
+    
+    
+    public static final String resolveOverriddenName( String name ){
+        String lookup = NAME_OVERRIDE_MAP.get( name );
+        return ( lookup == null ) ? name : lookup;
     }
     
 

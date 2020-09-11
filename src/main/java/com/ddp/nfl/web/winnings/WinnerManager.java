@@ -117,8 +117,10 @@ public final class WinnerManager{
                 //NOTE: Tie is also handled in the comparator
                 
                 if( !winnerSet.isEmpty( ) ){
-                    WinnerResult first   = (WinnerResult) (winnerSet.toArray( )[0]);                    
-                    first.markWinner( );                                        
+                    WinnerResult first   = (WinnerResult) (winnerSet.toArray( )[0]);                  
+                    if( first.getTotalScore( ) > 0 ) {
+                        first.markWinner( );              
+                    }
                 }
             }
             
@@ -294,6 +296,36 @@ public final class WinnerManager{
         return map;
         
     }
+    
+    
+    
+    public final static void main( String[] args ) {
+        System.setProperty("RDS_USERNAME", "Administrator" );
+        System.setProperty("RDS_PASSWORD", "$one1a1-moti2");
+    
+        DDPMeta ddpMeta     = new DDPMeta( "1.0", false, "REG", LocalDate.now( ), 1, 50 );
+        DBService service   = new DBService( ddpMeta, "com.mysql.cj.jdbc.Driver",
+                                        "ddp-nfl-db-instance.czsstheiepfi.us-east-1.rds.amazonaws.com", "3306", "ddpnfldb" );
+            
+        String scheduleUrl = "http://static.nfl.com/ajax/scorestrip?season=2020&seasonType=REG&week=1";
+
+        //Map<String, Schedule> scheduleMap = ScheduleManager.parseSchedule( scheduleUrl, service.getAllTeams( ));
+        //System.out.println( scheduleMap );
+
+        WinnerManager manager   = new WinnerManager( ddpMeta, service );
+        Map<DDPPlayer, Integer> map = manager.getPlayTotalScoreMap( );
+        for( Entry<DDPPlayer, Integer> entry : map.entrySet( ) ){
+            System.out.println( entry.getKey( ).getName( ) + " ==> " + entry.getValue( ).intValue( ) );
+        }
+        
+        /*
+        LiveScoreParser parser = new LiveScoreParser(  new ScheduleManager(ddpMeta, service)  );
+        parser.parseLiveScore( );
+        */
+        
+    }
+    
+    
     
 
         
