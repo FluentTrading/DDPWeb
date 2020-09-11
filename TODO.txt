@@ -34,7 +34,11 @@ http://icoconvert.com/
 
 
 ##### 2020
-1. Rename images/teams2/Missing.png to white_cell_spacer.png
+1. Indicate red-zone by blinking the score
+2. Show the ball for possession.
+3. Check the commentary
+4. Check how the page looks for live games
+5. Delete unused code, start from GameResult class
 
 
 
