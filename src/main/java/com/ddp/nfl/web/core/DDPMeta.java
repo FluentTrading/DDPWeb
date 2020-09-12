@@ -4,6 +4,8 @@ import static com.ddp.nfl.web.util.DDPUtil.*;
 
 import java.time.*;
 
+import io.github.cdimascio.dotenv.*;
+
 
 public final class DDPMeta{
 
@@ -14,9 +16,9 @@ public final class DDPMeta{
     private final int cashPerWeek;
     private final boolean seasonStarted;
     private final boolean seasonOver;
+    private final Dotenv dotConfig;
     
-    
-    public DDPMeta( String version, boolean seasonOver, String seasonType, LocalDate startDate, int gameWeek, int cashPerWeek ){
+    public DDPMeta( String version, boolean seasonOver, String seasonType, LocalDate startDate, int gameWeek, int cashPerWeek, Dotenv config ){
         
         this.version        = version;
         this.seasonOver     = seasonOver;
@@ -25,7 +27,8 @@ public final class DDPMeta{
         this.gameWeek       = gameWeek;
         this.cashPerWeek    = cashPerWeek;
         this.seasonStarted  = startDate.isEqual(LocalDate.now( )) || startDate.isBefore(LocalDate.now( )); 
-       
+        this.dotConfig         = config;
+        
         validate( );
     }
     
@@ -69,7 +72,35 @@ public final class DDPMeta{
         return cashPerWeek;
     }
     
-        
+    
+    public final String getDriverName( ){
+        return dotConfig.get( "RDS_DRIVER", "MISSING");
+    }
+    
+    
+    public final String getDBHostname( ){
+        return dotConfig.get( "RDS_HOST", "MISSING");
+    }
+    
+    
+    public final String getDBName( ){
+        return dotConfig.get( "RDS_DB_NAME", "MISSING");
+    }
+    
+    
+    public final int getDBPort( ){
+        return Integer.parseInt( dotConfig.get( "RDS_PORT", "-1") );
+    }
+    
+    
+    public final String getDBUserName( ){
+        return dotConfig.get( "RDS_USERNAME", "MISSING");
+    }
+    
+    public final String getDBPassword( ){
+        return dotConfig.get( "RDS_PASSWORD", "MISSING");
+    }
+    
     
     protected final void validate(  ){
         
@@ -82,7 +113,11 @@ public final class DDPMeta{
         }        
         
         if( cashPerWeek <= ONE ){
-            throw new RuntimeException("T1 Cash Per Week " + cashPerWeek + " is invalid" );
+            throw new RuntimeException("Cash Per Week " + cashPerWeek + " is invalid" );
+        }
+        
+        if( dotConfig == null ) {
+            throw new RuntimeException("Environment config is invalid" );
         }
                   
     }

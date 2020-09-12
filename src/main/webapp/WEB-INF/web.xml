@@ -39,25 +39,5 @@
         <param-value>WEB-INF/logback.xml</param-value>
     </context-param>
     
-    <context-param>
-        <param-name>RDS_DRIVER</param-name>
-        <param-value>com.mysql.cj.jdbc.Driver</param-value>
-    </context-param>
-    
-    <context-param>
-        <param-name>RDS_HOST</param-name>
-        <param-value>ddpdb.c6gcua5kvchj.us-east-2.rds.amazonaws.com</param-value>
-    </context-param>
-    
-    <context-param>
-        <param-name>RDS_PORT</param-name>
-        <param-value>3306</param-value>
-    </context-param>
-    
-  	<context-param>
-        <param-name>RDS_DB_NAME</param-name>
-        <param-value>ebdb</param-value>
-    </context-param>
-
     
 </web-app>

@@ -22,9 +22,9 @@ public final class DBConnection{
     private final static Logger LOGGER  = LoggerFactory.getLogger( NAME );
     
     
-    public DBConnection( DDPMeta ddpMeta, String driverName, String dbHost, String dbPort, String dbName ){
+    public DBConnection( DDPMeta ddpMeta ){
         this.ddpMeta            = ddpMeta;
-        this.connection         = createConnection( driverName, dbHost, dbPort, dbName );
+        this.connection         = createConnection( ddpMeta );
         this.connected          = validateConnection( );
         this.pickPrepStatement  = preparePickStatement( connection );
     }
@@ -215,25 +215,23 @@ public final class DBConnection{
 
     
     
-    protected final static Connection createConnection( String driverName, String hostname, String port, String dbName ){
+    protected final static Connection createConnection( DDPMeta ddpMeta ){
 
         LOGGER.info( "Attempting to create DB connection.");
 
         Connection connection   = null;
-        String userName         = System.getProperty("RDS_USERNAME");
-        String password         = System.getProperty("RDS_PASSWORD");
+        String userName         = ddpMeta.getDBUserName( );
+        String jdbcUrl          = "jdbc:mysql://" + ddpMeta.getDBHostname( ) + ":" + ddpMeta.getDBPort( ) + "/" + ddpMeta.getDBName( );
         
         try {
-            Class.forName( driverName );
-            
-            String jdbcUrl      = "jdbc:mysql://" + hostname + ":" + port + "/" + dbName;
+            Class.forName( ddpMeta.getDriverName( ) );
             LOGGER.info("Connecting to DB at [{}], User: [{}] ", jdbcUrl, userName );
 
-            connection          = DriverManager.getConnection(jdbcUrl, userName, password);
-            LOGGER.info("Successfully connected to database: [{}]{}", dbName, PRINT_NEWLINE);
+            connection          = DriverManager.getConnection(jdbcUrl, userName, ddpMeta.getDBPassword( ));
+            LOGGER.info("Successfully connected to database: [{}]{}", ddpMeta.getDBName( ), PRINT_NEWLINE);
             
         }catch( Exception e) { 
-            LOGGER.error("FAILED to connect to DB [{}:{}] [{}] [{}]", hostname, port, dbName, userName, e );            
+            LOGGER.error("FAILED to connect to DB [{}] [{}] using [{}]", ddpMeta.getDBName( ), jdbcUrl, userName, e );            
         }
         
         return connection;

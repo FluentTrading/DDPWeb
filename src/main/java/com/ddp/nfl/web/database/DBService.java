@@ -15,9 +15,9 @@ public final class DBService{
     private final Map<Integer, DDPPick> playerPickMap;
         
     
-    public DBService( DDPMeta ddpMeta, String driverName, String dbHost, String dbPort, String dbName ){
+    public DBService( DDPMeta ddpMeta ){
         
-        this.dbConnection   = new DBConnection( ddpMeta, driverName, dbHost, dbPort, dbName );
+        this.dbConnection   = new DBConnection( ddpMeta );
         this.teamMap        = dbConnection.loadTeams( );
         this.playerMap      = dbConnection.loadPlayers( );
         this.playerPickMap  = loadPicks( ddpMeta.getGameWeek( ),ddpMeta );
