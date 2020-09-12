@@ -44,28 +44,28 @@
 		font-weight: bold;		
 	}
 	
-	.info-bar-game-not-started {
+	.score-game-not-started {
 		color: #6F7178;	   	
 	   	padding: 2px 3px 0px 5px; /* Top, Right, Bottom, Left */
 	   	border: 0px solid #3F4148;
 	}
 		
 		
-	.info-bar-game-won{
+	.score-game-won{
 		color:#00ff00;	   	
 	   	border-right: 0px solid #3F4148;
 	   	padding: 2px 3px 0px 10px; /* Top, Right, Bottom, Left */
 	}
 	
 	
-	.info-bar-game-tied{
+	.score-game-tied{
 		color:#D6A319;	   	
 	   	border-right: 0px solid #3F4148;
 	   	padding: 2px 3px 0px 10px; /* Top, Right, Bottom, Left */
 	}
 	
 	
-	.info-bar-game-lost{
+	.score-game-lost{
 		color:#ff0000;	   	
 	   	border-right: 0px solid #3F4148;
 	   	padding: 2px 3px 0px 10px; /* Top, Right, Bottom, Left */

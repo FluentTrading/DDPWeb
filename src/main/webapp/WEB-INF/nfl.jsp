@@ -28,12 +28,12 @@
   <input id="tab1" type="radio" name="tabs" checked>
   <label for="tab1">
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <i class="fas fa-football-ball"></i>
-  	<c:if test="${requestScope[DDPUtil.RESULT_MANAGER_KEY] != null}">
-    	 ${requestScope[DDPUtil.RESULT_MANAGER_KEY].getMeta().getGameYear( )}
-    	 Week
-    	 ${requestScope[DDPUtil.RESULT_MANAGER_KEY].getMeta().getGameWeek( )}
-    </c:if>  
+  <c:if test="${requestScope[DDPUtil.RESULT_MANAGER_KEY] != null}">
+  DDP 
+  ${requestScope[DDPUtil.RESULT_MANAGER_KEY].getMeta().getGameYear( )}
+  Week
+  ${requestScope[DDPUtil.RESULT_MANAGER_KEY].getMeta().getGameWeek( )}
+  </c:if>  
   </label>
   
   <input id="tab2" type="radio" name="tabs">
@@ -102,6 +102,7 @@
     		<img src=${DDPUtil.generateMainImage()} class="backgroundImage">
     	</c:if>
     	
+    	
     	<c:forEach items="${requestScope[DDPUtil.RESULT_MANAGER_KEY].getResultList( )}" var="gameResult">
     		
     		<div class="newGridTable" >
@@ -114,14 +115,18 @@
   					
   					
   					<div class="score-cell-div">
+  						  						
   						<div class="topLeft"><img src="${gameResult.getMy1TeamIcon( )}" height="52" width="52"></div>
   						<div class="bottomLeft"><img src="${gameResult.getOpp1TeamIcon( )}" height="52" width="52"></div>
   										
-  										
-  						<div class="${gameResult.getGame1MsgInfoClass()}">		
-							<div class="topRight">${gameResult.getMy1TeamScore( )}</div>  						
-  							<div class="bottomRight">${gameResult.getOpp1TeamScore( )}</div>
+  							
+  						<div class="${gameResult.getGame1ScoreDivClass(true)}">
+							<div class="topRight">${gameResult.getMyGame1ScoreWithPossssion(true)}</div>											  							  							  						
   						</div>				
+  						
+  						<div class="${gameResult.getGame1ScoreDivClass(false)}">									  						
+  							<div class="bottomRight">${gameResult.getMyGame1ScoreWithPossssion(false)}</div>
+  						</div>
   						
 					</div>
 					
@@ -132,10 +137,14 @@
   						<div class="topLeft"><img src="${gameResult.getMy2TeamIcon( )}" height="52" width="52"></div>
   						<div class="bottomLeft"><img src="${gameResult.getOpp2TeamIcon( )}" height="52" width="52"></div>
   						
-  						<div class="${gameResult.getGame2MsgInfoClass()}">		
-  							<div class="topRight">${gameResult.getMy2TeamScore( )}</div>  						
-  							<div class="bottomRight">${gameResult.getOpp2TeamScore( )}</div>
-  						</div>																		
+  						<div class="${gameResult.getGame2ScoreDivClass(true)}">		
+							<div class="topRight">${gameResult.getMyGame2ScoreWithPossssion(true)}</div>  							
+  						</div>				
+  						
+  						<div class="${gameResult.getGame2ScoreDivClass(false)}">									  						
+  							<div class="bottomRight">${gameResult.getMyGame2ScoreWithPossssion(false)}</div>
+  						</div>
+  																	
 					</div>
 					
 					<div class="spacer-cell"></div>
@@ -144,10 +153,13 @@
   						<div class="topLeft"><img src="${gameResult.getMy3TeamIcon( )}" height="52" width="52"></div>
   						<div class="bottomLeft"><img src="${gameResult.getOpp3TeamIcon( )}" height="52" width="52"></div>
   						
-  						<div class="${gameResult.getGame3MsgInfoClass()}">
-  							<div class="topRight">${gameResult.getMy3TeamScore( )}</div>  						
-  							<div class="bottomRight">${gameResult.getOpp3TeamScore( )}</div>
-  						</div>																		
+  						<div class="${gameResult.getGame3ScoreDivClass(true)}">		
+							<div class="topRight">${gameResult.getMyGame3ScoreWithPossssion(true)}</div>  							
+  						</div>				
+  						
+  						<div class="${gameResult.getGame3ScoreDivClass(false)}">									  						
+  							<div class="bottomRight">${gameResult.getMyGame3ScoreWithPossssion( false)}</div>
+  						</div>																
 					</div>
 					
 					

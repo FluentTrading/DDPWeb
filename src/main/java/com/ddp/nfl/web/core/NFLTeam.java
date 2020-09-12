@@ -16,9 +16,9 @@ public final class NFLTeam{
    
     
     private final static String NFL_SQUARE_ICON_ID   = "";
-    private final static String NFL_LOGO_PREFIX      = "images/teams2/";
+    private final static String NFL_LOGO_PREFIX      = "images/teams/";
     private final static String NFL_LOGO_SUFFIX      = ".png";
-    private final static String MISSING_TEAM_LOGO    = NFL_LOGO_PREFIX + "Missing" + NFL_LOGO_SUFFIX;
+    private final static String MISSING_TEAM_LOGO    = NFL_LOGO_PREFIX + "missing" + NFL_LOGO_SUFFIX;
     private final static String GAME_LOST_LOGO       = NFL_LOGO_PREFIX + "loss.png";
     private final static Map<String, String> NAME_OVERRIDE_MAP = new HashMap<>();
     

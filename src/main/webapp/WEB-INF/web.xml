@@ -46,7 +46,7 @@
     
     <context-param>
         <param-name>RDS_HOST</param-name>
-        <param-value>ddp-nfl-db-instance.czsstheiepfi.us-east-1.rds.amazonaws.com</param-value>
+        <param-value>ddpdb.c6gcua5kvchj.us-east-2.rds.amazonaws.com</param-value>
     </context-param>
     
     <context-param>
@@ -56,7 +56,7 @@
     
   	<context-param>
         <param-name>RDS_DB_NAME</param-name>
-        <param-value>ddpnfldb</param-value>
+        <param-value>ebdb</param-value>
     </context-param>
 
     

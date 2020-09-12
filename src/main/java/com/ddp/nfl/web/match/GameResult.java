@@ -91,16 +91,16 @@ public final class GameResult{
     public final String getOpp3TeamIcon( ){
         return getTeamIcon( getOpp3Team( ));
     }
-    
-    
+        
         
     public final int getMy1TeamScore( ){
         NFLTeam myTeam    = getMy1Team( );
         LiveScore info    = getMatch1Score( );
-        int myTeamScore   = getScore( true, myTeam, info);
+        int myTeamScore   = getScore( true, myTeam, info );
         
         return myTeamScore;
     }
+        
     
     public final int getMy2TeamScore( ){
         NFLTeam myTeam    = getMy2Team( );
@@ -119,6 +119,32 @@ public final class GameResult{
     }
     
     
+    public final String getMyGame1ScoreWithPossssion( boolean isHome ){
+        int teamScore   = ( isHome ) ? getMy1TeamScore( ) : getOpp1TeamScore( );
+        NFLTeam myTeam  = ( isHome ) ? getMy1Team( ) : getOpp1Team( ); 
+        
+        return getMyGameScoreWithPossssion( teamScore, getMatch1Score( ), myTeam );
+    }
+    
+    
+
+    public final String getMyGame2ScoreWithPossssion( boolean isHome ){
+        int teamScore   = ( isHome ) ? getMy2TeamScore( ) : getOpp2TeamScore( );
+        NFLTeam myTeam  = ( isHome ) ? getMy2Team( ) : getOpp2Team( ); 
+        
+        return getMyGameScoreWithPossssion( teamScore, getMatch2Score( ), myTeam );
+    }
+    
+    
+
+    public final String getMyGame3ScoreWithPossssion( boolean isHome ){
+        int teamScore   = ( isHome ) ? getMy3TeamScore( ) : getOpp3TeamScore( );
+        NFLTeam myTeam  = ( isHome ) ? getMy3Team( ) : getOpp3Team( ); 
+        
+        return getMyGameScoreWithPossssion( teamScore, getMatch3Score( ), myTeam );
+    }
+    
+        
     public final int getHomeTotalScore( ) {
         return getMy1TeamScore( ) + getMy2TeamScore( ) + getMy3TeamScore( );
     }
@@ -298,19 +324,33 @@ public final class GameResult{
     public final String getMatch3TvStation( ){
         return getMatch3Score().getTVStation( );
     }
-    
-    
-    public final String getGame1MsgInfoClass( ){
-        return getMessageInfoClassName( getMatch1Score( ), getMy1TeamScore( ), getOpp1TeamScore( ) );
-    }
-    
-    public final String getGame2MsgInfoClass( ){
-        return getMessageInfoClassName( getMatch2Score( ), getMy2TeamScore( ), getOpp2TeamScore( ) );
-    }
         
-    public final String getGame3MsgInfoClass( ){
-        return getMessageInfoClassName( getMatch3Score( ), getMy3TeamScore( ), getOpp3TeamScore( ) );
-    }   
+    
+    public final String getGame1ScoreDivClass( boolean isHome ){
+        if( isHome ) {
+            return getScoreDivClassName( getMatch1Score( ), getMy1TeamScore( ), getOpp1TeamScore( ) );
+        }else {
+            return getScoreDivClassName( getMatch1Score( ), getOpp1TeamScore( ), getMy1TeamScore( ) );
+        }
+    }
+    
+    
+    public final String getGame2ScoreDivClass( boolean isHome ){
+        if( isHome ) {
+            return getScoreDivClassName( getMatch2Score( ), getMy2TeamScore( ), getOpp2TeamScore( ) );
+        }else {
+            return getScoreDivClassName( getMatch2Score( ), getOpp2TeamScore( ), getMy2TeamScore( ) );
+        }
+    }
+    
+    
+    public final String getGame3ScoreDivClass( boolean isHome ){
+        if( isHome ) {
+            return getScoreDivClassName( getMatch3Score( ), getMy3TeamScore( ), getOpp3TeamScore( ) );
+        }else {
+            return getScoreDivClassName( getMatch3Score( ), getOpp3TeamScore( ), getMy3TeamScore( ) );
+        }
+    }
     
     
     public final String getGame1ResultDivClasss( ){
@@ -335,6 +375,27 @@ public final class GameResult{
     }
     
     
+    protected final String getMyGameScoreWithPossssion( int teamScore, LiveScore score, NFLTeam myTeam ){
+        if( GameState.isPlaying(score) ){
+            if( teamHasPossession( myTeam, score ) ) {
+                if( score.isRedzone( ) ) {
+                    return "<div class=\"blink_me\"><i class=\"fas fa-football-ball fa-xs\"> </i> " + teamScore + "</div>";        
+                }else {
+                    return "<i class=\"fas fa-football-ball fa-xs\"> </i> " + teamScore;
+                }
+                
+            //Playing but do not have possession.    
+            }else {
+                return String.valueOf(  teamScore );    
+            }
+            
+        }else {
+            return String.valueOf(  teamScore );
+        }
+                
+    }
+    
+    
     //If home team has possession, adds a blinking green dot next to the name
     protected final String getTeamWithPossessionBlinker( NFLTeam team, LiveScore liveScore ){
         
@@ -352,6 +413,8 @@ public final class GameResult{
         return displayName;
         
     }
+    
+   
     
     
     protected final String getGameWinnerIcon( LiveScore liveScore, int homeScore, NFLTeam home, int awayScore, NFLTeam away ){
@@ -385,19 +448,22 @@ public final class GameResult{
     
     
     
-    protected final String getMessageInfoClassName( LiveScore liveScore, int homeScore, int awayScore ){
+
+    
+    
+    protected final String getScoreDivClassName( LiveScore liveScore, int homeScore, int awayScore ){
     
         if( GameState.isNotStarted( liveScore ) ){
-            return "info-bar-game-not-started";
+            return "score-game-not-started";
         
         }else if( homeScore == awayScore ){
-            return "info-bar-game-tied";
+            return "score-game-tied";
         
         }else if( homeScore > awayScore ){
-            return "info-bar-game-won";
+            return "score-game-won";
         
         }else {        
-            return "info-bar-game-lost";
+            return "score-game-lost";
         }
         
     }

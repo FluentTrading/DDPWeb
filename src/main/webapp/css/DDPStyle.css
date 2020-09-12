@@ -13,7 +13,7 @@ body {
   font: 20px/1 'Open Sans', sans-serif;
   font-family: 'Open Sans', sans-serif;
   color: #000000;
-  background: #6F7178; /* Color of the rest of the page */
+  background: #ffffff;/* 6F7178; Color of the rest of the page */
   padding: 0px 0px 0px 0px; /* Top, Right, Bottom, Left */ 
 }
 
@@ -43,7 +43,7 @@ label {
   padding: 20px 25px;
   font-weight: 600;
   text-align: center;
-  color: #ffffff;
+  color: #6F7178;
   background: #000000;
   border: 0px solid transparent;
 }
@@ -68,10 +68,10 @@ label:hover {
 
 /*Controls the properties of the tab which is selected */
 input:checked + label {
-  color: #0074D9;
+  color: #ffffff;
   background: #000000;
   border: 0px solid #ddd;
-  border-top: 0px solid #0074D9;
+  border-top: 0px solid #ffffff;
   border-bottom: 0px solid #fff;
 }
 
@@ -326,15 +326,14 @@ input:checked + label {
 	}
 	
 	
-	
-	.blinking{
-    	animation:blinkingText 1.2s infinite;
+	.blink_me{
+  		animation: blinker 1s linear infinite;
 	}
 	
-	@keyframes blinkingText{
-    	0%{     color: #000;   		}
-    	49%{    color: #000; 		}
-    	60%{    color: transparent; }
-    	99%{    color:transparent;  }
-    	100%{   color: #000;   		}
+	@keyframes blinker {
+  		50% {
+    		opacity: 0;
+  		}
 	}
+
+

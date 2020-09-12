@@ -1,12 +1,11 @@
-CREATE TABLE `ddpnfldb`.`DDPPlayer` (
+CREATE TABLE `DDPPlayer` (
   `Id` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(45) NOT NULL,
   `NickName` VARCHAR(45) NOT NULL,
   `Deposit` INT NOT NULL,
   PRIMARY KEY (`Id`));
   
-  
-INSERT INTO `ddpnfldb`.`DDPPlayer`
+INSERT INTO `DDPPlayer`
 VALUES
 (1, "Ankur", "Shola Ka Anus", 100),
 (2, "Raj", "DDP Cyclops", 100),
@@ -20,11 +19,10 @@ VALUES
   
   
   
-
 CREATE TABLE `DDPPick` (
-  `Year` int(11) NOT NULL,
-  `Week` int(11) NOT NULL,
-  `PickOrder` int(11) NOT NULL,
+  `Year` int NOT NULL,
+  `Week` int NOT NULL,
+  `PickOrder` int NOT NULL,
   `Player` varchar(45) NOT NULL,
   `Team1` varchar(45) NOT NULL,
   `Team2` varchar(45) NOT NULL,
@@ -34,8 +32,8 @@ CREATE TABLE `DDPPick` (
 
 
 
-CREATE TABLE `ddpnfldb`.`NFLTeam` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `NFLTeam` (
+  `Id` int NOT NULL AUTO_INCREMENT,
   `Team` varchar(50) NOT NULL,
   `NickName` varchar(15) NOT NULL,
   `Division` varchar(15) NOT NULL,
@@ -45,7 +43,7 @@ CREATE TABLE `ddpnfldb`.`NFLTeam` (
 ) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1 COMMENT='Table to store information about teams';
 
 
-INSERT INTO `ddpnfldb`.`NFLTeam`
+INSERT INTO `NFLTeam`
 VALUES
 (1, 'Cardinals', 'ARI', 'NFC', 'West', 'Arizona'),
 (2, 'Falcons', 'ATL', 'NFC', 'South', 'Atlanta'),
@@ -69,21 +67,19 @@ VALUES
 (20, 'Saints', 'NO', 'NFC', 'South', 'New Orleans'),
 (21, 'Giants', 'NYG', 'NFC', 'East', 'New York'),
 (22, 'Jets', 'NYJ', 'AFC', 'East', 'New York'),
-(23, 'Raiders', 'OAK', 'AFC', 'West', 'Oakland'),
+(23, 'Raiders', 'LV', 'AFC', 'West', 'Las Vegas'),
 (24, 'Eagles', 'PHI', 'NFC', 'East', 'Philadelphia'),
 (25, 'Steelers', 'PIT', 'AFC', 'North', 'Pittsburgh'),
-(26, 'Chargers', 'SD', 'AFC', 'West', 'San Diego'),
+(26, 'Chargers', 'LA', 'AFC', 'West', 'Los Angeles'),
 (27, '49ers', 'SF', 'NFC', 'West', 'San Francisco'),
 (28, 'Seahawks', 'SEA', 'NFC', 'West', 'Seattle'),
-(29, 'Rams', 'STL', 'NFC', 'West', 'St. Louis'),
+(29, 'Rams', 'LA', 'NFC', 'West', 'Los Angeles'),
 (30, 'Buccaneers', 'TB', 'NFC', 'South', 'Tampa Bay'),
 (31, 'Titans', 'TEN', 'AFC', 'South', 'Tennessee'),
 (32, 'Redskins', 'WAS', 'NFC', 'East', 'Washington');
 
 
-
-
-INSERT INTO `ddpnfldb`.`DDPPick`
+INSERT INTO `DDPPick`
 (`Year`, `Week`, `PickOrder`, `Player`, `Team1`, `Team2`, `Team3`)
 VALUES
 (2020, 1, 1, "Vic", "seahawks", "lions", "giants" );

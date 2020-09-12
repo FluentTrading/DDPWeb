@@ -34,11 +34,24 @@ http://icoconvert.com/
 
 
 ##### 2020
-1. Indicate red-zone by blinking the score
-2. Show the ball for possession.
-3. Check the commentary
+1. Show the ball for possession. (Is it too big, can we replace with something smaller)?
+2. Indicate red-zone by blinking the score OR can we overlay the dancing man (make it transparent) on top of the cell?
+
+4. How to size the page based on device
+5. How to put the focus of the page on the game section
+
+3. Check the commentary in row 3.
 4. Check how the page looks for live games
 5. Delete unused code, start from GameResult class
+6. Add a splash screen?
+
+
+How to set up aws environment:
+1. Create a new environment in elastic beanstalk.
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/TUT_WebAppWithRDS.html
+2. While configuring create a MySQL DB.
+3. Create the tables using the sql template in resources/schema/SQL.txt
+4. Upload the war file.
 
 
 
