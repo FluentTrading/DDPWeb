@@ -228,28 +228,28 @@ public final class GameResult{
     
     
     public final String getGame1FinishedMessage( ){
-        return getGameFinishedMessage( getMy1TeamScore( ), getOpp1TeamScore( ), getMatch1Score( ) );
+        return getGameFinishedMessage( getMy1Team( ), getMy1TeamScore( ), getOpp1TeamScore( ) );
     }
     
     
     public final String getGame2FinishedMessage( ){
-        return getGameFinishedMessage(  getMy2TeamScore( ), getOpp2TeamScore( ),getMatch2Score( ) );
+        return getGameFinishedMessage( getMy2Team( ), getMy2TeamScore( ), getOpp2TeamScore( ) );
     }
     
     
     public final String getGame3FinishedMessage( ){
-        return getGameFinishedMessage(  getMy3TeamScore( ), getOpp3TeamScore( ),getMatch3Score( ) );
+        return getGameFinishedMessage( getMy3Team( ), getMy3TeamScore( ), getOpp3TeamScore( ) );
     }
     
-    public final String getGameFinishedMessage( int myScore, int awayScore, LiveScore score ){
-        if( score == null ) return "Missing";
+    
+    public final String getGameFinishedMessage( NFLTeam myTeam, int myScore, int awayScore ){
                 
         if( myScore > awayScore ){
-            return score.getHomeTeam( ).getCamelCaseName( ) + " won by " + (myScore-awayScore);
+            return myTeam.getCamelCaseName( ) + " won by " + (myScore-awayScore);
         }else if( myScore == awayScore ){
             return  "Game tied";
         }else {
-            return score.getAwayTeam( ).getCamelCaseName( ) + " lost by " + Math.abs(myScore-awayScore);
+            return myTeam.getCamelCaseName( ) + " lost by " + Math.abs(myScore-awayScore);
         }
     }
     
