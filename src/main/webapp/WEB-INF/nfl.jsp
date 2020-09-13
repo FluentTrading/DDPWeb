@@ -9,7 +9,7 @@
 <head>
 	
 	<meta charset="UTF-8">
-	<meta http-equiv="refresh" content="2500"/>
+	<meta http-equiv="refresh" content="25"/>
 	<meta http-equiv="Content-Language" content="en">
 	<meta name="viewport" content="width=device-width, initial-scale=1" /> 
 	
@@ -210,7 +210,7 @@
   				</c:if>
   				  				
   				<c:if test="${gameResult.isGame1Playing()}">
-  					<div class="result-cell-live">
+  					<div class="${gameResult.getGame1ResultDivClasss( )}">
   						<div class="rightQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Quarter( gameResult )}</div>
   						<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Drive( gameResult )}</div>					
   						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Summary( gameResult )}  			
@@ -233,7 +233,7 @@
   				
   				
   				<c:if test="${gameResult.isGame2Playing()}">
-  					<div class="result-cell-live">
+  					<div class="${gameResult.getGame2ResultDivClasss( )}">
   						<div class="rightQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Quarter( gameResult )}</div>
   						<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Drive( gameResult )}</div>					
   						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Summary( gameResult )}  			
@@ -256,7 +256,7 @@
   				
   				
   				<c:if test="${gameResult.isGame3Playing()}">
-  					<div class="result-cell-live">
+  					<div class="${gameResult.getGame3ResultDivClasss( )}">
   						<div class="rightQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Quarter( gameResult )}</div>
   						<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Drive( gameResult )}</div>					
   						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Summary( gameResult )}  			

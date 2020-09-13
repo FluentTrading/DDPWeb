@@ -1,3 +1,4 @@
+
 Thursday Before the game
 ==================================================
 	1) Ensure refresh in nfl.jsp is set to 25 seconds.
@@ -23,15 +24,7 @@ http://www.nfl.com/liveupdate/scores/scores.json points to next week on Wed.
 
 
 ##### 2020
-1. Show the ball for possession. (Is it too big, can we replace with something smaller)?
-2. Indicate red-zone by blinking the score OR can we overlay the dancing man (make it transparent) on top of the cell?
-Can we show score per quarter?
-
-3. Check the commentary in row 3.
-4. Check how the page looks for live games
-5. Delete unused code, start from GameResult class
-6. Add a splash screen?
-
+NOTE: Not running AnalyticsManager (thread is not started as there i sno analysis data being sent at http://www.nfl.com/liveupdate/game-center/2020091303/2020091303_gtd.json)
 
 
 

@@ -461,6 +461,9 @@ public final class GameResult{
         if( GameState.isNotStarted( liveScore ) ){
             return "score-game-not-started";
         
+        }else if( GameState.isFinished( liveScore ) ){
+            return "score-game-finished";
+            
         }else if( homeScore == awayScore ){
             return "score-game-tied";
         
@@ -478,7 +481,10 @@ public final class GameResult{
         
         if( GameState.isNotStarted( liveScore ) ){
             return "result-cell-not-started";
-        
+            
+        }else if( GameState.isFinished( liveScore ) ){
+            return "result-cell-finished";
+             
         }else if( homeScore == awayScore ){
             return "result-cell-tied";
         

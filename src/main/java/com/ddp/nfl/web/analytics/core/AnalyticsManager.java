@@ -36,8 +36,8 @@ public final class AnalyticsManager{
 
     
     public final void start( ){
-        executor.scheduleAtFixedRate( gameThread, ZERO, INTERVAL, TimeUnit.MINUTES);
-        LOGGER.info( "Successfully created analytics thread to run everuy {} minutes.", INTERVAL );
+      //executor.scheduleAtFixedRate( gameThread, ZERO, INTERVAL, TimeUnit.MINUTES);
+      //LOGGER.info( "Successfully created analytics thread to run every {} minute.", INTERVAL );
     }
     
     
@@ -280,6 +280,11 @@ public final class AnalyticsManager{
         }
    
     }    
+    
+    public static void main( String[] args ) {
+        AnalyticsManager manager = new AnalyticsManager( );
+        manager.start( );
+    }
     
     
 }

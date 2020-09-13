@@ -106,7 +106,13 @@
 	   	padding: 2px 3px 0px 5px; /* Top, Right, Bottom, Left */
 	   	border: 0px solid #3F4148;
 	}
-		
+	
+	
+	.score-game-finished{
+		color: #6F7178;
+	   	border-right: 0px solid #3F4148;
+	   	padding: 2px 3px 0px 10px; /* Top, Right, Bottom, Left */
+	}	
 		
 	.score-game-won{
 		color:#00ff00;	   	
@@ -128,7 +134,6 @@
 	   	padding: 2px 3px 0px 10px; /* Top, Right, Bottom, Left */
 	}
 			
-	
 
 	.topRight {
 	   	position:absolute;
@@ -140,8 +145,6 @@
     	padding:10px 0px 0px 0px; /* Top, Right, Bottom, Left */    	
 	}
 	
-
-		
 	
 	.bottomRight {
     	position:absolute;
@@ -189,7 +192,7 @@
   		background-color: #3F4148;
   		border: 0px solid #ffffff;
 		text-align: left;
-		font-size: 16px;
+		font-size: 14px;
 		font-weight: plain;
   		font-family: 'Open Sans', sans-serif;  		
 	}
@@ -201,9 +204,10 @@
   		font-weight: bold;
   		font-size: 20px;
   		text-align: center;
+  		color: #ffffff;
   		background-color: #3F4148;
   		padding: 2px 25px 2px 25px; /* Top, Right, Bottom, Left */
-  		border: 0px solid #ff8000;
+  		border: 0px solid #0000ff;
 	}
 	
 	
@@ -216,17 +220,16 @@
     	padding: 2px 0px 2px 5px; /* Top, Right, Bottom, Left */
 	}
 	
-		
-	.result-cell-live{
+	
+	.result-cell-finished{
 		display: table-cell;
   		width: 6%;
   		position: relative;
-  		color: #000000;
+  		color: #6F7178;
     	background-color: #3F4148;
     	padding: 2px 0px 2px 5px; /* Top, Right, Bottom, Left */
-	}	
-		
-		
+	}
+			
 	.result-cell-finished{
 		display: table-cell;
   		width: 6%;
@@ -268,12 +271,12 @@
 	
 	.leftDriveInfo{
     	float:left;
-    	padding: 0px 2px 0px 20px; /* Top, Right, Bottom, Left */    
+    	padding: 0px 0px 0px 0px; /* Top, Right, Bottom, Left */    
 	}
 	
 	.rightQuarterInfo {
 	   	float:right;
-	   	padding: 0px 2px 0px 0px; /* Top, Right, Bottom, Left */
+	   	padding: 0px 15px 0px 0px; /* Top, Right, Bottom, Left */
 	}
 	
 
