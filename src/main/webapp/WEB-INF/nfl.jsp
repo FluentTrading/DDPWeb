@@ -11,6 +11,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="refresh" content="25"/>
 	<meta http-equiv="Content-Language" content="en">
+	<meta name="format-detection" content="telephone=no">
 	<meta name="viewport" content="width=device-width, initial-scale=1" /> 
 	
 	<title>|| DDP NFL Web ||</title>
@@ -47,7 +48,7 @@
   
   <input id="tab4" type="radio" name="tabs">
   <label for="tab4">
-  <i class="fas fa-award"></i> Archive
+  <i class="fas fa-award"></i> 2019
   </label>
         
   <section id="content1">
