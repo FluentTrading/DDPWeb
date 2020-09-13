@@ -98,8 +98,8 @@ public final class LiveScoreParser{
         int awayScore        = away.getTotalScore( );
             
         GameState gameState  = GameState.parseState( rawQuarterStr );
-        LiveScore liveScore  = new LiveScore( gameId, schedule, gameState, homeScore, 
-                                                  awayScore, teamPossession, timeRemaining, isRedzone, rawQuarterStr,
+        LiveScore liveScore  = new LiveScore( gameId, schedule, gameState, homeScore, home,
+                                                  awayScore, away, teamPossession, timeRemaining, isRedzone, rawQuarterStr,
                                                   yl, togo, down, bp, stadium, tvStation, note, summ);
 
         return liveScore;

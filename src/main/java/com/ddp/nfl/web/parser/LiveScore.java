@@ -5,6 +5,7 @@ import static com.ddp.nfl.web.util.DDPUtil.*;
 import org.slf4j.*;
 import java.time.*;
 import com.ddp.nfl.web.analytics.core.*;
+import com.ddp.nfl.web.analytics.home.*;
 import com.ddp.nfl.web.core.*;
 import com.ddp.nfl.web.schedule.*;
 
@@ -18,6 +19,9 @@ public final class LiveScore{
     private final GameState gameState;
     
     private final int homeScore;
+    private final TeamInfo homeTeamInfo;
+    private final TeamInfo awayTeamInfo;
+    
     private final int awayScore;
     
     private final String teamPossession;
@@ -40,7 +44,7 @@ public final class LiveScore{
     
    
     public LiveScore(  String gameId, Schedule schedule, GameState gameState,
-                            int homeScore, int awayScore,
+                            int homeScore, TeamInfo homeTeamInfo, int awayScore, TeamInfo awayTeamInfo,
                             String teamPossession, String timeRemaining, 
                             boolean isRedzone, String rawQuarterStr,
                             String yl, int togo, int down, int bp, String stadium, String tvStation, String note, SummaryManager summary ){
@@ -50,7 +54,9 @@ public final class LiveScore{
         this.gameState      = gameState;
                 
         this.homeScore      = homeScore;
+        this.homeTeamInfo   = homeTeamInfo;
         this.awayScore      = awayScore;
+        this.awayTeamInfo   = awayTeamInfo;
         this.timeRemaining  = timeRemaining;
         this.teamPossession = teamPossession;
         this.isRedzone      = isRedzone;
@@ -93,9 +99,19 @@ public final class LiveScore{
         return homeScore;
     }
 
+    
+    public final TeamInfo getHomeTeamInfo( ){
+        return homeTeamInfo;
+    }
+    
         
     public final int getAwayScore( ){
         return awayScore;
+    }
+    
+    
+    public final TeamInfo getAwayTeamInfo( ){
+        return awayTeamInfo;
     }
     
     

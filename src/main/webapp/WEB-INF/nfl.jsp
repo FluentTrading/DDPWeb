@@ -11,6 +11,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="refresh" content="2500"/>
 	<meta http-equiv="Content-Language" content="en">
+	<meta name="viewport" content="width=device-width, initial-scale=1" /> 
 	
 	<title>|| DDP NFL Web ||</title>
 	<link rel="stylesheet" type="text/css" href="css/DDPStyle.css">
@@ -28,8 +29,7 @@
   <input id="tab1" type="radio" name="tabs" checked>
   <label for="tab1">
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <c:if test="${requestScope[DDPUtil.RESULT_MANAGER_KEY] != null}">
-  DDP 
+  <c:if test="${requestScope[DDPUtil.RESULT_MANAGER_KEY] != null}">  
   ${requestScope[DDPUtil.RESULT_MANAGER_KEY].getMeta().getGameYear( )}
   Week
   ${requestScope[DDPUtil.RESULT_MANAGER_KEY].getMeta().getGameWeek( )}
@@ -48,7 +48,7 @@
   
   <input id="tab4" type="radio" name="tabs">
   <label for="tab4">
-  <i class="fas fa-award"></i> Archive 2019
+  <i class="fas fa-award"></i> 2019
   </label>
         
   <section id="content1">
@@ -116,11 +116,11 @@
   					
   					<div class="score-cell-div">
   						  						
-  						<div class="topLeft"><img src="${gameResult.getMy1TeamIcon( )}" height="52" width="52"></div>
+  						<div class="topLeft"><img src="${gameResult.getMy1TeamIcon( )}" height="52" width="52"></div>  						
   						<div class="bottomLeft"><img src="${gameResult.getOpp1TeamIcon( )}" height="52" width="52"></div>
   										
   							
-  						<div class="${gameResult.getGame1ScoreDivClass(true)}">
+  						<div class="${gameResult.getGame1ScoreDivClass(true)}">  							
 							<div class="topRight">${gameResult.getMyGame1ScoreWithPossssion(true)}</div>											  							  							  						
   						</div>				
   						
@@ -129,7 +129,7 @@
   						</div>
   						
 					</div>
-					
+ 					
 							
 					<div class="spacer-cell"></div>
 								
@@ -182,11 +182,10 @@
   				
   				<c:if test="${gameResult.isGame1NotStarted()}">
   					<div class="result-cell-not-started">
-  						<div class="leftDriveInfo">${gameResult.getGame1NotStartedMessage( )}</div>
+  						${gameResult.getGame1NotStartedMessage( )}
   					</div>
   				</c:if>
-  				
-  				
+  				  				
   				<c:if test="${gameResult.isGame1Playing()}">
   					<div class="result-cell-live">
   						<div class="rightQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Quarter( gameResult )}</div>
@@ -198,15 +197,14 @@
   				
   				<c:if test="${gameResult.isGame1Finished()}">
   					<div class="${gameResult.getGame1ResultDivClasss()}">
-  						<div class="leftDriveInfo">${gameResult.getGame1FinishedMessage( )}</div>
+  						${gameResult.getGame1FinishedMessage( )}
   					</div>
   				</c:if>
   				
-				
-				
+  			
 				<c:if test="${gameResult.isGame2NotStarted()}">
   					<div class="result-cell-not-started">
-  						<div class="leftDriveInfo">${gameResult.getGame2NotStartedMessage( )}</div>
+  						${gameResult.getGame2NotStartedMessage( )}
   					</div>
   				</c:if>
   				
@@ -222,15 +220,14 @@
   				
   				<c:if test="${gameResult.isGame2Finished()}">
   					<div class="${gameResult.getGame2ResultDivClasss()}">
-  						<div class="leftDriveInfo">${gameResult.getGame2FinishedMessage( )}</div>
+  						${gameResult.getGame2FinishedMessage( )}
   					</div>
   				</c:if>
   				
   				
-				
 				<c:if test="${gameResult.isGame3NotStarted()}">
   					<div class="result-cell-not-started">
-  						<div class="leftDriveInfo">${gameResult.getGame3NotStartedMessage( )}</div>
+  						${gameResult.getGame3NotStartedMessage( )}
   					</div>
   				</c:if>
   				
@@ -246,11 +243,10 @@
   				
   				<c:if test="${gameResult.isGame3Finished()}">
   					<div class="${gameResult.getGame3ResultDivClasss()}">
-  						<div class="leftDriveInfo">${gameResult.getGame3FinishedMessage( )}</div>
+  						${gameResult.getGame3FinishedMessage( )}
   					</div>
   				</c:if>
-  				
-  				
+  				  				
 
   			</div>
     
@@ -263,7 +259,7 @@
    	
    			<div class="statsRow">
   		
-  				<div class="totalScore">
+  				<div class="stats-row-first-cell-empty">
   					<!-- ${gameResult.getAllTotalHomeScore( )} -->
   				</div>
   				  		

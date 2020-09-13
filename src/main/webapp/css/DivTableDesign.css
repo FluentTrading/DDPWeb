@@ -1,6 +1,6 @@
 	
 	div.newGridTable {
-		background-color: #ffffff;	
+		background-color: #3F4148;	
   		border-collapse: collapse;
   		display: table;
   		width: 100%;
@@ -18,12 +18,12 @@
 	
 	.player-icon-cell {
 		display: table-cell;
-  		width: 5%;
+  		width: 1%;
   		background-color: #3F4148;
     	border: 0px solid #00ff00;
-    	padding: 15px 0px 15px 10px; /* Top, Right, Bottom, Left */    	
-    	
+    	padding: 15px 0px 15px 10px; /* Top, Right, Bottom, Left */
 	}
+	
 	
 	.spacer-cell{
 		display: table-cell;
@@ -32,17 +32,19 @@
     	background-color: #3F4148;
     	padding: 15px 5px 0px 5px; /* Top, Right, Bottom, Left */
 	}	
-
+	
 
 	.score-cell-div{
 		display: table-cell;
-  		width: 15%;
+  		width: 6%;
   		background-color: #3F4148;
   		position: relative;
 		border: 0px solid red;
 		font-size: 34px;
-		font-weight: bold;		
+		font-weight: bold;
+		padding: 2px 0px 2px 1px; /* Top, Right, Bottom, Left */    			
 	}
+	
 	
 	.score-game-not-started {
 		color: #6F7178;	   	
@@ -78,6 +80,7 @@
     	padding: 0px 10px 0px 0px; /* Top, Right, Bottom, Left */
     	top:0;
     	left:0;
+    	border: 0px solid blue;
 	}
 
 	
@@ -89,6 +92,18 @@
     	padding:10px 10px 0px 0px; /* Top, Right, Bottom, Left */
     	border: 0px solid red;
 	}
+	
+	
+	.topRightQuarter{
+	   	position:absolute;
+    	margin:0;    	
+    	top:0;
+    	right:0;    	
+    	padding:10px 10px 0px 0px; /* Top, Right, Bottom, Left */
+    	border: 0px solid red;
+	}
+	
+	
 		
 	.bottomLeft {
     	position:absolute;
@@ -127,101 +142,98 @@
 
 	.secondRow{
 	  	display: table-row;
-  		width: 100%;
-  		height: 20px;
-  		  			
   		color:#000000;
   		background-color: #3F4148;
   		border: 0px solid #ffffff;
 		text-align: left;
 		font-size: 16px;
 		font-weight: plain;
-  		font-family: 'Open Sans', sans-serif;
+  		font-family: 'Open Sans', sans-serif;  		
 	}
 			  			  
 		  	
   	.totalScore{
   		display: table-cell;
-  		width: 3%;
+  		width: 1%;
   		font-weight: bold;
-  		font-size: 21px;
+  		font-size: 20px;
   		text-align: center;
   		background-color: #3F4148;
-  		padding: 0px 20px 10px 14px; /* Top, Right, Bottom, Left */
+  		padding: 2px 25px 2px 25px; /* Top, Right, Bottom, Left */
   		border: 0px solid #ff8000;
 	}
 	
 	
 	.result-cell-not-started{
 		display: table-cell;
-  		width: 10%;
+  		width: 6%;
   		position: relative;
   		color: #6F7178;
     	background-color: #3F4148;
-    	padding: 11px 2px 0px 0px; /* Top, Right, Bottom, Left */
+    	padding: 2px 0px 2px 5px; /* Top, Right, Bottom, Left */
 	}
 	
 		
 	.result-cell-live{
 		display: table-cell;
-  		width: 10%;
+  		width: 6%;
   		position: relative;
   		color: #000000;
     	background-color: #3F4148;
-    	padding: 11px 2px 0px 0px; /* Top, Right, Bottom, Left */
+    	padding: 2px 0px 2px 5px; /* Top, Right, Bottom, Left */
 	}	
 		
 		
 	.result-cell-finished{
 		display: table-cell;
-  		width: 10%;
+  		width: 6%;
   		position: relative;
   		color: #6F7178;
     	background-color: #3F4148;
-    	padding: 11px 2px 0px 0px; /* Top, Right, Bottom, Left */
+    	padding: 2px 0px 2px 5px; /* Top, Right, Bottom, Left */
 	}
 	
 	.result-cell-won{
 		display: table-cell;
-  		width: 10%;
+  		width: 6%;
   		position: relative;
     	color: #00ff00;
     	background-color: #3F4148;    	
-    	padding: 11px 2px 0px 0px; /* Top, Right, Bottom, Left */
+    	border: 0px solid #ffffff;    	
+    	padding: 2px 0px 2px 5px; /* Top, Right, Bottom, Left */
 	}
 	
 	.result-cell-lost{
 		display: table-cell;
-  		width: 10%;
+  		width: 6%;
   		position: relative;
     	color: #ff0000;
-    	background-color: #3F4148;    	
-    	padding: 11px 2px 0px 0px; /* Top, Right, Bottom, Left */
+    	background-color: #3F4148;
+    	padding: 2px 0px 2px 5px; /* Top, Right, Bottom, Left */
 	}	
 	
 	
 	.result-cell-tied{
 		display: table-cell;
-  		width: 10%;
+  		width: 6%;
   		position: relative;
     	color: #D6A319;
-    	background-color: #3F4148;    	
-    	padding: 11px 2px 0px 0px; /* Top, Right, Bottom, Left */
+    	background-color: #3F4148;
+    	padding: 2px 0px 2px 5px; /* Top, Right, Bottom, Left */
 	}
 	
 	
 	.leftDriveInfo{
     	float:left;
-    	font-weight: bold;
     	padding: 0px 2px 0px 20px; /* Top, Right, Bottom, Left */    
 	}
 	
 	.rightQuarterInfo {
 	   	float:right;
-	   	font-weight: bold;
 	   	padding: 0px 2px 0px 0px; /* Top, Right, Bottom, Left */
 	}
 	
+
 	/*--------------------------------------- */
 	/*--------------- Stats Row --------------*/
 	/*--------------------------------------- */
@@ -237,6 +249,18 @@
   		font-family: 'Open Sans', sans-serif;
   		
   	}
+  	
+  	
+  	.stats-row-first-cell-empty{
+  		display: table-cell;
+  		width: 1%;
+  		font-weight: bold;
+  		font-size: 20px;
+  		text-align: center;
+  		background-color: #3F4148;
+  		padding: 2px 25px 2px 20px; /* Top, Right, Bottom, Left */
+  		border: 0px solid #ff0080;
+	}
 	
 	
 	.stats-cell{
