@@ -1,5 +1,9 @@
 # DDPWeb
 
+## Setup RDS
+1. Follow the link to set up RDS https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/TUT_WebAppWithRDS.html
+2. Create tables using the sql template in resources/schema/SQL.txt
+
 
 ## Setup and deploy to Heroku using webrunner
 https://devcenter.heroku.com/articles/java-webapp-runner

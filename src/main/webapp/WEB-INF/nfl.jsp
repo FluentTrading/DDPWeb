@@ -48,7 +48,7 @@
   
   <input id="tab4" type="radio" name="tabs">
   <label for="tab4">
-  <i class="fas fa-award"></i> 2019
+  <i class="fas fa-award"></i> Archive
   </label>
         
   <section id="content1">
@@ -116,11 +116,11 @@
   					
   					<div class="score-cell-div">
   						  						
-  						<div class="topLeft"><img src="${gameResult.getMy1TeamIcon( )}" height="52" width="52"></div>  						
+  						<div class="topLeft"><img src="${gameResult.getMy1TeamIcon( )}" height="52" width="52"></div>  						  	
   						<div class="bottomLeft"><img src="${gameResult.getOpp1TeamIcon( )}" height="52" width="52"></div>
   										
   							
-  						<div class="${gameResult.getGame1ScoreDivClass(true)}">  							
+  						<div class="${gameResult.getGame1ScoreDivClass(true)}">  							  						
 							<div class="topRight">${gameResult.getMyGame1ScoreWithPossssion(true)}</div>											  							  							  						
   						</div>				
   						
@@ -219,7 +219,7 @@
   				
   				
   				<c:if test="${gameResult.isGame2Finished()}">
-  					<div class="${gameResult.getGame2ResultDivClasss()}">
+  					<div class="${gameResult.getGame2ResultDivClasss()}">  						
   						${gameResult.getGame2FinishedMessage( )}
   					</div>
   				</c:if>
