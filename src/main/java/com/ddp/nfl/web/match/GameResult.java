@@ -222,7 +222,7 @@ public final class GameResult{
         if( score == null ) return "Missing";
         return score.getAwayTeam( ).getNickName( ) + " at " +
                 score.getHomeTeam( ).getNickName( ) + " " +
-                score.getGameTime( );
+                score.getGameTime( ) + " on " + score.getTVStation( );
 
     }
     

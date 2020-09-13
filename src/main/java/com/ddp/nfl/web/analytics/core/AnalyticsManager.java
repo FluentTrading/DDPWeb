@@ -72,7 +72,7 @@ public final class AnalyticsManager{
         return result.getMatch3Score( ).getDisplayableQuarter( );
     }
     
-        
+    
     //-------- Game Summary --------
     public final String getGame1Summary( GameResult result ){
         return getGameSummary( result.getGame1Quarter( ), result.getMy1Team( ), result.getMatch1Score( ) );

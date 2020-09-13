@@ -12,7 +12,7 @@
 	
 	.scoreRow{
   		display: table-row;  		  		
-  		border: 0px solid #00ff00;  	
+  		border: 0px solid green;		
 	}
 
 	
@@ -21,7 +21,7 @@
   		width: 1%;
   		background-color: #3F4148;
     	border: 0px solid #00ff00;
-    	padding: 15px 10px 15px 10px; /* Top, Right, Bottom, Left */
+    	padding: 15px 5px 15px 10px; /* Top, Right, Bottom, Left */
 	}
 
 	
@@ -32,7 +32,7 @@
   		width: 5%;
   		background-color: #3F4148;  		
 		border: 0px solid red;		
-		padding: 2px 0px 2px 1px; /* Top, Right, Bottom, Left */    			
+		padding: 5px 0px 2px 1px; /* Top, Right, Bottom, Left */    			
 	}
 	
 	
@@ -60,7 +60,7 @@
 	.quarter-score-cell-div{
 		display: table-cell;
 		position: relative;
-  		width: 6%;
+  		width: 8%;
   		color:#6F7178;  		
   		background-color: #3F4148;  		
   		font-size: 15px;
@@ -217,7 +217,7 @@
   		position: relative;
   		color: #6F7178;
     	background-color: #3F4148;
-    	padding: 2px 0px 2px 5px; /* Top, Right, Bottom, Left */
+    	padding: 2px 0px 2px 0px; /* Top, Right, Bottom, Left */
 	}
 	
 	
@@ -227,7 +227,7 @@
   		position: relative;
   		color: #6F7178;
     	background-color: #3F4148;
-    	padding: 2px 0px 2px 5px; /* Top, Right, Bottom, Left */
+    	padding: 2px 0px 2px 0px; /* Top, Right, Bottom, Left */
 	}
 			
 	.result-cell-finished{
@@ -236,7 +236,7 @@
   		position: relative;
   		color: #6F7178;
     	background-color: #3F4148;
-    	padding: 2px 0px 2px 5px; /* Top, Right, Bottom, Left */
+    	padding: 2px 0px 2px 0px; /* Top, Right, Bottom, Left */
 	}
 	
 	.result-cell-won{
@@ -246,7 +246,7 @@
     	color: #00ff00;
     	background-color: #3F4148;    	
     	border: 0px solid #ffffff;    	
-    	padding: 2px 0px 2px 5px; /* Top, Right, Bottom, Left */
+    	padding: 2px 0px 2px 0px; /* Top, Right, Bottom, Left */
 	}
 	
 	.result-cell-lost{
@@ -255,7 +255,7 @@
   		position: relative;
     	color: #ff0000;
     	background-color: #3F4148;
-    	padding: 2px 0px 2px 5px; /* Top, Right, Bottom, Left */
+    	padding: 2px 0px 2px 0px; /* Top, Right, Bottom, Left */
 	}	
 	
 	
@@ -265,72 +265,87 @@
   		position: relative;
     	color: #D6A319;
     	background-color: #3F4148;
-    	padding: 2px 0px 2px 5px; /* Top, Right, Bottom, Left */
+    	padding: 2px 0px 2px 0px; /* Top, Right, Bottom, Left */
+	}
+	
+	
+	.quarter-cell{
+		display: table-cell;
+  		width: 6%;
+  		position: relative;
+    	color: #ffffff;
+    	background-color: #3F4148;
+    	border: 0px solid #ff0080;
+    	padding: 2px 0px 2px 0px; /* Top, Right, Bottom, Left */
+	}
+	
+	
+	.leftQuarterInfo{
+    	float:left;
+    	padding: 0px 0px 0px 0px; /* Top, Right, Bottom, Left */
+    	border: 0px solid #ffff00;
+	}
+	
+	
+
+	/*--------------------------------------- */
+	/*--------------- Stats Row --------------*/
+	/*--------------------------------------- */
+
+		
+	.thirdRow{
+	  	display: table-row;
+  		color:#000000;
+  		background-color: #3F4148;
+  		text-align: left;
+		font-size: 14px;
+		font-weight: plain;
+  		font-family: 'Open Sans', sans-serif;  		
+  		border-bottom: 0px solid #ffffff;
+  		
+	}
+
+	
+	.totalScoreHidden{
+  		display: table-cell;
+  		width: 1%;
+  		font-weight: bold;
+  		font-size: 20px;
+  		text-align: center;
+  		color: #3F4148;
+  		background-color: #3F4148;
+  		padding: 2px 25px 5px 25px; /* Top, Right, Bottom, Left */
+  		border: 0px solid #0000ff;
+	}
+	
+	
+	.result-cell-not-started-Hidden{
+		display: table-cell;
+  		width: 6%;
+  		position: relative;
+  		color: #3F4148;
+    	background-color: #3F4148;
+    	padding: 2px 0px 5px 0px; /* Top, Right, Bottom, Left */
+	}
+	
+	
+		
+	.drive-cell{
+		display: table-cell;
+  		width: 6%;
+  		position: relative;
+    	color: #ffffff;
+    	background-color: #3F4148;
+    	border: 0px solid #ff0080;
+    	padding: 2px 0px 5px 0px; /* Top, Right, Bottom, Left */
 	}
 	
 	
 	.leftDriveInfo{
     	float:left;
     	padding: 0px 0px 0px 0px; /* Top, Right, Bottom, Left */    
+		border: 0px solid #ff0080;
 	}
 	
-	.rightQuarterInfo {
-	   	float:right;
-	   	padding: 0px 15px 0px 0px; /* Top, Right, Bottom, Left */
-	}
-	
-
-	/*--------------------------------------- */
-	/*--------------- Stats Row --------------*/
-	/*--------------------------------------- */
-	
-	.statsRow{
-  		display: table-row;
-  		width: 100%;
-  		height: 20px;
-  		  			
-  		color:#000000;
-  		background-color: #ffffff;
-		font-weight: plain;
-  		font-family: 'Open Sans', sans-serif;
-  		
-  	}
-  	
-  	
-  	.stats-row-first-cell-empty{
-  		display: table-cell;
-  		width: 1%;
-  		font-weight: bold;
-  		font-size: 20px;
-  		text-align: center;
-  		background-color: #3F4148;
-  		padding: 2px 25px 2px 20px; /* Top, Right, Bottom, Left */
-  		border: 0px solid #ff0080;
-	}
-	
-	
-	.stats-cell{
-		display: table-cell;
-  		width: 10%;
-  		position: relative;
-    	background-color: #3F4148;
-	}	
- 	  	
-
-	.statsName{
-    	float:left;
-    	font-size: plain;
-    	font-weight: plain;
-        padding: 0px 30px 3px 0px; /* Top, Right, Bottom, Left */	
-	}
-	
-	
-	.statsDesc{
-    	float:right;
-    	font-size: 12px;
-    	font-weight: plain;
-   		padding: 0px 5px 3px 0px; /* Top, Right, Bottom, Left */
-    	
-	}
-	
+		
 	

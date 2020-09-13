@@ -229,8 +229,7 @@ public final class LiveScore{
         
         builder.append( down ).append( downSuffix )
         .append( SPACE ).append( AMPERSAND ).append( SPACE )
-        .append( togo ).append( SPACE ).append( AT ).append( SPACE )
-        .append( yard );
+        .append( togo ).append( SPACE ).append( AT ).append( SPACE ).append( yard );
         
         return builder.toString( );
     }

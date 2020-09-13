@@ -30,7 +30,6 @@
   <label for="tab1">
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <c:if test="${requestScope[DDPUtil.RESULT_MANAGER_KEY] != null}">  
-  ${requestScope[DDPUtil.RESULT_MANAGER_KEY].getMeta().getGameYear( )}
   Week
   ${requestScope[DDPUtil.RESULT_MANAGER_KEY].getMeta().getGameWeek( )}
   </c:if>  
@@ -199,7 +198,7 @@
    			<div class="secondRow">
    			
    				<div class="totalScore">
-  					${gameResult.getHomeTotalScore( )}  					
+  					${gameResult.getHomeTotalScore( )}  
   				</div>  				
   				
   				
@@ -210,10 +209,8 @@
   				</c:if>
   				  				
   				<c:if test="${gameResult.isGame1Playing()}">
-  					<div class="${gameResult.getGame1ResultDivClasss( )}">
-  						<div class="rightQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Quarter( gameResult )}</div>
-  						<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Drive( gameResult )}</div>					
-  						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Summary( gameResult )}  			
+  					<div class="quarter-cell">
+  						<div class="leftQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Quarter( gameResult )}</div>		
   					</div>
   				</c:if>
   				
@@ -233,17 +230,15 @@
   				
   				
   				<c:if test="${gameResult.isGame2Playing()}">
-  					<div class="${gameResult.getGame2ResultDivClasss( )}">
-  						<div class="rightQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Quarter( gameResult )}</div>
-  						<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Drive( gameResult )}</div>					
-  						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Summary( gameResult )}  			
+  					<div class="quarter-cell">  							
+  						<div class="leftQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Quarter( gameResult )}</div>  										
   					</div>
   				</c:if>
   				
   				
   				<c:if test="${gameResult.isGame2Finished()}">
-  					<div class="${gameResult.getGame2ResultDivClasss()}">  						
-  						${gameResult.getGame2FinishedMessage( )}
+  					<div class="${gameResult.getGame2ResultDivClasss()}">  	
+  						${gameResult.getGame2FinishedMessage( )}					  						
   					</div>
   				</c:if>
   				
@@ -256,17 +251,15 @@
   				
   				
   				<c:if test="${gameResult.isGame3Playing()}">
-  					<div class="${gameResult.getGame3ResultDivClasss( )}">
-  						<div class="rightQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Quarter( gameResult )}</div>
-  						<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Drive( gameResult )}</div>					
-  						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Summary( gameResult )}  			
+  					<div class="quarter-cell">
+  						<div class="leftQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Quarter( gameResult )}</div>  										  						  			
   					</div>
   				</c:if>
   				
   				
   				<c:if test="${gameResult.isGame3Finished()}">
-  					<div class="${gameResult.getGame3ResultDivClasss()}">
-  						${gameResult.getGame3FinishedMessage( )}
+  					<div class="${gameResult.getGame3ResultDivClasss()}">  		
+  						${gameResult.getGame3FinishedMessage( )}				
   					</div>
   				</c:if>
   				  				
@@ -278,71 +271,83 @@
     
     <!--------------------------------------------- Third Row --------------------------------------------------------->
     
-    <div class="newGridTable" >
+		<div class="newGridTable" >
    	
-   			<div class="statsRow">
-  		
-  				<div class="stats-row-first-cell-empty">
-  					<!-- ${gameResult.getAllTotalHomeScore( )} -->
-  				</div>
-  				  		
-  				<div class="stats-cell">
-  					<div class="statsName">
-						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Stats( gameResult ).getPassName()}
-					</div>
-					<div class="statsDesc">
-						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Stats( gameResult ).getPassDesc()}
-					</div>
-					
-					<div class="statsName">
-						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Stats( gameResult ).getRushName()}
-					</div>
-					<div class="statsDesc">
-						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Stats( gameResult ).getRushDesc()}
-					</div>
-					
-				</div>
-  		
-  				<div class="stats-cell">
-  					<div class="statsName">
-						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Stats( gameResult ).getPassName()}
-					</div>
-					<div class="statsDesc">
-						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Stats( gameResult ).getPassDesc()}
-					</div>
-					
-					<div class="statsName">
-						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Stats( gameResult ).getRushName()}
-					</div>
-					<div class="statsDesc">
-						${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Stats( gameResult ).getRushDesc()}
-					</div>
-					
-				</div>		
-				
-				<div class="stats-cell">
-					<c:if test="${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Stats( gameResult ) != null}">
-						
-						<div class="statsName">
-							${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Stats( gameResult ).getPassName()}
-						</div>
-						<div class="statsDesc">
-							${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Stats( gameResult ).getPassDesc()}
-						</div>
-							
-						<div class="statsName">
-							${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Stats( gameResult ).getRushName()}
-						</div>
-						<div class="statsDesc">
-							${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Stats( gameResult ).getRushDesc()}
-						</div>
-				
-					</c:if>
-  				</div>
-  				  		  		
-		</div>
+   			<div class="thirdRow">
+   			
+   				<div class="totalScoreHidden">
+  					${gameResult.getHomeTotalScore( )}  					
+  				</div>  				
+  				
+  				
+  				<c:if test="${gameResult.isGame1NotStarted()}">
+  					<div class="result-cell-not-started-Hidden">
+  						${gameResult.getGame1NotStartedMessage( )}
+  					</div>
+  				</c:if>
+  				  				
+  				<c:if test="${gameResult.isGame1Playing()}">
+  					<div class="drive-cell">
+  						<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Drive( gameResult )}</div>		
+  					</div>
+  				</c:if>
+  				
+  				
+  				<c:if test="${gameResult.isGame1Finished()}">
+  					<div class="${gameResult.getGame1ResultDivClasss()}">
+  						
+  					</div>
+  				</c:if>
+  				
+  			
+				<c:if test="${gameResult.isGame2NotStarted()}">
+  					<div class="result-cell-not-started-Hidden">
+  						${gameResult.getGame2NotStartedMessage( )}
+  					</div>
+  				</c:if>
+  				
+  				
+  				<c:if test="${gameResult.isGame2Playing()}">
+  					<div class="drive-cell">  							
+  						<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Drive( gameResult )}</div>  										
+  					</div>
+  				</c:if>
+  				
+  				
+  				<c:if test="${gameResult.isGame2Finished()}">
+  					<div class="${gameResult.getGame2ResultDivClasss()}">  						
+  						
+  					</div>
+  				</c:if>
+  				
+  				
+				<c:if test="${gameResult.isGame3NotStarted()}">
+  					<div class="result-cell-not-started-Hidden">
+  						${gameResult.getGame3NotStartedMessage( )}
+  					</div>
+  				</c:if>
+  				
+  				
+  				<c:if test="${gameResult.isGame3Playing()}">
+  					<div class="drive-cell">
+  						<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Drive( gameResult )}</div>  										  						  			
+  					</div>
+  				</c:if>
+  				
+  				
+  				<c:if test="${gameResult.isGame3Finished()}">
+  					<div class="${gameResult.getGame3ResultDivClasss()}">
+  						
+  					</div>
+  				</c:if>
+  				  				
+
+  			</div>
     
-    </div>  
+    </div>
+
+
+  
     
     </c:forEach>	
 					    			
