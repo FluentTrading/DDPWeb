@@ -1,5 +1,6 @@
 package com.ddp.nfl.web.match;
 
+import com.ddp.nfl.web.analytics.home.*;
 import com.ddp.nfl.web.core.*;
 import com.ddp.nfl.web.parser.*;
 import com.ddp.nfl.web.util.*;
@@ -118,7 +119,7 @@ public final class GameResult{
         return myTeamScore;
     }
     
-    
+           
     public final String getMyGame1ScoreWithPossssion( boolean isHome ){
         int teamScore   = ( isHome ) ? getMy1TeamScore( ) : getOpp1TeamScore( );
         NFLTeam myTeam  = ( isHome ) ? getMy1Team( ) : getOpp1Team( ); 
@@ -144,11 +145,27 @@ public final class GameResult{
         return getMyGameScoreWithPossssion( teamScore, getMatch3Score( ), myTeam );
     }
     
+    
+    public final String getMy1TeamScorePerQuarter( boolean isHome ){        
+        return getTeamScorePerQuarter( isHome, getMy1Team( ), getMatch1Score() );
+    }
+    
+    
+    public final String getMy2TeamScorePerQuarter( boolean isHome ){
+        return getTeamScorePerQuarter( isHome, getMy2Team( ), getMatch2Score() );
+    }
+    
+    
+    public final String getMy3TeamScorePerQuarter( boolean isHome ){
+        return getTeamScorePerQuarter( isHome, getMy3Team( ), getMatch3Score() );
+    }
+    
+    
         
     public final int getHomeTotalScore( ) {
         return getMy1TeamScore( ) + getMy2TeamScore( ) + getMy3TeamScore( );
     }
-    
+      
    
     //Cumulative total
     public final int getAllTotalHomeScore( ) {
@@ -373,26 +390,20 @@ public final class GameResult{
         if( team == null ) return EMPTY;
         return team.getSquareTeamIcon( );        
     }
-    
+
     
     protected final String getMyGameScoreWithPossssion( int teamScore, LiveScore score, NFLTeam myTeam ){
-        if( GameState.isPlaying(score) ){
-            if( teamHasPossession( myTeam, score ) ) {
-                if( score.isRedzone( ) ) {
-                    return "<div class=\"blink_me\"><i class=\"fas fa-football-ball fa-xs\"> </i> " + teamScore + "</div>";        
-                }else {
-                    return "<i class=\"fas fa-football-ball fa-xs\"> </i> " + teamScore;
-                }
-                
-            //Playing but do not have possession.    
+        
+        if( teamHasPossession(myTeam, score) ){            
+            if( score.isRedzone( ) ) {
+                return "<div class=\"blink_me\"><u> " + teamScore + "</u></div>";        
             }else {
-                return String.valueOf(  teamScore );    
-            }
-            
+                return "<u>" + teamScore + "</u>";
+            }                
         }else {
-            return String.valueOf(  teamScore );
+            return String.valueOf(  teamScore );    
         }
-                
+                                
     }
     
     
@@ -413,9 +424,7 @@ public final class GameResult{
         return displayName;
         
     }
-    
    
-    
     
     protected final String getGameWinnerIcon( LiveScore liveScore, int homeScore, NFLTeam home, int awayScore, NFLTeam away ){
         
@@ -445,11 +454,7 @@ public final class GameResult{
         return ( homeTeamWin  ) ? home.getSquareTeamIcon( ) : NFLTeam.getMissingTeamLogo( );
                 
     }
-    
-    
-    
-
-    
+   
     
     protected final String getScoreDivClassName( LiveScore liveScore, int homeScore, int awayScore ){
     
@@ -486,7 +491,38 @@ public final class GameResult{
         
     }
     
-  
+    
+    protected final String getTeamScorePerQuarter( boolean isHome, NFLTeam myTeam, LiveScore score ){
+    
+        TeamInfo teamInfo           = getTeamInfo( isHome, myTeam, score );
+        if( teamInfo == null ){
+            return "";
+        }
+        
+        StringBuilder builder       = new StringBuilder();
+        boolean isFinishedOrPlaying = GameState.isPlaying( score ) || GameState.isFinished( score ) || GameState.isHalftime( score );
+        
+        if( isFinishedOrPlaying ){
+            builder.append( teamInfo.getQuarterScoreWithPadding( Quarter.FIRST ) )
+            .append(DDPUtil.SPACE)
+            .append(teamInfo.getQuarterScoreWithPadding( Quarter.SECOND ) )
+            .append(DDPUtil.SPACE)
+            .append(teamInfo.getQuarterScoreWithPadding( Quarter.THIRD ) )
+            .append(DDPUtil.SPACE)
+            .append(teamInfo.getQuarterScoreWithPadding( Quarter.FOURTH) );
+            
+            /*
+            if( teamInfo.getOvertimeScore( ) > 0 ){
+                builder.append(DDPUtil.SPACE)
+                .append(teamInfo.getQuarterScoreWithPadding( Quarter.OVERTIME) );        
+            } 
+            */               
+        }
+         
+        return builder.toString();
+                
+    }
+    
    
     public final NFLTeam getMy1Team( ){
         return myPickedTeams[ZERO];
@@ -538,6 +574,23 @@ public final class GameResult{
         return (myTeam.getId( ) == info.getHomeTeam( ).getId( )) ? info.getAwayScore( ) : info.getHomeScore( );
         
     }
+    
+    
+    
+    protected final TeamInfo getTeamInfo( boolean forHome, NFLTeam myTeam, LiveScore info ){
+        
+        if( myTeam == null || info == null ) {
+            return null;
+        }
+        
+        if( forHome ) {
+            return (myTeam.getId( ) == info.getHomeTeam( ).getId( )) ? info.getHomeTeamInfo( ) : info.getAwayTeamInfo( );
+        }
+           
+        return (myTeam.getId( ) == info.getHomeTeam( ).getId( )) ? info.getAwayTeamInfo( ) : info.getHomeTeamInfo( );
+        
+    }
+    
     
     
     protected final boolean teamHasPossession( NFLTeam myTeam, LiveScore liveScore ){

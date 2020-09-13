@@ -17,11 +17,11 @@ public class TeamInfo{
     
     
     public TeamInfo( boolean isHome, String teamName, int to, Map<Quarter, Integer> scoreMap, String players ){
-        this.isHome = isHome;
-        this.teamAbbr  = teamName;
-        this.to     = to;
-        this.players= players;
-        this.scoreMap = scoreMap;
+        this.isHome     = isHome;
+        this.teamAbbr   = teamName;
+        this.to         = to;
+        this.players    = players;
+        this.scoreMap   = scoreMap;
     }
 
     
@@ -66,6 +66,13 @@ public class TeamInfo{
     public final int getTotalScore( ){
         return getScoreWithDefault( Quarter.TOTAL );        
     }
+    
+    
+    public final String getQuarterScoreWithPadding( Quarter quarter ){
+        int score = getScoreWithDefault( quarter );        
+        return ( score < 10 ) ? "0" + score : String.valueOf(score);
+    }
+    
         
     protected final int getScoreWithDefault( Quarter qEnum ){
         Integer score = scoreMap.get( qEnum );

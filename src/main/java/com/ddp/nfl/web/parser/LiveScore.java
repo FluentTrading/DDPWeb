@@ -137,7 +137,7 @@ public final class LiveScore{
     public final String getDisplayableQuarter( ){
         return formattedQuarter;
     }
-     
+         
     
     public final String getRawQuarter( ){
         return rawQuarterStr;

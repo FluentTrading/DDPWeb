@@ -114,45 +114,68 @@
   					</div>
   					
   					
+  					<div class="score-cell-icon-div">  						  						
+  						<div class="topLeft"><img src="${gameResult.getMy1TeamIcon( )}" height="52" width="52"></div>
+  						<div class="bottomLeft"><img src="${gameResult.getOpp1TeamIcon( )}" height="52" width="52"></div>  						  						
+					</div>
+  					
+  					 
+  					<div class="quarter-score-cell-div">  						  						
+  						<div class="topRightQuarter">${gameResult.getMy1TeamScorePerQuarter(true)}</div>
+  						<div class="bottomRightQuarter">${gameResult.getMy1TeamScorePerQuarter(false)}</div>  						  						
+					</div>
+					 
+  					
   					<div class="score-cell-div">
-  						  						
-  						<div class="topLeft"><img src="${gameResult.getMy1TeamIcon( )}" height="52" width="52"></div>  						  	
-  						<div class="bottomLeft"><img src="${gameResult.getOpp1TeamIcon( )}" height="52" width="52"></div>
-  										
-  							
-  						<div class="${gameResult.getGame1ScoreDivClass(true)}">  							  						
+  						<div class="${gameResult.getGame1ScoreDivClass(true)}">						  						
 							<div class="topRight">${gameResult.getMyGame1ScoreWithPossssion(true)}</div>											  							  							  						
   						</div>				
   						
   						<div class="${gameResult.getGame1ScoreDivClass(false)}">									  						
   							<div class="bottomRight">${gameResult.getMyGame1ScoreWithPossssion(false)}</div>
-  						</div>
-  						
+  						</div>  						  						
 					</div>
  					
 							
 					<div class="spacer-cell"></div>
+					
+					<div class="score-cell-icon-div">
+  						<div class="topLeft"><img src="${gameResult.getMy2TeamIcon( )}" height="52" width="52"></div>
+  						<div class="bottomLeft"><img src="${gameResult.getOpp2TeamIcon( )}" height="52" width="52"></div>  																
+					</div>
+					
+				 
+  					<div class="quarter-score-cell-div">  						  						
+  						<div class="topRightQuarter">${gameResult.getMy2TeamScorePerQuarter(true)}</div>
+  						<div class="bottomRightQuarter">${gameResult.getMy2TeamScorePerQuarter(false)}</div> 						
+					</div>
+													
 								
   					<div class="score-cell-div">
-  						<div class="topLeft"><img src="${gameResult.getMy2TeamIcon( )}" height="52" width="52"></div>
-  						<div class="bottomLeft"><img src="${gameResult.getOpp2TeamIcon( )}" height="52" width="52"></div>
-  						
   						<div class="${gameResult.getGame2ScoreDivClass(true)}">		
 							<div class="topRight">${gameResult.getMyGame2ScoreWithPossssion(true)}</div>  							
-  						</div>				
-  						
+  						</div>				  						
   						<div class="${gameResult.getGame2ScoreDivClass(false)}">									  						
   							<div class="bottomRight">${gameResult.getMyGame2ScoreWithPossssion(false)}</div>
-  						</div>
-  																	
+  						</div>  																
 					</div>
 					
 					<div class="spacer-cell"></div>
 					
-					<div class="score-cell-div">
+					
+					<div class="score-cell-icon-div">
   						<div class="topLeft"><img src="${gameResult.getMy3TeamIcon( )}" height="52" width="52"></div>
-  						<div class="bottomLeft"><img src="${gameResult.getOpp3TeamIcon( )}" height="52" width="52"></div>
-  						
+  						<div class="bottomLeft"><img src="${gameResult.getOpp3TeamIcon( )}" height="52" width="52"></div>																
+					</div>
+										
+									 
+  					<div class="quarter-score-cell-div">  						  						
+  						<div class="topRightQuarter">${gameResult.getMy3TeamScorePerQuarter(true)}</div>
+  						<div class="bottomRightQuarter">${gameResult.getMy3TeamScorePerQuarter(false)}</div>  						  						
+					</div>
+					
+					
+					<div class="score-cell-div">
   						<div class="${gameResult.getGame3ScoreDivClass(true)}">		
 							<div class="topRight">${gameResult.getMyGame3ScoreWithPossssion(true)}</div>  							
   						</div>				
