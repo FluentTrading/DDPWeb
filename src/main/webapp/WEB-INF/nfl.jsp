@@ -9,7 +9,7 @@
 <head>
 	
 	<meta charset="UTF-8">
-	<meta http-equiv="refresh" content="25"/>
+	<meta http-equiv="refresh" content="60000"/>
 	<meta http-equiv="Content-Language" content="en">
 	<meta name="format-detection" content="telephone=no">
 	<meta name="viewport" content="width=device-width, initial-scale=1" /> 
@@ -120,9 +120,14 @@
 					</div>
   					
   					 
-  					<div class="quarter-score-cell-div">  						  						
-  						<div class="topRightQuarter">${gameResult.getMy1TeamScorePerQuarter(true)}</div>
-  						<div class="bottomRightQuarter">${gameResult.getMy1TeamScorePerQuarter(false)}</div>  						  						
+  					<div class="quarter-score-cell-div">
+  						<div class="${gameResult.getGame1ScoreDivClass(true)}">  						  						
+  							<div class="topRightQuarter">${gameResult.getMy1TeamScorePerQuarter(true)}</div>
+  						</div>
+  						
+  						<div class="${gameResult.getGame1ScoreDivClass(false)}">
+  							<div class="bottomRightQuarter">${gameResult.getMy1TeamScorePerQuarter(false)}</div>
+  						</div>  						  						
 					</div>
 					 
   					
@@ -145,9 +150,14 @@
 					</div>
 					
 				 
-  					<div class="quarter-score-cell-div">  						  						
-  						<div class="topRightQuarter">${gameResult.getMy2TeamScorePerQuarter(true)}</div>
-  						<div class="bottomRightQuarter">${gameResult.getMy2TeamScorePerQuarter(false)}</div> 						
+  					<div class="quarter-score-cell-div">  	
+  						<div class="${gameResult.getGame2ScoreDivClass(true)}">					  						
+  							<div class="topRightQuarter">${gameResult.getMy2TeamScorePerQuarter(true)}</div>
+  						</div>
+  						
+  						<div class="${gameResult.getGame2ScoreDivClass(false)}">
+  							<div class="bottomRightQuarter">${gameResult.getMy2TeamScorePerQuarter(false)}</div>
+  						</div> 						
 					</div>
 													
 								
@@ -169,9 +179,14 @@
 					</div>
 										
 									 
-  					<div class="quarter-score-cell-div">  						  						
-  						<div class="topRightQuarter">${gameResult.getMy3TeamScorePerQuarter(true)}</div>
-  						<div class="bottomRightQuarter">${gameResult.getMy3TeamScorePerQuarter(false)}</div>  						  						
+  					<div class="quarter-score-cell-div">  	
+  						<div class="${gameResult.getGame3ScoreDivClass(true)}">					  						
+  							<div class="topRightQuarter">${gameResult.getMy3TeamScorePerQuarter(true)}</div>
+  						</div>
+  						
+  						<div class="${gameResult.getGame3ScoreDivClass(false)}">
+  							<div class="bottomRightQuarter">${gameResult.getMy3TeamScorePerQuarter(false)}</div>  						  						
+						</div>
 					</div>
 					
 					
@@ -217,10 +232,12 @@
   				
   				
   				<c:if test="${gameResult.isGame1Finished()}">
-  					<div class="${gameResult.getGame1ResultDivClasss()}">
+  					<div class="result-cell-finished">
   						${gameResult.getGame1FinishedMessage( )}
   					</div>
   				</c:if>
+  				
+  				<div class="spacer-cell"></div>
   				
   			
 				<c:if test="${gameResult.isGame2NotStarted()}">
@@ -238,11 +255,12 @@
   				
   				
   				<c:if test="${gameResult.isGame2Finished()}">
-  					<div class="${gameResult.getGame2ResultDivClasss()}">  	
+  					<div class="result-cell-finished">
   						${gameResult.getGame2FinishedMessage( )}					  						
   					</div>
   				</c:if>
   				
+  				<div class="spacer-cell"></div>
   				
 				<c:if test="${gameResult.isGame3NotStarted()}">
   					<div class="result-cell-not-started">
@@ -259,11 +277,12 @@
   				
   				
   				<c:if test="${gameResult.isGame3Finished()}">
-  					<div class="${gameResult.getGame3ResultDivClasss()}">  		
+  					<div class="result-cell-finished">		
   						${gameResult.getGame3FinishedMessage( )}				
   					</div>
   				</c:if>
   				  				
+  				<div class="spacer-cell"></div>
 
   			</div>
     
@@ -276,9 +295,10 @@
    	
    			<div class="thirdRow">
    			
-   				<div class="totalScoreHidden">
-  					${gameResult.getHomeTotalScore( )}  					
+   				<div class="totalScore">
+  					${gameResult.getAllTotalHomeScore( )}  					
   				</div>  				
+  				
   				
   				
   				<c:if test="${gameResult.isGame1NotStarted()}">
@@ -299,6 +319,8 @@
   						
   					</div>
   				</c:if>
+  				
+  				<div class="spacer-cell"></div>
   				
   			
 				<c:if test="${gameResult.isGame2NotStarted()}">
@@ -321,6 +343,7 @@
   					</div>
   				</c:if>
   				
+  				<div class="spacer-cell"></div>
   				
 				<c:if test="${gameResult.isGame3NotStarted()}">
   					<div class="result-cell-not-started-Hidden">
@@ -342,6 +365,7 @@
   					</div>
   				</c:if>
   				  				
+				<div class="spacer-cell"></div>
 
   			</div>
     
@@ -376,14 +400,7 @@
 							
 							<c:forEach var="entry" items="${applicationScope[DDPUtil.SCHEDULE_KEY].getSchedules( ).values()}">
 							
-								<c:choose>
-							    	<c:when test="${entry.isGameOver()}">
-        								<tr bgcolor="#3F4148">        								
-    								</c:when>
-    								<c:otherwise>
-        								<tr bgcolor="#6F7178">
-    								</c:otherwise>
-								</c:choose>
+								<tr bgcolor="#3F4148">
     								
 										<td align="left" height="50" width="15%"></td>
   										

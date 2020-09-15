@@ -161,13 +161,13 @@ public final class GameResult{
     }
     
     
-        
+    //Total for a given week  
     public final int getHomeTotalScore( ) {
         return getMy1TeamScore( ) + getMy2TeamScore( ) + getMy3TeamScore( );
     }
       
    
-    //Cumulative total
+    //Cumulative total for all weeks
     public final int getAllTotalHomeScore( ) {
         return allTotalScore;
     }   

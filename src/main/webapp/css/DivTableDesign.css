@@ -12,7 +12,7 @@
 	
 	.scoreRow{
   		display: table-row;  		  		
-  		border: 0px solid green;		
+  		border: 0px solid green;		  		
 	}
 
 	
@@ -32,7 +32,7 @@
   		width: 5%;
   		background-color: #3F4148;  		
 		border: 0px solid red;		
-		padding: 5px 0px 2px 1px; /* Top, Right, Bottom, Left */    			
+		padding: 10px 0px 2px 1px; /* Top, Right, Bottom, Left */    			
 	}
 	
 	
@@ -61,7 +61,7 @@
 		display: table-cell;
 		position: relative;
   		width: 8%;
-  		color:#6F7178;  		
+  		color:#6F7178;
   		background-color: #3F4148;  		
   		font-size: 15px;
 		font-weight: plain;
@@ -109,7 +109,7 @@
 	
 	
 	.score-game-finished{
-		color: #6F7178;
+		color:#6F7178;
 	   	border-right: 0px solid #3F4148;
 	   	padding: 2px 3px 0px 10px; /* Top, Right, Bottom, Left */
 	}	
@@ -180,16 +180,14 @@
     	filter: alpha(opacity=50); /* For IE8 and earlier */
     	/*padding: 100px 100px 10px 50px; /* Top, Right, Bottom, Left */
 	}
-		
-		  	
+						
 	/*--------------------------------------- */
 	/*--------------- Second Row --------------*/
 	/*--------------------------------------- */
 
 	.secondRow{
-	  	display: table-row;
-  		color:#000000;
-  		background-color: #3F4148;
+	  	display: table-row;  		
+  		background-color: #6F7178;
   		border: 0px solid #ffffff;
 		text-align: left;
 		font-size: 14px;
@@ -206,7 +204,7 @@
   		text-align: center;
   		color: #ffffff;
   		background-color: #3F4148;
-  		padding: 2px 25px 2px 25px; /* Top, Right, Bottom, Left */
+  		padding: 2px 25px 2px 20px; /* Top, Right, Bottom, Left */
   		border: 0px solid #0000ff;
 	}
 	
@@ -216,25 +214,22 @@
   		width: 6%;
   		position: relative;
   		color: #6F7178;
+  		text-align: left;
+		font-size: 15px;
+		font-weight: plain;
     	background-color: #3F4148;
     	padding: 2px 0px 2px 0px; /* Top, Right, Bottom, Left */
 	}
 	
-	
-	.result-cell-finished{
-		display: table-cell;
-  		width: 6%;
-  		position: relative;
-  		color: #6F7178;
-    	background-color: #3F4148;
-    	padding: 2px 0px 2px 0px; /* Top, Right, Bottom, Left */
-	}
 			
 	.result-cell-finished{
 		display: table-cell;
   		width: 6%;
   		position: relative;
   		color: #6F7178;
+  		text-align: left;
+		font-size: 15px;
+		font-weight: plain;  		
     	background-color: #3F4148;
     	padding: 2px 0px 2px 0px; /* Top, Right, Bottom, Left */
 	}

@@ -90,8 +90,7 @@ input:checked + label {
 	
 	.schedulegrid {
 		font: 18px/1 'Open Sans', sans-serif;
-		overflow: hidden;
-		background: #3F4148;
+		overflow: hidden;	
 		border: 0px solid #9FAFB4;	
   		white-space: nowrap;
   		font-weight: bold;   		
@@ -105,9 +104,12 @@ input:checked + label {
 		
 	
 	.schedulegrid table tr {
-		border-left: 0px solid #ffffff;
-		border-right: 0px solid #ffffff;
-		border-bottom: 1px solid #ffffff;
+		color: #6F7178;
+    	background-color: #3F4148;
+	
+		border-left: 0px solid #6F7178;
+		border-right: 0px solid #6F7178;
+		border-bottom: 1px solid #6F7178;
 	}
 	
 
@@ -119,44 +121,43 @@ input:checked + label {
   		display: table;
   		width: 100%;
   		font-family: 'Open Sans', sans-serif;
-  		font-size: 20px;
-  		color: #000000;
-  		background-color: #3F4148;
+  		font-size: 18px;  	
   	}
   	
 
 	.cashRow{
   		display: table-row;
   		text-align: left;
-  		border-bottom: 1px solid #ffffff;  		
+  		color: #6F7178;
+    	background-color: #3F4148;	
+  		border-bottom: 0px solid red;  		
 	}
 	
 	
 	.cashPlayer{
+		font-weight: bold;   		
 		display: table-cell;
-  		font-weight: bold;
-  		border-bottom: 1px solid #ffffff;
+  		border-bottom: 0px solid #ffffff;
     	padding: 10px 15px 0px 35px; /* Top, Right, Bottom, Left */
 	}
 	
 
 	.cashAmount{
 		display: table-cell;
-		font-weight: bold;
+		font-weight: bold;		
 		padding: 10px 15px 0px 5px; /* Top, Right, Bottom, Left */
   	}		
 
 	.cashTotalScore{
 		display: table-cell;
-		font-weight: bold;
+		font-weight: bold;		
 		padding: 10px 15px 0px 5px; /* Top, Right, Bottom, Left */
 	}	
 			
 		
 	.cashDetailsRow{
   		display: table-row;
-  		border: 0px solid #9FAFB4;  		
-		background-color: #3F4148;
+  		border: 0px solid #9FAFB4;  				
 	}
 	
 
@@ -194,7 +195,7 @@ input:checked + label {
 		
 	a.cashLink{
 		text-decoration: none;
-  		background-color: #3D9970;  		
+  		color: #3D9970;  		
 	}
 		
 	
