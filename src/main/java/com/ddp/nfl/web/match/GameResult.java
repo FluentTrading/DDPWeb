@@ -218,13 +218,29 @@ public final class GameResult{
     }
     
     
-    public final String getGameNotStartedMessage( LiveScore score ){
+    protected final String getGameNotStartedMessage( LiveScore score ){
         if( score == null ) return "Missing";
         return score.getAwayTeam( ).getNickName( ) + " at " +
                 score.getHomeTeam( ).getNickName( ) + " " +
-                score.getGameTime( ) + " on " + score.getTVStation( );
+                score.getGameTime( );
 
     }
+    
+    
+    public final String getGame1Stadium( ){
+        return ( getMatch1Score( ) == null ? "" : getMatch1Score( ).getStadium( ));
+    }
+    
+    
+    public final String getGame2Stadium( ){
+        return ( getMatch2Score( ) == null ? "" : getMatch2Score( ).getStadium( ));
+    }
+    
+    
+    public final String getGame3Stadium( ){
+        return ( getMatch3Score( ) == null ? "" : getMatch3Score( ).getStadium( ));
+    }
+    
     
     
     public final String getGame1FinishedMessage( ){

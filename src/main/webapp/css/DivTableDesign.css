@@ -300,29 +300,45 @@
   		
 	}
 
-	
-	.totalScoreHidden{
+			  	
+  	.overallTotalScore{
   		display: table-cell;
   		width: 1%;
   		font-weight: bold;
   		font-size: 20px;
-  		text-align: center;
-  		color: #3F4148;
+  		text-align: left;
+  		color: #ffffff;
   		background-color: #3F4148;
-  		padding: 2px 25px 5px 25px; /* Top, Right, Bottom, Left */
+  		padding: 2px 0px 2px 25px; /* Top, Right, Bottom, Left */
   		border: 0px solid #0000ff;
 	}
 	
 	
-	.result-cell-not-started-Hidden{
+		
+	.third-score-cell-not-started{
 		display: table-cell;
   		width: 6%;
   		position: relative;
   		color: #3F4148;
+  		text-align: left;
+		font-size: 15px;
+		font-weight: plain;
     	background-color: #3F4148;
-    	padding: 2px 0px 5px 0px; /* Top, Right, Bottom, Left */
+    	padding: 2px 0px 2px 0px; /* Top, Right, Bottom, Left */
 	}
 	
+	
+	.result-cell-finished-hidden{
+		display: table-cell;
+  		width: 6%;
+  		position: relative;
+  		color: #3F4148;
+  		text-align: left;
+		font-size: 15px;
+		font-weight: plain;  		
+    	background-color: #3F4148;
+    	padding: 2px 0px 2px 0px; /* Top, Right, Bottom, Left */
+	}
 	
 		
 	.drive-cell{

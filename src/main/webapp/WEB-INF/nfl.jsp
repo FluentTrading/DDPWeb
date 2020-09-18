@@ -295,15 +295,15 @@
    	
    			<div class="thirdRow">
    			
-   				<div class="totalScore">
+   				<div class="overallTotalScore">
   					${gameResult.getAllTotalHomeScore( )}  					
   				</div>  				
   				
   				
   				
   				<c:if test="${gameResult.isGame1NotStarted()}">
-  					<div class="result-cell-not-started-Hidden">
-  						${gameResult.getGame1NotStartedMessage( )}
+  					<div class="third-score-cell-not-started">
+  						${gameResult.getGame1Stadium( )}
   					</div>
   				</c:if>
   				  				
@@ -315,17 +315,17 @@
   				
   				
   				<c:if test="${gameResult.isGame1Finished()}">
-  					<div class="${gameResult.getGame1ResultDivClasss()}">
-  						
+  					<div class="result-cell-finished-hidden">
+  						${gameResult.getGame1FinishedMessage( )}
   					</div>
   				</c:if>
   				
-  				<div class="spacer-cell"></div>
+  				
   				
   			
 				<c:if test="${gameResult.isGame2NotStarted()}">
-  					<div class="result-cell-not-started-Hidden">
-  						${gameResult.getGame2NotStartedMessage( )}
+  					<div class="third-score-cell-not-started">
+  						${gameResult.getGame2Stadium( )}
   					</div>
   				</c:if>
   				
@@ -338,16 +338,16 @@
   				
   				
   				<c:if test="${gameResult.isGame2Finished()}">
-  					<div class="${gameResult.getGame2ResultDivClasss()}">  						
-  						
+  					<div class="result-cell-finished-hidden">  	
+  						${gameResult.getGame2FinishedMessage( )}								  						
   					</div>
   				</c:if>
   				
-  				<div class="spacer-cell"></div>
+  				
   				
 				<c:if test="${gameResult.isGame3NotStarted()}">
-  					<div class="result-cell-not-started-Hidden">
-  						${gameResult.getGame3NotStartedMessage( )}
+  					<div class="third-score-cell-not-started">
+  						${gameResult.getGame1Stadium( )}
   					</div>
   				</c:if>
   				
@@ -360,12 +360,12 @@
   				
   				
   				<c:if test="${gameResult.isGame3Finished()}">
-  					<div class="${gameResult.getGame3ResultDivClasss()}">
-  						
+  					<div class="result-cell-finished-hidden">
+  						${gameResult.getGame3FinishedMessage( )}			
   					</div>
   				</c:if>
   				  				
-				<div class="spacer-cell"></div>
+				
 
   			</div>
     
