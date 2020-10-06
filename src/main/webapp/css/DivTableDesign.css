@@ -18,7 +18,7 @@
 	
 	.player-icon-cell {
 		display: table-cell;
-  		width: 1%;
+  		width: 2%;
   		background-color: #3F4148;
     	border: 0px solid #00ff00;
     	padding: 15px 5px 15px 10px; /* Top, Right, Bottom, Left */
@@ -198,15 +198,16 @@
 		  	
   	.totalScore{
   		display: table-cell;
-  		width: 1%;
+  		width: 3%;
   		font-weight: bold;
   		font-size: 20px;
   		text-align: center;
   		color: #ffffff;
   		background-color: #3F4148;
-  		padding: 2px 25px 2px 20px; /* Top, Right, Bottom, Left */
+  		padding: 2px 0px 2px 0px; /* Top, Right, Bottom, Left */
   		border: 0px solid #0000ff;
 	}
+	
 	
 	
 	.result-cell-not-started{
@@ -301,15 +302,15 @@
 	}
 
 			  	
-  	.overallTotalScore{
+  	.overallTotalScore-hidden{
   		display: table-cell;
   		width: 1%;
   		font-weight: bold;
   		font-size: 20px;
-  		text-align: left;
-  		color: #ffffff;
+  		text-align: right;
+  		color: #3F4148;
   		background-color: #3F4148;
-  		padding: 2px 0px 2px 25px; /* Top, Right, Bottom, Left */
+  		padding: 2px 0px 2px 0px; /* Top, Right, Bottom, Left */
   		border: 0px solid #0000ff;
 	}
 	
