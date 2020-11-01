@@ -85,7 +85,7 @@ public final class PickManager{
 
     //1. Ensure every player only has picked once.
     //2. Ensure every team picked is playing the week for which the pick was made.        
-    //3. Ensure every team was only picked once.    
+    //3. Ensure every team was only picked once.    (Relaxing this rule for 2020 )
     protected final PickResult validatePick( int pickForWeek, String player, String team1, 
                                              String team2, String team3, Collection<DDPPick> picks ){
         
@@ -115,6 +115,7 @@ public final class PickManager{
         }
         
         
+        /*
         boolean teamWasPicked1      = wasTeamPicked( team1, picks );
         if( teamWasPicked1 ){
             return PickResult.createInvalid( team1 + " was already picked!" );
@@ -129,6 +130,7 @@ public final class PickManager{
         if( teamWasPicked3 ){
             return PickResult.createInvalid( team3 + " was already picked!" );
         }
+        */
                       
         return PickResult.createValid("", null);
    
@@ -248,7 +250,9 @@ public final class PickManager{
             allPlayers.remove( player );
             allTeamsForWeek.remove( team1 );
             allTeamsForWeek.remove( team2 );
-            allTeamsForWeek.remove( team3 );
+            
+            //For 2020: Team3 can be re-picked.
+            //allTeamsForWeek.remove( team3 );
         }catch(Exception e ) {
             LOGGER.error( "FAILED to clean up player and teams after selection", e );
         }
