@@ -26,7 +26,7 @@
         
     <context-param>
         <param-name>NFL_WEEK_NUMBER</param-name>
-        <param-value>14</param-value>
+        <param-value>15</param-value>
     </context-param>
         
     <context-param>
