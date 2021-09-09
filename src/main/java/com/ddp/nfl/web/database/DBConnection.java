@@ -2,9 +2,9 @@ package com.ddp.nfl.web.database;
 
 import org.slf4j.*;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.*;
 
-import com.mysql.cj.jdbc.*;
 import com.ddp.nfl.web.core.*;
 
 import static com.ddp.nfl.web.util.DDPUtil.*;
@@ -28,14 +28,7 @@ public final class DBConnection{
         this.connected          = validateConnection( );
         this.pickPrepStatement  = preparePickStatement( connection );
     }
-    
-    
-    protected final Map<Integer, DDPPick> loadPicks( Map<String, NFLTeam> teamMap, Map<String, DDPPlayer> playerMap ){
-        return loadPicks( ddpMeta.getGameYear( ), ddpMeta.getGameWeek( ), teamMap, playerMap );
-        
-    }
-    
-   
+
     
     public final Map<Integer, DDPPick> loadPicks( int nflYear, int nflWeek, Map<String, NFLTeam> teamMap, Map<String, DDPPlayer> playerMap ){
         
@@ -58,11 +51,8 @@ public final class DBConnection{
                 
                 String team2    = NFLTeam.resolveOverriddenName( result.getString( "Team2" ));
                 team2           = isValid(team2) ? team2.toLowerCase( ) : EMPTY;
-                
-                String team3    = NFLTeam.resolveOverriddenName( result.getString( "Team3" ));
-                team3           = isValid(team3) ? team3.toLowerCase( ) : EMPTY;
-                
-                NFLTeam[] teams = new NFLTeam[]{ teamMap.get(team1), teamMap.get(team2), teamMap.get(team3) };
+
+                NFLTeam[] teams = new NFLTeam[]{ teamMap.get(team1), teamMap.get(team2) };
                 DDPPlayer player= playerMap.get( name );
                 DDPPick pick    = new DDPPick( pickOrder, player, teams );
                 
@@ -170,8 +160,7 @@ public final class DBConnection{
             pickPrepStatement.setString ( startColumnIndex++, pick.getPlayer( ).getName( ) );
             pickPrepStatement.setString ( startColumnIndex++, pick.getTeams( )[0].getLowerCaseName( ) );
             pickPrepStatement.setString ( startColumnIndex++, pick.getTeams( )[1].getLowerCaseName( ) );
-            pickPrepStatement.setString ( startColumnIndex++, pick.getTeams( )[2].getLowerCaseName( ) );
-             
+
             int updateResult    = pickPrepStatement.executeUpdate( );
             picksUpdated        = ( updateResult > -1 );
        
@@ -198,9 +187,9 @@ public final class DBConnection{
             StringBuilder builder   = new StringBuilder( 128 );
             
             builder.append( "INSERT INTO " ).append( DDP_PICK.getTableName( ) );
-            builder.append( "( Year, Week, PickOrder, Player, Team1, Team2, Team3 )" );
+            builder.append( "( Year, Week, PickOrder, Player, Team1, Team2 )" );
             builder.append( " VALUES " );
-            builder.append( "( ?, ?, ?, ?, ?, ?, ? )" );
+            builder.append( "( ?, ?, ?, ?, ?, ? )" );
                         
             String query    = builder.toString( );
             pStatement      = connection.prepareStatement(query);
@@ -220,18 +209,14 @@ public final class DBConnection{
         LOGGER.info( "Attempting to create DB connection.");
 
         Connection connection   = null;
-        String userName         = ddpMeta.getDBUserName( );
-        String jdbcUrl          = "jdbc:mysql://" + ddpMeta.getDBHostname( ) + ":" + ddpMeta.getDBPort( ) + "/" + ddpMeta.getDBName( );
-        
+        String connectionURL    = ddpMeta.getDBConnectionURL();
         try {
-            Class.forName( ddpMeta.getDriverName( ) );
-            LOGGER.info("Connecting to DB at [{}], User: [{}] ", jdbcUrl, userName );
+            Class.forName("org.postgresql.Driver");
+            connection          = DriverManager.getConnection(connectionURL);
+            LOGGER.info("Successfully connected to [{}]", connectionURL);
 
-            connection          = DriverManager.getConnection(jdbcUrl, userName, ddpMeta.getDBPassword( ));
-            LOGGER.info("Successfully connected to database: [{}]{}", ddpMeta.getDBName( ), PRINT_NEWLINE);
-            
         }catch( Exception e) { 
-            LOGGER.error("FAILED to connect to DB [{}] [{}] using [{}]", ddpMeta.getDBName( ), jdbcUrl, userName, e );            
+            LOGGER.error("FAILED to connect to DB at", connectionURL, e );
         }
         
         return connection;
@@ -249,15 +234,18 @@ public final class DBConnection{
     
     
     public final void close( ) throws SQLException {
-        
         if( connection != null ){
             connection.close();
         }
-        
-        AbandonedConnectionCleanupThread.checkedShutdown( );
+
         LOGGER.info("Successfully closed connection to DB.");
         
     }
-   
-    
+
+    public static void main( String[] args ){
+        DDPMeta ddpMeta         = new DDPMeta("3.0", false, "REG", LocalDate.now(), 1, 40);
+        DBConnection connection = new DBConnection(ddpMeta);
+        System.out.println( connection.loadPlayers().values() );
+    }
+
 }

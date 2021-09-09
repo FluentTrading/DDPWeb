@@ -126,13 +126,12 @@ public class PickServlet extends HttpServlet {
             String player       = request.getParameter("player");
             String team1        = request.getParameter("team1");
             String team2        = request.getParameter("team2");
-            String team3        = request.getParameter("team3");
-            boolean isValid     = isValid(player) && isValid(team1) && isValid(team2) && isValid(team3);
+            boolean isValid     = isValid(player) && isValid(team1) && isValid(team2);
             if( !isValid ) {
-                return PickResult.createInvalid( "Invalid selection, Player and all 3 teams must be selected!" );
+                return PickResult.createInvalid( "Invalid selection, Player and all 2 teams must be selected!" );
             }
             
-            pickResult          = pickManager.savePicks( pickForWeek, player, team1, team2, team3 );
+            pickResult          = pickManager.savePicks( pickForWeek, player, team1, team2 );
             
         }catch( Exception e) {
             LOGGER.warn( "FAILED to process picks", e );

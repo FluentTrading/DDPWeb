@@ -2,11 +2,10 @@ package com.ddp.nfl.web.core;
 
 public enum DDPTable{
     
-    NFL_TEAM    ( "NFLTeam"),
-    DDP_PLAYER  ( "DDPPlayer"),
-    DDP_PICK    ( "DDPPick"),
+    NFL_TEAM    ( "public.\"NFLTeam\""),
+    DDP_PLAYER  ( "public.\"DDPPlayer\""),
+    DDP_PICK    ( "public.\"DDPPick\""),
     UNKNOWN     ("");
-    
 
     private final String tableName;
     

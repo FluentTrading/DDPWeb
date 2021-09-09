@@ -17,8 +17,6 @@ import com.ddp.nfl.web.pickem.*;
 import com.ddp.nfl.web.schedule.*;
 import com.ddp.nfl.web.winnings.*;
 
-import io.github.cdimascio.dotenv.Dotenv;
-
 import static com.ddp.nfl.web.util.DDPUtil.*;
 
 
@@ -31,14 +29,6 @@ public final class AppContextListener implements ServletContextListener{
     private final static String NFL_START_DATE_KEY  = "NFL_START_DATE";
     private final static String NFL_WEEK_NUMBER     = "NFL_WEEK_NUMBER";
     private final static String CASH_PER_WEEK_KEY   = "CASH_PER_WEEK";
-    
-    private final static String RDS_DRIVER_TAG      = "RDS_DRIVER";
-    private final static String RDS_HOST_TAG        = "RDS_HOST";
-    private final static String RDS_PORT_TAG        = "RDS_PORT";
-    private final static String RDS_DB_NAME_TAG     = "RDS_DB_NAME";
-    private final static String RDS_USER_TAG        = "RDS_USERNAME";
-    private final static String RDS_PASS_TAG        = "RDS_PASSWORD";
-    
     private final static String LOGGER_CFG_TAG      = "LOGGER_CONFIG";
     
     private final static Logger LOGGER              = LoggerFactory.getLogger( "AppContextListener" );
@@ -145,9 +135,7 @@ public final class AppContextListener implements ServletContextListener{
         DDPMeta metaData        = null;
         
         try {
-            
-            Dotenv config       = Dotenv.load();
-            
+
             String version      = context.getInitParameter( APP_VERSION_KEY );
             boolean seasonOver  = Boolean.parseBoolean( context.getInitParameter( NFL_SEASON_OVER_KEY ) );
             String nflSeason    = context.getInitParameter( NFL_SEASON_KEY );
@@ -155,7 +143,7 @@ public final class AppContextListener implements ServletContextListener{
             int nflWeek         = Integer.parseInt( context.getInitParameter( NFL_WEEK_NUMBER ) );
             int cashPerWeek     = Integer.parseInt( context.getInitParameter( CASH_PER_WEEK_KEY ) );
                         
-            metaData            = new DDPMeta( version, seasonOver, nflSeason, startDate, nflWeek, cashPerWeek, config );
+            metaData            = new DDPMeta( version, seasonOver, nflSeason, startDate, nflWeek, cashPerWeek );
             
             context.setAttribute( META_INFO_KEY, metaData );
             LOGGER.info( "Successfully created {} {}", metaData, PRINT_NEWLINE );

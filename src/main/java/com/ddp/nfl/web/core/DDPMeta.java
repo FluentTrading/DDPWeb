@@ -1,24 +1,21 @@
 package com.ddp.nfl.web.core;
 
-import static com.ddp.nfl.web.util.DDPUtil.*;
-
 import java.time.*;
 
-import io.github.cdimascio.dotenv.*;
-
+import static com.ddp.nfl.web.util.DDPUtil.*;
 
 public final class DDPMeta{
 
     private final String version;
     private final String seasonType;
     private final LocalDate startDate;
+    private final String dbConnectionURL;
     private final int gameWeek;
     private final int cashPerWeek;
     private final boolean seasonStarted;
     private final boolean seasonOver;
-    private final Dotenv dotConfig;
-    
-    public DDPMeta( String version, boolean seasonOver, String seasonType, LocalDate startDate, int gameWeek, int cashPerWeek, Dotenv config ){
+
+    public DDPMeta( String version, boolean seasonOver, String seasonType, LocalDate startDate, int gameWeek, int cashPerWeek ){
         
         this.version        = version;
         this.seasonOver     = seasonOver;
@@ -26,9 +23,9 @@ public final class DDPMeta{
         this.startDate      = startDate;
         this.gameWeek       = gameWeek;
         this.cashPerWeek    = cashPerWeek;
+        this.dbConnectionURL= System.getenv("JDBC_DATABASE_URL");
         this.seasonStarted  = startDate.isEqual(LocalDate.now( )) || startDate.isBefore(LocalDate.now( )); 
-        this.dotConfig         = config;
-        
+
         validate( );
     }
     
@@ -73,51 +70,27 @@ public final class DDPMeta{
     }
     
     
-    public final String getDriverName( ){
-        return dotConfig.get( "RDS_DRIVER", "MISSING");
+    public final String getDBConnectionURL( ){
+        return dbConnectionURL;
     }
-    
-    
-    public final String getDBHostname( ){
-        return dotConfig.get( "RDS_HOST", "MISSING");
-    }
-    
-    
-    public final String getDBName( ){
-        return dotConfig.get( "RDS_DB_NAME", "MISSING");
-    }
-    
-    
-    public final int getDBPort( ){
-        return Integer.parseInt( dotConfig.get( "RDS_PORT", "-1") );
-    }
-    
-    
-    public final String getDBUserName( ){
-        return dotConfig.get( "RDS_USERNAME", "MISSING");
-    }
-    
-    public final String getDBPassword( ){
-        return dotConfig.get( "RDS_PASSWORD", "MISSING");
-    }
-    
+
     
     protected final void validate(  ){
         
         if( !isValid(seasonType) ){
-            throw new RuntimeException("SeasonType " + seasonType + " is invalid" );
+            throw new RuntimeException("SeasonType " + seasonType + " is invalid!" );
         }
         
         if( gameWeek < ONE ){
-            throw new RuntimeException("NFL game week " + gameWeek + " is invalid" );
+            throw new RuntimeException("NFL game week " + gameWeek + " is invalid!" );
         }        
         
         if( cashPerWeek <= ONE ){
-            throw new RuntimeException("Cash Per Week " + cashPerWeek + " is invalid" );
+            throw new RuntimeException("Cash Per Week " + cashPerWeek + " is invalid!" );
         }
         
-        if( dotConfig == null ) {
-            throw new RuntimeException("Environment config is invalid" );
+        if( !isValid(dbConnectionURL) ){
+            throw new RuntimeException("DB Connection URL is invalid!" );
         }
                   
     }

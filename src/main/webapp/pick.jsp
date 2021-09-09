@@ -30,7 +30,6 @@
 							<td align="center">Player</td>
 							<td align="center">Team 1</td>
 							<td align="center">Team 2</td>
-							<td align="center">Team 3</td>							
 						</tr>
 												
 						<tr>
@@ -69,17 +68,7 @@
   								</select>
   								
 							</td>
-							
-							
-							<td align="center">
-							  	<select class="pickGrid-content" name="team3">
-							  		<c:forEach var="entry3" items="${applicationScope[DDPUtil.PICK_MANAGER_KEY].getTeamsPlaying()}">
-    									<option value="${entry3}">${entry3}</option>
-    								</c:forEach>
-    								<option value="" selected>Select</option>
-  								</select>
-							</td>
-														
+
 						</tr>
 						
 						<tr>
@@ -124,9 +113,6 @@
   						<td width="130px">
   							<h1>${ddpPick.getTeams()[1].getCamelCaseName()}</h1>
   						</td>
-  						<td width="130px">
-  							<h1>${ddpPick.getTeams()[2].getCamelCaseName()}</h1>
-  						</td>  					
   					</tr>	
   				</table>
   				</c:forEach>	

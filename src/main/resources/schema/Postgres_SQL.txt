@@ -1,0 +1,82 @@
+
+JDBC_DATABASE_URL=jdbc:postgresql://ec2-18-215-44-132.compute-1.amazonaws.com:5432/d612rk4pqn5nqi?sslmode=require&user=rosrespdgzgaxg&password=62c1dd13ee11b0591bc4539e70b6b4c2d3d3a798377e9d968bc3c4e499b7b8de
+
+CREATE TABLE public."DDPPlayer" (
+	id int4 NOT NULL GENERATED ALWAYS AS IDENTITY,
+	"name" varchar NOT NULL,
+	nickname varchar NULL,
+	deposit int4 NOT NULL,
+	CONSTRAINT ddplayer_pk PRIMARY KEY (id)
+);
+  
+INSERT INTO `DDPPlayer`
+VALUES
+(1, "Ankur", "Shola Ka Anus", 100),
+(2, "Raj", "DDP Cyclops", 100),
+(3, "Kiran", "Mary Makkhan", 100),
+(4, "Andy", "Cuminside Kid", 100),
+(5, "Wazim", "Special Chutney", 100),
+(6, "Surbe", "Bortaales' Boi", 100),
+(7, "Preet", "Kansas", 100),
+(8, "Kania", "Kothari's All Star", 100),
+(9, "Vic", "Thug Extraordinaire", 100);
+
+  
+CREATE TABLE public."DDPPick" (
+	"year" int4 NOT NULL,
+	week int4 NOT NULL,
+	pickorder int4 NOT NULL,
+	player varchar NOT NULL,
+	team1 varchar NOT NULL,
+	team2 varchar NOT NULL,
+	CONSTRAINT ddppick_pk PRIMARY KEY (player, week)
+);
+
+CREATE TABLE public."NFLTeam" (
+	id int4 NOT NULL GENERATED ALWAYS AS IDENTITY,
+	team varchar NOT NULL,
+	nickname varchar NULL,
+	division varchar NOT NULL,
+	conference varchar NULL,
+	city varchar NULL,
+	CONSTRAINT nflteam_pk PRIMARY KEY (id, team)
+);
+
+INSERT INTO public."NFLTeam"
+(team, nickname, division, conference, city)
+VALUES
+('Cardinals', 'ARI', 'NFC', 'West', 'Arizona'),
+('Falcons', 'ATL', 'NFC', 'South', 'Atlanta'),
+('Ravens', 'BAL', 'AFC', 'North','Baltimore'),
+('Bills', 'BUF', 'AFC', 'East', 'Buffalo'),
+('Panthers', 'CAR', 'NFC', 'South', 'Carolina'),
+('Bears', 'CHI', 'NFC', 'North', 'Chicago'),
+('Bengals', 'CIN', 'AFC', 'North', 'Cincinnati'),
+('Browns', 'CLE', 'AFC', 'North', 'Cleveland'),
+('Cowboys', 'DAL', 'NFC', 'East', 'Dallas'),
+('Broncos', 'DEN', 'AFC', 'West', 'Denver'),
+('Lions', 'DET', 'NFC', 'North', 'Detroit'),
+('Packers', 'GB', 'NFC', 'North', 'Green Bay'),
+('Texans', 'HOU', 'AFC', 'South', 'Houston'),
+('Colts', 'IND', 'AFC', 'South', 'Indianapolis'),
+('Jaguars', 'JAX', 'AFC', 'South', 'Jacksonville'),
+('Chiefs', 'KC', 'AFC', 'West', 'Kansas City'),
+('Dolphins', 'MIA', 'AFC', 'East', 'Miami'),
+('Vikings', 'MIN', 'NFC', 'North', 'Minnesota'),
+('Patriots', 'NE', 'AFC', 'East', 'New England'),
+('Saints', 'NO', 'NFC', 'South', 'New Orleans'),
+('Giants', 'NYG', 'NFC', 'East', 'New York'),
+('Jets', 'NYJ', 'AFC', 'East', 'New York'),
+('Raiders', 'LV', 'AFC', 'West', 'Las Vegas'),
+('Eagles', 'PHI', 'NFC', 'East', 'Philadelphia'),
+('Steelers', 'PIT', 'AFC', 'North', 'Pittsburgh'),
+('Chargers', 'LA', 'AFC', 'West', 'Los Angeles'),
+('49ers', 'SF', 'NFC', 'West', 'San Francisco'),
+('Seahawks', 'SEA', 'NFC', 'West', 'Seattle'),
+('Rams', 'LA', 'NFC', 'West', 'Los Angeles'),
+('Buccaneers', 'TB', 'NFC', 'South', 'Tampa Bay'),
+('Titans', 'TEN', 'AFC', 'South', 'Tennessee'),
+('Redskins', 'WAS', 'NFC', 'East', 'Washington');
+
+
+
