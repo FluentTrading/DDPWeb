@@ -15,6 +15,8 @@ public final class NFLStadium{
         FMT_STADIUM_NAME_MAP.put( "Empower Field at Mile High", "Mile High" );
         FMT_STADIUM_NAME_MAP.put( "ROKiT Field at Dignity Health Sports Park", "ROKiT Field" );
         FMT_STADIUM_NAME_MAP.put( "Tottenham Hotspur Stadium", "Tottenham" );
+        FMT_STADIUM_NAME_MAP.put( "GEHA Field at Arrowhead Stadium", "Arrowhead Stadium" );
+        
     }
     
     

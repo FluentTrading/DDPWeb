@@ -1,6 +1,7 @@
 package com.ddp.nfl.web.winnings;
 
 import org.slf4j.*;
+
 import java.util.*;
 import java.util.Map.*;
 
@@ -78,7 +79,7 @@ public final class WinnerManager{
     
     
     protected final Map<Integer, Set<WinnerResult>> prepareWinner( DDPMeta ddpMeta, DBService service ){
-        Map<Integer, Collection<Schedule>> resultsPerWeekMap    = getResultPerWeek( ddpMeta, pastWeekArray, service );
+        Map<Integer, Collection<EspnSchedule>> resultsPerWeekMap= getResultPerWeek( ddpMeta, pastWeekArray, service );
         Map<Integer, Set<WinnerResult>> winnerMap               = getWeeklyResult( picksPerWeekMap, resultsPerWeekMap );
                 
         return winnerMap;
@@ -86,7 +87,7 @@ public final class WinnerManager{
     }
     
     
-    protected final Map<Integer, Set<WinnerResult>> getWeeklyResult( Map<Integer, Collection<DDPPick>> picksPerWeekMap, Map<Integer, Collection<Schedule>> resultsPerWeekMap ){
+    protected final Map<Integer, Set<WinnerResult>> getWeeklyResult( Map<Integer, Collection<DDPPick>> picksPerWeekMap, Map<Integer, Collection<EspnSchedule>> resultsPerWeekMap ){
         
         Map<Integer, Set<WinnerResult>> winnerResultMap     = new TreeMap<>( );
         Comparator<WinnerResult> resultComparator           = new WinnerComparator();
@@ -142,12 +143,12 @@ public final class WinnerManager{
     
      
     
-    protected final Map<NFLTeam, Integer> getTeamPoints( int week, DDPPick ddpPick, Map<Integer, Collection<Schedule>> results ){
+    protected final Map<NFLTeam, Integer> getTeamPoints( int week, DDPPick ddpPick, Map<Integer, Collection<EspnSchedule>> results ){
         
         NFLTeam[] myPickedTeams     = ddpPick.getTeams( );
         Map<NFLTeam, Integer> scores= new LinkedHashMap<>( );
         
-        Collection<Schedule> res   = results.get( week );
+        Collection<EspnSchedule> res= results.get( week );
         
         for( NFLTeam nflTeam : myPickedTeams ){
             if( nflTeam == null) {
@@ -156,7 +157,7 @@ public final class WinnerManager{
             
             String myTeam   = nflTeam.getLowerCaseName( );
             
-            for( Schedule result : res ){
+            for( EspnSchedule result : res ){
                 
                 if( myTeam.equalsIgnoreCase(result.getHomeTeam( ).getLowerCaseName( )) ){
                     scores.put( result.getHomeTeam( ), result.getHomeScore( ) );
@@ -173,26 +174,21 @@ public final class WinnerManager{
     }
                 
     
-    protected final Map<Integer, Collection<Schedule>> getResultPerWeek( DDPMeta ddpMeta, int[] weekArray, DBService service ){
+    protected final Map<Integer, Collection<EspnSchedule>> getResultPerWeek( DDPMeta ddpMeta, int[] weekArray, DBService service ){
         
-        int nflYear                     = ddpMeta.getGameYear( );
-        String seasonType               = ddpMeta.getSeasonType( );
-        Map<String, NFLTeam> teamMap    = service.getAllTeams( );
-        
-        Map<Integer, Collection<Schedule>> resultPerWeek = new HashMap<>( );
+        Map<Integer, Collection<EspnSchedule>> resultPerWeek = new HashMap<>( );
         
         for( int week : weekArray ){
-            
-            String scheduleUrl  = ScheduleManager.createScheduleUrl( seasonType, nflYear, week );
             
             try {
             
                 LOGGER.info( "Parsing schedule data to calculate winnings." );
-                Map<String, Schedule> scheduleMap = ScheduleManager.parseSchedule( scheduleUrl, teamMap );
+                DDPMeta lastWeekDDPMeta					= new DDPMeta( ddpMeta.getVersion(), ddpMeta.isSeasonOver(), ddpMeta.getSeasonType(), ddpMeta.getStartDate(), week, ddpMeta.getCashPerWeek() );
+                Map<String, EspnSchedule> scheduleMap 	= EspnScheduleManager.parseSchedule(lastWeekDDPMeta, service);
                 resultPerWeek.put( week, scheduleMap.values( ) );
-            
+                            
             }catch (Exception e) {
-                LOGGER.warn( "FAILED to parse result for week [{}] using url [{}]", week, scheduleUrl );
+                LOGGER.warn( "FAILED to parse result for week [{}]", week, e );
             }
             
         }

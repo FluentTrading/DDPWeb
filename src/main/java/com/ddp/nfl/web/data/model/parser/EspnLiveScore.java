@@ -1,53 +1,54 @@
-package com.ddp.nfl.web.parser;
+package com.ddp.nfl.web.data.model.parser;
 
 import static com.ddp.nfl.web.util.DDPUtil.*;
 
 import org.slf4j.*;
 import java.time.*;
-import com.ddp.nfl.web.analytics.core.*;
+
 import com.ddp.nfl.web.analytics.home.*;
 import com.ddp.nfl.web.core.*;
+import com.ddp.nfl.web.data.model.Situation;
 import com.ddp.nfl.web.schedule.*;
 
 
 
-public final class LiveScore{
+public final class EspnLiveScore{
     
     private final String gameId;
-    private final Schedule schedule;
+    private final EspnSchedule schedule;
             
-    private final GameState gameState;
+    private final EspnGameState gameState;
     
     private final int homeScore;
     private final TeamInfo homeTeamInfo;
-    private final TeamInfo awayTeamInfo;
     
     private final int awayScore;
-    
+    private final TeamInfo awayTeamInfo;
+            
     private final String teamPossession;
     private final String timeRemaining;
     
     private final boolean isRedzone;
-    private final String rawQuarterStr;
+    private final int quarter;
     
     private final String driveInfo;
     private final String formattedQuarter;
     
     private final String stadium;
-    private final String tvStation;
     private final String note;
     
-    private final SummaryManager summary; 
+    private final Situation summary; 
     
     private final static int    DATE_LENGTH     = 8;
     private final static Logger LOGGER          = LoggerFactory.getLogger( "LiveScore" );
     
    
-    public LiveScore(  String gameId, Schedule schedule, GameState gameState,
-                            int homeScore, TeamInfo homeTeamInfo, int awayScore, TeamInfo awayTeamInfo,
+    public EspnLiveScore(  String gameId, EspnSchedule schedule, EspnGameState gameState,
+                            int homeScore, TeamInfo homeTeamInfo,  
+                            int awayScore, TeamInfo awayTeamInfo, 
                             String teamPossession, String timeRemaining, 
-                            boolean isRedzone, String rawQuarterStr,
-                            String yl, int togo, int down, int bp, String stadium, String tvStation, String note, SummaryManager summary ){
+                            boolean isRedzone, int quarter,
+                            String yl, int togo, int down, String stadium, String note, Situation summary ){
         
         this.gameId         = gameId;
         this.schedule       = schedule;
@@ -60,12 +61,11 @@ public final class LiveScore{
         this.timeRemaining  = timeRemaining;
         this.teamPossession = teamPossession;
         this.isRedzone      = isRedzone;
-        this.rawQuarterStr  = rawQuarterStr;
+        this.quarter  		= quarter;
         this.driveInfo      = parseDrive( gameState, down, togo, yl );
-        this.formattedQuarter= formatQuarter( gameState, schedule, rawQuarterStr, tvStation, stadium, timeRemaining );
+        this.formattedQuarter= formatQuarter( gameState, schedule, quarter, stadium, timeRemaining );
         
-        this.stadium        = NFLStadium.getFormattedName(stadium);
-        this.tvStation      = tvStation;
+        this.stadium        = NFLStadium.getFormattedName(stadium);        
         this.note           = note;
         this.summary        = summary;
     }
@@ -75,17 +75,22 @@ public final class LiveScore{
         return gameId;
     }
 
+    
+    public final EspnSchedule getSchedule( ){
+        return schedule;
+    }
+    
       
     public final String getGameScheduleTime( ) {
-        return schedule.getGameScheduleTime( );
+        return schedule.getFullSchedule( );
     }
     
     public final String getGameTime( ) {
-        return schedule.getGameDayTime( );
+        return schedule.getShortSchedule( );
     }
     
 
-    public final GameState getGameState( ) {
+    public final EspnGameState getGameState( ) {
         return gameState;
     }
     
@@ -139,8 +144,8 @@ public final class LiveScore{
     }
          
     
-    public final String getRawQuarter( ){
-        return rawQuarterStr;
+    public final int getQuarter( ){
+        return quarter;
     }
 
     
@@ -159,16 +164,12 @@ public final class LiveScore{
     }
     
     
-    public final String getTVStation( ) {
-        return tvStation;
-    }
-
     public final String getNote( ) {
         return note;
     }
 
 
-    public final SummaryManager getSummary( ) {
+    public final Situation getSituation( ) {
         return summary;
     }
 
@@ -219,13 +220,13 @@ public final class LiveScore{
     }
 
 
-    protected final static String parseDrive( GameState state, int down, int togo, String yard ){
+    protected final static String parseDrive( EspnGameState state, int down, int togo, String yard ){
 
-        boolean isPlaying     = GameState.isPlayingNotHalfTime(state);
+        boolean isPlaying     = EspnGameState.isPlayingNotHalfTime(state);
         if( !isPlaying ) return EMPTY;
         
         StringBuilder builder = new StringBuilder( );
-        String downSuffix     = GameState.getDownSuffix( down );
+        String downSuffix     = EspnGameState.getDownSuffix( down );
         
         builder.append( down ).append( downSuffix )
         .append( SPACE ).append( AMPERSAND ).append( SPACE )
@@ -236,7 +237,7 @@ public final class LiveScore{
 
     
     
-    protected final static String formatQuarter( GameState state, Schedule schedule, String quarterStr, String tvStation, String stadium, String timeRemaining ){
+    protected final static String formatQuarter( EspnGameState state, EspnSchedule schedule, int quarter, String stadium, String timeRemaining ){
 
         if( schedule == null ) {
             return "Unknown";
@@ -245,7 +246,7 @@ public final class LiveScore{
         switch( state ) {
             
             case NOT_STARTED:
-                return schedule.getGameDayTime( ) + " on " + tvStation;
+                return schedule.getFullSchedule( );
                 
             case FINISHED:
                 return "Final";
@@ -258,17 +259,17 @@ public final class LiveScore{
                 
             case PLAYING:{
                 
-                if( quarterStr.equalsIgnoreCase("1")){
-                    return "Q" + quarterStr + SPACE_DASH + timeRemaining;
+                if( quarter == 1){
+                    return "Q1" + SPACE_DASH + timeRemaining;
 
-                }else if( quarterStr.equalsIgnoreCase("2")){
-                    return "Q" + quarterStr + SPACE_DASH + timeRemaining;
+                }else if( quarter == 2 ){
+                    return "Q2" + SPACE_DASH + timeRemaining;
 
-                }else if( quarterStr.equalsIgnoreCase("3")){
-                    return "Q" + quarterStr + SPACE_DASH + timeRemaining;
+                }else if( quarter == 3){
+                    return "Q3" + SPACE_DASH + timeRemaining;
 
-                }else if( quarterStr.equalsIgnoreCase("4")){            
-                    return "Q" + quarterStr + SPACE_DASH + timeRemaining;
+                }else if( quarter == 4){            
+                    return "Q4" + SPACE_DASH + timeRemaining;
 
                 }else{
                     return "O.T";
@@ -291,7 +292,7 @@ public final class LiveScore{
         builder.append( "LiveScore[")
         .append( "GameId=" ).append( gameId );
                         
-        if( GameState.NOT_STARTED == gameState ) {
+        if( EspnGameState.NOT_STARTED == gameState ) {
             builder.append( ", StartTime=" ).append( getGameScheduleTime( ) )
             .append( ", Home=" ).append( getHomeTeam( ).getCamelCaseName( ) )
             .append( ", Away=" ).append( getAwayTeam( ).getCamelCaseName( ) );
@@ -304,8 +305,7 @@ public final class LiveScore{
         .append( ", quarter=" ).append( formattedQuarter )
         .append( ", TimeLeft=" ).append( timeRemaining )
         .append( ", isRedzone=" ).append( isRedzone )
-        .append( ", Drive=" ).append( driveInfo ).append( ", stadium=" ).append( stadium )
-        .append( ", tvStation=" ).append( tvStation )
+        .append( ", Drive=" ).append( driveInfo ).append( ", stadium=" ).append( stadium )        
         .append( ", note=" ).append( note );
             
         if( summary != null ) {

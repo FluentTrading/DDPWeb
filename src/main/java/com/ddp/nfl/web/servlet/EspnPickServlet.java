@@ -13,14 +13,14 @@ import javax.servlet.annotation.*;
 import static com.ddp.nfl.web.util.DDPUtil.*;
 
 
-@WebServlet(name = "PickServlet", description = "Servlet to store the Team Picks", urlPatterns = {"/pick"})
-public class PickServlet extends HttpServlet {
+@WebServlet(name = "EspnPickServlet", description = "Servlet to store the Team Picks", urlPatterns = {"/pick"})
+public class EspnPickServlet extends HttpServlet {
 
     private final static long serialVersionUID  = 1L;
     private final static String EXPECTED_PASS   = "1whynopass";
     private final static String PASS_SESSION_KEY= "isLoggedIn";
     private final static String ERROR_MESSAGE   = "Internal Error! ";
-    private final static Logger LOGGER          = LoggerFactory.getLogger( "PickServlet" );
+    private final static Logger LOGGER          = LoggerFactory.getLogger( "EspnPickServlet" );
 
     
     public final void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {}
@@ -31,7 +31,7 @@ public class PickServlet extends HttpServlet {
                         
         ServletContext context  = request.getServletContext( );
         
-        PickManager pickManager = (PickManager) context.getAttribute( PICK_MANAGER_KEY );
+        EspnPickManager pickManager = (EspnPickManager) context.getAttribute( ESPN_PICK_MANAGER_KEY );
         if( pickManager == null ){
             handleError( ERROR_MESSAGE, request, response );
         }
@@ -66,7 +66,7 @@ public class PickServlet extends HttpServlet {
     }
     
 
-    protected final PickResult handleAction( PickActionType type, int pickForWeek, PickManager pickManager, HttpServletRequest request ) {
+    protected final PickResult handleAction( PickActionType type, int pickForWeek, EspnPickManager pickManager, HttpServletRequest request ) {
         
         PickResult result   = null;
                 
@@ -94,7 +94,7 @@ public class PickServlet extends HttpServlet {
     }
     
 
-    protected final PickResult loadPicks( String headerMsg, int pickForWeek, PickManager pickManager ){
+    protected final PickResult loadPicks( String headerMsg, int pickForWeek, EspnPickManager pickManager ){
         
         PickResult pickResult       = null;
         
@@ -117,7 +117,7 @@ public class PickServlet extends HttpServlet {
     
     
 
-    protected final PickResult savePicks( int pickForWeek, PickManager pickManager, HttpServletRequest request ){
+    protected final PickResult savePicks( int pickForWeek, EspnPickManager pickManager, HttpServletRequest request ){
         
         PickResult pickResult   = null;
         

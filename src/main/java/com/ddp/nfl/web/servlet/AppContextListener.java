@@ -12,9 +12,8 @@ import com.ddp.nfl.web.analytics.core.*;
 import com.ddp.nfl.web.archive.*;
 import com.ddp.nfl.web.core.*;
 import com.ddp.nfl.web.database.*;
-import com.ddp.nfl.web.parser.*;
 import com.ddp.nfl.web.pickem.*;
-import com.ddp.nfl.web.schedule.*;
+import com.ddp.nfl.web.schedule.EspnScheduleManager;
 import com.ddp.nfl.web.winnings.*;
 
 import static com.ddp.nfl.web.util.DDPUtil.*;
@@ -43,10 +42,9 @@ public final class AppContextListener implements ServletContextListener{
                 
         DDPMeta ddpMeta         = createMetaData( context );
         DBService service       = createDBService( ddpMeta, context );
-        ScheduleManager schMan  = parseSchedule( ddpMeta, service, context );
-        
-        createLiveScoreParser( schMan, context );
-        createPickManager( ddpMeta, schMan, service, context );
+                
+        storeScheduleManager( ddpMeta, service, context );
+        createPickManager( ddpMeta, service, context );
         createGameCenter( context );
         prepareWinningsCash( ddpMeta, service, context );
         prepareArchiveReader( ddpMeta, context );
@@ -56,31 +54,24 @@ public final class AppContextListener implements ServletContextListener{
     }
 
 
-
-    protected final LiveScoreParser createLiveScoreParser( ScheduleManager schManager, ServletContext context ){
-        LiveScoreParser scoreParser = new LiveScoreParser( schManager );
-        context.setAttribute( LIVE_SCORE_PARSER_KEY, scoreParser );
-        LOGGER.info("Successfully created ScoreParser with key [{}]{}", LIVE_SCORE_PARSER_KEY, PRINT_NEWLINE);
-        
-        return scoreParser;
+    protected final void storeScheduleManager( DDPMeta meta, DBService service, ServletContext context ){
+    	context.setAttribute( ESPN_SCHEDULE_KEY, new EspnScheduleManager(meta, service) );        
+        LOGGER.info("Successfully created EspnScheduleManager with key [{}]{}", ESPN_SCHEDULE_KEY, PRINT_NEWLINE);    
     }
+    
 
-
-
-    protected final PickManager createPickManager( DDPMeta meta, ScheduleManager schMan, DBService service, ServletContext context ){
-        PickManager pick    = new PickManager( meta, schMan, service );
-        context.setAttribute( PICK_MANAGER_KEY, pick );
-        LOGGER.info("Successfully created PickManager with key [{}]{}", PICK_MANAGER_KEY, PRINT_NEWLINE);
+    protected final EspnPickManager createPickManager( DDPMeta meta, DBService service, ServletContext context ){
+    	EspnScheduleManager sch =(EspnScheduleManager) context.getAttribute(ESPN_SCHEDULE_KEY);
+    	EspnPickManager pick    = new EspnPickManager( meta, sch, service );
+        context.setAttribute( ESPN_PICK_MANAGER_KEY, pick );
+        LOGGER.info("Successfully created EspnPickManager with key [{}]{}", ESPN_PICK_MANAGER_KEY, PRINT_NEWLINE);
         
         return pick;
     }
     
     
     protected final void createGameCenter( ServletContext context ) {
-        AnalyticsManager manager= new AnalyticsManager( );
-        manager.start( );
-        
-        context.setAttribute( GAME_ANALYTICS_KEY, manager );
+    	context.setAttribute( GAME_ANALYTICS_KEY, new EspnAnalyticsManager() );
         LOGGER.info("Successfully stored game center manager with key [{}] {}", GAME_ANALYTICS_KEY, PRINT_NEWLINE);        
     }
     
@@ -117,18 +108,7 @@ public final class AppContextListener implements ServletContextListener{
     
     }    
     
-
-    protected final ScheduleManager parseSchedule( DDPMeta ddpMeta, DBService service, ServletContext context ){
-        LOGGER.info( "Parsing schedules for Schedule Manager." );
-        ScheduleManager manager = new ScheduleManager( ddpMeta, service );
-        context.setAttribute( SCHEDULE_KEY, manager );
-        
-        LOGGER.info( "Stored [{}] game schedule for Week [{}] with Key: [{}]{}", manager.getScheduleCount( ), ddpMeta.getGameWeek( ), SCHEDULE_KEY, PRINT_NEWLINE );
-     
-        return manager;
-    
-    }
-    
+   
         
     protected final DDPMeta createMetaData( ServletContext context ){
         
@@ -192,11 +172,6 @@ public final class AppContextListener implements ServletContextListener{
                 service.close( );
             }
                         
-            AnalyticsManager game = (AnalyticsManager) ctx.getAttribute( GAME_ANALYTICS_KEY );
-            if( game != null ) {
-                game.stop( );
-            }
-            
             LOGGER.info( "Successfully destroyed DDP Servlet context.");
             
         } catch (SQLException e) {

@@ -1,6 +1,7 @@
 package com.ddp.nfl.web.analytics.home;
 
 import java.util.*;
+import com.ddp.nfl.web.data.model.Record;
 
 import static com.ddp.nfl.web.util.DDPUtil.*;
 
@@ -8,24 +9,24 @@ import static com.ddp.nfl.web.util.DDPUtil.*;
 public class TeamInfo{
 
     private final boolean isHome;
-    private final String teamAbbr;
-    private final int to;
+    private final String teamAbbr;    
     private final String players;
     private final Map<Quarter, Integer> scoreMap;
-    
+    private final Map<String, Record> recordMap;
+        
     private final static int DEFAULT_SCORE  = 0;
     
     
-    public TeamInfo( boolean isHome, String teamName, int to, Map<Quarter, Integer> scoreMap, String players ){
+    public TeamInfo( boolean isHome, String teamName, Map<Quarter, Integer> scoreMap, String players, List<Record> records ){
         this.isHome     = isHome;
-        this.teamAbbr   = teamName;
-        this.to         = to;
+        this.teamAbbr   = teamName;        
         this.players    = players;
         this.scoreMap   = scoreMap;
+        this.recordMap	= parseRecord(records);
     }
 
     
-    public final boolean isHome( ) {
+	public final boolean isHome( ) {
         return isHome;
     }
     
@@ -34,14 +35,17 @@ public class TeamInfo{
         return teamAbbr;
     }
 
-    public final int getTo( ) {
-        return to;
-    }
-
-
     public final String getPlayers( ) {
         return players;
     }
+    
+    
+    //YTD, Home or Away
+    public final String getRecord( ){
+    	Record record = recordMap.get("YTD");
+    	return (record != null) ? record.getSummary() : "0-0";
+    }
+    
    
     public final int get1QuarterScore( ){
         return getScoreWithDefault( Quarter.FIRST );        
@@ -64,7 +68,13 @@ public class TeamInfo{
     }
         
     public final int getTotalScore( ){
-        return getScoreWithDefault( Quarter.TOTAL );        
+    	int sum = 0;
+    	for( Integer i : scoreMap.values() ) {
+    		sum += i;
+    	}
+
+    	return sum;
+       // return getScoreWithDefault( Quarter.TOTAL );        
     }
     
     
@@ -78,6 +88,16 @@ public class TeamInfo{
         Integer score = scoreMap.get( qEnum );
         return ( score != null ) ? score.intValue( ) : DEFAULT_SCORE;   
     }
+    
+
+    private Map<String, Record> parseRecord( List<Record> records ){
+		Map<String, Record> map = new HashMap<>();
+		for( Record r : records ) {
+			map.put( r.getName(), r);
+		}
+		
+		return map;
+	}
     
     
     public final void toDisplayString( StringBuilder builder ){
@@ -106,8 +126,7 @@ public class TeamInfo{
             builder.append( "Away=" );
         }
         builder.append( teamAbbr );
-        
-        builder.append( ", To=" ).append( to );
+        builder.append( ", Records: " ).append( recordMap );        
         builder.append( ", Score:" ). append( scoreMap );
         builder.append( ", Players=" ).append( players );           
         builder.append( "]" );

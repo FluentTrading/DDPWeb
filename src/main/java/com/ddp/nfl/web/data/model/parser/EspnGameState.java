@@ -1,9 +1,13 @@
-package com.ddp.nfl.web.parser;
+package com.ddp.nfl.web.data.model.parser;
 
 import static com.ddp.nfl.web.util.DDPUtil.*;
 
+import java.util.Set;
 
-public enum GameState{
+import com.ddp.nfl.web.data.model.Status;
+
+
+public enum EspnGameState{
     
     NOT_STARTED,
     DELAYED,
@@ -16,69 +20,78 @@ public enum GameState{
     public final static String ND    = "nd";
     public final static String RD    = "rd";
     public final static String TH    = "th";
+    
+    public final static Set<Integer> quarterSet = Set.of(1, 2, 3, 4);
         
     
-    public final static GameState parseState( String rawQuarter ) {
+    public final static EspnGameState parseState( Status status ) {
+    	
+    	int quarter 	= status.getPeriod();
+    	String name		= status.getType().getName();
+    	boolean done	= status.getType().isCompleted();
+    	
+    	if( !done && quarterSet.contains(quarter) ){
+    		return PLAYING;
+    	}
+    	
+    	if( done ){
+    		return FINISHED;
+    	}
+    	
+    	if( !done && !quarterSet.contains(quarter) ) {
+    		 return NOT_STARTED;
+    	}
+    	
+    	if( !done && name.contains("DELAY") ){
+   		 	return DELAYED;
+    	}
         
-        boolean notStarted  = parseGameNotStarted( rawQuarter );
-        if( notStarted ) return NOT_STARTED;
+
+    	if( !done && name.contains("HALF") ){
+   		 	return HALFTIME;
+    	}
+      
         
-        
-        boolean isFinished  = parseGameFinished( rawQuarter );
-        if( isFinished ) return FINISHED;
-        
-        
-        boolean isDelayed   = parseGameDelayed( rawQuarter );
-        if( isDelayed ) return DELAYED;
-        
-        
-        boolean isHalftime  = parseGameHalftime( rawQuarter );
-        if( isHalftime ) return HALFTIME;
-        
-        
-        boolean isPlaying   = !notStarted && !isFinished;
-        if( isPlaying ) return PLAYING;
-        
-        
-        return GameState.UNKNOWN;
+        return EspnGameState.UNKNOWN;
      
     }
        
+        
     
-    public final static boolean isNotStarted( LiveScore score ){
+    public final static boolean isNotStarted( EspnLiveScore score ){
         if( score == null ) return true;
-        return ( GameState.NOT_STARTED == score.getGameState( ) );
+        return ( EspnGameState.NOT_STARTED == score.getGameState( ) );
     }
          
     
-    public final static boolean isFinished( LiveScore score ) {
-        return ( GameState.FINISHED == score.getGameState( ) );
+    public final static boolean isFinished( EspnLiveScore score ) {
+        return ( EspnGameState.FINISHED == score.getGameState( ) );
     }
     
     
-    public final static boolean isPlaying( LiveScore score ) {
+    public final static boolean isPlaying( EspnLiveScore score ) {
         if( score == null ) return false;
-        return ( GameState.PLAYING == score.getGameState( ) );
+        return ( EspnGameState.PLAYING == score.getGameState( ) );
     }
 
     
-    public final static boolean isPlaying( GameState state ) {
-        return ( GameState.PLAYING == state );
+    public final static boolean isPlaying( EspnGameState state ) {
+        return ( EspnGameState.PLAYING == state );
     }
     
     
-    public final static boolean isPlayingNotHalfTime( GameState state ){
-        return ( isPlaying(state) && !(GameState.HALFTIME == state));
+    public final static boolean isPlayingNotHalfTime( EspnGameState state ){
+        return ( isPlaying(state) && !(EspnGameState.HALFTIME == state));
     }
     
   
-    public final static boolean isDelayed( LiveScore score ) {
-        return ( GameState.DELAYED == score.getGameState( ) );
+    public final static boolean isDelayed( EspnLiveScore score ) {
+        return ( EspnGameState.DELAYED == score.getGameState( ) );
     }
     
     
-    public final static boolean isHalftime( LiveScore score ) {
-        return ( GameState.HALFTIME == score.getGameState( ) );
+    public final static boolean isHalftime( EspnLiveScore score ) {
+        return ( EspnGameState.HALFTIME == score.getGameState( ) );
     }
     
     

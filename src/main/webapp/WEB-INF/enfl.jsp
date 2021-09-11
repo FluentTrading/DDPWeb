@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ page isELIgnored="false"%>
-<%@ page import="com.ddp.nfl.web.match.GameResultManager,com.ddp.nfl.web.util.DDPUtil" %>
+<%@ page import="com.ddp.nfl.web.match.EspnGameResultManager,com.ddp.nfl.web.util.DDPUtil" %>
 <%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
@@ -9,7 +9,7 @@
 <head>
 	
 	<meta charset="UTF-8">
-	<meta http-equiv="refresh" content="25"/>
+	<meta http-equiv="refresh" content="2500"/>
 	<meta http-equiv="Content-Language" content="en">
 	<meta name="format-detection" content="telephone=no">
 	<meta name="viewport" content="width=device-width, initial-scale=1" /> 
@@ -30,9 +30,9 @@
   <input id="tab1" type="radio" name="tabs" checked>
   <label for="tab1">
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <c:if test="${requestScope[DDPUtil.RESULT_MANAGER_KEY] != null}">  
+  <c:if test="${requestScope[DDPUtil.ESPN_RESULT_MANAGER_KEY] != null}">  
   Week
-  ${requestScope[DDPUtil.RESULT_MANAGER_KEY].getMeta().getGameWeek( )}
+  ${requestScope[DDPUtil.ESPN_RESULT_MANAGER_KEY].getMeta().getGameWeek( )}
   </c:if>  
   </label>
   
@@ -48,7 +48,7 @@
   
   <input id="tab4" type="radio" name="tabs">
   <label for="tab4">
-  <i class="fas fa-award"></i> 2019
+  <i class="fas fa-award"></i> 2020
   </label>
         
   <section id="content1">
@@ -57,7 +57,7 @@
  				 	   		
  	   	<c:choose>
  	   	
-           	<c:when test="${!requestScope[DDPUtil.RESULT_MANAGER_KEY].isValid( )}">
+           	<c:when test="${!requestScope[DDPUtil.ESPN_RESULT_MANAGER_KEY].isValid( )}">
            		<td>
            			<br>
                 	<center>						
@@ -75,8 +75,7 @@
 							<td width=100px" align="center"> 
 								<img src=${pick.getPlayer( ).getIcon( )} title="${pick.getPlayer( ).getName( )}" height="52" width="52"/>
 								<h6 style="color:#ffffff;">${pick.getTeams()[0].getCamelCaseName()}</h6>
-								<h6 style="color:#ffffff;">${pick.getTeams()[1].getCamelCaseName()}</h6>
-								<h6 style="color:#ffffff;">${pick.getTeams()[2].getCamelCaseName()}</h6>
+								<h6 style="color:#ffffff;">${pick.getTeams()[1].getCamelCaseName()}</h6>								
 							</td>
 						</c:if>					  				
   					</c:forEach>
@@ -88,7 +87,7 @@
   				<center>
   					<h3 style="color:#ffffff;">
 						<br>
-           					${requestScope[DDPUtil.RESULT_MANAGER_KEY].getDisplayMessage()}
+           					${requestScope[DDPUtil.ESPN_RESULT_MANAGER_KEY].getDisplayMessage()}
            				<br>
            			</h3>
            		</center>
@@ -98,22 +97,23 @@
         	
     	<c:otherwise>
 
-		<c:if test="${requestScope[DDPUtil.RESULT_MANAGER_KEY].noGamesStarted( )}">
+		<c:if test="${requestScope[DDPUtil.ESPN_RESULT_MANAGER_KEY].noGamesStarted( )}">
     		<img src=${DDPUtil.generateMainImage()} class="backgroundImage">
     	</c:if>
     	
     	
-    	<c:forEach items="${requestScope[DDPUtil.RESULT_MANAGER_KEY].getResultList( )}" var="gameResult">
+    	<c:forEach items="${requestScope[DDPUtil.ESPN_RESULT_MANAGER_KEY].getResultList( )}" var="gameResult">
     		
     		<div class="newGridTable" >
     
 	   			<div class="scoreRow">
   					
   					<div class="player-icon-cell">
-  						<img src="${gameResult.getPlayer( ).getIcon( )}" title=${gameResult.getPlayer( ).getName( )} height="75" width="75">
+  						<img src="${gameResult.getPlayer( ).getIcon( )}" title=${gameResult.getPlayer( ).getName( )} height="70" width="70">
   					</div>
   					
-  					
+  					<div class="spacer-cell-no-padding"></div>
+					
   					<div class="score-cell-icon-div">  						  						
   						<div class="topLeft"><img src="${gameResult.getMy1TeamIcon( )}" height="52" width="52"></div>
   						<div class="bottomLeft"><img src="${gameResult.getOpp1TeamIcon( )}" height="52" width="52"></div>  						  						
@@ -142,7 +142,7 @@
 					</div>
  					
 							
-					<div class="spacer-cell"></div>
+					<div class="spacer-cell-no-padding"></div>
 					
 					<div class="score-cell-icon-div">
   						<div class="topLeft"><img src="${gameResult.getMy2TeamIcon( )}" height="52" width="52"></div>
@@ -170,39 +170,8 @@
   						</div>  																
 					</div>
 					
-					<div class="spacer-cell"></div>
-					
-					
-					<div class="score-cell-icon-div">
-  						<div class="topLeft"><img src="${gameResult.getMy3TeamIcon( )}" height="52" width="52"></div>
-  						<div class="bottomLeft"><img src="${gameResult.getOpp3TeamIcon( )}" height="52" width="52"></div>																
-					</div>
-										
-									 
-  					<div class="quarter-score-cell-div">  	
-  						<div class="${gameResult.getGame3ScoreDivClass(true)}">					  						
-  							<div class="topRightQuarter">${gameResult.getMy3TeamScorePerQuarter(true)}</div>
-  						</div>
-  						
-  						<div class="${gameResult.getGame3ScoreDivClass(false)}">
-  							<div class="bottomRightQuarter">${gameResult.getMy3TeamScorePerQuarter(false)}</div>  						  						
-						</div>
-					</div>
-					
-					
-					<div class="score-cell-div">
-  						<div class="${gameResult.getGame3ScoreDivClass(true)}">		
-							<div class="topRight">${gameResult.getMyGame3ScoreWithPossssion(true)}</div>  							
-  						</div>				
-  						
-  						<div class="${gameResult.getGame3ScoreDivClass(false)}">									  						
-  							<div class="bottomRight">${gameResult.getMyGame3ScoreWithPossssion( false)}</div>
-  						</div>																
-					</div>
-					
-					
-					<div class="spacer-cell"></div>
-								  						
+					<div class="spacer-cell-no-padding"></div>
+												  						
 			</div>
 		</div>
 		
@@ -217,7 +186,8 @@
   					${gameResult.getHomeTotalScore( )}  
   				</div>  				
   				
-  				
+  				<div class="spacer-cell-no-padding"></div>
+  				  				
   				<c:if test="${gameResult.isGame1NotStarted()}">
   					<div class="result-cell-not-started">
   						${gameResult.getGame1NotStartedMessage( )}
@@ -237,8 +207,7 @@
   					</div>
   				</c:if>
   				
-  				<div class="spacer-cell"></div>
-  				
+  				<div class="spacer-cell-no-padding"></div>
   			
 				<c:if test="${gameResult.isGame2NotStarted()}">
   					<div class="result-cell-not-started">
@@ -259,31 +228,9 @@
   						${gameResult.getGame2FinishedMessage( )}					  						
   					</div>
   				</c:if>
-  				
-  				<div class="spacer-cell"></div>
-  				
-				<c:if test="${gameResult.isGame3NotStarted()}">
-  					<div class="result-cell-not-started">
-  						${gameResult.getGame3NotStartedMessage( )}
-  					</div>
-  				</c:if>
-  				
-  				
-  				<c:if test="${gameResult.isGame3Playing()}">
-  					<div class="quarter-cell">
-  						<div class="leftQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Quarter( gameResult )}</div>  										  						  			
-  					</div>
-  				</c:if>
-  				
-  				
-  				<c:if test="${gameResult.isGame3Finished()}">
-  					<div class="result-cell-finished">		
-  						${gameResult.getGame3FinishedMessage( )}				
-  					</div>
-  				</c:if>
-  				  				
-  				<div class="spacer-cell"></div>
 
+  				<div class="spacer-cell-no-padding"></div>
+  				
   			</div>
     
     </div>
@@ -298,75 +245,54 @@
    				<div class="overallTotalScore-hidden">
   					${gameResult.getAllTotalHomeScore( )}  					
   				</div>  				
-  				
-  				
+  				  						
+  				<div class="spacer-cell-no-padding"></div>
   				
   				<c:if test="${gameResult.isGame1NotStarted()}">
   					<div class="third-score-cell-not-started">
-  						${gameResult.getGame1Stadium( )}
+  						&nbsp${gameResult.getGame1LiveScore().getSchedule().getGameOdds().toLiteString()}
   					</div>
   				</c:if>
   				  				
   				<c:if test="${gameResult.isGame1Playing()}">
   					<div class="drive-cell">
-  						<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Drive( gameResult )}</div>		
+  						<div class="leftDriveInfo">&nbsp${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Drive( gameResult )}</div>		
   					</div>
   				</c:if>
   				
-  				
+  				  				
   				<c:if test="${gameResult.isGame1Finished()}">
   					<div class="result-cell-finished-hidden">
-  						${gameResult.getGame1FinishedMessage( )}
+  						&nbsp${gameResult.getGame1FinishedMessage( )}
   					</div>
   				</c:if>
   				
+  						
+  				<div class="spacer-cell-no-padding"></div>
   				
-  				
-  			
 				<c:if test="${gameResult.isGame2NotStarted()}">
   					<div class="third-score-cell-not-started">
-  						${gameResult.getGame2Stadium( )}
+  						&nbsp${gameResult.getGame2LiveScore().getSchedule().getGameOdds().toLiteString()}
   					</div>
   				</c:if>
   				
   				
   				<c:if test="${gameResult.isGame2Playing()}">
   					<div class="drive-cell">  							
-  						<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Drive( gameResult )}</div>  										
+  						<div class="leftDriveInfo">&nbsp${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Drive( gameResult )}</div>  										
   					</div>
   				</c:if>
   				
   				
   				<c:if test="${gameResult.isGame2Finished()}">
   					<div class="result-cell-finished-hidden">  	
-  						${gameResult.getGame2FinishedMessage( )}								  						
+  						&nbsp${gameResult.getGame2FinishedMessage( )}								  						
   					</div>
-  				</c:if>
-  				
-  				
-  				
-				<c:if test="${gameResult.isGame3NotStarted()}">
-  					<div class="third-score-cell-not-started">
-  						${gameResult.getGame1Stadium( )}
-  					</div>
-  				</c:if>
-  				
-  				
-  				<c:if test="${gameResult.isGame3Playing()}">
-  					<div class="drive-cell">
-  						<div class="leftDriveInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Drive( gameResult )}</div>  										  						  			
-  					</div>
-  				</c:if>
-  				
-  				
-  				<c:if test="${gameResult.isGame3Finished()}">
-  					<div class="result-cell-finished-hidden">
-  						${gameResult.getGame3FinishedMessage( )}			
-  					</div>
-  				</c:if>
-  				  				
+  				</c:if> 				
 				
-
+		
+  				<div class="spacer-cell-no-padding"></div>
+  				
   			</div>
     
     </div>
@@ -393,23 +319,21 @@
     	<div class="schedulegrid">    	
     	
     		<c:choose>
-				<c:when test="${applicationScope[DDPUtil.SCHEDULE_KEY] != null}">
+				<c:when test="${applicationScope[DDPUtil.ESPN_SCHEDULE_KEY] != null}">
 					
 					<div>
 						<table>
 							
-							<c:forEach var="entry" items="${applicationScope[DDPUtil.SCHEDULE_KEY].getSchedules( ).values()}">
+							<c:forEach var="entry" items="${applicationScope[DDPUtil.ESPN_SCHEDULE_KEY].getSchedules( ).values()}">
 							
 								<tr bgcolor="#3F4148">
-    								
-										<td align="left" height="50" width="15%"></td>
-  										
+    						  									
+    						  			<td align="left" height="50" width="10%"></td>
+    						  										
   										<td align="left">
-    										<h4>${entry.getGameScheduleTime()}</h4>
+    										<h4>${entry.getShortSchedule()}</h4>
 	   									</td>
-	   									
-	   									<td align="left" height="50" width="10%"></td>
-	   									
+	   										   									
 	   									<td align="left">
     										<h4>${entry.getAwayTeam().getCamelCaseName()}</h4>
 	   									</td>
@@ -429,9 +353,16 @@
     									<td align="left">
     										<h4>&nbsp;${entry.getHomeTeam().getCamelCaseName()}</h4>
     									</td>
-	   										    				    									
-    									<td align="center" width="15%"></td>
+    									
+    									<td align="left">    									
+    										<h6 style="color:orange;">&nbsp;${entry.getGameOdds().getDetails()}</h6>
+    									</td>
+    									
+    									<td align="right" height="50" width="10%"></td>
+    					   				
     								</tr>
+    		
+    								
   								</c:forEach>																
 							
 						</table>
@@ -474,9 +405,9 @@
     						
     						
     					<c:forEach items="${entry.getResults( )}" var="winResult">
-    						
+
     						<div class="cashDetailsRow">
-    							
+
     							<div class="cashWeekNumber">
     								${winResult.getWeekNumberHtml( )}
     							</div>
@@ -502,17 +433,8 @@
     									${winResult.get_2Score( )}
     								</div>
     							</div>
-    							
-    							
-    							<div class="cashDetails">
-    								<div class="cashDetailsTeam">
-    									${winResult.getTeam3( ).getNickName( )}
-    								</div>
-    								<div class="cashDetailsScore">
-    									${winResult.get_3Score( )}
-    								</div>    	
-    							</div>    	
-    							    							
+
+
     						</div>
     						</c:forEach>
     				</div>

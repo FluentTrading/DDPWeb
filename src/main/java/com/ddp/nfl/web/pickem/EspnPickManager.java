@@ -9,12 +9,12 @@ import com.ddp.nfl.web.database.*;
 import com.ddp.nfl.web.schedule.*;
 
 
-public final class PickManager{
+public final class EspnPickManager{
 
     private final DDPMeta ddpMeta;
     private final int pickWeek;
     private final DBService service;
-    private final ScheduleManager scheduleManager;
+    private final EspnScheduleManager scheduleManager;
     
     private final Set<String> allTeamsForWeek; 
     private final Map<String, DDPPlayer> allPlayers;
@@ -24,7 +24,7 @@ public final class PickManager{
     private final static Logger LOGGER  = LoggerFactory.getLogger( "PickManager" );
     
     
-    public PickManager( DDPMeta ddpMeta, ScheduleManager scheduleManager, DBService service ){
+    public EspnPickManager( DDPMeta ddpMeta, EspnScheduleManager scheduleManager, DBService service ){
         this.ddpMeta        = ddpMeta;
         this.service        = service;
         this.scheduleManager= scheduleManager;
@@ -88,7 +88,6 @@ public final class PickManager{
     //3. Ensure every team was only picked once.    (Relaxing this rule for 2020 )
     protected final PickResult validatePick( int pickForWeek, String player, String team1, String team2, Collection<DDPPick> picks ){
         
-        Collection<Schedule> scheuleMap = scheduleManager.getSchedules( ).values( );
         DDPPick playerPicked        = hasPlayerPicked( player, picks );
         if( playerPicked != null ){
             return PickResult.createInvalid( "Player " + player + " had already picked " + playerPicked.toTeamString( ) );

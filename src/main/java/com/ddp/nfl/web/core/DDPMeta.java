@@ -23,14 +23,14 @@ public final class DDPMeta{
         this.startDate      = startDate;
         this.gameWeek       = gameWeek;
         this.cashPerWeek    = cashPerWeek;
-        this.dbConnectionURL= System.getenv("JDBC_DATABASE_URL");
+        this.dbConnectionURL= loadDBConnectionURL();        
         this.seasonStarted  = startDate.isEqual(LocalDate.now( )) || startDate.isBefore(LocalDate.now( )); 
 
         validate( );
     }
     
     
-    public final boolean hasSeasonStarted( ){
+	public final boolean hasSeasonStarted( ){
         return seasonStarted;
     }
 
@@ -96,6 +96,16 @@ public final class DDPMeta{
     }
 
 
+    private static String loadDBConnectionURL() {
+    	String url = System.getenv("JDBC_DATABASE_URL");
+    	if( url == null ){
+    		url = "jdbc:postgresql://ec2-18-215-44-132.compute-1.amazonaws.com:5432/d612rk4pqn5nqi?sslmode=require&user=rosrespdgzgaxg&password=62c1dd13ee11b0591bc4539e70b6b4c2d3d3a798377e9d968bc3c4e499b7b8de";           
+    	}
+    	
+    	return url;
+	}
+    
+    
     @Override
     public final String toString( ){
         

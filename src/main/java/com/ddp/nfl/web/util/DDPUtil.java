@@ -3,6 +3,10 @@ package com.ddp.nfl.web.util;
 import java.time.format.*;
 import java.util.concurrent.*;
 
+import com.ddp.nfl.web.data.model.SeasonTypeDeserializer;
+import com.ddp.nfl.web.data.model.Type;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.google.gson.*;
 
 
@@ -34,24 +38,32 @@ public final class DDPUtil{
     public final static String DB_SERVICE_KEY       = "DBServiceKey";
     public final static String META_INFO_KEY        = "MetaInfoKey";
     public final static String SCHEDULE_KEY         = "ScheduleKey";
+    public final static String ESPN_SCHEDULE_KEY    = "EspnScheduleKey";
+    //public final static String ESPN_GAME_MANAGER_KEY= "ESPNGameManagerKey";
     public final static String CASH_MANAGER_KEY     = "CashManagerKey";
     public final static String ARCHIVE_MANAGER_KEY  = "ArchiveManagerKey";
     
     public final static String RESULT_MANAGER_KEY   = "ResultManagerKey";
+    public final static String ESPN_RESULT_MANAGER_KEY   = "EspnResultManagerKey";
     public final static String GAME_ANALYTICS_KEY   = "GameAnalyticsKey";
     public final static String ANALYTICS_GAME_ID_KEY= "gameId";
             
     public final static String PICK_RESULT_KEY      = "PickResultKey";
     public final static String PICK_MANAGER_KEY     = "PickManagerKey";
+    public final static String ESPN_PICK_MANAGER_KEY     = "EspnPickManagerKey";
     
     public final static String LIVE_SCORE_PARSER_KEY= "LiveScoreParserKey";
+    public final static String ESPN_LIVE_SCORE_PARSER_KEY= "EspnLiveScoreParserKey";
     public final static String BLINK_GREEN_DOT      = "<span class=\"dotBlink\"/>";
         
     public final static String GAME_SERVLET_LINK    = "/game";
     public final static String DDP_GAME_PAGE_LINK   = "/WEB-INF/nfl.jsp";
+    public final static String ESPN_DDP_GAME_PAGE_LINK   = "/WEB-INF/enfl.jsp";
     public final static String PICK_TAB_LINK        = "/pick.jsp";
+    public final static String ESPN_PICK_TAB_LINK     = "/epick.jsp";
     
     public final static Gson GSON_INSTANCE          = new GsonBuilder().create();
+    public final static ObjectMapper JSON_INSTANCE  = createJsonMapper();
     public final static JsonParser JSON_PARSER      = new JsonParser();
     
     public final static String RED_ZONE_ICON        = "images/misc/touchdown.gif";
@@ -61,6 +73,18 @@ public final class DDPUtil{
    // public final static String JSON_MINI_SCORE_URL  = "http://localhost:8080/web/testdata/Live_Game_Day_Week3.json";
     public final static String JSON_MINI_SCORE_URL  = "http://static.nfl.com/liveupdate/scores/scores.json";
         
+    
+    private static ObjectMapper createJsonMapper(){
+    	ObjectMapper mapper  = new ObjectMapper();
+	
+		SimpleModule module = new SimpleModule();
+		module.addDeserializer(Type.class, new SeasonTypeDeserializer());
+		mapper.registerModule(module);
+
+		return mapper;
+    }
+    
+    
     public final static boolean isValid( String data ){
         return !( data == null || data.trim( ).isEmpty( ) );            
     }

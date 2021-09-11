@@ -1,22 +1,23 @@
 package com.ddp.nfl.web.match;
 
 import java.util.*;
+
 import com.ddp.nfl.web.core.*;
-import com.ddp.nfl.web.parser.*;
+import com.ddp.nfl.web.data.model.parser.*;
 
 import static com.ddp.nfl.web.util.DDPUtil.*;
 
 
-public final class GameResultManager{
+public final class EspnGameResultManager{
        
     private final DDPMeta meta;
     private final ResultCode code;
     private final String message;
     private final boolean noGamesStarted;
-    private final List<GameResult> resultList;
+    private final List<EspnGameResult> resultList;
     
     
-    public GameResultManager( DDPMeta meta, ResultCode code, String message, List<GameResult> resultList ){
+    public EspnGameResultManager( DDPMeta meta, ResultCode code, String message, List<EspnGameResult> resultList ){
         this.meta       = meta;
         this.code       = code;
         this.message    = message;
@@ -25,13 +26,13 @@ public final class GameResultManager{
     }
     
     
-    public final static GameResultManager createValid( DDPMeta meta, List<GameResult> resultList ){
-        return new GameResultManager( meta, ResultCode.SUCCESS, EMPTY, resultList );
+    public final static EspnGameResultManager createValid( DDPMeta meta, List<EspnGameResult> resultList ){
+        return new EspnGameResultManager( meta, ResultCode.SUCCESS, EMPTY, resultList );
     }
     
 
-    public final static GameResultManager createInvalid( DDPMeta meta, ResultCode code, String message ){
-        return new GameResultManager( meta, code, message, null );
+    public final static EspnGameResultManager createInvalid( DDPMeta meta, ResultCode code, String message ){
+        return new EspnGameResultManager( meta, code, message, null );
     }
     
     
@@ -65,7 +66,7 @@ public final class GameResultManager{
     }
     
 
-    public final List<GameResult> getResultList( ){
+    public final List<EspnGameResult> getResultList( ){
         return resultList;
     }
     
@@ -75,18 +76,18 @@ public final class GameResultManager{
     } 
     
 
-    private final boolean noGamesStarted( List<GameResult> resultList ){
+    private final boolean noGamesStarted( List<EspnGameResult> resultList ){
         
         if( resultList == null || resultList.isEmpty( ) ) return true;
         
         int totalGamesCount = 0;
         int notStartedCount = 0;
         
-        for( GameResult result : resultList ){
-            for( LiveScore score : result.getLiveScores( ) ){
+        for( EspnGameResult result : resultList ){
+            for( EspnLiveScore score : result.getLiveScores( ) ){
                 ++totalGamesCount;
                 if( score != null ) {
-                   notStartedCount  = (GameState.isNotStarted(score)) ? ++notStartedCount : notStartedCount;
+                   notStartedCount  = (EspnGameState.isNotStarted(score)) ? ++notStartedCount : notStartedCount;
                 }
             }
         }

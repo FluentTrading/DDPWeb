@@ -19,7 +19,7 @@
   	<div class="pickGrid" align="center">
   	
   	<c:choose>
-		<c:when test="${applicationScope[DDPUtil.PICK_MANAGER_KEY] != null}">
+		<c:when test="${applicationScope[DDPUtil.ESPN_PICK_MANAGER_KEY] != null}">
 		
 			<table>
 							
@@ -36,13 +36,13 @@
 							
 							<td width="150px" align="center">
 								<select class="pickGrid-content" name="weekNumber">
-									<option value="${applicationScope[DDPUtil.PICK_MANAGER_KEY].getPickWeek( )}">${applicationScope[DDPUtil.PICK_MANAGER_KEY].getPickWeek( )}</option>
+									<option value="${applicationScope[DDPUtil.ESPN_PICK_MANAGER_KEY].getPickWeek( )}">${applicationScope[DDPUtil.ESPN_PICK_MANAGER_KEY].getPickWeek( )}</option>
   								</select>  								
 							</td>
 							
 							<td align="center">
 							  	<select class="pickGrid-content" name="player">
-							  		<c:forEach var="entry" items="${applicationScope[DDPUtil.PICK_MANAGER_KEY].getAllPlayers( ).values()}">
+							  		<c:forEach var="entry" items="${applicationScope[DDPUtil.ESPN_PICK_MANAGER_KEY].getAllPlayers( ).values()}">
     									<option value="${entry.getName( )}">${entry.getName( )}</option>
     								</c:forEach>
     								<option value="" selected>Select</option>
@@ -52,7 +52,7 @@
 						
 							<td align="center">
 							  	<select class="pickGrid-content" name="team1">
-							  		<c:forEach var="entry1" items="${applicationScope[DDPUtil.PICK_MANAGER_KEY].getTeamsPlaying()}">
+							  		<c:forEach var="entry1" items="${applicationScope[DDPUtil.ESPN_PICK_MANAGER_KEY].getTeamsPlaying()}">
     									<option value="${entry1}">${entry1}</option>
     								</c:forEach>
     								<option value="" selected>Select</option>
@@ -61,7 +61,7 @@
 							
 							<td align="center"> 
 							  	<select class="pickGrid-content" name="team2">
-							  		<c:forEach var="entry2" items="${applicationScope[DDPUtil.PICK_MANAGER_KEY].getTeamsPlaying()}">
+							  		<c:forEach var="entry2" items="${applicationScope[DDPUtil.ESPN_PICK_MANAGER_KEY].getTeamsPlaying()}">
     									<option value="${entry2}">${entry2}</option>
     								</c:forEach>
     								<option value="" selected>Select</option>
@@ -86,9 +86,7 @@
 							<td align="center" colspan="1">
 								<button class="pickGridBtn" name="action" value="load" type="submit">Load</button>
 							</td>
-		
-							<td></td>
-													
+															
 						</tr>
 					
 					</form>

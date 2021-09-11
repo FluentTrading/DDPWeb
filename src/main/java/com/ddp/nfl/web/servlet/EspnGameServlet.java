@@ -3,28 +3,26 @@ package com.ddp.nfl.web.servlet;
 import java.io.*;
 import java.util.*;
 
-import org.slf4j.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
-import com.ddp.nfl.web.analytics.core.*;
 import com.ddp.nfl.web.core.*;
+import com.ddp.nfl.web.data.model.parser.*;
 import com.ddp.nfl.web.database.*;
 import com.ddp.nfl.web.match.*;
-import com.ddp.nfl.web.parser.*;
+import com.ddp.nfl.web.schedule.EspnScheduleManager;
 import com.ddp.nfl.web.winnings.*;
 
 import static com.ddp.nfl.web.util.DDPUtil.*;
 import static com.ddp.nfl.web.match.ResultCode.*;
 
 
-@WebServlet(name = "GameServlet", description = "Servlet to keep track of score", urlPatterns = {"/game"})
-public class GameServlet extends HttpServlet{
+@WebServlet(name = "EspnGameServlet", description = "Servlet to keep track of score", urlPatterns = {"/game"})
+public class EspnGameServlet extends HttpServlet{
 
     private final static long serialVersionUID  = 1L;
-    private final static Logger LOGGER          = LoggerFactory.getLogger( "GameServlet" );
-    
+        
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -74,41 +72,34 @@ public class GameServlet extends HttpServlet{
             return;
         }
 
-        
-        LiveScoreParser jsonParser  = (LiveScoreParser) context.getAttribute( LIVE_SCORE_PARSER_KEY );
-        Map<NFLTeam, LiveScore> map = jsonParser.parseLiveScore( );
+        EspnScheduleManager schedule= (EspnScheduleManager) context.getAttribute( ESPN_SCHEDULE_KEY );
+        Map<NFLTeam, EspnLiveScore> map = EspnDataManager.parseLiveScore(metaInfo, dbService, schedule);        
         if( map.isEmpty( ) ) {
             handleError( metaInfo, PARSE_ERROR, "NFL data for week " +  metaInfo.getGameWeek( ) + " is not yet available.", request, response );
             return;
-        }
-                
-        
-        AnalyticsManager analytics  = (AnalyticsManager) context.getAttribute( GAME_ANALYTICS_KEY );
-        if( analytics != null ){
-            analytics.gameStatusUpdate( map );
         }
         
         
         WinnerManager cashManager   = (WinnerManager) context.getAttribute( CASH_MANAGER_KEY );
                 
-        GameResultManager result    = GameResultFactory.packData( metaInfo, map, dbService, cashManager );
+        EspnGameResultManager result    = EspnGameResultFactory.packData( metaInfo, map, dbService, cashManager );
         handleSuccess( result, request, response );   
         
     }
 
 
 
-    protected final void handleSuccess( GameResultManager result, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        request.setAttribute( RESULT_MANAGER_KEY, result );
-        request.getRequestDispatcher(DDP_GAME_PAGE_LINK).forward(request, response);
+    protected final void handleSuccess( EspnGameResultManager result, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        request.setAttribute( ESPN_RESULT_MANAGER_KEY, result );
+        request.getRequestDispatcher(ESPN_DDP_GAME_PAGE_LINK).forward(request, response);
     }
     
 
     protected final void handleError( DDPMeta metaInfo, ResultCode code, String errorReason, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         //LOGGER.warn("{} {}", code, errorReason );
         
-        request.setAttribute( RESULT_MANAGER_KEY, GameResultManager.createInvalid( metaInfo, code, errorReason ) );
-        request.getRequestDispatcher(DDP_GAME_PAGE_LINK).forward(request, response);
+        request.setAttribute( ESPN_RESULT_MANAGER_KEY, EspnGameResultManager.createInvalid( metaInfo, code, errorReason ) );
+        request.getRequestDispatcher(ESPN_DDP_GAME_PAGE_LINK).forward(request, response);
     }
     
     
