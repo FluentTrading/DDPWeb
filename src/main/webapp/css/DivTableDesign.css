@@ -174,7 +174,18 @@
     	
     	border: 0px solid #80ff80;
 	}
+
 	
+	.spacer-cell-half-no-padding{
+		display: table-cell;
+  		width: 0.5%;
+  		position: relative;
+    	background-color: #3F4148;
+    	
+    	border: 0px solid #80ff80;
+	}
+	
+		
 			
 	.backgroundImage{
 		position:absolute;
@@ -212,9 +223,16 @@
   		color: #ffffff;
   		background-color: #3F4148;
   		padding: 2px 0px 2px 10px; /* Top, Right, Bottom, Left */
-  		border: 1px solid #8080ff;
+  		border: 0px solid #8080ff;
 	}
 	
+	.player-icon-cell {
+		display: table-cell;
+  		width: 2%;
+  		background-color: #3F4148;
+    	border: 0px solid #00ff00;
+    	padding: 15px 0px 15px 20px; /* Top, Right, Bottom, Left */
+	}
 	
 	
 	.result-cell-not-started{
@@ -227,7 +245,7 @@
 		font-weight: plain;
     	background-color: #3F4148;
     	padding: 2px 0px 2px 0px; /* Top, Right, Bottom, Left */
-    	border: 2px solid #80ff80;
+    	border: 0px solid #80ff80;
 	}
 	
 			
@@ -241,7 +259,7 @@
 		font-weight: plain;  		
     	background-color: #3F4148;
     	padding: 2px 0px 2px 0px; /* Top, Right, Bottom, Left */
-    	border: 2px solid #ff8000;
+    	border: 0px solid #ff8000;
 	}
 	
 	.result-cell-won{
@@ -312,15 +330,12 @@
 
 			  	
   	.overallTotalScore-hidden{
-  		display: table-cell;
+		display: table-cell;
   		width: 2%;
-  		font-weight: bold;
-  		font-size: 20px;
-  		text-align: right;
-  		color: #3F4148;
+  		color:#3F4148;
   		background-color: #3F4148;
-  		padding: 2px 0px 2px 10px; /* Top, Right, Bottom, Left */
-  		border: 1px solid #ff80c0;
+    	border: 0px solid #00ff00;
+    	padding: 15px 0px 15px 20px; /* Top, Right, Bottom, Left */
 	}
 	
 	
@@ -335,7 +350,7 @@
 		font-weight: plain;
     	background-color: #3F4148;
     	padding: 2px 0px 2px 0px; /* Top, Right, Bottom, Left */
-    	border: 2px solid #0000ff;
+    	border: 0px solid #0000ff;
 	
 	}
 	
@@ -350,7 +365,7 @@
 		font-weight: plain;  		
     	background-color: #3F4148;
     	padding: 2px 0px 2px 0px; /* Top, Right, Bottom, Left */
-    	border: 2px solid #00ffff;
+    	border: 0px solid #00ffff;
 	}
 	
 		

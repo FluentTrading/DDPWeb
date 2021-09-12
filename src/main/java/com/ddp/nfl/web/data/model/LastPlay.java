@@ -79,6 +79,8 @@ public class LastPlay{
 	public final int getStatYardage() {
 		return statYardage;
 	}
+	
+		
 
 	@Override
 	public String toString() {

@@ -149,6 +149,9 @@ public final class WinnerManager{
         Map<NFLTeam, Integer> scores= new LinkedHashMap<>( );
         
         Collection<EspnSchedule> res= results.get( week );
+        if( res == null ) {
+        	return scores;
+        }
         
         for( NFLTeam nflTeam : myPickedTeams ){
             if( nflTeam == null) {
@@ -177,6 +180,11 @@ public final class WinnerManager{
     protected final Map<Integer, Collection<EspnSchedule>> getResultPerWeek( DDPMeta ddpMeta, int[] weekArray, DBService service ){
         
         Map<Integer, Collection<EspnSchedule>> resultPerWeek = new HashMap<>( );
+        
+        //At least 1 week should be over before we calculate winnings.
+        if( ddpMeta.getGameWeek() == 1 ){
+        	return resultPerWeek;
+        }
         
         for( int week : weekArray ){
             

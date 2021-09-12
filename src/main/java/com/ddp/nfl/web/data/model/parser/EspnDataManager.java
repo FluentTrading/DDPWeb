@@ -86,10 +86,6 @@ public final class EspnDataManager{
                 boolean isRedzone   	= (situation != null ? situation.isRedZone() : false );
                 String teamPossession	= (situation != null ? situation.getPossessionText() : "" );
                 
-                System.out.println("DataManager: " + competition.getLeaders());
-                System.out.println("Home: " + homeComp.getLeaders());
-                System.out.println("Away: " + awayComp.getLeaders());
-                
                 EspnGameState gameState = EspnGameState.parseState( competition.getStatus() );
                 EspnLiveScore liveScore = new EspnLiveScore( gameId, schedule, gameState, homeScore, home,
                                                           awayScore, away, teamPossession, timeRemaining, isRedzone, quarter,
@@ -97,6 +93,16 @@ public final class EspnDataManager{
                 
                 scores.put( liveScore.getHomeTeam( ), liveScore );
                 scores.put( liveScore.getAwayTeam( ), liveScore );
+
+                //System.out.println("DataManager: " + competition.getLeaders());
+                if(  home.getTeamNameAbbr().equals("saints")) {
+                	System.out.println( "Saints: " + liveScore.getGameState() + ", " + liveScore.getGameNotStartedInfo() + ", Schedule: " + liveScore.getSchedule());
+                }
+                
+                if(  away.getTeamNameAbbr().equals("packers")) {
+                	System.out.println( "packers: " + liveScore.getGameState() + ", " + liveScore.getGameNotStartedInfo()+ ", Schedule: " + liveScore.getSchedule());
+                }
+
                 
             }
                 

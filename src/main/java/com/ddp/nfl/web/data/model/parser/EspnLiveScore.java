@@ -174,6 +174,19 @@ public final class EspnLiveScore{
     }
 
     
+    
+    //Game not started
+    //Show odds if not available, show time
+    public final String getGameNotStartedInfo( ) {
+    	if( schedule.getGameOdds() != null ) {
+    		return schedule.getGameOdds().toLiteString();
+    	}else {
+    		return schedule.getFullSchedule();
+    	}
+    	
+    }
+    
+    
   
     protected final static String createFormattedGameTime( String gameDay, LocalDate gameDate, String gameTime ){
         

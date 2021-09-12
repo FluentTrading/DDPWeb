@@ -85,6 +85,25 @@ public class Situation{
 	public final String getPossession() {
 		return possession;
 	}
+	
+	public final String getProbability() {
+		if( lastPlay == null || lastPlay.getProbability() == null ) {
+			return "";
+		}else {
+			return lastPlay.getProbability().toLiteString();
+		}
+	}
+	
+
+	
+	public String toLiteString() {
+		return "Situation [LastPlay=" + lastPlay + ", down=" + down + ", yardLine=" + yardLine
+				+ ", distance=" + distance + ", downDistanceText=" + downDistanceText + ", shortDownDistanceText="
+				+ shortDownDistanceText + ", possessionText=" + possessionText + ", isRedZone=" + isRedZone
+				+ ", possession=" + possession
+				+ "]";
+	}
+	
 
 	@Override
 	public String toString() {

@@ -26,31 +26,27 @@ public enum EspnGameState{
     
     public final static EspnGameState parseState( Status status ) {
     	
-    	int quarter 	= status.getPeriod();
-    	String name		= status.getType().getName();
-    	boolean done	= status.getType().isCompleted();
-    	
-    	if( !done && quarterSet.contains(quarter) ){
+    	String name		= status.getType() != null ? status.getType().getName() : "UNKNOWN";
+    	    	
+    	if( "STATUS_IN_PROGRESS".equals(name) ){
     		return PLAYING;
     	}
-    	
-    	if( done ){
+    	    	
+    	if( "STATUS_FINAL".equals(name) ){
     		return FINISHED;
     	}
     	
-    	if( !done && !quarterSet.contains(quarter) ) {
+    	if( "STATUS_SCHEDULED".equals(name) ){
     		 return NOT_STARTED;
     	}
     	
-    	if( !done && name.contains("DELAY") ){
-   		 	return DELAYED;
-    	}
+        if( "STATUS_HALFTIME".equals(name)) {
+        	return HALFTIME;
+        }
         
-
-    	if( !done && name.contains("HALF") ){
-   		 	return HALFTIME;
-    	}
-      
+        if( "STATUS_DELAYED".equals(name)) {
+        	return DELAYED;
+        }
         
         return EspnGameState.UNKNOWN;
      

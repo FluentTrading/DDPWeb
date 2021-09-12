@@ -9,7 +9,7 @@
 <head>
 	
 	<meta charset="UTF-8">
-	<meta http-equiv="refresh" content="2500"/>
+	<meta http-equiv="refresh" content="30"/>
 	<meta http-equiv="Content-Language" content="en">
 	<meta name="format-detection" content="telephone=no">
 	<meta name="viewport" content="width=device-width, initial-scale=1" /> 
@@ -182,11 +182,11 @@
    	
    			<div class="secondRow">
    			
-   				<div class="totalScore">
+   				<div class="totalScore">   				
   					${gameResult.getHomeTotalScore( )}  
   				</div>  				
-  				
-  				<div class="spacer-cell-no-padding"></div>
+
+				<div class="spacer-cell-half-no-padding"></div>
   				  				
   				<c:if test="${gameResult.isGame1NotStarted()}">
   					<div class="result-cell-not-started">
@@ -196,7 +196,7 @@
   				  				
   				<c:if test="${gameResult.isGame1Playing()}">
   					<div class="quarter-cell">
-  						<div class="leftQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Quarter( gameResult )}</div>		
+  						<div class="leftQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Quarter( gameResult )} &nbsp${gameResult.getGame1LiveScore().getSituation().getDownDistanceText()}</div>		
   					</div>
   				</c:if>
   				
@@ -207,7 +207,7 @@
   					</div>
   				</c:if>
   				
-  				<div class="spacer-cell-no-padding"></div>
+  				<div class="spacer-cell-half-no-padding"></div>
   			
 				<c:if test="${gameResult.isGame2NotStarted()}">
   					<div class="result-cell-not-started">
@@ -218,7 +218,7 @@
   				
   				<c:if test="${gameResult.isGame2Playing()}">
   					<div class="quarter-cell">  							
-  						<div class="leftQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Quarter( gameResult )}</div>  										
+  						<div class="leftQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Quarter( gameResult )} ${gameResult.getGame2LiveScore().getSituation().getDownDistanceText()}</div>  										
   					</div>
   				</c:if>
   				
@@ -229,7 +229,7 @@
   					</div>
   				</c:if>
 
-  				<div class="spacer-cell-no-padding"></div>
+  				<div class="spacer-cell-half-no-padding"></div>
   				
   			</div>
     
@@ -243,55 +243,56 @@
    			<div class="thirdRow">
    			
    				<div class="overallTotalScore-hidden">
-  					${gameResult.getAllTotalHomeScore( )}  					
+  					${gameResult.getHomeTotalScore( )}  					
   				</div>  				
-  				  						
-  				<div class="spacer-cell-no-padding"></div>
   				
-  				<c:if test="${gameResult.isGame1NotStarted()}">
+  				<div class="spacer-cell-half-no-padding"></div>
+  			
+  				
+  				<c:if test="${gameResult.isGame1NotStarted()}">  					
   					<div class="third-score-cell-not-started">
-  						&nbsp${gameResult.getGame1LiveScore().getSchedule().getGameOdds().toLiteString()}
+  						${gameResult.getGame1LiveScore().getGameNotStartedInfo()}
   					</div>
   				</c:if>
   				  				
   				<c:if test="${gameResult.isGame1Playing()}">
   					<div class="drive-cell">
-  						<div class="leftDriveInfo">&nbsp${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Drive( gameResult )}</div>		
+  						<div class="leftDriveInfo">&nbsp${gameResult.getGame1LiveScore().getSituation().getProbability()}</div>	
   					</div>
   				</c:if>
   				
   				  				
   				<c:if test="${gameResult.isGame1Finished()}">
   					<div class="result-cell-finished-hidden">
-  						&nbsp${gameResult.getGame1FinishedMessage( )}
+  						${gameResult.getGame1FinishedMessage( )}
   					</div>
   				</c:if>
   				
   						
-  				<div class="spacer-cell-no-padding"></div>
+  				<div class="spacer-cell-half-no-padding"></div>
   				
 				<c:if test="${gameResult.isGame2NotStarted()}">
   					<div class="third-score-cell-not-started">
-  						&nbsp${gameResult.getGame2LiveScore().getSchedule().getGameOdds().toLiteString()}
+  						${gameResult.getGame2LiveScore().getGameNotStartedInfo()}
   					</div>
   				</c:if>
   				
   				
   				<c:if test="${gameResult.isGame2Playing()}">
-  					<div class="drive-cell">  							
-  						<div class="leftDriveInfo">&nbsp${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Drive( gameResult )}</div>  										
+  					<div class="drive-cell">  							  						
+  						<div class="leftDriveInfo">&nbsp${gameResult.getGame2LiveScore().getSituation().getProbability()}</div>  										
   					</div>
   				</c:if>
   				
   				
   				<c:if test="${gameResult.isGame2Finished()}">
   					<div class="result-cell-finished-hidden">  	
-  						&nbsp${gameResult.getGame2FinishedMessage( )}								  						
+  						${gameResult.getGame2FinishedMessage( )}								  						
   					</div>
   				</c:if> 				
 				
 		
-  				<div class="spacer-cell-no-padding"></div>
+  				<div class="spacer-cell-half-no-padding"></div>
   				
   			</div>
     
@@ -406,36 +407,27 @@
     						
     					<c:forEach items="${entry.getResults( )}" var="winResult">
 
-    						<div class="cashDetailsRow">
-
     							<div class="cashWeekNumber">
     								${winResult.getWeekNumberHtml( )}
-    							</div>
-    							
-    							<div class="cashWeekScore">
     								${winResult.getTotalFormattedScore( )}
-    							</div>    							
-    							
-    							<div class="cashDetails">
-    								<div class="cashDetailsTeam">
-    									${winResult.getTeam1( ).getNickName( )}
-    								</div>
-    								<div class="cashDetailsScore">
-    									${winResult.get_1Score( )}
-    								</div>
-    							</div>
-    							
-    							<div class="cashDetails">
-    								<div class="cashDetailsTeam">
-    									${winResult.getTeam2( ).getNickName( )}
-    								</div>
-    								<div class="cashDetailsScore">
-    									${winResult.get_2Score( )}
-    								</div>
     							</div>
 
+    							<div class="cashDetailsTeam">
+    								${winResult.getTeam1( ).getNickName( )}
+    							</div>
 
-    						</div>
+		                        <div class="cashDetailsTeam">
+    								${winResult.get_1Score( )}
+    							</div>
+
+    							<div class="cashDetailsTeam">
+                                	${winResult.getTeam2( ).getNickName( )}
+                                </div>
+
+                                <div class="cashDetailsTeam">
+                                    ${winResult.get_2Score( )}
+                                </div>
+
     						</c:forEach>
     				</div>
   					</c:forEach>

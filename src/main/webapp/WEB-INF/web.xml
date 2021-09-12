@@ -33,7 +33,7 @@
         <param-name>CASH_PER_WEEK</param-name>
         <param-value>50</param-value>
     </context-param>
-            
+               
     <context-param>
         <param-name>LOGGER_CONFIG</param-name>
         <param-value>WEB-INF/logback.xml</param-value>

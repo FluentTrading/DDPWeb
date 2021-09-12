@@ -21,14 +21,14 @@ public final class EspnGameResultFactory{
         	EspnGameResult result   = packData( meta.getGameWeek( ), pick, scoreMap, cashManager );
         	resultList.add( result );
 
-        	if( pick.getPlayer().getName().equalsIgnoreCase("vic")) {
+        	if( pick.getPlayer().getName().equalsIgnoreCase("raj")) {
         		//System.out.println( "State 2: " + result.getGame2LiveScore().);
         		//System.out.println( "1: " + result.getGame1LiveScore().getSchedule() + ", " + result.getGame1Stadium() );
         		//System.out.println( "2: " + result.getGame2LiveScore().getSchedule() + ", " + result.isGame2NotStarted() + ", " + result.getGame2Stadium() );
         		
         		//System.out.println( "Bucs: " + result.getGame1LiveScore().getHomeTeamInfo().getRecord()  );
         		//System.out.println( "Cowboys: " + result.getGame1LiveScore().getAwayTeamInfo().getRecord()  );
-        		System.out.println( "1: " + result.getGame1LiveScore().getSituation() );
+        //		System.out.println( "1: NotStarted: " + result.isGame1NotStarted() + ", Fin: " + result.isGame1Finished() + ", Live: " + result.isGame1Playing() + ", " + result.getGame1LiveScore().getGameState());
         	}
         	
         	
