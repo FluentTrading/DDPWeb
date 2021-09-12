@@ -93,16 +93,6 @@ public final class EspnDataManager{
                 
                 scores.put( liveScore.getHomeTeam( ), liveScore );
                 scores.put( liveScore.getAwayTeam( ), liveScore );
-
-                //System.out.println("DataManager: " + competition.getLeaders());
-                if(  home.getTeamNameAbbr().equals("saints")) {
-                	System.out.println( "Saints: " + liveScore.getGameState() + ", " + liveScore.getGameNotStartedInfo() + ", Schedule: " + liveScore.getSchedule());
-                }
-                
-                if(  away.getTeamNameAbbr().equals("packers")) {
-                	System.out.println( "packers: " + liveScore.getGameState() + ", " + liveScore.getGameNotStartedInfo()+ ", Schedule: " + liveScore.getSchedule());
-                }
-
                 
             }
                 
