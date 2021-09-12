@@ -89,28 +89,7 @@ public enum EspnGameState{
     public final static boolean isHalftime( EspnLiveScore score ) {
         return ( EspnGameState.HALFTIME == score.getGameState( ) );
     }
-    
-    
-    protected final static boolean parseGameNotStarted( String rawQuarterStr ){
-        return !isValid(rawQuarterStr ) || "p".equalsIgnoreCase( rawQuarterStr ) || "Pregame".equalsIgnoreCase( rawQuarterStr );
-    }
-    
-    
-    protected final static boolean parseGameFinished( String rawQuarterStr ){
-        return "F".equals( rawQuarterStr ) || "FO".equals( rawQuarterStr )
-                || "Final".equals( rawQuarterStr )
-                || "final overtime".equalsIgnoreCase( rawQuarterStr );
-    }
-    
-    
-    protected final static boolean parseGameDelayed( String rawQuarterStr ){
-        return rawQuarterStr.equalsIgnoreCase("Delayed") || rawQuarterStr.equalsIgnoreCase("Suspended");
-    }
-    
-    
-    protected final static boolean parseGameHalftime( String rawQuarterStr ){
-        return rawQuarterStr.equalsIgnoreCase("H") || rawQuarterStr.equalsIgnoreCase("Halftime");
-    }
+
     
     protected final static String getDownSuffix( int down ) {
     
