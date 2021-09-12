@@ -176,7 +176,7 @@ public final class EspnLiveScore{
 
 	public final String getGamePlayingInfo(){
 		String info = summary.getDownDistanceText();
-		if( info == null || info.isBlank() ) {
+		if( info == null || info.length() ==0 ) {
 			return "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 		}else {
 			return info;
