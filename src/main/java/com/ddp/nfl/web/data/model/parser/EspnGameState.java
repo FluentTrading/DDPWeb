@@ -1,9 +1,6 @@
 package com.ddp.nfl.web.data.model.parser;
 
 import static com.ddp.nfl.web.util.DDPUtil.*;
-
-import java.util.Set;
-
 import com.ddp.nfl.web.data.model.Status;
 
 
@@ -20,9 +17,7 @@ public enum EspnGameState{
     public final static String ND    = "nd";
     public final static String RD    = "rd";
     public final static String TH    = "th";
-    
-    public final static Set<Integer> quarterSet = Set.of(1, 2, 3, 4);
-        
+            
     
     public final static EspnGameState parseState( Status status ) {
     	
