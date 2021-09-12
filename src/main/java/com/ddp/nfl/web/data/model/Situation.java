@@ -29,9 +29,9 @@ public class Situation{
 		this.down = down;
 		this.yardLine = yardLine;
 		this.distance = distance;
-		this.downDistanceText = downDistanceText;
-		this.shortDownDistanceText = shortDownDistanceText;
-		this.possessionText = possessionText;
+		this.downDistanceText = ( downDistanceText == null || downDistanceText.equals("null") ? "" : downDistanceText);
+		this.shortDownDistanceText = ( shortDownDistanceText == null ? "" : shortDownDistanceText);
+		this.possessionText = ( possessionText == null ? "" : possessionText);;
 		this.isRedZone = isRedZone;
 		this.homeTimeouts = homeTimeouts;
 		this.awayTimeouts = awayTimeouts;
@@ -94,8 +94,8 @@ public class Situation{
 		}
 	}
 	
-
 	
+
 	public String toLiteString() {
 		return "Situation [LastPlay=" + lastPlay + ", down=" + down + ", yardLine=" + yardLine
 				+ ", distance=" + distance + ", downDistanceText=" + downDistanceText + ", shortDownDistanceText="

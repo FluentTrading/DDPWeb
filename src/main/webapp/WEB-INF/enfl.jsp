@@ -194,9 +194,9 @@
   					</div>
   				</c:if>
   				  				
-  				<c:if test="${gameResult.isGame1Playing()}">
+  				<c:if test="${gameResult.isGame1Playing()}">  					
   					<div class="quarter-cell">
-  						<div class="leftQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame1Quarter( gameResult )} &nbsp${gameResult.getGame1LiveScore().getSituation().getDownDistanceText()}</div>		
+  						<div class="leftQuarterInfo">${gameResult.getGame1LiveScore().getDisplayableQuarter()}</div>		
   					</div>
   				</c:if>
   				
@@ -218,7 +218,7 @@
   				
   				<c:if test="${gameResult.isGame2Playing()}">
   					<div class="quarter-cell">  							
-  						<div class="leftQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame2Quarter( gameResult )} ${gameResult.getGame2LiveScore().getSituation().getDownDistanceText()}</div>  										
+  						<div class="leftQuarterInfo">${gameResult.getGame2LiveScore().getDisplayableQuarter()}</div>  										
   					</div>
   				</c:if>
   				
@@ -257,7 +257,7 @@
   				  				
   				<c:if test="${gameResult.isGame1Playing()}">
   					<div class="drive-cell">
-  						<div class="leftDriveInfo">&nbsp${gameResult.getGame1LiveScore().getSituation().getProbability()}</div>	
+  						<div class="leftDriveInfo">${gameResult.getGame1LiveScore().getGamePlayingInfo()}</div>	
   					</div>
   				</c:if>
   				
@@ -280,7 +280,7 @@
   				
   				<c:if test="${gameResult.isGame2Playing()}">
   					<div class="drive-cell">  							  						
-  						<div class="leftDriveInfo">&nbsp${gameResult.getGame2LiveScore().getSituation().getProbability()}</div>  										
+  						<div class="leftDriveInfo">${gameResult.getGame2LiveScore().getGamePlayingInfo()}</div>  										
   					</div>
   				</c:if>
   				
@@ -352,11 +352,11 @@
     									</td>
     			
     									<td align="left">
-    										<h4>&nbsp;${entry.getHomeTeam().getCamelCaseName()}</h4>
+    										<h4>${entry.getHomeTeam().getCamelCaseName()}</h4>
     									</td>
     									
     									<td align="left">    									
-    										<h6 style="color:orange;">&nbsp;${entry.getGameOdds().getDetails()}</h6>
+    										<h6 style="color:orange;">&nbsp;&nbsp;${entry.getGameOdds().getDetails()}</h6>
     									</td>
     									
     									<td align="right" height="50" width="10%"></td>

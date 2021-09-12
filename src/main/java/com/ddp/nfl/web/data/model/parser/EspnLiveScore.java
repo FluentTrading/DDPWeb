@@ -173,7 +173,17 @@ public final class EspnLiveScore{
         return summary;
     }
 
-    
+
+	public final String getGamePlayingInfo(){
+		String info = summary.getDownDistanceText();
+		if( info == null || info.isBlank() ) {
+			return "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+		}else {
+			return info;
+		}
+	}
+	
+	    
     
     //Game not started
     //Show odds if not available, show time
