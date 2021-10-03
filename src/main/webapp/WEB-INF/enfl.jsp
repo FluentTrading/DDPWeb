@@ -405,13 +405,14 @@
     						</div>
     						
     						
-    					<c:forEach items="${entry.getResults( )}" var="winResult">
-
+    						<c:forEach items="${entry.getResults( )}" var="winResult">
+								
     							<div class="cashWeekNumber">
     								${winResult.getWeekNumberHtml( )}
     								${winResult.getTotalFormattedScore( )}
     							</div>
 
+								<!-- 
     							<div class="cashDetailsTeam">
     								${winResult.getTeam1( ).getNickName( )}
     							</div>
@@ -427,10 +428,11 @@
                                 <div class="cashDetailsTeam">
                                     ${winResult.get_2Score( )}
                                 </div>
-
+								 -->
     						</c:forEach>
-    				</div>
-  					</c:forEach>
+    					</div>
+  						
+  						</c:forEach>
   						    			
     			</c:when>
 				<c:otherwise>
