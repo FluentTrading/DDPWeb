@@ -1,6 +1,5 @@
 package com.ddp.nfl.web.data.model;
 
-import java.util.List;
 
 public class Tracking {
 
