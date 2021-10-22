@@ -48,7 +48,7 @@
   
   <input id="tab4" type="radio" name="tabs">
   <label for="tab4">
-  <i class="fas fa-award"></i> 2020
+  <i class="fas fa-award"></i> Crypto
   </label>
         
   <section id="content1">
@@ -463,25 +463,14 @@
 	 
 	 
 	  <section id="content4">
-	  	  
-	  	   	<div class="archiveTable">
-	      	<c:choose>
-				
-				<c:when test="${applicationScope[DDPUtil.ARCHIVE_MANAGER_KEY] != null}">
-					<c:forEach var="entry" items="${applicationScope[DDPUtil.ARCHIVE_MANAGER_KEY].getArchivedImages()}">
-						<div class="archiveRow">
-    						<center>
-								<img src="${entry}"/>
-							</center>
-    					</div>
-    				</c:forEach>
-    			</c:when>
-				<c:otherwise>
-					<h3><center>Archive is empty.<center></h3>
-				</c:otherwise>					
-	  		
-	  		</c:choose>		  	
+	  <div class="archiveTable">	
+	  	  <script defer src="https://www.livecoinwatch.com/static/lcw-widget.js"></script> <div class="livecoinwatch-widget-3" lcw-base="USD" lcw-d-head="true" lcw-d-name="true" lcw-d-code="true" lcw-d-icon="true" lcw-color-tx="#ffffff" lcw-color-bg="#3f4148" lcw-border-w="1" ></div>
+	  	  </div>
+	  	  <!-- 
+	  	   	<div class="archiveTable">					
+				<script defer src="https://www.livecoinwatch.com/static/lcw-widget.js"></script> <div class="livecoinwatch-widget-1" lcw-coin="BTC" lcw-base="USD" lcw-secondary="ETH" lcw-period="d" lcw-color-tx="#ffffff" lcw-color-pr="#00d084" lcw-color-bg="#000000" lcw-border-w="0" ></div>  	
 	  		</div>
+	  		 -->
 	  </section>
 		
 </main>
