@@ -80,3 +80,19 @@ VALUES
 
 
 
+
+
+INSERT INTO public."DDPPick"
+("year", week, pickorder, player, team1, team2)
+VALUES
+(2021, 12, 1, 'Wazim', 'patriots', 'giants'),
+(2021, 12, 2, 'Preet', 'buccaneers', 'texans'),
+(2021, 12, 3, 'Vic', 'chargers', 'steelers'),
+(2021, 12, 4, 'Andy', 'cowboys', 'washington'),
+(2021, 12, 5, 'Kania', 'packers', 'falcons'),
+(2021, 12, 6, 'Raj', 'bills', 'bengals'),
+(2021, 12, 7, 'Ankur', 'eagles', 'rams'),
+(2021, 12, 8, 'Kiran', 'colts', 'vikings'),
+(2021, 12, 9, 'Surbe', '49ers', 'ravens');
+
+

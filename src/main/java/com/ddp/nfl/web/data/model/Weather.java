@@ -1,5 +1,7 @@
 package com.ddp.nfl.web.data.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Weather {
 
     public String displayValue;
@@ -7,6 +9,8 @@ public class Weather {
     public int temperature;
     public String conditionId;
        
+    @JsonIgnore
+    public Link link;
     
     public Weather() {}
     
