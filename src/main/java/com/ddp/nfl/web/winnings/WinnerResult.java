@@ -156,17 +156,16 @@ public final class WinnerResult{
         if( isWinner( ) ){
             builder.append( "<a href=\"" ).append ( winImageLink ).append( "\"");
             builder.append( " class=\"cashLink\">" );
-            builder.append( " Week " ).append( weekNumber ).append( COLON );
+            builder.append( " W" ).append( weekNumber ).append( COLON );
             builder.append( "</a>" );
             
         }else {
-            builder.append( "Week " ).append(  weekNumber ).append( COLON );
+            builder.append( "W" ).append(  weekNumber ).append( COLON );
         }
            
         return builder.toString( );
             
     }
-    
     
 
     @Override
