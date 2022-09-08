@@ -17,10 +17,10 @@ https://devcenter.heroku.com/articles/java-webapp-runner
 
 
 ## Deploying to Heroku using webrunner
-1. cd /drives/c/Personal/Development/EclipseWorkspace/DDPWeb
+1. cd /drives/c/Personal/Development/EclipseWorkspace/Java/DDPWeb
 2. mvn clean package
 3. java -jar target/dependency/webapp-runner.jar target/*.war
 4. http://localhost:8080/game
-5. Commit to git
+5. Commit to git https://github.com/FluentTrading/DDPWeb
 6. Deploy from Heroku dashboard
 

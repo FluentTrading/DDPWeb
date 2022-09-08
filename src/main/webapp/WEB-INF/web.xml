@@ -11,7 +11,7 @@
     
     <context-param>
         <param-name>NFL_SEASON_OVER</param-name>
-        <param-value>true</param-value>
+        <param-value>false</param-value>
     </context-param>
     
     <context-param>
@@ -21,12 +21,12 @@
     
     <context-param>
         <param-name>NFL_START_DATE</param-name>
-        <param-value>2021-09-09</param-value>
+        <param-value>2022-09-08</param-value>
     </context-param>
         
     <context-param>
         <param-name>NFL_WEEK_NUMBER</param-name>
-        <param-value>19</param-value>
+        <param-value>1</param-value>
     </context-param>
         
     <context-param>
