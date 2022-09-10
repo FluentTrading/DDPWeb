@@ -111,7 +111,8 @@ public final class EspnDataManager{
          
               
     private static final String readUrl( String urlString ) throws Exception{
-        
+    	//LOGGER.info( "Loading schedule from {}", urlString );
+    	
         BufferedReader reader   = null;
         StringBuilder buffer    = new StringBuilder( 2048 );
         

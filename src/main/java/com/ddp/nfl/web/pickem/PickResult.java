@@ -3,7 +3,7 @@ package com.ddp.nfl.web.pickem;
 import java.util.*;
 
 import com.ddp.nfl.web.core.*;
-import com.ddp.nfl.web.util.*;
+
 
 public final class PickResult{
     

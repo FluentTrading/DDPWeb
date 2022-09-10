@@ -52,7 +52,10 @@ public final class DBConnection{
                 String team2    = NFLTeam.resolveOverriddenName( result.getString( "Team2" ));
                 team2           = isValid(team2) ? team2.toLowerCase( ) : EMPTY;
 
-                NFLTeam[] teams = new NFLTeam[]{ teamMap.get(team1), teamMap.get(team2) };
+                String team3    = NFLTeam.resolveOverriddenName( result.getString( "Team3" ));
+                team3           = isValid(team3) ? team3.toLowerCase( ) : EMPTY;
+                                
+                NFLTeam[] teams = new NFLTeam[]{ teamMap.get(team1), teamMap.get(team2), teamMap.get(team3) };
                 DDPPlayer player= playerMap.get( name );
                 DDPPick pick    = new DDPPick( pickOrder, player, teams );
                 
@@ -160,7 +163,8 @@ public final class DBConnection{
             pickPrepStatement.setString ( startColumnIndex++, pick.getPlayer( ).getName( ) );
             pickPrepStatement.setString ( startColumnIndex++, pick.getTeams( )[0].getLowerCaseName( ) );
             pickPrepStatement.setString ( startColumnIndex++, pick.getTeams( )[1].getLowerCaseName( ) );
-
+            pickPrepStatement.setString ( startColumnIndex++, pick.getTeams( )[2].getLowerCaseName( ) );
+            
             int updateResult    = pickPrepStatement.executeUpdate( );
             picksUpdated        = ( updateResult > -1 );
        
@@ -187,10 +191,10 @@ public final class DBConnection{
             StringBuilder builder   = new StringBuilder( 128 );
             
             builder.append( "INSERT INTO " ).append( DDP_PICK.getTableName( ) );
-            builder.append( "( Year, Week, PickOrder, Player, Team1, Team2 )" );
-            builder.append( " VALUES " );
-            builder.append( "( ?, ?, ?, ?, ?, ? )" );
-                        
+            builder.append( "( Year, Week, PickOrder, Player, Team1, Team2, Team3 )" );
+            builder.append( " VALUES " );            
+            builder.append( "( ?, ?, ?, ?, ?, ?, ? )" );
+            
             String query    = builder.toString( );
             pStatement      = connection.prepareStatement(query);
                         

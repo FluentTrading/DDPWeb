@@ -61,23 +61,23 @@ public final class EspnPickManager{
     }
     
     
-    public final PickResult savePicks( int pickForWeek, String player, String team1, String team2 ) {
+    public final PickResult savePicks( int pickForWeek, String player, String team1, String team2, String team3 ) {
 
-        Collection<DDPPick> picks   = loadTeamsPicked( pickForWeek );
-        PickResult result           = validatePick( pickForWeek, player, team1, team2, picks );
+        Collection<DDPPick> picks   = loadTeamsPicked( pickForWeek );        
+        PickResult result           = validatePick( pickForWeek, player, team1, team2, team3, picks );
         if( !result.isValid( ) ){
             return result;
         }
         
         int year                    = ddpMeta.getGameYear( );
         int pickOrder               = picks.size( ) + ONE;
-        DDPPick ddpPick             = createDDPPick( pickOrder, pickForWeek, player, team1, team2 );
+        DDPPick ddpPick             = createDDPPick( pickOrder, pickForWeek, player, team1, team2, team3 );
         boolean storedCorrectly     = service.upsertPick( year, pickForWeek, pickOrder, ddpPick );
         if( !storedCorrectly ) {
             return PickResult.createInvalid( "FAILED to save picks! Server on Fire Mon!" );
         }
         
-        cleanupSelection( player, team1, team2 );
+        cleanupSelection( player, team1, team2, team3 );
         return PickResult.createValid( "", picks );
         
     }
@@ -86,7 +86,7 @@ public final class EspnPickManager{
     //1. Ensure every player only has picked once.
     //2. Ensure every team picked is playing the week for which the pick was made.        
     //3. Ensure every team was only picked once.    (Relaxing this rule for 2020 )
-    protected final PickResult validatePick( int pickForWeek, String player, String team1, String team2, Collection<DDPPick> picks ){
+    protected final PickResult validatePick( int pickForWeek, String player, String team1, String team2, String team3, Collection<DDPPick> picks ){
         
         DDPPick playerPicked        = hasPlayerPicked( player, picks );
         if( playerPicked != null ){
@@ -94,12 +94,12 @@ public final class EspnPickManager{
         }
   
         //User hasn't selected teams twice
-        boolean teamsNotUnique      = team1.equals(team2);
+        boolean teamsNotUnique      = (team1.equals(team2) || team2.equals(team3) || team1.equals( team3));
         if( teamsNotUnique ){
-            return PickResult.createInvalid( player + " can't pick " + team1 + " twice!");
+        	return PickResult.createInvalid( player + " can't pick same team multiple times! " + team1 + " " + team2 + " " + team3 );            
         }
         
-        boolean[] allTeamsPlaying   = allTeamsPlaying( team1, team2 );
+        boolean[] allTeamsPlaying   = allTeamsPlaying( team1, team2, team3 );
         if( !allTeamsPlaying[ZERO] ){
             return PickResult.createInvalid( team1 + " are not playing in Week " + pickForWeek );
         }
@@ -108,18 +108,23 @@ public final class EspnPickManager{
             return PickResult.createInvalid( team2 + " are not playing in Week " + pickForWeek );
         }
 
+        
+        if( !allTeamsPlaying[TWO] ){
+        	return PickResult.createInvalid( team3 + " are not playing in Week " + pickForWeek );
+        }
+        
         return PickResult.createValid("", null);
    
     }
         
-           
-    protected final boolean[] allTeamsPlaying( String team1, String team2 ){
+
+    protected final boolean[] allTeamsPlaying( String team1, String team2, String team3 ) {
         Set<String> teamsPlaying = getTeamsPlaying( );
-        return new boolean[]{ teamsPlaying.contains(team1), teamsPlaying.contains(team2) };
+        return new boolean[]{ teamsPlaying.contains(team1), teamsPlaying.contains(team2), teamsPlaying.contains(team3) };
     }
     
 
-    protected final DDPPick createDDPPick( int pickOrder, int pickForWeek, String playerStr, String team1Str, String team2Str ){
+    protected final DDPPick createDDPPick( int pickOrder, int pickForWeek, String playerStr, String team1Str, String team2Str, String team3Str ){
 
         DDPPick ddpPick     = null;
         
@@ -144,11 +149,18 @@ public final class EspnPickManager{
                 return null;
             }
 
-            ddpPick         = new DDPPick( pickOrder, player, new NFLTeam[]{ team1, team2 } );
+            NFLTeam team3   = resolveTeam( team3Str );
+            if( team3 == null ) {
+            	LOGGER.warn( "Discarding pick as we failed to look up Team3 using [{}]", team3Str );
+                return null;
+            }
+                         
+            
+            ddpPick         = new DDPPick( pickOrder, player, new NFLTeam[]{ team1, team2, team3 } );
             LOGGER.info("For Week [{}] [{}] picked {}", pickForWeek, playerStr, ddpPick );
             
         }catch( Exception e ) {
-            LOGGER.warn( "FAILED to parse picks made for [{}] [{}] [{}] [{}]", pickForWeek, playerStr, team1Str, team2Str );
+        	LOGGER.warn( "FAILED to parse picks made for [{}] [{}] [{}] [{}] [{}]", pickForWeek, playerStr, team1Str, team2Str, team3Str );
         }
         
         return ddpPick;
@@ -191,11 +203,15 @@ public final class EspnPickManager{
     }
     
 
-    private final void cleanupSelection( String player, String team1, String team2 ) {
+    private final void cleanupSelection( String player, String team1, String team2, String team3 ) {
         try {
             allPlayers.remove( player );
             allTeamsForWeek.remove( team1 );
             allTeamsForWeek.remove( team2 );
+            allTeamsForWeek.remove( team3 );
+            
+            //For 2020: Team3 can be re-picked.
+            //allTeamsForWeek.remove( team3 );
 
         }catch(Exception e ) {
             LOGGER.error( "FAILED to clean up player and teams after selection", e );

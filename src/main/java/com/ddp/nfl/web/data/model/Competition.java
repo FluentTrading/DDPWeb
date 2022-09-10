@@ -22,6 +22,8 @@ public class Competition {
     public Status status;
     @JsonIgnore
     public List<Broadcast> broadcasts;
+    @JsonIgnore
+    public Format format;
     public List<Leader> leaders;
     public String startDate;
     @JsonIgnore
@@ -32,13 +34,14 @@ public class Competition {
     public List<Ticket> tickets;
     public List<Odd> odds;
     
+    
     public Competition() {}
 
     
 	public Competition(String id, String uid, String date, int attendance, Type type, boolean timeValid,
 			boolean neutralSite, boolean conferenceCompetition, boolean recent, Venue venue,
 			List<Competitor> competitors, List<Object> notes, Situation situation, Status status,
-			List<Broadcast> broadcasts, List<Leader> leaders, String startDate, List<GeoBroadcast> geoBroadcasts,
+			List<Broadcast> broadcasts, Format format, List<Leader> leaders, String startDate, List<GeoBroadcast> geoBroadcasts,
 			List<Ticket> tickets, List<Odd> odds) {		
 		this.id = id;
 		this.uid = uid;
@@ -55,13 +58,13 @@ public class Competition {
 		this.situation = situation;
 		this.status = status;
 		this.broadcasts = broadcasts;
+		this.format = format;
 		this.leaders = leaders;
 		this.startDate = startDate;
 		this.geoBroadcasts = geoBroadcasts;
 		this.tickets = tickets;
 		this.odds = odds;
 	}
-
 
 
 	public final Situation getSituation() {
@@ -130,6 +133,10 @@ public class Competition {
 		return broadcasts;
 	}
 	
+	public final Format getFormat() {
+		return format;
+	}
+	
 	public final List<Ticket> getTickets() {
 		return tickets;
 	}
@@ -175,7 +182,7 @@ public class Competition {
 				+ type + ", timeValid=" + timeValid + ", neutralSite=" + neutralSite + ", conferenceCompetition="
 				+ conferenceCompetition + ", recent=" + recent + ", venue=" + venue + ", competitors=" + competitors
 				+ ", notes=" + notes + ", situation=" + situation + ", status=" + status + ", broadcasts=" + broadcasts
-				+ ", leaders=" + leaders + ", startDate=" + startDate + ", geoBroadcasts=" + geoBroadcasts
+				+ ", Format=" + format + ", leaders=" + leaders + ", startDate=" + startDate + ", geoBroadcasts=" + geoBroadcasts
 				+ ", tickets=" + tickets + ", odds=" + odds + "]";
 	}
 	

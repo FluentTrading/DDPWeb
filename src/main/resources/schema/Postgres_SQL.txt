@@ -29,6 +29,7 @@ CREATE TABLE public."DDPPick" (
 	player varchar NOT NULL,
 	team1 varchar NOT NULL,
 	team2 varchar NOT NULL,
+	team2 varchar NOT NULL,
 	CONSTRAINT ddppick_pk PRIMARY KEY (player, week)
 );
 

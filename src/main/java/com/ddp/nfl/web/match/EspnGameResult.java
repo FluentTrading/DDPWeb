@@ -51,6 +51,15 @@ public final class EspnGameResult{
     }
     
     
+    public final String getGame3HomeRecord( ) {
+    	return getGame3LiveScore().getHomeTeamInfo().getRecord();
+    }
+
+    public final String getGame3AwayRecord( ) {
+    	return getGame3LiveScore().getAwayTeamInfo().getRecord();
+    }
+    
+    
     public final EspnLiveScore getGame1LiveScore( ) {
         return myScores[0];
     }
@@ -59,6 +68,9 @@ public final class EspnGameResult{
         return myScores[1];
     }
         
+    public final EspnLiveScore getGame3LiveScore( ) {
+        return myScores[2];
+    }
         
     public final String getMy1TeamName( ){
         return getTeamWithPossessionBlinker( getMy1Team( ), getMatch1Score( ) );
@@ -70,6 +82,11 @@ public final class EspnGameResult{
     }
 
     
+    public final String getMy3TeamName( ){
+    	return getTeamWithPossessionBlinker( getMy3Team( ), getMatch3Score( ) );
+	}
+
+    
     public final String getOpp1TeamName( ){
         return getTeamWithPossessionBlinker( getOpp1Team( ), getMatch1Score( ) );
     }
@@ -77,6 +94,11 @@ public final class EspnGameResult{
     public final String getOpp2TeamName( ){
         return getTeamWithPossessionBlinker( getOpp2Team( ), getMatch2Score( ) );
     }
+    
+    public final String getOpp3TeamName( ){
+        return getTeamWithPossessionBlinker( getOpp3Team( ), getMatch3Score( ) );
+    }
+    
     
     
     public final String getMy1TeamIcon( ){
@@ -89,6 +111,11 @@ public final class EspnGameResult{
     }
 
 
+    public final String getMy3TeamIcon( ){
+        return getTeamIcon( getMy3Team( ));
+    }
+
+    
     public final String getOpp1TeamIcon( ){
         return getTeamIcon( getOpp1Team( ));
     }
@@ -97,6 +124,11 @@ public final class EspnGameResult{
     public final String getOpp2TeamIcon( ){
         return getTeamIcon( getOpp2Team( ));
     }
+    
+    public final String getOpp3TeamIcon( ){
+        return getTeamIcon( getOpp3Team( ));
+    }
+    
 
         
     public final int getMy1TeamScore( ){
@@ -116,6 +148,16 @@ public final class EspnGameResult{
         return myTeamScore;
     }
 
+    
+    
+    public final int getMy3TeamScore( ){
+        NFLTeam myTeam    = getMy3Team( );
+        EspnLiveScore info= getMatch3Score( );
+        int myTeamScore   = getScore( true, myTeam, info);
+        
+        return myTeamScore;
+    }
+    
            
     public final String getMyGame1ScoreWithPossssion( boolean isHome ){
         int teamScore   = ( isHome ) ? getMy1TeamScore( ) : getOpp1TeamScore( );
@@ -134,6 +176,15 @@ public final class EspnGameResult{
     }
     
     
+    public final String getMyGame3ScoreWithPossssion( boolean isHome ){
+        int teamScore   = ( isHome ) ? getMy3TeamScore( ) : getOpp3TeamScore( );
+        NFLTeam myTeam  = ( isHome ) ? getMy3Team( ) : getOpp3Team( ); 
+        
+        return getMyGameScoreWithPossssion( teamScore, getMatch3Score( ), myTeam );
+    }
+    
+    
+    
     public final String getMy1TeamScorePerQuarter( boolean isHome ){        
         return getTeamScorePerQuarter( isHome, getMy1Team( ), getMatch1Score() );
     }
@@ -143,10 +194,13 @@ public final class EspnGameResult{
         return getTeamScorePerQuarter( isHome, getMy2Team( ), getMatch2Score() );
     }
        
+    public final String getMy3TeamScorePerQuarter( boolean isHome ){
+        return getTeamScorePerQuarter( isHome, getMy3Team( ), getMatch3Score() );
+    }
     
     //Total for a given week  
     public final int getHomeTotalScore( ) {
-        return getMy1TeamScore( ) + getMy2TeamScore( );
+        return getMy1TeamScore( ) + getMy2TeamScore( ) + getMy3TeamScore();
     }
       
    
@@ -172,10 +226,17 @@ public final class EspnGameResult{
         
         return myTeamScore;
     }
+    
+    public final int getOpp3TeamScore( ){
+        EspnLiveScore info   = getMatch3Score( );
+        int myTeamScore  = getScore( false, getMy3Team( ), info);
+        
+        return myTeamScore;
+    }
 
 
     public final int getAwayTotalScore( ) {
-        return getOpp1TeamScore( ) + getOpp2TeamScore( );
+        return getOpp1TeamScore( ) + getOpp2TeamScore( ) + getOpp3TeamScore();
     }
     
     
@@ -187,6 +248,11 @@ public final class EspnGameResult{
     public final String getGame2NotStartedMessage( ){
         return getGameNotStartedMessage( getMatch2Score( ) );
     }
+    
+    public final String getGame3NotStartedMessage( ){
+        return getGameNotStartedMessage( getMatch3Score( ) );
+    }
+
 
     
     protected final String getGameNotStartedMessage( EspnLiveScore score ){
@@ -207,6 +273,11 @@ public final class EspnGameResult{
         return ( getMatch2Score( ) == null ? "" : getMatch2Score( ).getStadium( ));
     }
     
+    public final String getGame3Stadium( ){
+        return ( getMatch3Score( ) == null ? "" : getMatch3Score( ).getStadium( ));
+    }
+    
+    
     
     public final String getGame1FinishedMessage( ){
         return getGameFinishedMessage( getMy1Team( ), getMy1TeamScore( ), getOpp1TeamScore( ) );
@@ -217,6 +288,9 @@ public final class EspnGameResult{
         return getGameFinishedMessage( getMy2Team( ), getMy2TeamScore( ), getOpp2TeamScore( ) );
     }
     
+    public final String getGame3FinishedMessage( ){
+        return getGameFinishedMessage( getMy3Team( ), getMy3TeamScore( ), getOpp3TeamScore( ) );
+    }
     
     public final String getGameFinishedMessage( NFLTeam myTeam, int myScore, int awayScore ){
                 
@@ -253,6 +327,10 @@ public final class EspnGameResult{
         return getGameWinnerIcon( getMatch2Score( ), getMy2TeamScore( ), getMy2Team( ), getOpp2TeamScore( ), getOpp2Team( ) );
     }
     
+    public final String getGame3WinnerIcon( ){
+        return getGameWinnerIcon( getMatch3Score( ), getMy3TeamScore( ), getMy3Team( ), getOpp3TeamScore( ), getOpp3Team( ) );
+    }
+    
     
     public final boolean isGame1Finished( ){
         return EspnGameState.isFinished(getMatch1Score( ));
@@ -260,6 +338,10 @@ public final class EspnGameResult{
     
     public final boolean isGame2Finished( ){
         return EspnGameState.isFinished(getMatch2Score( ));
+    }
+        
+    public final boolean isGame3Finished( ){
+        return EspnGameState.isFinished(getMatch3Score( ));
     }
         
     
@@ -271,6 +353,9 @@ public final class EspnGameResult{
         return EspnGameState.isNotStarted(getMatch2Score( ));
     }
     
+    public final boolean isGame3NotStarted( ){
+        return EspnGameState.isNotStarted(getMatch3Score( ));
+    }
 
     
     public final boolean isGame1Playing( ){
@@ -282,7 +367,10 @@ public final class EspnGameResult{
     }
     
     
-      
+    public final boolean isGame3Playing( ){
+        return EspnGameState.isPlaying(getMatch3Score( ));
+    }
+    
     //-----------------------   
     
     public final String getGame1ScoreDivClass( boolean isHome ){
@@ -302,7 +390,13 @@ public final class EspnGameResult{
         }
     }
     
-    
+    public final String getGame3ScoreDivClass( boolean isHome ){
+        if( isHome ) {
+            return getScoreDivClassName( getMatch3Score( ), getMy3TeamScore( ), getOpp3TeamScore( ) );
+        }else {
+            return getScoreDivClassName( getMatch3Score( ), getOpp3TeamScore( ), getMy3TeamScore( ) );
+        }
+    }
     
     public final String getGame1ResultDivClasss( ){
         return getResultCellDivClassName( getMatch1Score( ), getMy1TeamScore( ), getOpp1TeamScore( ) );
@@ -312,7 +406,10 @@ public final class EspnGameResult{
         return getResultCellDivClassName( getMatch2Score( ), getMy2TeamScore( ), getOpp2TeamScore( ) );
     }
        
-    
+    public final String getGame3ResultDivClasss( ){
+        return getResultCellDivClassName( getMatch3Score( ), getMy3TeamScore( ), getOpp3TeamScore( ) );
+    }
+       
         
     //UI shouldn't directly invoke these methods.
     //-----------------------------------------------------------
@@ -470,6 +567,10 @@ public final class EspnGameResult{
         return myPickedTeams[ONE];
     }
     
+    
+    public final NFLTeam getMy3Team( ){
+        return myPickedTeams[TWO];
+    }
    
     
     protected final NFLTeam getOpp1Team( ){
@@ -482,6 +583,14 @@ public final class EspnGameResult{
     protected final NFLTeam getOpp2Team( ){
     	EspnLiveScore info   = getMatch2Score( );
         NFLTeam oppTeam  = getOpponentTeam( getMy2Team( ), info );
+        
+        return oppTeam;
+    }
+    
+    
+    protected final NFLTeam getOpp3Team( ){
+    	EspnLiveScore info   = getMatch3Score( );
+        NFLTeam oppTeam  = getOpponentTeam( getMy3Team( ), info );
         
         return oppTeam;
     }
@@ -573,6 +682,11 @@ public final class EspnGameResult{
     
     public final EspnLiveScore getMatch2Score( ){
         return myScores[1];        
+    }
+    
+    
+    public final EspnLiveScore getMatch3Score( ){
+        return myScores[2];        
     }
     
         

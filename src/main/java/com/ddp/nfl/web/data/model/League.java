@@ -10,6 +10,7 @@ public class League {
     public String abbreviation;
     public String slug;
     public Season season;
+    public List<Logo> logos;
     public String calendarType;
     public boolean calendarIsWhitelist;
     public String calendarStartDate;
@@ -20,7 +21,7 @@ public class League {
 	public League() {}		
 	
 
-	public League(String id, String uid, String name, String abbreviation, String slug, Season season,
+	public League(String id, String uid, String name, String abbreviation, String slug, Season season, List<Logo> logos,
 			String calendarType, boolean calendarIsWhitelist, String calendarStartDate, String calendarEndDate,
 			List<Calendar> calendar) {
 	
@@ -30,6 +31,7 @@ public class League {
 		this.abbreviation = abbreviation;
 		this.slug = slug;
 		this.season = season;
+		this.logos = logos;
 		this.calendarType = calendarType;
 		this.calendarIsWhitelist = calendarIsWhitelist;
 		this.calendarStartDate = calendarStartDate;
@@ -40,73 +42,103 @@ public class League {
 	public final String getId() {
 		return id;
 	}
+	
 	public final void setId(String id) {
 		this.id = id;
 	}
+	
 	public final String getUid() {
 		return uid;
 	}
+	
 	public final void setUid(String uid) {
 		this.uid = uid;
 	}
+	
 	public final String getName() {
 		return name;
 	}
+	
 	public final void setName(String name) {
 		this.name = name;
 	}
+	
 	public final String getAbbreviation() {
 		return abbreviation;
 	}
+	
 	public final void setAbbreviation(String abbreviation) {
 		this.abbreviation = abbreviation;
 	}
+	
 	public final String getSlug() {
 		return slug;
 	}
+	
 	public final void setSlug(String slug) {
 		this.slug = slug;
 	}
+	
 	public final Season getSeason() {
 		return season;
 	}
+	
 	public final void setSeason(Season season) {
 		this.season = season;
 	}
+	
+	public final List<Logo> getLogos() {
+		return logos;
+	}
+	
+	public final void getLogos(List<Logo> logos) {
+		this.logos = logos;
+	}
+	
 	public final String getCalendarType() {
 		return calendarType;
 	}
+	
 	public final void setCalendarType(String calendarType) {
 		this.calendarType = calendarType;
 	}
+	
 	public final boolean isCalendarIsWhitelist() {
 		return calendarIsWhitelist;
 	}
+	
 	public final void setCalendarIsWhitelist(boolean calendarIsWhitelist) {
 		this.calendarIsWhitelist = calendarIsWhitelist;
 	}
+	
 	public final String getCalendarStartDate() {
 		return calendarStartDate;
 	}
+	
 	public final void setCalendarStartDate(String calendarStartDate) {
 		this.calendarStartDate = calendarStartDate;
 	}
+	
 	public final String getCalendarEndDate() {
 		return calendarEndDate;
 	}
+	
 	public final void setCalendarEndDate(String calendarEndDate) {
 		this.calendarEndDate = calendarEndDate;
 	}
+	
 	public final List<Calendar> getCalendar() {
 		return calendar;
 	}
+	
 	public final void setCalendar(List<Calendar> calendar) {
 		this.calendar = calendar;
 	}
+	
 	@Override
 	public String toString() {
 		return "League [id=" + id + ", uid=" + uid + ", name=" + name + ", abbreviation=" + abbreviation + ", slug="
-				+ slug + ", season=" + season + ", calendarType=" + calendarType + ", calendarIsWhitelist="
+				+ slug + ", season=" + season + ", logos= " + logos + ", calendarType=" + calendarType + ", calendarIsWhitelist="
 				+ calendarIsWhitelist + ", calendarStartDate=" + calendarStartDate + ", calendarEndDate="
 				+ calendarEndDate + ", calendar=" + calendar + "]";
 	}

@@ -23,11 +23,19 @@ public class EspnPickServlet extends HttpServlet {
     private final static Logger LOGGER          = LoggerFactory.getLogger( "EspnPickServlet" );
 
     
-    public final void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {}
+    @Override
+    public final void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	performPick( request, response );
+    }
             
     
     @Override
     public final void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	performPick( request, response );
+    }
+    
+    
+    protected final void performPick(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
                         
         ServletContext context  = request.getServletContext( );
         
@@ -126,12 +134,13 @@ public class EspnPickServlet extends HttpServlet {
             String player       = request.getParameter("player");
             String team1        = request.getParameter("team1");
             String team2        = request.getParameter("team2");
-            boolean isValid     = isValid(player) && isValid(team1) && isValid(team2);
+            String team3        = request.getParameter("team3");
+            boolean isValid     = isValid(player) && isValid(team1) && isValid(team2) && isValid(team3);
             if( !isValid ) {
-                return PickResult.createInvalid( "Invalid selection, Player and all 2 teams must be selected!" );
+                return PickResult.createInvalid( "Invalid selection, Player and all 3 teams must be selected!" );
             }
             
-            pickResult          = pickManager.savePicks( pickForWeek, player, team1, team2 );
+            pickResult          = pickManager.savePicks( pickForWeek, player, team1, team2, team3 );
             
         }catch( Exception e) {
             LOGGER.warn( "FAILED to process picks", e );

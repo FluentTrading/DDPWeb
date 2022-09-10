@@ -9,7 +9,7 @@
 <head>
 	
 	<meta charset="UTF-8">
-	<meta http-equiv="refresh" content="300000"/>
+	<meta http-equiv="refresh" content="30"/>
 	<meta http-equiv="Content-Language" content="en">
 	<meta name="format-detection" content="telephone=no">
 	<meta name="viewport" content="width=device-width, initial-scale=1" /> 
@@ -75,7 +75,8 @@
 							<td width=100px" align="center"> 
 								<img src=${pick.getPlayer( ).getIcon( )} title="${pick.getPlayer( ).getName( )}" height="52" width="52"/>
 								<h6 style="color:#ffffff;">${pick.getTeams()[0].getCamelCaseName()}</h6>
-								<h6 style="color:#ffffff;">${pick.getTeams()[1].getCamelCaseName()}</h6>								
+								<h6 style="color:#ffffff;">${pick.getTeams()[1].getCamelCaseName()}</h6>	
+								<h6 style="color:#ffffff;">${pick.getTeams()[2].getCamelCaseName()}</h6>							
 							</td>
 						</c:if>					  				
   					</c:forEach>
@@ -111,9 +112,7 @@
   					<div class="player-icon-cell">
   						<img src="${gameResult.getPlayer( ).getIcon( )}" title=${gameResult.getPlayer( ).getName( )} height="70" width="70">
   					</div>
-  					
-  					<div class="spacer-cell-no-padding"></div>
-					
+  										
   					<div class="score-cell-icon-div">  						  						
   						<div class="topLeft"><img src="${gameResult.getMy1TeamIcon( )}" height="52" width="52"></div>
   						<div class="bottomLeft"><img src="${gameResult.getOpp1TeamIcon( )}" height="52" width="52"></div>  						  						
@@ -142,7 +141,7 @@
 					</div>
  					
 							
-					<div class="spacer-cell-no-padding"></div>
+					<div class="spacer-cell"></div>
 					
 					<div class="score-cell-icon-div">
   						<div class="topLeft"><img src="${gameResult.getMy2TeamIcon( )}" height="52" width="52"></div>
@@ -170,7 +169,34 @@
   						</div>  																
 					</div>
 					
-					<div class="spacer-cell-no-padding"></div>
+					<div class="spacer-cell"></div>
+					
+					<div class="score-cell-icon-div">
+  						<div class="topLeft"><img src="${gameResult.getMy3TeamIcon( )}" height="52" width="52"></div>
+  						<div class="bottomLeft"><img src="${gameResult.getOpp3TeamIcon( )}" height="52" width="52"></div>  																
+					</div>
+					
+				 
+  					<div class="quarter-score-cell-div">  	
+  						<div class="${gameResult.getGame3ScoreDivClass(true)}">					  						
+  							<div class="topRightQuarter">${gameResult.getMy3TeamScorePerQuarter(true)}</div>
+  						</div>
+  						
+  						<div class="${gameResult.getGame3ScoreDivClass(false)}">
+  							<div class="bottomRightQuarter">${gameResult.getMy3TeamScorePerQuarter(false)}</div>
+  						</div> 						
+					</div>
+													
+								
+  					<div class="score-cell-div">
+  						<div class="${gameResult.getGame3ScoreDivClass(true)}">		
+							<div class="topRight">${gameResult.getMyGame3ScoreWithPossssion(true)}</div>  							
+  						</div>				  						
+  						<div class="${gameResult.getGame3ScoreDivClass(false)}">									  						
+  							<div class="bottomRight">${gameResult.getMyGame3ScoreWithPossssion(false)}</div>
+  						</div>  																
+					</div>
+					<div class="spacer-cell"></div>
 												  						
 			</div>
 		</div>
@@ -186,8 +212,9 @@
   					${gameResult.getHomeTotalScore( )}  
   				</div>  				
 
-				<div class="spacer-cell-half-no-padding"></div>
-  				  				
+				
+				<div class="spacer-cell"></div>
+				  				  				
   				<c:if test="${gameResult.isGame1NotStarted()}">
   					<div class="result-cell-not-started">
   						${gameResult.getGame1NotStartedMessage( )}
@@ -207,7 +234,7 @@
   					</div>
   				</c:if>
   				
-  				<div class="spacer-cell-half-no-padding"></div>
+  				<div class="spacer-cell"></div>
   			
 				<c:if test="${gameResult.isGame2NotStarted()}">
   					<div class="result-cell-not-started">
@@ -229,7 +256,29 @@
   					</div>
   				</c:if>
 
-  				<div class="spacer-cell-half-no-padding"></div>
+  				<div class="spacer-cell"></div>
+  				
+				<c:if test="${gameResult.isGame3NotStarted()}">
+  					<div class="result-cell-not-started">
+  						${gameResult.getGame3NotStartedMessage( )}
+  					</div>
+  				</c:if>
+  				
+  				
+  				<c:if test="${gameResult.isGame3Playing()}">
+  					<div class="quarter-cell">
+  						<div class="leftQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Quarter( gameResult )}</div>  										  						  			
+  					</div>
+  				</c:if>
+  				
+  				
+  				<c:if test="${gameResult.isGame3Finished()}">
+  					<div class="result-cell-finished">		
+  						${gameResult.getGame3FinishedMessage( )}				
+  					</div>
+  				</c:if>
+  				  				
+  				<div class="spacer-cell"></div>
   				
   			</div>
     
@@ -237,68 +286,6 @@
     
     
     <!--------------------------------------------- Third Row --------------------------------------------------------->
-    
-		<div class="newGridTable" >
-   	
-   			<div class="thirdRow">
-   			
-   				<div class="overallTotalScore-hidden">
-  					${gameResult.getHomeTotalScore( )}  					
-  				</div>  				
-  				
-  				<div class="spacer-cell-half-no-padding"></div>
-  			
-  				
-  				<c:if test="${gameResult.isGame1NotStarted()}">  					
-  					<div class="third-score-cell-not-started">
-  						${gameResult.getGame1LiveScore().getGameNotStartedInfo()}
-  					</div>
-  				</c:if>
-  				  				
-  				<c:if test="${gameResult.isGame1Playing()}">
-  					<div class="drive-cell">
-  						<div class="leftDriveInfo">${gameResult.getGame1LiveScore().getGamePlayingInfo()}</div>	
-  					</div>
-  				</c:if>
-  				
-  				  				
-  				<c:if test="${gameResult.isGame1Finished()}">
-  					<div class="result-cell-finished-hidden">
-  						${gameResult.getGame1FinishedMessage( )}
-  					</div>
-  				</c:if>
-  				
-  						
-  				<div class="spacer-cell-half-no-padding"></div>
-  				
-				<c:if test="${gameResult.isGame2NotStarted()}">
-  					<div class="third-score-cell-not-started">
-  						${gameResult.getGame2LiveScore().getGameNotStartedInfo()}
-  					</div>
-  				</c:if>
-  				
-  				
-  				<c:if test="${gameResult.isGame2Playing()}">
-  					<div class="drive-cell">  							  						
-  						<div class="leftDriveInfo">${gameResult.getGame2LiveScore().getGamePlayingInfo()}</div>  										
-  					</div>
-  				</c:if>
-  				
-  				
-  				<c:if test="${gameResult.isGame2Finished()}">
-  					<div class="result-cell-finished-hidden">  	
-  						${gameResult.getGame2FinishedMessage( )}								  						
-  					</div>
-  				</c:if> 				
-				
-		
-  				<div class="spacer-cell-half-no-padding"></div>
-  				
-  			</div>
-    
-    </div>
-
-
   
     
     </c:forEach>	
