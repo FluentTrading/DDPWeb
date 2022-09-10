@@ -208,12 +208,14 @@
    	
    			<div class="secondRow">
    			
+   				<div class="spacer-cell-half-no-padding"></div>
+   				
    				<div class="totalScore">   				
   					${gameResult.getHomeTotalScore( )}  
   				</div>  				
 
 				
-				<div class="spacer-cell"></div>
+				<div class="spacer-cell-half-no-padding"></div>
 				  				  				
   				<c:if test="${gameResult.isGame1NotStarted()}">
   					<div class="result-cell-not-started">
@@ -286,7 +288,71 @@
     
     
     <!--------------------------------------------- Third Row --------------------------------------------------------->
-  
+		<div class="newGridTable" >
+   	
+   			<div class="thirdRow">
+   			
+   				<div class="spacer-cell-half-no-padding"></div>
+   				
+   				<div class="overallTotalScore-hidden">   				
+  					${gameResult.getAllTotalHomeScore( )}  
+  				</div>  				
+
+				
+				<c:if test="${gameResult.isGame1NotStarted()}">
+  					<div class="third-score-cell-not-started">  						
+  					</div>
+  				</c:if>
+  				
+  				<c:if test="${gameResult.isGame1Playing()}">
+  					<div class="quarter-cell">  							
+  					</div>
+  				</c:if>
+  				
+  				<c:if test="${gameResult.isGame1Finished()}">
+  					<div class="result-cell-finished">  						
+  					</div>
+  				</c:if>
+  				
+  				<div class="spacer-cell"></div>
+  			
+				<c:if test="${gameResult.isGame2NotStarted()}">
+  					<div class="third-score-cell-not-started">  						
+  					</div>
+  				</c:if>
+  				
+  				<c:if test="${gameResult.isGame2Playing()}">
+  					<div class="quarter-cell">  							
+  					</div>
+  				</c:if>
+  				
+  				<c:if test="${gameResult.isGame2Finished()}">
+  					<div class="result-cell-finished">  						
+  					</div>
+  				</c:if>
+  				
+  				<div class="spacer-cell"></div>
+  				
+				<c:if test="${gameResult.isGame3NotStarted()}">
+  					<div class="third-score-cell-not-started">  						
+  					</div>
+  				</c:if>
+  				
+  				<c:if test="${gameResult.isGame3Playing()}">
+  					<div class="quarter-cell">  							
+  					</div>
+  				</c:if>
+  				
+  				<c:if test="${gameResult.isGame3Finished()}">
+  					<div class="result-cell-finished">  						
+  					</div>
+  				</c:if>
+  				  				
+  				<div class="spacer-cell"></div>
+  				
+  			</div>
+    
+    </div>
     
     </c:forEach>	
 					    			
