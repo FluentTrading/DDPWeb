@@ -16,10 +16,11 @@ public final class NFLStadium{
         FMT_STADIUM_NAME_MAP.put( "Empower Field at Mile High", "Mile High" );
         FMT_STADIUM_NAME_MAP.put( "ROKiT Field at Dignity Health Sports Park", "ROKiT Field" );
         FMT_STADIUM_NAME_MAP.put( "Tottenham Hotspur Stadium", "Tottenham" );
-        FMT_STADIUM_NAME_MAP.put( "GEHA Field at Arrowhead Stadium", "Arrowhead Stadium" );
+        FMT_STADIUM_NAME_MAP.put( "GEHA Field at Arrowhead Stadium", "Arrowhead" );
         FMT_STADIUM_NAME_MAP.put( "Bank of America Stadium", "BOA Stadium" );
-        FMT_STADIUM_NAME_MAP.put( "U.S. Bank Stadium", " US Bank Stadium" );
+        FMT_STADIUM_NAME_MAP.put( "U.S. Bank Stadium", " US Bank" );
         FMT_STADIUM_NAME_MAP.put( "State Farm Stadium", "State Farm" );
+        FMT_STADIUM_NAME_MAP.put( "Hard Rock Stadium", "Hard Rock" );
 
     }
     
