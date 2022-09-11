@@ -37,6 +37,7 @@ public final class EspnLiveScore{
     private final String stadium;
     private final String note;
     
+    private final String gameDetail;
     private final Situation summary; 
     
     private final static int    DATE_LENGTH     = 8;
@@ -48,7 +49,7 @@ public final class EspnLiveScore{
                             int awayScore, TeamInfo awayTeamInfo, 
                             String teamPossession, String timeRemaining, 
                             boolean isRedzone, int quarter,
-                            String yl, int togo, int down, String stadium, String note, Situation summary ){
+                            String yl, int togo, int down, String stadium, String note, String gameDetail, Situation summary ){
         
         this.gameId         = gameId;
         this.schedule       = schedule;
@@ -67,6 +68,8 @@ public final class EspnLiveScore{
         
         this.stadium        = NFLStadium.getFormattedName(stadium);        
         this.note           = note;
+        
+        this.gameDetail 	= gameDetail;
         this.summary        = summary;
     }
     
@@ -84,6 +87,7 @@ public final class EspnLiveScore{
     public final String getGameScheduleTime( ) {
         return schedule.getFullSchedule( );
     }
+    
     
     public final String getGameTime( ) {
         return schedule.getShortSchedule( );
@@ -117,6 +121,11 @@ public final class EspnLiveScore{
     
     public final TeamInfo getAwayTeamInfo( ){
         return awayTeamInfo;
+    }
+    
+    
+    public final String getGameDetail( ) {
+	    return gameDetail;
     }
     
     
@@ -175,11 +184,15 @@ public final class EspnLiveScore{
 
 
 	public final String getGamePlayingInfo(){
-		String info = summary.getDownDistanceText();
-		if( info == null || info.length() ==0 ) {
-			return "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+		if( summary != null ) {
+			String info = summary.getDownDistanceText();
+			if( info == null || info.length() ==0 ) {
+				return "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+			}else {
+				return info;
+			}
 		}else {
-			return info;
+			return "";
 		}
 	}
 	
@@ -308,38 +321,16 @@ public final class EspnLiveScore{
 
 
     @Override
-    public final String toString( ){
-        
-        StringBuilder builder = new StringBuilder( 256 );
-        
-        builder.append( "LiveScore[")
-        .append( "GameId=" ).append( gameId );
-                        
-        if( EspnGameState.NOT_STARTED == gameState ) {
-            builder.append( ", StartTime=" ).append( getGameScheduleTime( ) )
-            .append( ", Home=" ).append( getHomeTeam( ).getCamelCaseName( ) )
-            .append( ", Away=" ).append( getAwayTeam( ).getCamelCaseName( ) );
-        }
-
-        builder.append( ", State=" ).append( gameState.name( ) )
-        .append( ", Home=" ).append( getHomeTeam( ).getCamelCaseName( )).append( ", HomeScore=" ).append( homeScore )
-        .append( ", Away=" ).append( getAwayTeam( ).getCamelCaseName( ) ).append( ", AwayScore=" ).append( awayScore )
-        .append( ", Possession=" ).append( teamPossession )
-        .append( ", quarter=" ).append( formattedQuarter )
-        .append( ", TimeLeft=" ).append( timeRemaining )
-        .append( ", isRedzone=" ).append( isRedzone )
-        .append( ", Drive=" ).append( driveInfo ).append( ", stadium=" ).append( stadium )        
-        .append( ", note=" ).append( note );
-            
-        if( summary != null ) {
-            builder.append( summary );
-        }
-             
-        builder.append( "]" );
-            
-        return builder.toString( );
-        
-    }
+	public String toString() {
+		return "EspnLiveScore [gameId=" + gameId + ", schedule=" + schedule + ", gameState=" + gameState
+				+ ", homeScore=" + homeScore + ", homeTeamInfo=" + homeTeamInfo + ", awayScore=" + awayScore
+				+ ", awayTeamInfo=" + awayTeamInfo + ", teamPossession=" + teamPossession + ", timeRemaining="
+				+ timeRemaining + ", isRedzone=" + isRedzone + ", quarter=" + quarter + ", driveInfo=" + driveInfo
+				+ ", formattedQuarter=" + formattedQuarter + ", stadium=" + stadium + ", note=" + note + ", summary="
+				+ summary + "]";
+	}
+    
+    
     
 
 }

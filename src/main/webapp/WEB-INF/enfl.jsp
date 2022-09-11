@@ -225,7 +225,7 @@
   				  				
   				<c:if test="${gameResult.isGame1Playing()}">  					
   					<div class="quarter-cell">
-  						<div class="leftQuarterInfo">${gameResult.getGame1LiveScore().getDisplayableQuarter()}</div>		
+  						<div class="leftQuarterInfo">${gameResult.getGame1LiveScore().getGameDetail()}</div>		
   					</div>
   				</c:if>
   				
@@ -243,11 +243,11 @@
   						${gameResult.getGame2NotStartedMessage( )}
   					</div>
   				</c:if>
-  				
-  				
-  				<c:if test="${gameResult.isGame2Playing()}">
-  					<div class="quarter-cell">  							
-  						<div class="leftQuarterInfo">${gameResult.getGame2LiveScore().getDisplayableQuarter()}</div>  										
+    					
+  					
+  				<c:if test="${gameResult.isGame2Playing()}">  			  					
+  					<div class="quarter-cell">  							  						
+  						<div class="leftQuarterInfo">${gameResult.getGame2LiveScore().getGameDetail()}</div>  										
   					</div>
   				</c:if>
   				
@@ -268,8 +268,8 @@
   				
   				
   				<c:if test="${gameResult.isGame3Playing()}">
-  					<div class="quarter-cell">
-  						<div class="leftQuarterInfo">${applicationScope[DDPUtil.GAME_ANALYTICS_KEY].getGame3Quarter( gameResult )}</div>  										  						  			
+  					<div class="quarter-cell">  						  	
+  						<div class="leftQuarterInfo">${gameResult.getGame3LiveScore().getGameDetail()}</div>  									  						  			
   					</div>
   				</c:if>
   				

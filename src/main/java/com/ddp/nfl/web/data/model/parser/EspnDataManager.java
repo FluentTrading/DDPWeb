@@ -16,6 +16,7 @@ import com.ddp.nfl.web.data.model.EspnData;
 import com.ddp.nfl.web.data.model.Event;
 import com.ddp.nfl.web.data.model.Linescore;
 import com.ddp.nfl.web.data.model.Situation;
+import com.ddp.nfl.web.data.model.Status;
 import com.ddp.nfl.web.data.model.Team;
 import com.ddp.nfl.web.database.*;
 import com.ddp.nfl.web.schedule.EspnSchedule;
@@ -87,9 +88,10 @@ public final class EspnDataManager{
                 String teamPossession	= (situation != null ? situation.getPossessionText() : "" );
                 
                 EspnGameState gameState = EspnGameState.parseState( competition.getStatus() );
+                String gameShortDetail =  competition.getStatus().getType().getDetail();
                 EspnLiveScore liveScore = new EspnLiveScore( gameId, schedule, gameState, homeScore, home,
                                                           awayScore, away, teamPossession, timeRemaining, isRedzone, quarter,
-                                                          yl, togo, down, stadium, note, competition.getSituation());
+                                                          yl, togo, down, stadium, note, gameShortDetail, competition.getSituation());
                 
                 scores.put( liveScore.getHomeTeam( ), liveScore );
                 scores.put( liveScore.getAwayTeam( ), liveScore );
@@ -108,9 +110,8 @@ public final class EspnDataManager{
         
     }
     
-         
-              
-    private static final String readUrl( String urlString ) throws Exception{
+
+	private static final String readUrl( String urlString ) throws Exception{
     	//LOGGER.info( "Loading schedule from {}", urlString );
     	
         BufferedReader reader   = null;
