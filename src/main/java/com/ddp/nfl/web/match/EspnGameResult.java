@@ -317,7 +317,10 @@ public final class EspnGameResult{
         return getMatch2Score( ).getDisplayableQuarter( );        
     }
     
-
+    public final String getGame3Quarter( ){
+        return getMatch3Score( ).getDisplayableQuarter( );        
+    }
+    
     public final String getGame1WinnerIcon( ){
         return getGameWinnerIcon( getMatch1Score( ), getMy1TeamScore( ), getMy1Team( ), getOpp1TeamScore( ), getOpp1Team( ) );
     }

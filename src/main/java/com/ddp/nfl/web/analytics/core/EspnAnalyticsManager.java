@@ -37,6 +37,11 @@ public final class EspnAnalyticsManager{
     }
 
     
+    public final String getGame3Drive( EspnGameResult result ){
+        return getPlayDrive( result.getMatch3Score( ) );
+    }
+
+    
     //-------- Game Quarter --------
     public final String getGame1Quarter( EspnGameResult result ){
         return result.getMatch1Score( ).getDisplayableQuarter( );
@@ -47,6 +52,11 @@ public final class EspnAnalyticsManager{
         return result.getMatch2Score( ).getDisplayableQuarter( );
     }
     
+    
+    public final String getGame3Quarter( EspnGameResult result ){
+        return result.getMatch3Score( ).getDisplayableQuarter( );
+    }
+    
     //-------- Game Summary --------
     public final String getGame1Summary( EspnGameResult result ){
         return getGameSummary( result.getGame1Quarter( ), result.getMy1Team( ), result.getMatch1Score( ) );
@@ -54,6 +64,11 @@ public final class EspnAnalyticsManager{
     
     public final String getGame2Summary( EspnGameResult result ){
         return getGameSummary( result.getGame2Quarter( ), result.getMy2Team( ), result.getMatch2Score( ) );
+    }
+   
+    
+    public final String getGame3Summary( EspnGameResult result ){
+        return getGameSummary( result.getGame3Quarter( ), result.getMy3Team( ), result.getMatch3Score( ) );
     }
     
     
@@ -65,6 +80,11 @@ public final class EspnAnalyticsManager{
     public final Analytics getGame2Stats( EspnGameResult result ){
         return getGameStat( result.getMy2Team( ), result.getMatch2Score( ) );
     }
+    
+    public final Analytics getGame3Stats( EspnGameResult result ){
+        return getGameStat( result.getMy3Team( ), result.getMatch3Score( ) );
+    }
+
 
     protected final String getPlayDrive( EspnLiveScore liveScore ){
         if( liveScore == null ) return EMPTY;
